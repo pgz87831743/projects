@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus'
 import {ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
 import axios from 'axios'
+import {userOption} from "@/store/storage";
 
 axios.defaults.baseURL = "http://localhost:9001/"
 
@@ -17,11 +18,28 @@ axios.interceptors.response.use(response => {
             type: 'info'
         });
     }
+
+
+    // console.log(response.data.expirationTime);
+    // console.log(response.data.expirationTime-Date.now());
+    // if (response.data.expirationTime-Date.now()<1800000){
+    //     axios.post("/user/refreshToken")
+    //         .then(response=>{
+    //             console.log(response.data)
+    //
+    //             return response;
+    //         })
+    // }
+
+
+
     return response;
 })
 
 axios.interceptors.request.use(request => {
-    request.headers.token=store.getters.token;
+    request.headers.token=userOption().getUser().data?userOption().getUser().data.token:'';
+
+
     return request;
 })
 
