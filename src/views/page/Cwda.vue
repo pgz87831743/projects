@@ -8,6 +8,8 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="xm" label="宠物名称"/>
           <el-table-column prop="zl" label="宠物种类"/>
+          <el-table-column prop="sex" label="性别"/>
+          <el-table-column prop="sc" label="身长"/>
           <el-table-column prop="gwbs" label="过往病史"/>
           <el-table-column prop="jy" label="绝育情况（是否）"/>
           <el-table-column prop="nl" label="年龄"/>
@@ -47,6 +49,12 @@
         </el-form-item>
         <el-form-item label="种类">
           <el-input v-model="form.zl"/>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-input v-model="form.sex"/>
+        </el-form-item>
+        <el-form-item label="身长">
+          <el-input v-model="form.sc"/>
         </el-form-item>
         <el-form-item label="过往病史">
           <el-input v-model="form.gwbs"/>
