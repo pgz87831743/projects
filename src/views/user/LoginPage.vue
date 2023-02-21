@@ -1,7 +1,7 @@
 <template>
 
     <div class="login_div">
-      <h2>宠物健康检测系统登录界面</h2>
+      <h2>校园社交系统登录界面</h2>
       <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="60px" class="demo-ruleForm">
         <el-form-item label="用户名:" prop="username">
           <el-input type="text" v-model="ruleForm.username"></el-input>
@@ -44,7 +44,7 @@ export default {
           .then(resp => {
             if (resp.data.success) {
               userOption().setUser(resp.data)
-              router.push({path: 'MeanPage'})
+              router.push({path: 'FontPage'})
             }
           });
 

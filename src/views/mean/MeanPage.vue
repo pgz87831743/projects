@@ -4,7 +4,7 @@
       <el-header>
         <el-row>
           <el-col :span="5">
-            宠物健康检测系统
+            校园社交系统后台
           </el-col>
           <el-col :span="19">
             您好:{{ user.data.username }}
@@ -29,11 +29,11 @@
 <!--              <el-menu-item index="/MeanPage/AuthorityManage">权限管理</el-menu-item>-->
 <!--            </el-sub-menu>-->
 
-            <el-menu-item index="/MeanPage/Cwda">宠物档案</el-menu-item>
-            <el-menu-item index="/MeanPage/Mrjl">每日记录</el-menu-item>
-            <el-menu-item index="/MeanPage/Zhgl">账号管理</el-menu-item>
-            <el-menu-item index="/MeanPage/Syjq">宠物饲养技巧</el-menu-item>
-            <el-menu-item index="/MeanPage/Jkjc">健康监测</el-menu-item>
+            <el-menu-item index="/MeanPage/Cwda">新闻管理</el-menu-item>
+            <el-menu-item index="/MeanPage/Mrjl">留言管理</el-menu-item>
+            <el-menu-item index="/MeanPage/Zhgl">运动打卡</el-menu-item>
+            <el-menu-item index="/MeanPage/Syjq">相约运动</el-menu-item>
+
 
 
 

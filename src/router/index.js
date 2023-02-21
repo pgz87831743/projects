@@ -11,13 +11,30 @@ const routes = [
         path: '/',
         name: 'login',
         component: () => import('../views/user/LoginPage')
+    },
+    {
+        path: '/FontPage',
+        name: 'FontPage',
+        component: () => import('../views/mean/FontPage'),
+        children: [
+            {
+                path: 'liaotTian',
+                name: 'liaotTian',
+                component: () => import('../views/fontpage/liaotTian')
+            },
+            {
+                path: 'ShouYe',
+                name: 'ShouYe',
+                component: () => import('../views/fontpage/ShouYe')
+            }
+            ]
     }
     ,
     {
         path: '/MeanPage',
         name: 'MeanPage',
         component: () => import('../views/mean/MeanPage'),
-        children:[
+        children: [
             {
                 path: 'Mrjl',
                 name: 'Mrjl',
