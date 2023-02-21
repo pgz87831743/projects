@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import store from "@/store/index"
+import {userOption} from "@/store/storage";
 
 const routes = [
     {
@@ -14,23 +14,58 @@ const routes = [
     }
     ,
     {
-        path: '/PeiXunList',
-        name: 'PeiXunList',
-        component: () => import('../views/table/PeiXunList')
+        path: '/MeanPage',
+        name: 'MeanPage',
+        component: () => import('../views/mean/MeanPage'),
+        children:[
+            {
+                path: 'Mrjl',
+                name: 'Mrjl',
+                component: () => import('../views/page/Mrjl')
+            },
+            {
+                path: 'Cwda',
+                name: 'Cwda',
+                component: () => import('../views/page/Cwda')
+            }
+            ,
+            {
+                path: 'Zhgl',
+                name: 'Zhgl',
+                component: () => import('../views/page/Zhgl')
+            }
+            ,
+            {
+                path: 'Syjq',
+                name: 'Syjq',
+                component: () => import('../views/page/Syjq')
+            }
+            ,
+            {
+                path: 'Jkjc',
+                name: 'Jkjc',
+                component: () => import('../views/page/Jkjc')
+            },
+            {
+                path: 'UserManage',
+                name: 'UserManage',
+                component: () => import('../views/user/UserManage')
+            },
+            {
+                path: 'RoleManage',
+                name: 'RoleManage',
+                component: () => import('../views/user/RoleManage')
+            },
+            {
+                path: 'AuthorityManage',
+                name: 'AuthorityManage',
+                component: () => import('../views/user/AuthorityManage')
+            }
+        ]
     }
-    ,
-    {
-        path: '/PeiXunData',
-        name: 'PeiXunData',
-        component: () => import('../views/table/PeiXunData')
-    }
-    ,
-    {
-        path: '/TabsPage',
-        name: 'TabsPage',
-        component: () => import('../views/table/TabsPage')
-    }
+
 ]
+
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -39,30 +74,16 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-
-    console.log(store.getters['isAuth'])
-    if ( !store.getters['isAuth']) {
-        if (to.fullPath==="/login" || to.fullPath==="/"||to.fullPath==="/register") {
-
+    if (!userOption().isAuth()) {
+        if (to.fullPath === "/login" || to.fullPath === "/" || to.fullPath === "/register") {
             next()
-        }else{
+        } else {
             next("/")
         }
-    }else{
-      next();
+    } else {
+        next();
     }
 
-
-
-    // if(to.meta.isAuth){     //判断是否需要鉴权
-    //   if(localStorage.getItem('name') === '张三'){
-    //     next();
-    //   }else{
-    //     alert('不好意思，姓名不对，没有权限');
-    //   }
-    // }else{
-    //   next()
-    // }
 })
 
 export default router
