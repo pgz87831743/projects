@@ -11,10 +11,30 @@
         <el-col :span="1">
           <el-button type="primary" @click="searchQuery">搜索</el-button>
         </el-col>
+
+        <el-col :span="3" :offset="1">
+          <el-form-item label="分类">
+            <el-select v-model="page.lx" placeholder=" " clearable="true">
+              <el-option label="猫咪饮食" value="猫咪饮食" />
+              <el-option label="猫咪行为" value="猫咪行为" />
+              <el-option label="猫咪用品" value="猫咪用品" />
+              <el-option label="狗狗饮食" value="狗狗饮食" />
+              <el-option label="狗狗行为" value="狗狗行为" />
+              <el-option label="狗狗用品" value="狗狗用品" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="1">
+          <el-button type="primary" @click="searchQuery">搜索</el-button>
+        </el-col>
       </el-row>
+
+
       <el-row>
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="title" label="标题"/>
+          <el-table-column prop="lx" label="类型"/>
           <el-table-column prop="times" label="浏览次数"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column label="操作">
@@ -46,7 +66,20 @@
      <div v-if="upd">
        <el-form v-model="form" :label-width="labelWidth">
          <el-form-item label="标题">
-           <el-input v-model="form.title"/>
+           <el-input v-model="form.title" style="width: 220px"/>
+         </el-form-item>
+         <el-form-item label="发布类型">
+           <el-select v-model="form.lx" placeholder=" ">
+             <el-option label="饮食" value="饮食" />
+             <el-option label="行为" value="行为" />
+             <el-option label="用品" value="用品" />
+           </el-select>
+         </el-form-item>
+         <el-form-item label="适用宠物">
+           <el-select v-model="form.sycw" placeholder=" ">
+             <el-option label="猫咪" value="猫咪" />
+             <el-option label="狗狗" value="狗狗" />
+           </el-select>
          </el-form-item>
        </el-form>
        <div style="border: 1px solid #ccc; margin-top: 10px">
@@ -69,7 +102,7 @@
 
       <div v-if="!upd">
         <h1 style="font-size: 30px">{{form.title}}</h1>
-        <p style="margin-top: 20px">发布日期：{{form.createTime}} 查看次数：{{form.times}}</p>
+        <p style="margin-top: 20px">发布日期:{{form.createTime}}&nbsp;&nbsp; 查看次数:{{form.times}} &nbsp;&nbsp;类型:{{form.sycw+form.lx}}</p>
         <el-divider />
         <p v-html="form.content"></p>
       </div>
@@ -128,6 +161,7 @@ export default {
       labelWidth: 100,
       page: {
         search: '',
+        lx: '',
         pageNum: 1,
         pageSize: 10,
       },
@@ -224,6 +258,7 @@ export default {
           })
     },
     saveOrUpdate() {
+      this.form.lx=this.form.sycw+this.form.lx
       this.$http.post("/feedingSkills/add", this.form)
           .then(() => {
             this.initTableData()
