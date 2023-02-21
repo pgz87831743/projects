@@ -19,11 +19,24 @@
               default-active="2"
               class="el-menu-vertical-demo"
           >
-            <el-menu-item index="/MeanPage/Jkjl">宠物健康记录</el-menu-item>
-            <el-menu-item index="/MeanPage/Jkjc">健康监测</el-menu-item>
+
+<!--            <el-sub-menu index="1">-->
+<!--              <template #title>-->
+<!--                <span>系统管理</span>-->
+<!--              </template>-->
+<!--              <el-menu-item index="/MeanPage/UserManage">用户管理</el-menu-item>-->
+<!--              <el-menu-item index="/MeanPage/RoleManage">角色管理</el-menu-item>-->
+<!--              <el-menu-item index="/MeanPage/AuthorityManage">权限管理</el-menu-item>-->
+<!--            </el-sub-menu>-->
+
+            <el-menu-item index="/MeanPage/Cwda">宠物档案</el-menu-item>
+            <el-menu-item index="/MeanPage/Mrjl">每日记录</el-menu-item>
             <el-menu-item index="/MeanPage/Zhgl">账号管理</el-menu-item>
             <el-menu-item index="/MeanPage/Syjq">宠物饲养技巧</el-menu-item>
-            <el-menu-item index="/MeanPage/Xttj">系统推荐</el-menu-item>
+            <el-menu-item index="/MeanPage/Jkjc">健康监测</el-menu-item>
+
+
+
           </el-menu>
         </el-aside>
         <el-main width="90%">

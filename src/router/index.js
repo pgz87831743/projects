@@ -19,14 +19,14 @@ const routes = [
         component: () => import('../views/mean/MeanPage'),
         children:[
             {
-                path: 'Jkjl',
-                name: 'Jkjl',
-                component: () => import('../views/page/Jkjl')
+                path: 'Mrjl',
+                name: 'Mrjl',
+                component: () => import('../views/page/Mrjl')
             },
             {
-                path: 'Jkjc',
-                name: 'Jkjc',
-                component: () => import('../views/page/Jkjc')
+                path: 'Cwda',
+                name: 'Cwda',
+                component: () => import('../views/page/Cwda')
             }
             ,
             {
@@ -42,9 +42,24 @@ const routes = [
             }
             ,
             {
-                path: 'Xttj',
-                name: 'Xttj',
-                component: () => import('../views/page/Xttj')
+                path: 'Jkjc',
+                name: 'Jkjc',
+                component: () => import('../views/page/Jkjc')
+            },
+            {
+                path: 'UserManage',
+                name: 'UserManage',
+                component: () => import('../views/user/UserManage')
+            },
+            {
+                path: 'RoleManage',
+                name: 'RoleManage',
+                component: () => import('../views/user/RoleManage')
+            },
+            {
+                path: 'AuthorityManage',
+                name: 'AuthorityManage',
+                component: () => import('../views/user/AuthorityManage')
             }
         ]
     }

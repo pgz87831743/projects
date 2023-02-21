@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+
     <div class="login_div">
-      <h2>培训信息维护登录界面</h2>
+      <h2>宠物健康检测系统登录界面</h2>
       <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="60px" class="demo-ruleForm">
         <el-form-item label="用户名:" prop="username">
           <el-input type="text" v-model="ruleForm.username"></el-input>
@@ -16,7 +16,7 @@
         </el-form-item>
 
       </el-form>
-    </div>
+
 
   </div>
 </template>
@@ -65,7 +65,7 @@ export default {
 
 <style scoped lang="scss">
 .login_div {
-  width: 280px;
+  width: 300px;
   margin: 100px auto;
 
   .el-form-item {

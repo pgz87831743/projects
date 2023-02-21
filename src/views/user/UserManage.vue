@@ -2,23 +2,17 @@
   <div>
     <el-space style="width: 100%" fill>
       <el-row>
-        <el-col :span="1">
-          <el-button type="primary" @click="centerDialogVisible = true">新增</el-button>
-        </el-col>
-        <el-col :span="3" :offset="1">
-          <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="searchQuery" />
-        </el-col>
-        <el-col :span="1">
-          <el-button type="primary" @click="searchQuery" >搜索</el-button>
-        </el-col>
+        <el-button type="primary" @click="centerDialogVisible = true">新增</el-button>
       </el-row>
       <el-row>
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="xm" label="宠物名称"/>
-          <el-table-column prop="zl" label="宠物种类"/>
-          <el-table-column prop="xw" label="宠物行为"/>
-          <el-table-column prop="cwyp" label="宠物用品"/>
-          <el-table-column prop="ys" label="宠物饮食"/>
+          <el-table-column prop="wsl" label="喂食量"/>
+          <el-table-column prop="ysl" label="饮水量"/>
+          <el-table-column prop="sy" label="刷牙"/>
+          <el-table-column prop="pb" label="排便"/>
+          <el-table-column prop="yz" label="体重"/>
+          <el-table-column prop="hdl" label="活动量"/>
+          <el-table-column prop="qc" label="驱虫"/>
           <el-table-column label="操作">
             <template #default="scope">
               <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
@@ -47,23 +41,28 @@
           {{ optionName }}
         </div>
       </template>
-      <el-form v-model="form" :label-width="labelWidth">
-        <el-form-item label="宠物名称">
-          <el-input v-model="form.xm"/>
+      <el-form v-model="form">
+        <el-form-item label="喂食量" :label-width="labelWidth">
+          <el-input v-model="form.wsl"/>
         </el-form-item>
-        <el-form-item label="宠物种类">
-          <el-input v-model="form.zl"/>
+        <el-form-item label="饮水量" :label-width="labelWidth">
+          <el-input v-model="form.ysl"/>
         </el-form-item>
-        <el-form-item label="宠物行为">
-          <el-input v-model="form.xw"/>
+        <el-form-item label="刷牙" :label-width="labelWidth">
+          <el-input v-model="form.sy"/>
         </el-form-item>
-        <el-form-item label="宠物用品">
-          <el-input v-model="form.cwyp"/>
+        <el-form-item label="排便" :label-width="labelWidth">
+          <el-input v-model="form.pb"/>
         </el-form-item>
-        <el-form-item label="宠物饮食">
-          <el-input v-model="form.ys"/>
+        <el-form-item label="体重" :label-width="labelWidth">
+          <el-input v-model="form.yz"/>
         </el-form-item>
-
+        <el-form-item label="活动量" :label-width="labelWidth">
+          <el-input v-model="form.hdl"/>
+        </el-form-item>
+        <el-form-item label="驱虫" :label-width="labelWidth">
+          <el-input v-model="form.qc"/>
+        </el-form-item>
       </el-form>
 
       <template #footer>
@@ -96,14 +95,12 @@
 
 <script>
 export default {
-  name: "Syjq",
+  name: "Mrjl",
   data() {
     return {
-      search:'',
       form: {},
       labelWidth: 100,
       page: {
-        search:'',
         pageNum: 1,
         pageSize: 10,
       },
@@ -116,14 +113,6 @@ export default {
   components: {},
   methods: {
 
-
-    searchQuery(){
-      this.$http.post("/feedingSkills/page", this.page)
-          .then(resp => {
-            this.tableData = resp.data.data.records
-            this.total = resp.data.data.total
-          })
-    },
     dialogClose(){
       this.form={}
       this.centerDialogVisible=false
@@ -135,7 +124,7 @@ export default {
       this.form=JSON.parse(JSON.stringify(row))
     },
     handleDelete(index, row) {
-      this.$http.delete("/feedingSkills/delete/" + row.id)
+      this.$http.delete("/dailyRecord/delete/" + row.id)
           .then(() => {
             this.initTableData()
           })
@@ -143,21 +132,21 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      this.$http.post("/feedingSkills/page", this.page)
+      this.$http.post("/dailyRecord/page", this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
     initTableData() {
-      this.$http.post("/feedingSkills/page", this.page)
+      this.$http.post("/dailyRecord/page", this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
     saveOrUpdate() {
-      this.$http.post("/feedingSkills/add", this.form)
+      this.$http.post("/dailyRecord/add", this.form)
           .then(() => {
             this.initTableData()
             this.dialogClose()
