@@ -2,11 +2,36 @@
   <div>
     <el-space style="width: 100%" fill>
       <el-row>
-        <el-button type="primary" @click="centerDialogVisible = true">新增</el-button>
+        <el-row>
+          <el-button type="primary" @click="centerDialogVisible = true">新增</el-button>
+        </el-row>
+
+        <el-col :span="4" :offset="1">
+          <el-form-item label="搜索内容">
+            <el-input v-model="page.name" placeholder="请输入搜索内容" clearable @clear="searchQuery"/>
+          </el-form-item>
+
+        </el-col>
+
+        <el-col :span="3" :offset="1">
+          <el-form-item label="时间">
+            <el-date-picker
+                v-model="page.data"
+                type="data"
+                placeholder=""
+                format="YYYY-MM-DD"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-button type="primary" @click="searchQuery">搜索</el-button>
+        </el-col>
+
+
       </el-row>
       <el-row>
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="petFile.xm" label="宠物名称"/>
+          <el-table-column prop="petName" label="宠物名称"/>
           <el-table-column prop="wsl" label="喂食量"/>
           <el-table-column prop="ysl" label="饮水量"/>
           <el-table-column prop="sy" label="刷牙"/>
@@ -14,6 +39,7 @@
           <el-table-column prop="tz" label="体重"/>
           <el-table-column prop="hdl" label="活动量"/>
           <el-table-column prop="qc" label="驱虫"/>
+          <el-table-column prop="dataStr" label="创建时间"/>
           <el-table-column label="操作">
             <template #default="scope">
               <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
@@ -45,30 +71,49 @@
       <el-form v-model="form" :rules="rules" label-width="130px">
         <el-form-item label="宠物名称">
           <el-select v-model="form.petId" placeholder=" ">
-            <el-option v-for="item in allPet" :label="item.xm" :value="item.id" />
+            <el-option v-for="item in allPet" :label="item.xm" :value="item.id"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="喂食量" >
+        <el-form-item label="喂食量">
           <el-input v-model="form.wsl"/>
         </el-form-item>
         <el-form-item label="饮水量">
           <el-input v-model="form.ysl"/>
         </el-form-item>
-        <el-form-item label="刷牙" >
-          <el-input v-model="form.sy"/>
-        </el-form-item>
-        <el-form-item label="排便" >
-          <el-input v-model="form.pb"/>
-        </el-form-item>
-        <el-form-item label="体重" >
+
+        <el-form-item label="体重">
           <el-input v-model="form.tz"/>
         </el-form-item>
-        <el-form-item label="活动量" >
-          <el-input v-model="form.hdl"/>
+
+        <el-form-item label="刷牙">
+          <el-select v-model="form.sy" placeholder=" ">
+            <el-option label="是" value="是"/>
+            <el-option label="否" value="否"/>
+          </el-select>
         </el-form-item>
-        <el-form-item label="驱虫" >
-          <el-input v-model="form.qc"/>
+
+        <el-form-item label="排便">
+          <el-select v-model="form.pb" placeholder="是否正常">
+            <el-option label="是" value="是"/>
+            <el-option label="否" value="否"/>
+          </el-select>
         </el-form-item>
+
+        <el-form-item label="活动量">
+          <el-select v-model="form.hdl" placeholder=" ">
+            <el-option label="大" value="大"/>
+            <el-option label="中" value="中"/>
+            <el-option label="小" value="小"/>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="驱虫">
+          <el-select v-model="form.qc" placeholder=" ">
+            <el-option label="是" value="是"/>
+            <el-option label="否" value="否"/>
+          </el-select>
+        </el-form-item>
+
       </el-form>
 
       <template #footer>
@@ -94,16 +139,18 @@
   </div>
 
 
-
-
 </template>
 
 
 <script>
+
+import {dateFormat} from "@/utils/DateUtils";
+
+
 export default {
   data() {
     return {
-      allPet:[],
+      allPet: [],
       form: {},
       labelWidth: 100,
       page: {
@@ -119,15 +166,29 @@ export default {
   components: {},
   methods: {
 
-    dialogClose(){
-      this.form={}
-      this.centerDialogVisible=false
+
+    searchQuery() {
+      if (this.page.data != null) {
+        this.page.dataStr = dateFormat('YYYY-mm-dd', this.page.data)
+      }
+
+      this.$http.post("/dailyRecord/page", this.page)
+          .then(resp => {
+            this.tableData = resp.data.data.records
+            this.total = resp.data.data.total
+          })
     },
 
-    handleEdit(index,row) {
+
+    dialogClose() {
+      this.form = {}
+      this.centerDialogVisible = false
+    },
+
+    handleEdit(index, row) {
       this.optionName = '修改'
       this.centerDialogVisible = true
-      this.form=JSON.parse(JSON.stringify(row))
+      this.form = JSON.parse(JSON.stringify(row))
     },
     handleDelete(index, row) {
       this.$http.delete("/dailyRecord/delete/" + row.id)

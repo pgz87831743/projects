@@ -2,11 +2,41 @@
   <div>
     <el-space style="width: 100%" fill>
 
+
+      <el-row>
+
+
+        <el-col :span="4" :offset="1">
+          <el-form-item label="搜索内容">
+            <el-input v-model="page.name" placeholder="请输入搜索内容" clearable @clear="searchQuery"/>
+          </el-form-item>
+
+        </el-col>
+
+        <el-col :span="3" :offset="1">
+          <el-form-item label="时间">
+            <el-date-picker
+                v-model="page.data"
+                type="data"
+                format="YYYY-MM-DD"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-button type="primary" @click="searchQuery">搜索</el-button>
+        </el-col>
+
+
+
+
+
+      </el-row>
+
       <el-row>
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="type" label="监测类型"/>
+          <el-table-column prop="petName" label="宠物名称"/>
           <el-table-column prop="recommend" label="参考策略"/>
-          <el-table-column prop="createTime" label="创建时间"/>
+          <el-table-column prop="dataStr" label="创建时间"/>
           <el-table-column label="操作">
             <template #default="scope">
               <el-button
@@ -37,12 +67,12 @@
   </div>
 
 
-
-
 </template>
 
 
 <script>
+import {dateFormat} from "@/utils/DateUtils";
+
 export default {
 
   data() {
@@ -51,7 +81,7 @@ export default {
       labelWidth: 100,
       page: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 10
       },
       total: null,
       centerDialogVisible: false,
@@ -62,6 +92,18 @@ export default {
   components: {},
   methods: {
 
+    searchQuery() {
+
+      if (this.page.data!=null){
+        this.page.dataStr=dateFormat('YYYY-mm-dd',this.page.data)
+      }
+
+      this.$http.post("/healthMonitoring/page", this.page)
+          .then(resp => {
+            this.tableData = resp.data.data.records
+            this.total = resp.data.data.total
+          })
+    },
 
     handleDelete(index, row) {
       this.$http.delete("/healthMonitoring/delete/" + row.id)

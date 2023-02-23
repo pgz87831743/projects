@@ -15,7 +15,12 @@ export function userOption(){
             setValue("my.user",value)
         },
         isAuth(){
-            return window.localStorage.getItem("my.user").indexOf("token")!==-1
+            if (window.localStorage.getItem("my.user")==null){
+                return -1;
+            }else{
+                return window.localStorage.getItem("my.user").indexOf("token")!==-1
+            }
+
         }
     }
 }

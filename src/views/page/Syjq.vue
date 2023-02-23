@@ -102,7 +102,7 @@
 
       <div v-if="!upd">
         <h1 style="font-size: 30px">{{form.title}}</h1>
-        <p style="margin-top: 20px">发布日期:{{form.createTime}}&nbsp;&nbsp; 查看次数:{{form.times}} &nbsp;&nbsp;类型:{{form.sycw+form.lx}}</p>
+        <p style="margin-top: 20px">发布日期:{{form.createTime}}&nbsp;&nbsp; 查看次数:{{form.times}} &nbsp;&nbsp;类型:{{form.lx}}</p>
         <el-divider />
         <p v-html="form.content"></p>
       </div>

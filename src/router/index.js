@@ -45,21 +45,6 @@ const routes = [
                 path: 'Jkjc',
                 name: 'Jkjc',
                 component: () => import('../views/page/Jkjc')
-            },
-            {
-                path: 'UserManage',
-                name: 'UserManage',
-                component: () => import('../views/user/UserManage')
-            },
-            {
-                path: 'RoleManage',
-                name: 'RoleManage',
-                component: () => import('../views/user/RoleManage')
-            },
-            {
-                path: 'AuthorityManage',
-                name: 'AuthorityManage',
-                component: () => import('../views/user/AuthorityManage')
             }
         ]
     }
