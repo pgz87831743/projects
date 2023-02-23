@@ -7,6 +7,7 @@ import {ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
 import axios from 'axios'
 import {userOption} from "@/store/storage";
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 axios.defaults.baseURL = "http://localhost:9001/"
 
@@ -37,7 +38,11 @@ axios.interceptors.response.use(response => {
 })
 
 axios.interceptors.request.use(request => {
-    request.headers.token=userOption().getUser().data?userOption().getUser().data.token:'';
+
+    if (userOption().getUser()!=null){
+        request.headers.token=userOption().getUser().data?userOption().getUser().data.token:'';
+    }
+
 
 
     return request;
@@ -49,9 +54,9 @@ axios.interceptors.request.use(request => {
 const app = createApp(App)
 app.config.globalProperties.$http = axios
 app.use(store)
+app.use(store)
 app.use(router)
-app.use(ElementPlus)
+app.use(ElementPlus,{
+    locale: zhCn,
+})
 app.mount('#app')
-
-
-
