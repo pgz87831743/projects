@@ -5,7 +5,7 @@
       :ellipsis="false"
       :router="true"
   >
-    <el-menu-item >Logo</el-menu-item>
+    <el-menu-item ><h1>校园社交系统前台</h1></el-menu-item>
     <div class="flex-grow" />
     <el-menu-item index="/FontPage/ShouYe">首页</el-menu-item>
     <el-menu-item index="/FontPage/liaotTian">聊天</el-menu-item>

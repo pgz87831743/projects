@@ -26,7 +26,6 @@
 
 import router from "@/router";
 import {userOption} from '@/store/storage'
-
 export default {
   name: "LoginPage",
   data() {
@@ -44,7 +43,7 @@ export default {
           .then(resp => {
             if (resp.data.success) {
               userOption().setUser(resp.data)
-              router.push({path: 'FontPage'})
+              router.push({path: '/FontPage/ShouYe'})
             }
           });
 

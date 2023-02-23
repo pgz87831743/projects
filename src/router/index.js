@@ -36,49 +36,33 @@ const routes = [
         component: () => import('../views/mean/MeanPage'),
         children: [
             {
-                path: 'Mrjl',
-                name: 'Mrjl',
-                component: () => import('../views/page/Mrjl')
+                path: 'ConcomitantMotion',
+                name: 'ConcomitantMotion',
+                component: () => import('../views/endpage/ConcomitantMotion')
+            },{
+                path: 'MessageManagement',
+                name: 'MessageManagement',
+                component: () => import('../views/endpage/MessageManagement')
+            },{
+                path: 'NewsManagement',
+                name: 'NewsManagement',
+                component: () => import('../views/endpage/NewsManagement')
+            },{
+                path: 'SportsClocking',
+                name: 'SportsClocking',
+                component: () => import('../views/endpage/SportsClocking')
             },
-            {
-                path: 'Cwda',
-                name: 'Cwda',
-                component: () => import('../views/page/Cwda')
-            }
-            ,
             {
                 path: 'Zhgl',
                 name: 'Zhgl',
-                component: () => import('../views/page/Zhgl')
-            }
-            ,
-            {
-                path: 'Syjq',
-                name: 'Syjq',
-                component: () => import('../views/page/Syjq')
-            }
-            ,
-            {
-                path: 'Jkjc',
-                name: 'Jkjc',
-                component: () => import('../views/page/Jkjc')
-            },
-            {
-                path: 'UserManage',
-                name: 'UserManage',
-                component: () => import('../views/user/UserManage')
-            },
-            {
-                path: 'RoleManage',
-                name: 'RoleManage',
-                component: () => import('../views/user/RoleManage')
-            },
-            {
-                path: 'AuthorityManage',
-                name: 'AuthorityManage',
-                component: () => import('../views/user/AuthorityManage')
+                component: () => import('../views/endpage/Zhgl')
             }
         ]
+    },
+    {
+        path: '/NewsInfo',
+        name: '/NewsInfo',
+        component: () => import('../views/fontpage/NewsInfo')
     }
 
 ]
