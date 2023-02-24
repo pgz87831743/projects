@@ -221,7 +221,7 @@ export default {
     },
     newClick(item) {
       router.push({path: '/NewsInfo', query: {item: JSON.stringify(item)}})
-      this.$http()
+      this.$http.get('/yw/news-management/queryById/'+item.id)
     },
     note(item) {
       this.dialog.dialogFormVisible = true
