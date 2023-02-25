@@ -1,8 +1,8 @@
 <template>
 
     <div class="login_div">
-      <h2>校园社交系统登录界面</h2>
-      <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="60px" class="demo-ruleForm">
+      <h2>培训信息维护登录界面</h2>
+      <el-form :model="ruleForm" label-position="center" status-icon ref="ruleForm" label-width="60px" class="demo-ruleForm">
         <el-form-item label="用户名:" prop="username">
           <el-input type="text" v-model="ruleForm.username"></el-input>
         </el-form-item>
@@ -10,9 +10,11 @@
           <el-input type="password" v-model="ruleForm.password" a></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm()">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-          <el-button @click="register()">注册</el-button>
+          <div style="margin: 0 auto">
+            <el-button type="primary" @click="submitForm()">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </div>
+<!--          <el-button @click="register()">注册</el-button>-->
         </el-form-item>
 
       </el-form>
@@ -43,7 +45,7 @@ export default {
           .then(resp => {
             if (resp.data.success) {
               userOption().setUser(resp.data)
-              router.push({path: '/FontPage/ShouYe'})
+              router.push({path: '/MeanPage/ReportForms'})
             }
           });
 

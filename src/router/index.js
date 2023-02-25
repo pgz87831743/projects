@@ -12,58 +12,20 @@ const routes = [
         name: 'login',
         component: () => import('../views/user/LoginPage')
     },
-    {
-        path: '/FontPage',
-        name: 'FontPage',
-        component: () => import('../views/mean/FontPage'),
-        children: [
-            {
-                path: 'liaotTian',
-                name: 'liaotTian',
-                component: () => import('../views/fontpage/liaotTian')
-            },
-            {
-                path: 'ShouYe',
-                name: 'ShouYe',
-                component: () => import('../views/fontpage/ShouYe')
-            }
-            ]
-    }
-    ,
+
     {
         path: '/MeanPage',
         name: 'MeanPage',
         component: () => import('../views/mean/MeanPage'),
         children: [
             {
-                path: 'ConcomitantMotion',
-                name: 'ConcomitantMotion',
-                component: () => import('../views/endpage/ConcomitantMotion')
-            },{
-                path: 'MessageManagement',
-                name: 'MessageManagement',
-                component: () => import('../views/endpage/MessageManagement')
-            },{
-                path: 'NewsManagement',
-                name: 'NewsManagement',
-                component: () => import('../views/endpage/NewsManagement')
-            },{
-                path: 'SportsClocking',
-                name: 'SportsClocking',
-                component: () => import('../views/endpage/SportsClocking')
-            },
-            {
-                path: 'Zhgl',
-                name: 'Zhgl',
-                component: () => import('../views/endpage/Zhgl')
+                path: 'ReportForms',
+                name: 'ReportForms',
+                component: () => import('../views/endpage/ReportForms')
             }
         ]
     },
-    {
-        path: '/NewsInfo',
-        name: '/NewsInfo',
-        component: () => import('../views/fontpage/NewsInfo')
-    }
+
 
 ]
 
