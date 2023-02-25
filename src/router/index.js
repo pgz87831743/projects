@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import {userOption} from "@/store/storage";
+
 
 const routes = [
     {
@@ -11,21 +11,7 @@ const routes = [
         path: '/',
         name: 'login',
         component: () => import('../views/user/LoginPage')
-    },
-
-    {
-        path: '/MeanPage',
-        name: 'MeanPage',
-        component: () => import('../views/mean/MeanPage'),
-        children: [
-            {
-                path: 'ReportForms',
-                name: 'ReportForms',
-                component: () => import('../views/endpage/ReportForms')
-            }
-        ]
-    },
-
+    }
 
 ]
 
@@ -37,18 +23,6 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
-    if (!userOption().isAuth()) {
-        if (to.fullPath === "/login" || to.fullPath === "/" || to.fullPath === "/register") {
-            next()
-        } else {
-            next("/")
-        }
-    } else {
-        next();
-    }
-
-})
 
 export default router
 
