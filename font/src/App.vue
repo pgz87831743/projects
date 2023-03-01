@@ -2,7 +2,7 @@
   <router-view/>
 </template>
 
-<style lang="scss">
+<style lang="scss" >
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,8 +10,16 @@
   text-align: center;
   color: #2c3e50;
 }
-body{
-  //background: #f2f2f2;
+*{
+  margin: 0;
+  padding: 0;
 }
-
+ul li{
+  list-style: none;
+}
 </style>
+<script>
+export default {
+  components: {}
+}
+</script>

@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  lintOnSave:false,
   devServer: {
     open: true,
     host: '0.0.0.0',
@@ -9,7 +10,7 @@ module.exports = defineConfig({
     //以上的ip和端口是我们本机的;下面为需要跨域的
     proxy: { //配置跨域
       '/api': {
-        target: 'http://192.168.1.3:9001', //填写请求的目标地址
+        target: 'http://localhost:9001', //填写请求的目标地址
         changOrigin: true, //允许跨域
         pathRewrite: {
           '^/api': '' //请求的时候使用这个api就可以

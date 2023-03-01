@@ -1,5 +1,43 @@
 import axios from "axios";
-const http = axios.create({
-    baseURL: 'http://localhost:9001/'
+import { showSuccessToast, showFailToast } from 'vant';
+import {getItem} from "@/utils/storage";
+// import {getItem} from './storage'
+
+const request = axios.create({
+    baseURL: '/api',
 })
-export default http;
+
+
+
+// 添加响应拦截器
+request.interceptors.response.use(
+    function (response) {
+        // 对响应数据进行操作
+        let code=response.data.code
+        let showMsg=response.data.showMsg
+        if (code===200&&showMsg){
+            showSuccessToast(response.data.msg)
+        }else if(code>200){
+            showFailToast(response.data.msg)
+        }
+        console.log(response.data)
+        return response
+    },
+    function (error) {
+        // 对响应错误进行操作
+        return Promise.reject(error);
+    }
+);
+request.interceptors.request.use((config)=>{
+    if (getItem('TOKEN_INFO_KEY')!=null){
+        config.headers.Authorization=getItem('TOKEN_INFO_KEY').token
+    }
+    return config
+},(error)=>{
+
+    return Promise.reject(error)
+})
+
+
+
+export default request;

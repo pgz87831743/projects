@@ -6,5 +6,6 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import 'amfe-flexible'
 import './styles/index.scss'
-
-createApp(App).use(store).use(Vant).use(router).mount('#app')
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+createApp(App).use(store).use(ElementPlus).use(Vant).use(router).mount('#app')
