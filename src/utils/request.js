@@ -1,6 +1,7 @@
 import axios from "axios";
-import { showSuccessToast, showFailToast } from 'vant';
+import { ElNotification } from 'element-plus'
 import {getItem} from "@/utils/storage";
+import router from "@/router";
 // import {getItem} from './storage'
 
 const request = axios.create({
@@ -16,11 +17,22 @@ request.interceptors.response.use(
         let code=response.data.code
         let showMsg=response.data.showMsg
         if (code===200&&showMsg){
-            showSuccessToast(response.data.msg)
+            ElNotification({
+                title: 'Success',
+                message: response.data.msg,
+                type: 'success',
+            })
         }else if(code>200){
-            showFailToast(response.data.msg)
+            ElNotification({
+                title: 'Error',
+                message: response.data.msg,
+                type: 'error',
+            })
         }
-        console.log(response.data)
+        if (response.request.responseURL.endsWith('/system/login')){
+            router.push({path:'/login'})
+        }
+
         return response
     },
     function (error) {

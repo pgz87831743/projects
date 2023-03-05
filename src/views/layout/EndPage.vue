@@ -1,11 +1,13 @@
 <template>
   <div>
-    <el-row>
-      <div style="background: #4a8aff;height: 80px;width: 100%">
-
-      </div>
-    </el-row>
-    <el-row>
+    <div style="background: #ffffff;height: 80px;width: 100%;border-bottom: 1px #f0f0f0 solid">
+      <el-row>
+        <el-col :span="3">
+          <h1 style="color: #000204;">XXX后台管理系统</h1>
+        </el-col>
+      </el-row>
+    </div>
+    <el-row :gutter="10">
       <el-col :span="3">
         <el-menu
             class="el-menu-vertical-demo"
