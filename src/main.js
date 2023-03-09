@@ -8,4 +8,15 @@ import 'amfe-flexible'
 import './styles/index.scss'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-createApp(App).use(store).use(ElementPlus).use(Vant).use(router).mount('#app')
+
+
+import {authShow} from "@/utils/authutil";
+
+const app=createApp(App);
+app.config.globalProperties['$auth'] =authShow;
+app.use(store)
+app.use(ElementPlus)
+app.use(Vant)
+app.use(router)
+app.mount('#app')
+

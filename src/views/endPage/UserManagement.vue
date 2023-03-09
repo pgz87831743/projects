@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button  type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
       <el-col :span="5" :offset="1">
         <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>
@@ -37,19 +37,6 @@
           <template #default="scope">
             <el-button size="small" @click="clickButton('update', scope.row)">修改</el-button>
             <el-button size="small" @click="clickButton('detail', scope.row)">详情</el-button>
-            <el-popover trigger="click"  placement="right" :width="400" @show="popoverShow(scope.row)" >
-              <template #reference>
-                <el-button size="small" >角色分配</el-button>
-              </template>
-              <el-checkbox-group v-model="scope.row.role">
-                <el-checkbox v-bind:key="item.id" v-for="item in scope.row.roleData" :label="item.name" name="type" :checked="item.check"/>
-              </el-checkbox-group>
-              <div style="text-align: right; margin: 0">
-                <el-button size="small" type="primary"  @click="submitRole(scope)">提交</el-button>
-              </div>
-            </el-popover>
-
-
             <el-button
                 size="small"
                 type="danger"
@@ -90,6 +77,13 @@
         <el-form-item label="年龄">
           <el-input v-model="form.age"/>
         </el-form-item>
+        <el-form-item label="角色">
+          <el-checkbox-group v-model="form.roles">
+            <el-checkbox v-bind:key="item.id" v-for="item in this.roleData" :label="item.id" name="type">
+              {{ item.name }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
       </el-form>
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -121,7 +115,15 @@
 
 <script>
 
-import {systemRoleList, sysUserAdd, sysUserDeleteById, sysUserPage, sysUserUpdateById} from "@/api/user";
+import {
+  systemAssignRoles,
+  systemRoleList,
+  sysUserAdd,
+  sysUserDeleteById,
+  sysUserGetById,
+  sysUserPage,
+  sysUserUpdateById
+} from "@/api/user";
 
 export default {
   name: "UserManagement",
@@ -134,9 +136,10 @@ export default {
         tootle: 100,
         search: ''
       },
-      visible:[],
+      visible: [],
       role: {},
       tableData: [],
+      roleData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -149,15 +152,11 @@ export default {
   },
   components: {},
   methods: {
-    popoverShow(row) {
-      systemRoleList(row.username).then(resp => {
-        row.roleData = resp.data.data
-      })
-    },
 
     submitRole(row) {
-      this.visible[row.$index]=false
-      console.log(row)
+      let data = {userId: row.id, roles: row.role}
+      console.log(data)
+      systemAssignRoles(data)
     },
 
     clickButton(type, row) {
@@ -167,16 +166,20 @@ export default {
         this.dialog.formDisabled = false
         this.dialog.isAdd = true
       } else if (type === 'update') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '修改'
-        this.dialog.formDisabled = false
-        this.dialog.isAdd = false
-        this.form = JSON.parse(JSON.stringify(row))
+        sysUserGetById(row.id).then((resp) => {
+          this.dialog.dialogFormVisible = true
+          this.dialog.optionName = '修改'
+          this.dialog.formDisabled = false
+          this.dialog.isAdd = false
+          this.form = resp.data.data
+        })
       } else if (type === 'detail') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '详情'
-        this.dialog.formDisabled = true
-        this.form = JSON.parse(JSON.stringify(row))
+        sysUserGetById(row.id).then((resp) => {
+          this.dialog.dialogFormVisible = true
+          this.dialog.optionName = '详情'
+          this.dialog.formDisabled = true
+          this.form = resp.data.data
+        })
       } else if (type === 'delete') {
         sysUserDeleteById(row.id).then(() => {
           this.initTableData()
@@ -219,10 +222,17 @@ export default {
           })
     },
 
+    initRoleDate() {
+      systemRoleList('1').then(resp => {
+        this.roleData = resp.data.data
+      })
+    }
+
 
   },
   mounted() {
     this.initTableData()
+    this.initRoleDate()
   },
 
 }

@@ -13,6 +13,12 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
+                path: "/UserPage",
+                name: "UserPage",
+                component: () => import('../views/endPage/UserPage'),
+            },
+
+            {
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/endPage/UserManagement'),

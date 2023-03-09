@@ -13,12 +13,9 @@
     </el-row>
     <el-row>
       <el-table row-key="id" :data="tableData" border style="width: 100%">
-
-        <el-table-column prop="id" label="主键"/>
         <el-table-column prop="name" label="权限名"/>
         <el-table-column prop="description" label="描述"/>
         <el-table-column prop="type" label="权限类型 mean button"/>
-        <el-table-column prop="url" label="路径"/>
         <el-table-column label="操作" width="280px">
           <template #default="scope">
             <el-button size="small" @click="clickButton('update', scope.row)">修改</el-button>
@@ -47,7 +44,6 @@
             <el-radio label="button" size="large">按钮</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="路径"><el-input v-model="form.url"/></el-form-item>
       </el-form>
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -59,16 +55,6 @@
     </el-dialog>
 
 
-    <!-- 分页 -->
-    <div class="paginationClass">
-      <el-pagination
-          small
-          background
-          :total="total"
-          @current-change="currentChange"
-          layout="prev, pager, next"
-      />
-    </div>
 
 
   </div>

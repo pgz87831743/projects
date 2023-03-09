@@ -30,13 +30,25 @@
     </el-row>
 
 
-
-
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="角色名"><el-input v-model="form.name"/></el-form-item>
-        <el-form-item label="描述"><el-input v-model="form.description"/></el-form-item>
+        <el-form-item label="角色名">
+          <el-input v-model="form.name"/>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="form.description"/>
+        </el-form-item>
+        <el-form-item label="权限">
+          <el-tree
+              :data="authorityDate"
+              show-checkbox
+              ref="roleTree"
+              node-key="id"
+              :props="defaultProps"
+          />
+        </el-form-item>
       </el-form>
+
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
         <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
@@ -62,18 +74,28 @@
   </div>
 
 
-
 </template>
 
 
 <script>
 
-import {sysRoleAdd, sysRoleDeleteById, sysRolePage, sysRoleUpdateById} from "@/api/user";
+import {
+  sysRoleAdd,
+  sysRoleDeleteById,
+  sysRoleGetById,
+  sysRolePage,
+  sysRoleUpdateById,
+  systemAuthorityTree,
+} from "@/api/user";
 
 export default {
   name: "RoleManagement",
   data() {
     return {
+      defaultProps: {
+        children: 'children',
+        label: 'description',
+      },
       page: {
         pageSize: 10,
         pageNum: 1,
@@ -81,6 +103,7 @@ export default {
         search: ''
       },
       tableData: [],
+      authorityDate: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -93,23 +116,49 @@ export default {
   },
   components: {},
   methods: {
+
+
+    treeData() {
+      systemAuthorityTree().then((resp => {
+        this.authorityDate = resp.data.data
+      }))
+    },
+
+
     clickButton(type, row) {
       if (type === 'add') {
+        this.treeData()
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
         this.dialog.isAdd = true
       } else if (type === 'update') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '修改'
-        this.dialog.formDisabled = false
-        this.dialog.isAdd = false
-        this.form = JSON.parse(JSON.stringify(row))
+        sysRoleGetById(row.id).then((resp => {
+          this.dialog.isAdd = false
+          this.dialog.dialogFormVisible = true
+          this.dialog.optionName = '修改'
+          this.dialog.formDisabled = false
+          this.form = resp.data.data
+          this.$nextTick(() => {
+            this.form.authorities.forEach((row) => {
+              this.$refs.roleTree.setChecked(row, true, false)
+            })
+          })
+        }))
       } else if (type === 'detail') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '详情'
-        this.dialog.formDisabled = true
-        this.form = JSON.parse(JSON.stringify(row))
+        sysRoleGetById(row.id).then((resp => {
+          this.dialog.dialogFormVisible = true
+          this.dialog.optionName = '详情'
+          this.dialog.formDisabled = true
+          this.form = resp.data.data
+          this.$nextTick(() => {
+            this.form.authorities.forEach((row) => {
+              this.$refs.roleTree.setChecked(row, true, false)
+            })
+          })
+
+        }))
+
       } else if (type === 'delete') {
         sysRoleDeleteById(row.id).then(() => {
           this.initTableData()
@@ -127,8 +176,9 @@ export default {
     },
 
     formSubmit() {
-      this.dialog.dialogFormVisible = false
+      this.form.authorities = this.$refs.roleTree.getCheckedKeys()
       if (this.dialog.isAdd) {
+        console.log(this.$refs.roleTree.getCheckedKeys());
         sysRoleAdd(this.form)
             .then(() => {
               this.initTableData();
@@ -139,10 +189,13 @@ export default {
               this.initTableData();
             })
       }
+      this.dialog.dialogFormVisible = false
     },
 
     dialogClose() {
       this.form = {}
+      // this.$refs.roleTree.setCheckedKeys(this.authorityDate.map(k => k.id), false)
+      this.$refs.roleTree.setCheckedKeys([], false)
     },
 
     initTableData() {
@@ -156,6 +209,7 @@ export default {
   },
   mounted() {
     this.initTableData()
+    this.treeData()
   },
 
 }
@@ -184,9 +238,11 @@ export default {
 .demo-image__error .image-slot {
   font-size: 30px;
 }
+
 .demo-image__error .image-slot .el-icon {
   font-size: 30px;
 }
+
 .demo-image__error .el-image {
   width: 100%;
   height: 200px;

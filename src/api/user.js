@@ -17,6 +17,20 @@ export const systemAuthorityTree = () => {
     return request.get('/system/authorityTree')
 }
 
+export const systemAssignRoles = (data) => {
+    return request.post('/system/assignRoles',data)
+}
+
+export const systemAssignAuthority = (data) => {
+    return request.post('/system/assignAuthority',data)
+}
+
+export const systemAuthorityTreeByRoleId = (roleId) => {
+    return request.get('/system/authorityTreeByRoleId/'+roleId)
+}
+
+
+
 
 //用户相关
 export const sysUserPage = (data) => {
