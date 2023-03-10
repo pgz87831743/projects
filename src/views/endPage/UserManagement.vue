@@ -35,11 +35,12 @@
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button  size="small" @click="clickButton('update', scope.row)">修改</el-button>
+            <el-button  size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
                 type="danger"
+
                 @click="clickButton('delete',scope.row)">删除
             </el-button>
           </template>

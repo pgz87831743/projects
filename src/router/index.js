@@ -7,7 +7,12 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import('../views/user/LoginPage')
-    }, {
+    },
+    {
+        path: '/',
+        component: () => import('../views/user/LoginPage')
+    }
+    , {
         path: '/EndPage',
         name: 'EndPage',
         component: () => import('../views/layout/EndPage'),

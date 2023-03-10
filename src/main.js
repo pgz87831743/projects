@@ -11,9 +11,11 @@ import 'element-plus/dist/index.css'
 
 
 import {authShow} from "@/utils/authutil";
+import request from "@/utils/request";
 
 const app=createApp(App);
 app.config.globalProperties['$auth'] =authShow;
+app.config.globalProperties['$request'] =request;
 app.use(store)
 app.use(ElementPlus)
 app.use(Vant)
