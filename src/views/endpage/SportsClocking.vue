@@ -8,7 +8,7 @@
         <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>
       </el-col>
       <el-col :span="1">
-        <el-button type="success">搜索</el-button>
+        <el-button type="success" @click="search">搜索</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -119,6 +119,15 @@ export default {
             this.total = resp.data.data.total
           })
     },
+
+    search(){
+      this.$http.post("/yw/sports-clocking/page", this.page)
+          .then(resp => {
+            this.tableData = resp.data.data.records
+            this.total = resp.data.data.total
+          })
+    },
+
 
     formSubmit() {
       this.dialog.dialogFormVisible = false

@@ -5,9 +5,11 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import {ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
+import './style/all.scss'
 import axios from 'axios'
 import {userOption} from "@/store/storage";
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+
 
 axios.defaults.baseURL = "http://localhost:9001/"
 

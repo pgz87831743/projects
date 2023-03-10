@@ -4,12 +4,25 @@
       <el-header>
         <el-row>
           <el-col :span="5">
-            校园社交系统后台
+            <div class="co">
+              校园社交系统
+            </div>
           </el-col>
-          <el-col :span="5" :offset="14">
-            您好:{{ user.data.username }}
-            <el-button type="success" @click="logout">退出登录</el-button>
-            <el-button type="success" @click="indexPage">前台</el-button>
+          <el-col :span="4" :offset="15">
+            <el-row>
+              <el-col :span="8">
+                <span class="co"> {{ user.data.username }},你好</span>
+              </el-col>
+              <el-col :span="8">
+                <el-button class="co" @click="logout" style="background: none">退出登录</el-button>
+              </el-col>
+              <el-col :span="6">
+                <el-button class="co" style="background: none"  @click="indexPage">首页</el-button>
+              </el-col>
+            </el-row>
+
+
+
           </el-col>
 
         </el-row>
@@ -68,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .el-header {
-  background: black;
+
   color: white;
   text-align: left;
   font-size: 30px;
@@ -81,9 +94,21 @@ export default {
   text-align: right;
 }
 
+#app > div > section > section > aside > ul > li.el-menu-item.is-active{
+  color: white;
+  background: #2c3c9a;
+  border-radius: 30px;
+}
+
+#app > div > section > section > aside > ul > li.el-menu-item{
+  color: #2c3c9a;
+  padding-left: 20px;
+}
+
+
 .el-aside {
   height: 100vh;
-  border-right: black 1px solid;
+  border-right:none;
 }
 
 .el-main {

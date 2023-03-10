@@ -5,11 +5,11 @@
       :ellipsis="false"
       :router="true"
   >
-    <el-menu-item ><h1>校园社交系统前台</h1></el-menu-item>
+    <el-menu-item ><h1 style="color: #2c3c9a">校园社交系统</h1></el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="/FontPage/ShouYe">首页</el-menu-item>
-    <el-menu-item index="/FontPage/liaotTian">聊天</el-menu-item>
-    <el-menu-item index="/MeanPage">后台</el-menu-item>
+    <el-menu-item index="/FontPage/ShouYe"><div class="co">首页</div></el-menu-item>
+    <el-menu-item index="/FontPage/liaotTian"><div class="co">聊天</div></el-menu-item>
+    <el-menu-item index="/MeanPage"><div class="co">后台</div></el-menu-item>
   </el-menu>
   <router-view/>
 </template>

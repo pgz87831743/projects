@@ -1,7 +1,7 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <el-main>
+    <el-row>
+      <el-col :offset="1" :span="15">
         <el-tabs
             v-model="activity"
             type="card"
@@ -10,27 +10,29 @@
         >
           <el-tab-pane label="校园新闻" name="1">
             <el-row>
-              <el-col>
+              <el-col class="p-el-co">
                 <div>
-                  <h1 style="text-align: left">校园新闻</h1>
                   <el-row justify="center" v-for="item in newTableData" v-bind:key="item.id">
                     <el-col>
-                      <el-card class="box-card" :style="{background:'#77C1A2'}">
+                      <el-card shadow="hover" class="box-card p-b">
                         <el-row>
-                          <el-col :span="21">
-                            <ul>
-                              <li>发布人：{{ item.createByUser.username }}</li>
-                              <li>标题：{{ item.title }}</li>
-                              <li>浏览量：{{ item.times }}</li>
-                            </ul>
+                          <el-col :span="24">
+                            <h1>{{ item.title }}</h1>
+                            <p style="margin-top: 20px">发布人：{{ item.createByUser.username }}</p>
+                           <div style="text-align: left;margin-top: 20px">
+                             浏览量：{{ item.times }}
+                           </div>
                           </el-col>
-                          <el-col :span="2">
+                        </el-row>
+
+                        <el-row>
+                          <el-col :offset="20" :span="4" class="p-cl">
                             <el-button type="info" v-bind:key="item.id" @click="newClick(item)">查看详细</el-button>
-                          </el-col>
-                          <el-col :span="1">
                             <el-button type="info" v-bind:key="item.id" @click="note(item)">留言</el-button>
                           </el-col>
                         </el-row>
+
+
                       </el-card>
                     </el-col>
                   </el-row>
@@ -41,21 +43,26 @@
           <el-tab-pane label="相约运动" name="2">
             <el-row>
               <el-col>
-                <h1 style="text-align: left">相约运动</h1>
                 <div>
                   <el-row justify="center" v-for="item in concomitantMotionData" v-bind:key="item.id">
                     <el-col>
-                      <el-card class="box-card" :style="{background:'#77C1A2'}">
+                      <el-card shadow="hover" class="box-card p-b">
+
+
                         <el-row>
-                          <el-col :span="21">
+                          <el-col :span="24">
                             <ul>
+                              <li><h1>{{ item.content }}</h1></li>
                               <li>发起人：{{ item.createByUser.username }}</li>
                               <li>相约时间：{{ item.concomitantTime }}</li>
                               <li>相约地点：{{ item.address }}</li>
                               <li>报名人员：{{ item.concomitantPerson }}</li>
                             </ul>
                           </el-col>
-                          <el-col :span="3">
+                        </el-row>
+
+                        <el-row>
+                          <el-col :span="1" :offset="22" class="p-cl">
                             <el-button type="info" v-bind:key="item.id" @click="enroll(item)">报名</el-button>
                           </el-col>
                         </el-row>
@@ -69,11 +76,10 @@
           <el-tab-pane label="运动打卡" name="3">
             <el-row>
               <el-col>
-                <h1 style="text-align: left">运动打卡</h1>
                 <div>
                   <el-row justify="center" v-for="item in sportsClockingData" v-bind:key="item.id">
                     <el-col>
-                      <el-card class="box-card" :style="{background:'#77C1A2'}">
+                      <el-card shadow="hover" class="box-card p-b">
                         <ul>
                           <li>打卡人：{{ item.createByUser.username }}</li>
                           <li>打卡时间：{{ item.createTime }}</li>
@@ -88,38 +94,37 @@
           </el-tab-pane>
 
         </el-tabs>
-
-
-      </el-main>
-      <el-aside width="20%">
-        <el-row>
-          <el-col><h1>留言</h1></el-col>
-        </el-row>
-        <el-row justify="center" v-for="item in tableData" v-bind:key="item.id">
-          <el-col :span="22">
-            <el-card class="box-card" :style="{background:'#77C1A2'}">
-              <ul>
-                <li>留言人：{{ item.createByFromUser.username }}</li>
-                <li>留言时间：{{ item.createTime }}</li>
-                <li>留内容：{{ item.content }}</li>
-              </ul>
-            </el-card>
-          </el-col>
-        </el-row>
-
-        <!-- 分页 -->
-        <div class="paginationClass">
-          <el-pagination
-              small
-              background
-              :total="total"
-              :page-size="page.pageSize"
-              @current-change="currentChange"
-              layout="prev, pager, next"
-          />
+      </el-col>
+      <el-col :offset="1" :span="6">
+        <div class="lyb">
+          <el-row>
+            <el-col><h1 style="color: #2c3c9a">留言板</h1></el-col>
+          </el-row>
+          <el-row justify="center" v-for="item in tableData" v-bind:key="item.id">
+            <el-col :span="22">
+              <el-card class="box-card" shadow="hover" style="margin: 10px;border-radius: 10px">
+                <ul>
+                  <li>留言人：{{ item.createByFromUser.username }}</li>
+                  <li>留言时间：{{ item.createTime }}</li>
+                  <li>留内容：{{ item.content }}</li>
+                </ul>
+              </el-card>
+            </el-col>
+          </el-row>
+          <!-- 分页 -->
+          <div class="paginationClass">
+            <el-pagination
+                small
+                background
+                :total="total"
+                :page-size="page.pageSize"
+                @current-change="currentChange"
+                layout="prev, pager, next"
+            />
+          </div>
         </div>
-      </el-aside>
-    </el-container>
+      </el-col>
+    </el-row>
   </div>
 
 
@@ -221,7 +226,7 @@ export default {
     },
     newClick(item) {
       router.push({path: '/NewsInfo', query: {item: JSON.stringify(item)}})
-      this.$http.get('/yw/news-management/queryById/'+item.id)
+      this.$http.get('/yw/news-management/queryById/' + item.id)
     },
     note(item) {
       this.dialog.dialogFormVisible = true
@@ -230,7 +235,7 @@ export default {
     },
 
     enroll(item) {
-      this.$http.get("/yw/concomitant-motion/enroll/"+item.id)
+      this.$http.get("/yw/concomitant-motion/enroll/" + item.id)
     },
     dialogClose() {
       this.form = {}
