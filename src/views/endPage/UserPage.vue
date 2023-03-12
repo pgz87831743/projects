@@ -3,7 +3,7 @@
     <el-row gutter="20">
       <el-col :span="18">
         <el-card shadow="hover">
-          <h1 style="text-align: center">个人资料</h1>
+          <h1 style="text-align: center">个人信息</h1>
           <el-form :model="oldForm" label-position="right" label-width="150px" :disabled="true">
             <el-form-item label=" " >
               <el-avatar :size="300" :src="oldForm.avatar" />

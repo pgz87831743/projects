@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="3" :offset="18" style="padding: 15px">
           <span style="color:#2c3c9a;  font-size:20px;float:left;display:inline-block;line-height: 60px">您好:{{
-              user.username
+              user.nickname
             }}</span>
           <el-popover>
             <template #reference>
