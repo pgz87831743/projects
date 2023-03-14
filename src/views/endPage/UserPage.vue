@@ -8,46 +8,17 @@
             <el-form-item label=" " >
               <el-avatar :size="300" :src="oldForm.avatar" />
             </el-form-item>
-            <el-form-item label="用户名">
-              <el-input v-model="oldForm.username"/>
-            </el-form-item>
-            <el-form-item label="密码">
-              <el-input type="password" v-model="oldForm.password"/>
-            </el-form-item>
-            <el-form-item label="昵称">
-              <el-input v-model="oldForm.nickname"/>
-            </el-form-item>
-            <el-form-item label="性别">
-              <el-input v-model="oldForm.sex"/>
-            </el-form-item>
-            <el-form-item label="手机">
-              <el-input v-model="oldForm.phone"/>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input v-model="oldForm.email"/>
-            </el-form-item>
-            <el-form-item label="会员等级">
-              <el-input v-model="oldForm.level"/>
-            </el-form-item>
-            <el-form-item label="年龄">
-              <el-input v-model="oldForm.age"/>
-            </el-form-item>
+            <el-form-item label="用户名"><el-input v-model="oldForm.username"/></el-form-item>
+            <el-form-item label="密码"><el-input v-model="oldForm.password"/></el-form-item>
+            <el-form-item label="姓名"><el-input v-model="oldForm.nickname"/></el-form-item>
+            <el-form-item label="性别"><el-input v-model="oldForm.sex"/></el-form-item>
+            <el-form-item label="手机"><el-input v-model="oldForm.phone"/></el-form-item>
+            <el-form-item label="邮箱"><el-input v-model="oldForm.email"/></el-form-item>
+            <el-form-item label="年龄"><el-input v-model="oldForm.age"/></el-form-item>
+            <el-form-item label="身份证号"><el-input v-model="oldForm.idCard"/></el-form-item>
           </el-form>
           <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
             <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-              <el-form-item label="用户名">
-                <el-input v-model="form.username"/>
-              </el-form-item>
-              <el-form-item label="密码">
-                <el-input v-model="form.password"/>
-              </el-form-item>
-              <el-form-item label="昵称">
-                <el-input v-model="form.nickname"/>
-              </el-form-item>
-              <el-form-item label="头像地址">
-                <el-input v-model="form.avatar"/>
-              </el-form-item>
-
               <el-form-item label="上传头像">
                 <el-upload
                     class="upload-demo"
@@ -65,22 +36,17 @@
                   </div>
                 </el-upload>
               </el-form-item>
-
-              <el-form-item label="性别">
-                <el-input v-model="form.sex"/>
+              <el-form-item label="头像地址">
+                <el-input v-model="form.avatar"/>
               </el-form-item>
-              <el-form-item label="手机">
-                <el-input v-model="form.phone"/>
-              </el-form-item>
-              <el-form-item label="邮箱">
-                <el-input v-model="form.email"/>
-              </el-form-item>
-              <el-form-item label="会员等级">
-                <el-input v-model="form.level"/>
-              </el-form-item>
-              <el-form-item label="年龄">
-                <el-input v-model="form.age"/>
-              </el-form-item>
+              <el-form-item label="用户名"><el-input v-model="form.username"/></el-form-item>
+              <el-form-item label="密码"><el-input v-model="form.password"/></el-form-item>
+              <el-form-item label="姓名"><el-input v-model="form.nickname"/></el-form-item>
+              <el-form-item label="性别"><el-input v-model="form.sex"/></el-form-item>
+              <el-form-item label="手机"><el-input v-model="form.phone"/></el-form-item>
+              <el-form-item label="邮箱"><el-input v-model="form.email"/></el-form-item>
+              <el-form-item label="年龄"><el-input v-model="form.age"/></el-form-item>
+              <el-form-item label="身份证号"><el-input v-model="form.idCard"/></el-form-item>
             </el-form>
             <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -149,6 +115,7 @@ export default {
       sysUserUpdateById(this.form)
           .then(() => {
             this.dialog.dialogFormVisible = false
+            window.location.href='/UserPage'
           })
     },
     clickButton() {

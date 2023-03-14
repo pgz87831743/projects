@@ -53,6 +53,12 @@ export const sysUserUpdateById = (data) => {
 }
 
 
+//用户注册
+export const sysUserRegister = (data) => {
+    return request.post('/sys/sysUser/userRegister', data)
+}
+
+
 //角色相关
 export const sysRolePage = (data) => {
     return request.post('/sys/sysRole/page', data)
@@ -74,6 +80,9 @@ export const sysRoleUpdateById = (data) => {
 }
 
 
+
+
+
 //权限相关
 export const sysAuthorityPage = (data) => {
     return request.post('/sys/sysAuthority/page', data)
@@ -93,3 +102,80 @@ export const sysAuthorityAdd = (data) => {
 export const sysAuthorityUpdateById = (data) => {
     return request.put('/sys/sysAuthority/updateById', data)
 }
+
+
+//贷款信息接口
+export const loanPage = (data) => {
+    return request.post('/loan/page', data)
+}
+export const loanListAll = () => {
+    return request.get('/loan/listAll')
+}
+export const loanGetById = (id) => {
+    return request.get('/loan/getById/' + id)
+}
+export const loanDeleteById = (id) => {
+    return request.delete('/loan/deleteById/' + id)
+}
+export const loanAdd = (data) => {
+    return request.post('/loan/add', data)
+}
+export const loanUpdateById = (data) => {
+    return request.put('/loan/updateById', data)
+}
+
+export const loanApplyForLoan = (data) => {
+    return request.post('/loan/applyForLoan', data)
+}
+
+//计算利息
+export const loanCalculateInterest = (data) => {
+    return request.post('/loan/calculateInterest', data)
+}
+
+//还款
+export const loanRepayment = (data) => {
+    return request.post('/loan/repayment', data)
+}
+
+
+//财务审核
+export const loanFinancialReview = (data) => {
+    return request.post('/loan/financialReview', data)
+}
+
+//信息审核
+export const loanInformationReview = (data) => {
+    return request.post('/loan/informationReview', data)
+}
+
+
+//统计
+export const loanStatistics = () => {
+    return request.post('/loan/statistics')
+}
+
+
+//问答相关
+export const qnaPage = (data) => {
+    return request.post('/qna/page', data)
+}
+export const qnaListAll = () => {
+    return request.get('/qna/listAll')
+}
+export const qnaGetById = (id) => {
+    return request.get('/qna/getById/' + id)
+}
+export const qnaDeleteById = (id) => {
+    return request.delete('/qna/deleteById/' + id)
+}
+export const qnaAdd = (data) => {
+    return request.post('/qna/add', data)
+}
+export const qnaUpdateById = (data) => {
+    return request.put('/qna/updateById', data)
+}
+
+
+
+

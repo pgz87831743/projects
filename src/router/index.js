@@ -36,6 +36,44 @@ const routes = [
                 name: "AuthorityManagement",
                 component: () => import('../views/endPage/AuthorityManagement'),
             }
+            , {
+                path: "/XinXiShenHe",
+                name: "XinXiShenHe",
+                component: () => import('../views/endPage/XinXiShenHe'),
+            }
+            , {
+                path: "/FangKuanShenHe",
+                name: "FangKuanShenHe",
+                component: () => import('../views/endPage/FangKuanShenHe'),
+            }
+            , {
+                path: "/QianKuanCuiShou",
+                name: "QianKuanCuiShou",
+                component: () => import('../views/endPage/QianKuanCuiShou'),
+            }
+            , {
+                path: "/XiTongCanShu",
+                name: "XiTongCanShu",
+                component: () => import('../views/endPage/XiTongCanShu'),
+            },
+            {
+                path: "/DaiKuanShenQin",
+                name: "DaiKuanShenQin",
+                component: () => import('../views/endPage/DaiKuanShenQin'),
+            }
+            ,
+            {
+                path: "/QnA",
+                name: "QnA",
+                component: () => import('../views/endPage/QnA'),
+            }
+            ,
+            {
+                path: "/LoanConsultation",
+                name: "LoanConsultation",
+                component: () => import('../views/endPage/LoanConsultation')
+            }
+
         ]
     }
 ]
@@ -50,8 +88,8 @@ router.beforeEach((to, from, next) => {
     //第一个参数to，包含的内容是切换后的路由对象，也就是跳转后的路由对象
     if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {
         next('/login')
-    }else{
-      next()
+    } else {
+        next()
     }
     //第二个参数from，包含的内容的是切换前的路由对象，也就是跳转前的路由对象
     //第三个参数next()，是否往下执行，执行的话，如果不写的话路由就不会跳转，操作将会终止

@@ -3,10 +3,10 @@
     <div style="background: #ffffff;height: 80px;width: 100%;border-bottom: 1px #f0f0f0 solid">
       <el-row>
         <el-col :span="3">
-          <h1 style="color: #2c3c9a;">XXX后台管理系统</h1>
+          <h1 >助农小额贷款系统</h1>
         </el-col>
         <el-col :span="3" :offset="18" style="padding: 15px">
-          <span style="color:#2c3c9a;  font-size:20px;float:left;display:inline-block;line-height: 60px">您好:{{
+          <span style=" font-size:20px;float:left;display:inline-block;line-height: 60px">您好:{{
               user.nickname
             }}</span>
           <el-popover>
@@ -32,16 +32,23 @@
             :default-active="$route.fullPath"
         >
           <el-menu-item index="/UserPage">首页</el-menu-item>
-          <el-sub-menu index="1">
+          <el-sub-menu v-if="this.$auth('管理人员')">
             <template #title>
               <span>系统管理</span>
             </template>
-            <el-menu-item-group>
+            <el-menu-item-group >
               <el-menu-item index="/UserManagement">用户管理</el-menu-item>
               <el-menu-item index="/RoleManagement">角色管理</el-menu-item>
               <el-menu-item index="/AuthorityManagement">权限管理</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
+          <el-menu-item v-if="this.$auth('DKSQ')" index="/DaiKuanShenQin">贷款申请</el-menu-item>
+          <el-menu-item v-if="this.$auth('ZXTW')" index="/LoanConsultation">咨询提问</el-menu-item>
+          <el-menu-item v-if="this.$auth('XXSH')" index="/XinXiShenHe">信息审核</el-menu-item>
+          <el-menu-item v-if="this.$auth('FDSH')" index="/FangKuanShenHe">放款审核</el-menu-item>
+          <el-menu-item v-if="this.$auth('QKCS')" index="/QianKuanCuiShou">欠款催收</el-menu-item>
+          <el-menu-item v-if="this.$auth('KHWD')" index="/QnA">客户问答</el-menu-item>
+          <el-menu-item v-if="this.$auth('XTCS')" index="/XiTongCanShu">系统参数</el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="21">
@@ -96,32 +103,6 @@ export default {
   border-right: 1px lavender solid;
 }
 
-
-::v-deep .el-menu .el-menu-item:hover {
-  color:  #f8f9fe ;
-  background: #2c3c9a
-}
-
-::v-deep .el-menu .el-menu-item {
-  color: #2c3c9a;
-}
-
-::v-deep .el-menu .is-active {
-
-}
-
-::v-deep .el-sub-menu > div{
-  color: #2c3c9a;
-}
-::v-deep .el-sub-menu > div:hover{
-  color:  #f8f9fe ;
-  background: #2c3c9a
-}
-
-//.el-submenu ::v-deep .el-submenu__title:hover {
-//  color: #2E95FB !important;
-//  background: linear-gradient(270deg, #F2F7FC 0%, #FEFEFE 100%)!important;
-//}
 
 
 </style>
