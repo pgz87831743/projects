@@ -6,11 +6,13 @@
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
 
+  text-align: center;
 }
 body{
-  //background: #f2f2f2;
+  margin: 0;
+  padding:0;
+  text-underline: none;
 }
 
 </style>
