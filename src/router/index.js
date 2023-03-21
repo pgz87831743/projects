@@ -11,6 +11,39 @@ const routes = [
     {
         path: '/',
         component: () => import('../views/user/LoginPage')
+    },
+    {
+        path: "/FileDetail",
+        name: "FileDetail",
+        component: () => import('../views/font-page/FileDetail'),
+    },
+
+
+    {
+        path: '/FontPage',
+        component: () => import('../views/layout/FontPage'),
+        children: [
+            {
+                path: "/IndexPage",
+                name: "IndexPage",
+                component: () => import('../views/font-page/IndexPage'),
+            },
+            {
+                path: "/SearchResource",
+                name: "SearchResource",
+                component: () => import('../views/font-page/SearchResource'),
+            },
+            {
+                path: "/PublishResource",
+                name: "PublishResource",
+                component: () => import('../views/font-page/PublishResource'),
+            },
+            {
+                path: "/PersonalCenter",
+                name: "PersonalCenter",
+                component: () => import('../views/font-page/PersonalCenter'),
+            }
+        ]
     }
     , {
         path: '/EndPage',
@@ -20,59 +53,27 @@ const routes = [
             {
                 path: "/UserPage",
                 name: "UserPage",
-                component: () => import('../views/endPage/UserPage'),
+                component: () => import('../views/end-page/UserPage'),
             },
 
             {
                 path: "/UserManagement",
                 name: "UserManagement",
-                component: () => import('../views/endPage/UserManagement'),
+                component: () => import('../views/end-page/UserManagement'),
             }, {
                 path: "/RoleManagement",
                 name: "RoleManagement",
-                component: () => import('../views/endPage/RoleManagement'),
+                component: () => import('../views/end-page/RoleManagement'),
             }, {
                 path: "/AuthorityManagement",
                 name: "AuthorityManagement",
-                component: () => import('../views/endPage/AuthorityManagement'),
-            }
-            , {
-                path: "/XinXiShenHe",
-                name: "XinXiShenHe",
-                component: () => import('../views/endPage/XinXiShenHe'),
-            }
-            , {
-                path: "/FangKuanShenHe",
-                name: "FangKuanShenHe",
-                component: () => import('../views/endPage/FangKuanShenHe'),
-            }
-            , {
-                path: "/QianKuanCuiShou",
-                name: "QianKuanCuiShou",
-                component: () => import('../views/endPage/QianKuanCuiShou'),
+                component: () => import('../views/end-page/AuthorityManagement'),
             }
             , {
                 path: "/XiTongCanShu",
                 name: "XiTongCanShu",
-                component: () => import('../views/endPage/XiTongCanShu'),
+                component: () => import('../views/end-page/XiTongCanShu'),
             },
-            {
-                path: "/DaiKuanShenQin",
-                name: "DaiKuanShenQin",
-                component: () => import('../views/endPage/DaiKuanShenQin'),
-            }
-            ,
-            {
-                path: "/QnA",
-                name: "QnA",
-                component: () => import('../views/endPage/QnA'),
-            }
-            ,
-            {
-                path: "/LoanConsultation",
-                name: "LoanConsultation",
-                component: () => import('../views/endPage/LoanConsultation')
-            }
 
         ]
     }

@@ -3,7 +3,7 @@
     <div style="background: #ffffff;height: 80px;width: 100%;border-bottom: 1px #f0f0f0 solid">
       <el-row>
         <el-col :span="3">
-          <h1 >助农小额贷款系统</h1>
+          <h2>助农小额贷款系统</h2>
         </el-col>
         <el-col :span="3" :offset="18" style="padding: 15px">
           <span style=" font-size:20px;float:left;display:inline-block;line-height: 60px">您好:{{
@@ -32,7 +32,7 @@
             :default-active="$route.fullPath"
         >
           <el-menu-item index="/UserPage">首页</el-menu-item>
-          <el-sub-menu v-if="this.$auth('管理人员')">
+          <el-sub-menu>
             <template #title>
               <span>系统管理</span>
             </template>
@@ -42,13 +42,7 @@
               <el-menu-item index="/AuthorityManagement">权限管理</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-menu-item v-if="this.$auth('DKSQ')" index="/DaiKuanShenQin">贷款申请</el-menu-item>
-          <el-menu-item v-if="this.$auth('ZXTW')" index="/LoanConsultation">咨询提问</el-menu-item>
-          <el-menu-item v-if="this.$auth('XXSH')" index="/XinXiShenHe">信息审核</el-menu-item>
-          <el-menu-item v-if="this.$auth('FDSH')" index="/FangKuanShenHe">放款审核</el-menu-item>
-          <el-menu-item v-if="this.$auth('QKCS')" index="/QianKuanCuiShou">欠款催收</el-menu-item>
-          <el-menu-item v-if="this.$auth('KHWD')" index="/QnA">客户问答</el-menu-item>
-          <el-menu-item v-if="this.$auth('XTCS')" index="/XiTongCanShu">系统参数</el-menu-item>
+          <el-menu-item  index="/XiTongCanShu">系统参数</el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="21">
