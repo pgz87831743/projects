@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div style="background: #ffffff;height: 80px;width: 100%;border-bottom: 1px #f0f0f0 solid">
+    <el-affix >
+    <div
+        style="color: green;background: #ffffff;padding-left:15px;height: 70px;width: 100%;border-bottom: 1px #f0f0f0 solid">
       <el-row>
-        <el-col :span="3">
-          <h2>助农小额贷款系统</h2>
+        <el-col :span="21">
+          <h3>高校数字资源后台管理</h3>
         </el-col>
-        <el-col :span="3" :offset="18" style="padding: 15px">
-          <span style=" font-size:20px;float:left;display:inline-block;line-height: 60px">您好:{{
+        <el-col :span="3" style="padding: 15px">
+          <span style=" font-size:16px;float:left;display:inline-block;line-height: 60px">您好:{{
               user.nickname
             }}</span>
           <el-popover>
             <template #reference>
-              <el-avatar :size="60" :src="this.user.avatar"/>
+              <el-avatar :size="50" :src="this.user.avatar"/>
             </template>
             <template #default>
               <div style="margin: 0 auto">
@@ -24,6 +26,7 @@
 
       </el-row>
     </div>
+    </el-affix>
     <el-row :gutter="10">
       <el-col :span="3">
         <el-menu
@@ -36,17 +39,23 @@
             <template #title>
               <span>系统管理</span>
             </template>
-            <el-menu-item-group >
+            <el-menu-item-group>
               <el-menu-item index="/UserManagement">用户管理</el-menu-item>
               <el-menu-item index="/RoleManagement">角色管理</el-menu-item>
               <el-menu-item index="/AuthorityManagement">权限管理</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-menu-item  index="/XiTongCanShu">系统参数</el-menu-item>
+          <el-menu-item index="/endSearchResource">资源管理</el-menu-item>
+          <el-menu-item index="/AuditManagement">审核管理</el-menu-item>
+          <el-menu-item index="/ReportingManagement">举报管理</el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="21">
-        <router-view></router-view>
+        <div class="div">
+          <el-card shadow="hover">
+            <router-view></router-view>
+          </el-card>
+        </div>
       </el-col>
     </el-row>
 
@@ -96,7 +105,6 @@ export default {
   height: 100vh;
   border-right: 1px lavender solid;
 }
-
 
 
 </style>

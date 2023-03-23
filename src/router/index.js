@@ -42,7 +42,7 @@ const routes = [
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
-            }
+            },
         ]
     }
     , {
@@ -55,7 +55,6 @@ const routes = [
                 name: "UserPage",
                 component: () => import('../views/end-page/UserPage'),
             },
-
             {
                 path: "/UserManagement",
                 name: "UserManagement",
@@ -70,9 +69,24 @@ const routes = [
                 component: () => import('../views/end-page/AuthorityManagement'),
             }
             , {
-                path: "/XiTongCanShu",
-                name: "XiTongCanShu",
-                component: () => import('../views/end-page/XiTongCanShu'),
+                path: "/ResourcesManagement",
+                name: "ResourcesManagement",
+                component: () => import('../views/end-page/ResourcesManagement'),
+            }
+            , {
+                path: "/ReportingManagement",
+                name: "ReportingManagement",
+                component: () => import('../views/end-page/ReportingManagement'),
+            }
+            , {
+                path: "/AuditManagement",
+                name: "AuditManagement",
+                component: () => import('../views/end-page/AuditManagement'),
+            },
+            {
+                path: "/endSearchResource",
+                name: "/endSearchResource",
+                component: () => import('../views/font-page/SearchResource'),
             },
 
         ]

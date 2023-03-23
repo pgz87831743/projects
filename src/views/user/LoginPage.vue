@@ -20,6 +20,7 @@
           </el-card>
         </el-col>
       </el-row>
+      <img :src="user.code">
     </div>
 
     <el-dialog v-model="dialog.dialogFormVisible" title="新用户注册" @closed="dialogClose">
@@ -42,7 +43,7 @@
 
 <script>
 
-import {login, sysUserRegister} from "@/api/user";
+import {login, systemCaptcha, sysUserRegister} from "@/api/user";
 import {useStore} from 'vuex'
 import router from "@/router";
 
@@ -110,6 +111,9 @@ export default {
     },
   },
   mounted() {
+    systemCaptcha().then((resp)=>{
+      this.user=resp.data.data()
+    })
   },
 
 }

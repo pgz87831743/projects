@@ -3,54 +3,56 @@
     <div>
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-card shadow="hover" class="box-card">
-            <template #header>
-              <span class="pin-lun">个人信息</span>
-            </template>
-            <el-row>
-              <el-col >
-                <el-form class="div-form" model="form" >
-                  <el-form-item >
-                    <el-avatar
-                        :src="form.avatar"
-                        :size="75"
-                    />
-                    <el-upload
-                        class="upload-demo"
-                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                        multiple
-                        :limit="1"
-                    >
-                      <el-button >更换头像</el-button>
-                    </el-upload>
-                  </el-form-item>
-                  <el-form-item label="昵称：">
-                    <el-input v-model="form.nickname"></el-input>
-                  </el-form-item>
-                  <el-form-item label="性别：">
+          <el-affix :offset="90">
+            <el-card shadow="hover" class="box-card">
+              <template #header>
+                <span class="pin-lun">个人信息</span>
+              </template>
+              <el-row>
+                <el-col >
+                  <el-form class="div-form" model="form" >
+                    <el-form-item >
+                      <el-avatar
+                          :src="form.avatar"
+                          :size="75"
+                      />
+                      <el-upload
+                          class="upload-demo"
+                          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                          multiple
+                          :limit="1"
+                      >
+                        <el-button >更换头像</el-button>
+                      </el-upload>
+                    </el-form-item>
+                    <el-form-item label="昵称：">
+                      <el-input v-model="form.nickname"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别：">
                       <el-radio-group v-model="form.sex">
                         <el-radio label="男">男</el-radio>
                         <el-radio label="女">女</el-radio>
                       </el-radio-group>
-                  </el-form-item>
-                  <el-form-item label="简介：">
-                    <el-input v-model="form.description"></el-input>
-                  </el-form-item>
-                  <el-form-item label="学校：">
-                    <el-input v-model="form.school"></el-input>
-                  </el-form-item>
-                </el-form>
-              </el-col>
-            </el-row>
-            <el-row justify="center">
-              <el-col :span="6">
-                <el-button>编辑</el-button>
-              </el-col>
-              <el-col  :span="6">
-                <el-button>保存</el-button>
-              </el-col>
-            </el-row>
-          </el-card>
+                    </el-form-item>
+                    <el-form-item label="简介：">
+                      <el-input v-model="form.description"></el-input>
+                    </el-form-item>
+                    <el-form-item label="学校：">
+                      <el-input v-model="form.school"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+              </el-row>
+              <el-row justify="center">
+                <el-col :span="6">
+                  <el-button>编辑</el-button>
+                </el-col>
+                <el-col  :span="6">
+                  <el-button>保存</el-button>
+                </el-col>
+              </el-row>
+            </el-card>
+          </el-affix>
         </el-col>
         <el-col :span="18">
           <el-card shadow="hover" class="box-card">
@@ -60,30 +62,55 @@
             <el-row>
               <el-col >
                 <el-row :gutter="12">
-                  <el-col v-bind:key="item.id" v-for="item in list.slice(0,4)" :span="6">
-                    <el-card shadow="hover" @click="fileDetail(item)">
-                      <div>
+                  <el-col v-bind:key="item.id" v-for="item in list" :span="6">
+                    <div class="div">
+                      <el-card shadow="hover" @click="fileDetail(item)">
                         <div>
-                          <img :src="item.cover" height="300">
+                          <div>
+                            <img :src="item.cover" height="300">
+                          </div>
+                          <div>
+                            {{ item.title }}
+                          </div>
+                          <div class="card-div">
+                            <div>
+                              {{item.create_time}}
+                            </div>
+                            <div>
+                              <el-icon><View /></el-icon>
+                              123
+                            </div>
+                            <div>
+                              <el-icon><Comment /></el-icon>
+                              123
+                            </div>
+                          </div>
                         </div>
+                      </el-card>
+                      <el-card shadow="hover" @click="fileDetail(item)">
                         <div>
-                          {{ item.title }}
+                          <div>
+                            <img :src="item.cover" height="300">
+                          </div>
+                          <div>
+                            {{ item.title }}
+                          </div>
+                          <div class="card-div">
+                            <div>
+                              {{item.create_time}}
+                            </div>
+                            <div>
+                              <el-icon><View /></el-icon>
+                              123
+                            </div>
+                            <div>
+                              <el-icon><Comment /></el-icon>
+                              123
+                            </div>
+                          </div>
                         </div>
-                        <div class="card-div">
-                          <div>
-                           {{item.create_time}}
-                          </div>
-                          <div>
-                            <el-icon><View /></el-icon>
-                            123
-                          </div>
-                          <div>
-                            <el-icon><Comment /></el-icon>
-                            123
-                          </div>
-                        </div>
-                      </div>
-                    </el-card>
+                      </el-card>
+                    </div>
                   </el-col>
                 </el-row>
               </el-col>

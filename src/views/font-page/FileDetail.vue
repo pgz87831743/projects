@@ -4,17 +4,76 @@
       <template #header>
         <span class="pin-lun">文件详情</span>
       </template>
-      <el-row gutter="10">
-        <el-col >
-          <img :src="item.cover" height="300">
-        </el-col>
-        <el-col >
-          名称：{{item.title}}
-        </el-col>
-        <el-col >
-          简介：{{item.description}}
-        </el-col>
-      </el-row>
+      <el-descriptions
+          class="margin-top"
+          :column="1"
+          :min-width="120"
+          border
+      >
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              首页图
+            </div>
+          </template>
+          <img :src="item.cover">
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              名称
+            </div>
+          </template>
+          {{item.title}}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              简介
+            </div>
+          </template>
+          {{item.description}}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              文件
+            </div>
+          </template>
+          <el-divider/>
+          <el-row>
+            <el-col :span="18">
+              <el-text size="large" type="success">小白成大神.pdf</el-text>
+            </el-col>
+            <el-col :span="6">
+              <el-button type="success">预览</el-button>
+              <el-button type="success">下载</el-button>
+              <el-button type="success">举报</el-button>
+            </el-col>
+          </el-row>
+          <el-divider/>
+          <el-row>
+            <el-col :span="18">
+              <el-text size="large" type="success">小白成大神.pdf</el-text>
+            </el-col>
+            <el-col :span="6">
+              <el-button type="success">预览</el-button>
+              <el-button type="success">下载</el-button>
+              <el-button type="success">举报</el-button>
+            </el-col>
+          </el-row>
+          <el-divider/>
+
+
+
+
+        </el-descriptions-item>
+
+      </el-descriptions>
     </el-card>
     <el-card shadow="hover" >
       <template #header>
@@ -146,7 +205,13 @@ export default {
         cover:"http://p2.music.126.net/wRiwy65LSxv9X43B-zlBMA==/109951163550232716.jpg?param=380y140",
         create_time:"2023-03-15",
         create_by:"小白天",
-      }
+      },
+      fileList:[
+        {
+          name: 'food.jpeg',
+          url: 'http://p2.music.126.net/wRiwy65LSxv9X43B-zlBMA==/109951163550232716.jpg?param=380y140',
+        }
+      ]
     }
   },
   methods: {
@@ -172,6 +237,5 @@ export default {
 .el-row-div{
   margin-top: 20px;
 }
-
 
 </style>

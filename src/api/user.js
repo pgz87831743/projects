@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
 
-//权限相关
+//系统相关
 export const login = (data) => {
     return request.post('/system/login', data)
 }
@@ -27,6 +27,10 @@ export const systemAssignAuthority = (data) => {
 
 export const systemAuthorityTreeByRoleId = (roleId) => {
     return request.get('/system/authorityTreeByRoleId/'+roleId)
+}
+
+export const systemCaptcha = () => {
+    return request.post('/system/captcha')
 }
 
 
