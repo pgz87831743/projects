@@ -28,7 +28,7 @@
             <el-menu-item index="/MyOrder">
               My Order
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="/MemberShip">
               Membership
             </el-menu-item>
           </el-menu>
@@ -37,12 +37,6 @@
           <router-view></router-view>
         </el-col>
       </el-row>
-      <div class="hdv2">
-        <span class="hdv2-span">CREATIVE TIM</span>
-        <span class="hdv2-span">ABOUT US</span>
-        <span class="hdv2-span">BLOG</span>
-        <span class="hdv2-span">2019,Designed by<span class="sc">Invision</span>.Code by <span class="sc">Creative Tim</span>. Presented by <span class="sc">MockPlus RP</span></span>
-      </div>
     </div>
   </div>
 </template>
@@ -60,20 +54,7 @@ export default {
 
 <style scoped lang="scss">
 
-.sc{
-  color: #e0592d;
-}
 
-.hdv2-span{
-  color: #ffffff;
-  display: inline-block;
-  padding: 30px;
-}
-
-.hdv2{
-  height: 80px;
-  background: #333333;
-}
 
 .el-menu-vertical-demo{
   height: 70vh;

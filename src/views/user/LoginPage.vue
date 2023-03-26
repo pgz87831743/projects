@@ -13,7 +13,7 @@
           </el-form-item>
         </el-form>
 
-        <el-button style="width: 50%;margin-top: 30px; border-radius: 30px;width: 100%;height:38px;color: #ffffff;background: #f96332"> Get Started</el-button>
+        <el-button @click="loginHandler" style="width: 50%;margin-top: 30px; border-radius: 30px;width: 100%;height:38px;color: #ffffff;background: #f96332"> Get Started</el-button>
         <span >
             <el-link style="color: #ffffff" :underline="false" href="/register" target="_blank"> CREATE ACCOUNT</el-link>
         </span>
@@ -66,6 +66,11 @@ export default {
   },
   components: {},
   methods: {
+
+
+    loginHandler(){
+      router.push({path: '/IndexPage'})
+    },
 
     formSubmit() {
       sysUserRegister(this.form)

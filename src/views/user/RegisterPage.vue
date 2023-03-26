@@ -59,7 +59,7 @@
               </el-form-item>
             </el-form>
 
-            <el-button style="width: 50%;margin-top: 30px; border-radius: 30px;width: 100%;height:38px;color: #ffffff;background: #f96332"> Get Started</el-button>
+            <el-button @click="registerHandler" style="width: 50%;margin-top: 30px; border-radius: 30px;width: 100%;height:38px;color: #ffffff;background: #f96332"> Get Started</el-button>
 
           </el-card>
         </el-col>
@@ -74,8 +74,11 @@
 <script>
 
 
+import router from "@/router";
+
 export default {
   name: "RegisterPage",
+
   data() {
     return {
 
@@ -90,7 +93,11 @@ export default {
       ]
     }
   },
-
+  methods:{
+    registerHandler(){
+      router.push({path: '/'})
+    },
+  }
 
 }
 </script>

@@ -34,14 +34,32 @@ const routes = [
                 component: () => import('../views/font-page/IndexPage'),
             },
             {
-                path: "/SearchResource",
-                name: "SearchResource",
-                component: () => import('../views/font-page/SearchResource'),
+                path: "/Timetable",
+                name: "Timetable",
+                component: () => import('../views/font-page/Timetable'),
             },
             {
-                path: "/PublishResource",
-                name: "PublishResource",
-                component: () => import('../views/font-page/PublishResource'),
+                path: "/FacilityAndAppointment",
+                name: "FacilityAndAppointment",
+                component: () => import('../views/font-page/FacilityAndAppointment'),
+            },
+            {
+                path: "/MemberShip",
+                name: "MemberShip",
+                component: () => import('../views/font-page/MemberShip'),
+            },
+            {
+                path: "/Contactus",
+                name: "Contactus",
+                component: () => import('../views/font-page/Contactus'),
+            },{
+                path: "/StadiumBooking",
+                name: "StadiumBooking",
+                component: () => import('../views/font-page/StadiumBooking'),
+            },{
+                path: "/StadiumDetail",
+                name: "StadiumDetail",
+                component: () => import('../views/font-page/StadiumDetail'),
             },
             {
                 path: "/PersonalCenter",
@@ -103,7 +121,7 @@ const routes = [
             {
                 path: "/endSearchResource",
                 name: "/endSearchResource",
-                component: () => import('../views/font-page/SearchResource'),
+                component: () => import('../views/font-page/FacilityAndAppointment.vue'),
             },
 
         ]

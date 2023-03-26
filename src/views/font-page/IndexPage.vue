@@ -5,9 +5,9 @@
     </div>
     <div class="bk2">
       <div class="wz">Some of Our Facilities</div>
-      <el-row :gutter="20" :justify="'center'" class="card">
+      <el-row  :justify="'center'" class="card">
         <el-col :span="6" v-for="item in detail" v-bind:key="item.id">
-          <el-card shadow="hover">
+          <div>
             <div>
               <img :src="item.img">
             </div>
@@ -17,7 +17,7 @@
             <div>
               {{ item.description }}
             </div>
-          </el-card>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -25,9 +25,9 @@
       <div class="bk3_f1">Membership</div>
       <div class="bk3_f2">Be our VIP and have a noble experience!</div>
       <div class="bk_d3">
-        <el-row :gutter="65" :justify="'center'">
-          <el-col :span="5">
-            <el-card class="cd1">
+        <el-row :justify="'center'">
+          <el-col :span="6">
+            <div class="cd1">
               <div class="nr" style="font-size: 18px;color: #666666 ">Monthly</div>
               <div style="position: relative;">
                 <span style="display: inline-block;position: absolute;left:0;right:80px">$</span><span
@@ -41,10 +41,10 @@
               <div class="nr">
                 <el-button type="danger" round class="btc1">Get Started</el-button>
               </div>
-            </el-card>
+            </div>
           </el-col>
-          <el-col :span="5">
-            <el-card class="cd2">
+          <el-col :span="6">
+            <div class="cd2">
               <div class="nr" style="font-size: 18px">Annually</div>
               <div style="position: relative;">
                 <span style="display: inline-block;position: absolute;left:0;right:105px">$</span><span
@@ -58,7 +58,7 @@
               <div class="nr">
                 <el-button type="danger" round class="btc2">Get Started</el-button>
               </div>
-            </el-card>
+            </div>
           </el-col>
 
         </el-row>
@@ -122,6 +122,11 @@ export default {
 
 <style scoped lang="scss">
 
+
+::v-deep(.el-card){
+  padding: 0;
+}
+
 .bk4{
   background: url("@/../src/assets/bg3.png");
   height: 703px;
@@ -151,6 +156,10 @@ export default {
       border: none;
       background: #f96332;
       color: #f0f0f0;
+      height: 350px;
+      padding: 40px;
+      border-radius: 20px;
+      margin-left: 50px;
 
       .nr {
         margin: 20px;
@@ -159,6 +168,11 @@ export default {
 
     .cd1 {
       border: none;
+      background: #ffffff;
+      height: 350px;
+      padding: 40px;
+      border-radius: 20px;
+      margin-left: 50px;
 
       .nr {
         margin: 20px;
