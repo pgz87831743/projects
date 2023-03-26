@@ -4,76 +4,9 @@
       <template #header>
         <span class="pin-lun">文件详情</span>
       </template>
-      <el-descriptions
-          class="margin-top"
-          :column="1"
-          :min-width="120"
-          border
-      >
+      <el-row gutter="10">
 
-        <el-descriptions-item>
-          <template #label>
-            <div class="cell-item">
-              首页图
-            </div>
-          </template>
-          <img :src="item.cover">
-        </el-descriptions-item>
-
-        <el-descriptions-item>
-          <template #label>
-            <div class="cell-item">
-              名称
-            </div>
-          </template>
-          {{item.title}}
-        </el-descriptions-item>
-
-        <el-descriptions-item>
-          <template #label>
-            <div class="cell-item">
-              简介
-            </div>
-          </template>
-          {{item.description}}
-        </el-descriptions-item>
-
-        <el-descriptions-item>
-          <template #label>
-            <div class="cell-item">
-              文件
-            </div>
-          </template>
-          <el-divider/>
-          <el-row>
-            <el-col :span="18">
-              <el-text size="large" type="success">小白成大神.pdf</el-text>
-            </el-col>
-            <el-col :span="6">
-              <el-button type="success">预览</el-button>
-              <el-button type="success">下载</el-button>
-              <el-button type="success">举报</el-button>
-            </el-col>
-          </el-row>
-          <el-divider/>
-          <el-row>
-            <el-col :span="18">
-              <el-text size="large" type="success">小白成大神.pdf</el-text>
-            </el-col>
-            <el-col :span="6">
-              <el-button type="success">预览</el-button>
-              <el-button type="success">下载</el-button>
-              <el-button type="success">举报</el-button>
-            </el-col>
-          </el-row>
-          <el-divider/>
-
-
-
-
-        </el-descriptions-item>
-
-      </el-descriptions>
+      </el-row>
     </el-card>
     <el-card shadow="hover" >
       <template #header>

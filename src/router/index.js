@@ -7,6 +7,10 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import('../views/user/LoginPage')
+    }, {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/user/RegisterPage')
     },
     {
         path: '/',
@@ -21,6 +25,7 @@ const routes = [
 
     {
         path: '/FontPage',
+        name: 'FontPage',
         component: () => import('../views/layout/FontPage'),
         children: [
             {
@@ -42,6 +47,18 @@ const routes = [
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
+                children: [
+                    {
+                        path: "/MyHomePage",
+                        name: "MyHomePage",
+                        component: () => import('../views/font-page/Home/MyHomePage'),
+                    },
+                    {
+                        path: "/MyOrder",
+                        name: "MyOrder",
+                        component: () => import('../views/font-page/Home/MyOrder'),
+                    }
+                ]
             },
         ]
     }

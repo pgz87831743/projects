@@ -8,12 +8,13 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">高校数字资源共享平台</div></el-menu-item>
-        <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/SearchResource">我要找资源</el-menu-item>
-        <el-menu-item index="/PublishResource">我要发布资源</el-menu-item>
+        <el-menu-item ><div style="font-size: 20px;">NOW UI KIT PRO</div></el-menu-item>
         <div class="flex-grow" />
-        <el-menu-item index="/PersonalCenter">个人中心</el-menu-item>
+        <el-menu-item index="/IndexPage">HOME</el-menu-item>
+        <el-menu-item index="/SearchResource">FACILITY & APPOINTMENT</el-menu-item>
+        <el-menu-item index="/PublishResource">MEMBERSHIP</el-menu-item>
+        <el-menu-item index="/1">CONTACTUS</el-menu-item>
+        <el-menu-item index="/PersonalCenter"><el-avatar :size="56" src="http://p2.music.126.net/vZ5ef3WzRneTTydXSzPauQ==/109951165994871935.jpg?param=380y140" /></el-menu-item>
       </el-menu>
     </el-affix>
     <router-view></router-view>

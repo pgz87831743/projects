@@ -1,42 +1,28 @@
 <template>
-  <div class="m-div">
-    <div class="m-form-div">
-      <el-row justify="center">
-        <el-col :span="6">
-          <el-card>
-            <h1 class="p-color">助农小额贷款系统</h1>
-            <el-form ref="form" :model="user" label-width="80px">
-              <el-form-item label="用户名">
-                <el-input v-model="user.username"></el-input>
-              </el-form-item>
-              <el-form-item label="密码">
-                <el-input v-model="user.password"></el-input>
-              </el-form-item>
-            </el-form>
-            <div>
-              <el-button @click="onsubmit">登录</el-button>
-              <el-button @click="clickButton">注册</el-button>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <img :src="user.code">
+  <div class="dv1">
+    <div class="login">
+
+      <el-card shadow="hover">
+        <img style="margin: 60px 0" :src="require('@/assets/ImageAvatar.png')">
+        <el-form>
+          <el-form-item >
+            <el-input   :prefix-icon="User"  v-model="user.username" size="large" placeholder="Account"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input  :prefix-icon="Lock" v-model="user.password"   size="large" placeholder="password"></el-input>
+          </el-form-item>
+        </el-form>
+
+        <el-button style="width: 50%;margin-top: 30px; border-radius: 30px;width: 100%;height:38px;color: #ffffff;background: #f96332"> Get Started</el-button>
+        <span >
+            <el-link style="color: #ffffff" :underline="false" href="/register" target="_blank"> CREATE ACCOUNT</el-link>
+        </span>
+        <span style="width: 50%;display:inline-block;text-align: right;margin-top: 20px; color: #ffffff">
+          <el-link style="color: #ffffff" :underline="false"> NEED HELP?</el-link>
+        </span>
+      </el-card>
+
     </div>
-
-    <el-dialog v-model="dialog.dialogFormVisible" title="新用户注册" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px">
-        <el-form-item label="用户名"><el-input v-model="form.username"/></el-form-item>
-        <el-form-item label="密码"><el-input v-model="form.password"/></el-form-item>
-        <el-form-item label="手机"><el-input v-model="form.phone"/></el-form-item>
-      </el-form>
-      <template #footer>
-      <span class="dialog-footer" v-if="!dialog.formDisabled">
-        <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="formSubmit">确认</el-button>
-      </span>
-      </template>
-    </el-dialog>
-
   </div>
 </template>
 
@@ -46,10 +32,19 @@
 import {login, systemCaptcha, sysUserRegister} from "@/api/user";
 import {useStore} from 'vuex'
 import router from "@/router";
+import {Lock,User} from "@element-plus/icons-vue";
 
 
 export default {
   name: "LoginPage",
+  computed: {
+    Lock() {
+      return Lock
+    },
+    User(){
+      return User
+    }
+  },
 
   setup() {
     return {
@@ -59,6 +54,7 @@ export default {
 
   data() {
     return {
+
       user: {
         username: '',
         password: ''
@@ -121,16 +117,43 @@ export default {
 
 
 <style lang="scss" scoped>
-.m-div {
+
+::v-deep(input::-webkit-input-placeholder) { color: #ffffff; }
+::v-deep(input::-ms-input-placeholder) { color: #ffffff; }
+
+::v-deep(.el-icon){
+  color: #ffffff;
+}
+
+::v-deep(.el-card){
+  background: rgba(255,255,255,0.1);
+  border: none;
+}
+
+::v-deep(.el-input__wrapper){
+  background: #b49997;
+  border-radius: 30px;
+}
+
+.dv1{
   height: 100vh;
-  background-image: url("../../assets/pexels-pixabay-259165.jpg");
-  background-size: 100%;
-  background-repeat: no-repeat;
+  background:url("@/../src/assets/login.png");
+  position: relative;
 
-  .m-form-div {
-    padding-top: 300px;
+  .login{
+    position: absolute;
+    height: 600px;
+    width: 400px;
+    margin: 0 auto;
+    top: 130px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
+    //background: #666666;
   }
+
+
 }
 
 
