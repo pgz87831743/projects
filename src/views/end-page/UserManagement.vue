@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button  type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
       <el-col :span="5" :offset="1">
         <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>
@@ -18,29 +18,22 @@
         <el-table-column prop="nickname" label="昵称"/>
         <el-table-column prop="avatar" label="头像">
           <template #default="scope">
-            <div class="demo-image__preview">
-              <el-image
-                  :src="scope.row.avatar"
-                  fit="cover"
-              />
-            </div>
+            <img :src="scope.row.avatar" width="100">
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="phone" label="手机"/>
-        <el-table-column prop="email" label="邮箱"/>
-        <el-table-column prop="level" label="会员等级"/>
-        <el-table-column prop="age" label="年龄"/>
+        <el-table-column prop="school" label="学校"/>
+        <el-table-column prop="description" label="简介"/>
+        <el-table-column prop="role" label="角色"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button  size="small" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button  size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" @click="clickButton('update', scope.row)">修改</el-button>
+            <el-button size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
                 type="danger"
-
                 @click="clickButton('delete',scope.row)">删除
             </el-button>
           </template>
@@ -61,34 +54,38 @@
           <el-input v-model="form.nickname"/>
         </el-form-item>
         <el-form-item label="头像">
-          <el-input v-model="form.avatar"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img  :src="form.avatar"  width="100" />
+            <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
+
         </el-form-item>
         <el-form-item label="性别">
           <el-radio-group v-model="form.sex">
-            <el-radio label="男">男</el-radio>
-            <el-radio label="女">女</el-radio>
+            <el-radio label="男"></el-radio>
+            <el-radio label="女"></el-radio>
           </el-radio-group>
-
         </el-form-item>
-        <el-form-item label="手机">
-          <el-input v-model="form.phone"/>
+        <el-form-item label="学校">
+          <el-input v-model="form.school"/>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="form.email"/>
-        </el-form-item>
-        <el-form-item label="会员等级">
-          <el-input v-model="form.level"/>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age"/>
+        <el-form-item label="简介">
+          <el-input type="textarea" v-model="form.description"/>
         </el-form-item>
         <el-form-item label="角色">
-          <el-checkbox-group v-model="form.roles">
-            <el-checkbox v-bind:key="item.id" v-for="item in this.roleData" :label="item.id" name="type">
-              {{ item.name }}
-            </el-checkbox>
-          </el-checkbox-group>
+          <el-select v-model="form.role">
+            <el-option :label="item" :value="item" v-for="item in roleData"  v-bind:key="item"/>
+          </el-select>
         </el-form-item>
+
+
       </el-form>
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -110,8 +107,6 @@
           layout="prev, pager, next"
       />
     </div>
-
-
   </div>
 
 
@@ -120,15 +115,8 @@
 
 <script>
 
-import {
-  systemAssignRoles,
-  systemRoleList,
-  sysUserAdd,
-  sysUserDeleteById,
-  sysUserGetById,
-  sysUserPage,
-  sysUserUpdateById
-} from "@/api/user";
+import {roles, sysUserAdd, sysUserDeleteById, sysUserGetById, sysUserPage, sysUserUpdateById} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 export default {
   name: "UserManagement",
@@ -142,7 +130,6 @@ export default {
         search: ''
       },
       visible: [],
-      role: {},
       tableData: [],
       roleData: [],
       dialog: {
@@ -155,13 +142,11 @@ export default {
       total: 0,
     }
   },
-  components: {},
+  components: {Plus},
   methods: {
 
-    submitRole(row) {
-      let data = {userId: row.id, roles: row.role}
-      console.log(data)
-      systemAssignRoles(data)
+    handleAvatarSuccess(response){
+      this.form.avatar=response[0].url
     },
 
     clickButton(type, row) {
@@ -210,13 +195,19 @@ export default {
       } else if (!this.dialog.isAdd) {
         sysUserUpdateById(this.form)
             .then(() => {
-              this.initTableData();
+              window.location.href='/UserManagement'
             })
       }
     },
 
     dialogClose() {
       this.form = {}
+    },
+
+    initRoleData() {
+      roles().then((resp) => {
+        this.roleData = resp.data.data
+      })
     },
 
     initTableData() {
@@ -227,17 +218,10 @@ export default {
           })
     },
 
-    initRoleDate() {
-      systemRoleList('1').then(resp => {
-        this.roleData = resp.data.data
-      })
-    }
-
-
   },
   mounted() {
     this.initTableData()
-    this.initRoleDate()
+    this.initRoleData()
   },
 
 }
@@ -252,7 +236,13 @@ export default {
 .el-row {
   margin-top: 30px;
 }
-
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
 
 .paginationClass {
   position: fixed;

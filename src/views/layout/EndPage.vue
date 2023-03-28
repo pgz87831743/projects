@@ -34,17 +34,7 @@
             router
             :default-active="$route.fullPath"
         >
-          <el-menu-item index="/UserPage">首页</el-menu-item>
-          <el-sub-menu>
-            <template #title>
-              <span>系统管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/UserManagement">用户管理</el-menu-item>
-              <el-menu-item index="/RoleManagement">角色管理</el-menu-item>
-              <el-menu-item index="/AuthorityManagement">权限管理</el-menu-item>
-            </el-menu-item-group>
-          </el-sub-menu>
+          <el-menu-item index="/UserManagement">用户管理</el-menu-item>
           <el-menu-item index="/endSearchResource">资源管理</el-menu-item>
           <el-menu-item index="/AuditManagement">审核管理</el-menu-item>
           <el-menu-item index="/ReportingManagement">举报管理</el-menu-item>
@@ -65,7 +55,7 @@
 
 <script>
 
-import {logout, sysUserGetById} from "@/api/user";
+import {logout, sysUserGetById} from "@/api/api";
 import {getItem, removeItem} from "@/utils/storage";
 import router from "@/router";
 
