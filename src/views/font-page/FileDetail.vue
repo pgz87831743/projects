@@ -17,7 +17,7 @@
               首页图
             </div>
           </template>
-          <img :src="item.cover">
+          <img :src="item.cover" width="300">
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -49,9 +49,26 @@
               <el-text size="large" type="success">{{ item.fileName }}</el-text>
             </el-col>
             <el-col :span="6">
-              <el-button type="success">预览</el-button>
-              <el-button type="success">下载</el-button>
-              <el-button type="success">举报</el-button>
+              <el-button type="success" @click="previewHandle(item)">预览</el-button>
+              <el-button type="success" @click="downLoadHandle(item)">下载</el-button>
+
+
+              <el-popover
+                  :width="450"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+              >
+                <template #reference>
+                  <el-button type="success" @click="reportHandle(item)">举报</el-button>
+                </template>
+                <template #default>
+                  <el-row :gutter="20">
+                    <el-col :span="20">
+                      <el-input placeholder="请输入举报内容" clearable v-model="report.content"></el-input>
+                    </el-col>
+                  </el-row>
+                </template>
+              </el-popover>
+
             </el-col>
           </el-row>
 
@@ -83,10 +100,29 @@
         <el-row v-for="item in item.commentList" v-bind:key="item.id">
           <el-col :span="1">
             <div>
-              <el-avatar
-                  :src="item.avatarFb"
-                  :size="45"
-              />
+
+              <el-popover
+                  :width="450"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+              >
+                <template #reference>
+                  <el-avatar
+                      :src="item.avatarFb"
+                      :size="45"
+                  />
+                </template>
+                <template #default>
+                  <el-row :gutter="20">
+                    <el-col :span="20">
+                      <el-input placeholder="请输入回复内容" clearable v-model="comment.replyContent"></el-input>
+                    </el-col>
+                    <el-col :span="2">
+                      <el-button type="success" @click="replyHandle(item)">回复</el-button>
+                    </el-col>
+                  </el-row>
+                </template>
+              </el-popover>
+
             </div>
           </el-col>
           <el-col :span="23">
@@ -94,15 +130,6 @@
               <div>{{ item.createBy }} <span style="float: right;margin-right: 30px">{{ item.createTime }}</span></div>
               <div>
                 {{ item.content }}
-              </div>
-              <div>
-                <!--                      <span style="padding: 10px 0;display: inline-block;float: left">-->
-                <!--                         <el-icon :size="30"><ChatDotSquare/></el-icon>-->
-                <!--                      </span>-->
-                <!--                <span style="padding: 13px 5px;display: inline-block;float: left;color: #8a919f">-->
-                <!--                         回复-->
-                <!--                      </span>-->
-                <!--                <el-button text @click="open">回复</el-button>-->
               </div>
               <div style="clear: both"></div>
               <div class="reply">
@@ -141,7 +168,7 @@
 <script>
 
 
-import {commentAdd, resourcesGetById} from "@/api/api";
+import {commentAdd, reportApi, resourcesApi} from "@/api/api";
 
 
 export default {
@@ -152,13 +179,39 @@ export default {
       comment: {
         resourcesId: this.id,
         content: '',
+        replyContent: ''
+      },
+      report: {
+        resourcesId: '',
+        content: ''
       },
       item: {},
     }
   },
   methods: {
 
+
+    previewHandle(item) {
+      window.open(item.filePath, '_blank');
+    },
+    downLoadHandle(item) {
+      window.open('/api/file/download/' + item.fileId, '_blank');
+    },
+    reportHandle(item) {
+      if (this.report.content.trim().length===0){
+        return;
+      }
+      this.report.resourcesId = item.id
+      reportApi.add(this.report)
+          .then(() => {
+            this.report = {}
+          })
+    },
+
     commentAddHandle() {
+      if (this.comment.content.trim().length === 0) {
+        return;
+      }
       commentAdd(this.comment)
           .then(() => {
             this.comment = {}
@@ -166,8 +219,25 @@ export default {
           })
     },
 
+    replyHandle(item) {
+      if (this.comment.replyContent.trim().length === 0) {
+        return;
+      }
+      let com = {
+        resourcesId: item.resourcesId,
+        content: this.comment.replyContent,
+        replyId: item.createBy,
+        replyCommentId: item.id,
+      }
+      commentAdd(com)
+          .then(() => {
+            this.comment = {}
+            this.initData()
+          })
+    },
+
     initData() {
-      resourcesGetById(this.item.id)
+      resourcesApi.getById(this.item.id)
           .then((resp) => {
             this.item = resp.data.data
             this.comment.resourcesId = resp.data.data.id

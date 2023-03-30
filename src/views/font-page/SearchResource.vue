@@ -1,55 +1,176 @@
 <template>
-<div class="div">
-  <div>
-  <el-card shadow="hover" class="box-card">
+  <div class="div">
+    <div>
+      <el-card shadow="hover" class="box-card">
 
-    <template #header>
-      <div class="card-header">
+        <template #header>
+          <div class="card-header">
 
-        <el-input
-            v-model="search"
-            placeholder="请输入搜索内容"
-            class="input-with-select"
+            <el-input
+                v-model="searchParams.searchText"
+                placeholder="请输入搜索内容"
+                class="input-with-select"
+            >
+              <template #append>
+                <el-button @click="searchHandle">
+                  <el-icon>
+                    <Search/>
+                  </el-icon>
+                </el-button>
+              </template>
+            </el-input>
+          </div>
+        </template>
+
+        <el-tabs
+            type="card"
+            class="demo-tabs"
+            v-model="searchParams.type"
+            @tab-change="tabChangeHandle"
         >
-          <template #append>
-            <el-button  ><el-icon><Search /></el-icon></el-button>
-          </template>
-        </el-input>
-      </div>
-    </template>
+          <el-tab-pane :label="item.label" :name="item.value" v-bind:key="item.value" v-for="item in fileType">
+            <div class="row-div">
+              <el-row :gutter="12">
+                <el-col v-bind:key="item.id" v-for="item in list" :span="6">
+                  <el-card shadow="hover" @click="fileDetail(item)" style="margin: 10px">
+                    <div>
+                      <div>
+                        <img :src="item.cover" height="300">
+                      </div>
+                      <div>
+                        {{ item.title }}
+                      </div>
+                      <div class="card-div">
+                        <div>
+                          <el-avatar
+                              :size="35"
+                              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                          />
+                        </div>
+                        <div>
+                          {{ item.createBy }}·{{ item.createTime }}
+                        </div>
+                        <div>
+                          <el-icon>
+                            <View/>
+                          </el-icon>
+                          {{ item.commentNum }}
+                        </div>
+                        <div>
+                          <el-icon>
+                            <Comment/>
+                          </el-icon>
+                          {{ item.times }}
+                        </div>
+                      </div>
+                    </div>
+                  </el-card>
+                </el-col>
+              </el-row>
 
-    <el-tabs
-        type="card"
-        class="demo-tabs"
-
-    >
-      <el-tab-pane label="图片" name="first">图片</el-tab-pane>
-      <el-tab-pane label="文档" name="second">文档</el-tab-pane>
-      <el-tab-pane label="音频" name="third">音频</el-tab-pane>
-      <el-tab-pane label="视频" name="fourth">视频</el-tab-pane>
-      <el-tab-pane label="压缩包" name="five">压缩包</el-tab-pane>
-    </el-tabs>
-  </el-card>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-card>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import {Search} from "@element-plus/icons-vue";
+import {Comment, Search, View} from "@element-plus/icons-vue";
+import router from "@/router";
+import {resourcesApi} from "@/api/api";
 
 export default {
   name: "SearchResource",
-  components: {Search},
-  data(){
-    return{
-      search:""
+  components: {Comment, View, Search},
+  data() {
+    return {
+      searchParams: {
+        searchText: "",
+        type: 'PIC',
+      },
+      fileType: [
+        {
+          label: '图片',
+          value: 'PIC'
+        },
+        {
+          label: '文档',
+          value: 'DOC'
+        },
+        {
+          label: '音频',
+          value: 'AUDIO'
+        },
+        {
+          label: '视频',
+          value: 'VIDEO'
+        },
+        {
+          label: '压缩包',
+          value: 'ZIP'
+        },
+      ],
+      list: []
     }
+  },
+  methods: {
+    fileDetail(item) {
+      console.log(item)
+      let routeData = router.resolve({path: '/FileDetail', query: {id: item.id}});
+      window.open(routeData.href, '_blank');
+    },
+
+    searchHandle() {
+      resourcesApi.searchResource(this.searchParams)
+          .then((resp) => {
+            this.list = resp.data.data
+          })
+    },
+
+    tabChangeHandle(name) {
+      this.searchParams.type = name
+      this.searchHandle()
+    },
+
+
+  },
+  mounted() {
+
   }
 }
 </script>
 
-<style scoped>
-::v-deep(.box-card .el-card__header){
+<style scoped lang="scss">
+::v-deep(.box-card .el-card__header) {
   border: none;
 }
+
+.card-div {
+  //background: aqua;
+  height: 35px;
+  margin-top: 10px;
+
+  div {
+    display: inline-block;
+    float: left;
+  }
+
+  div:nth-child(2) {
+    height: 100%;
+    line-height: 35px;
+    margin-left: 5px;
+    font-size: 10px;
+  }
+
+  div:nth-child(n+3) {
+    float: right;
+    font-size: 10px;
+    line-height: 35px;
+    margin: 0 5px;
+
+  }
+}
+
 </style>

@@ -19,44 +19,61 @@ export const systemCaptcha = () => {
     return request.post('/system/captcha')
 }
 
-
-//用户相关
-export const sysUserPage = (data) => {
-    return request.post('/sys/sysUser/page', data)
+export const systemCurrentUser = () => {
+    return request.get('/system/currentUser')
 }
 
-export const sysUserGetById = (id) => {
-    return request.get('/sys/sysUser/getById/' + id)
-}
-export const sysUserDeleteById = (id) => {
-    return request.delete('/sys/sysUser/deleteById/' + id)
-}
-export const sysUserAdd = (data) => {
-    return request.post('/sys/sysUser/add', data)
-}
-export const sysUserUpdateById = (data) => {
-    return request.put('/sys/sysUser/updateById', data)
+
+//用户管理
+export const sysUserApi = {
+    page(data) {
+        return request.post('/sys/sysUser/page', data)
+    },
+    getById(id) {
+        return request.get('/sys/sysUser/getById/' + id)
+    },
+    add(data) {
+        return request.post('/sys/sysUser/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/sys/sysUser/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/sys/sysUser/updateById', data)
+    }
 }
 
 
 //文件发布相关
-
-// export const sysUserPage = (data) => {
-//     return request.post('/sys/sysUser/page', data)
-// }
-//
-export const resourcesGetById = (id) => {
-    return request.get('/resources/getById/' + id)
+export const resourcesApi = {
+    page(data) {
+        return request.post('/resources/page', data)
+    },
+    getById(id) {
+        return request.get('/resources/getById/' + id)
+    },
+    listAll() {
+        return request.get('/resources/listAll')
+    },
+    add(data) {
+        return request.post('/resources/add', data)
+    },
+    hotResource() {
+        return request.get('/resources/hotResource')
+    },
+    deleteById(id) {
+        return request.delete('/resources/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/resources/updateById', data)
+    },
+    approved(data) {
+        return request.post('/resources/approved', data)
+    },
+    searchResource(data){
+        return request.post('/resources/searchResource', data)
+    }
 }
-export const resourcesListAll = () => {
-    return request.get('/resources/listAll')
-}
-export const resourcesAdd = (data) => {
-    return request.post('/resources/add', data)
-}
-// export const sysUserUpdateById = (data) => {
-//     return request.put('/sys/sysUser/updateById', data)
-// }
 
 
 //评论
@@ -65,6 +82,56 @@ export const commentAdd = (data) => {
 }
 
 
+
+//举报相关接口
+export const reportApi = {
+    page(data) {
+        return request.post('/report/page', data)
+    },
+    getById(id) {
+        return request.get('/report/getById/' + id)
+    },
+    listAll() {
+        return request.get('/report/listAll')
+    },
+    add(data) {
+        return request.post('/report/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/report/deleteById/' + id)
+    },
+
+    deleteResource(data) {
+        return request.delete('/report/deleteResource', {
+            data:data
+        })
+    },
+    updateById(data) {
+        return request.put('/report/updateById', data)
+    }
+
+}
+
+//敏感词
+
+//用户管理
+export const sensitiveWordsApi = {
+    page(data) {
+        return request.post('/sensitiveWords/page', data)
+    },
+    getById(id) {
+        return request.get('/sensitiveWords/getById/' + id)
+    },
+    add(data) {
+        return request.post('/sensitiveWords/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/sensitiveWords/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/sensitiveWords/updateById', data)
+    }
+}
 
 
 

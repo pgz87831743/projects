@@ -76,10 +76,15 @@ const routes = [
                 component: () => import('../views/end-page/AuditManagement'),
             },
             {
-                path: "/endSearchResource",
-                name: "/endSearchResource",
-                component: () => import('../views/font-page/SearchResource'),
+                path: "/SensitiveWords",
+                name: "SensitiveWords",
+                component: () => import('../views/end-page/SensitiveWords'),
             },
+            {
+                path: "/endSearchResource",
+                name: "endSearchResource",
+                component: () => import('../views/font-page/SearchResource'),
+            }
 
         ]
     }

@@ -4,12 +4,12 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>
-      </el-col>
-      <el-col :span="1">
-        <el-button type="success">搜索</el-button>
-      </el-col>
+<!--      <el-col :span="5" :offset="1">-->
+<!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1" :offset="1">-->
+<!--        <el-button type="success" @click="search">搜索</el-button>-->
+<!--      </el-col>-->
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
@@ -29,8 +29,8 @@
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
                 type="danger"
@@ -89,9 +89,8 @@
       </el-form>
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
-        <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" v-if="this.isAdd" @click="formSubmit">确认</el-button>
-        <el-button type="primary" v-if="!this.isAdd" @click="formSubmit">确认</el-button>
+          <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+        <el-button type="success" @click="formSubmit">确认</el-button>
       </span>
       </template>
     </el-dialog>
@@ -103,6 +102,7 @@
           small
           background
           :total="total"
+          :page-size="5"
           @current-change="currentChange"
           layout="prev, pager, next"
       />
@@ -115,16 +115,15 @@
 
 <script>
 
-import {roles, sysUserAdd, sysUserDeleteById, sysUserGetById, sysUserPage, sysUserUpdateById} from "@/api/api";
+import { roles, sysUserApi} from "@/api/api";
 import {Plus} from "@element-plus/icons-vue";
 
 export default {
   name: "UserManagement",
   data() {
     return {
-      api: '/sys/sys-user',
       page: {
-        pageSize: 10,
+        pageSize: 5,
         pageNum: 1,
         tootle: 100,
         search: ''
@@ -135,8 +134,8 @@ export default {
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
-        isAdd: false,
-        formDisabled: true
+        formDisabled: true,
+        optionValue: null
       },
       form: {},
       total: 0,
@@ -145,33 +144,40 @@ export default {
   components: {Plus},
   methods: {
 
+    search(){
+      sysUserApi.page(this.page)
+          .then(resp => {
+            this.tableData = resp.data.data.records
+            this.total = resp.data.data.total
+          })
+    },
+
     handleAvatarSuccess(response){
       this.form.avatar=response[0].url
     },
 
     clickButton(type, row) {
+      this.dialog.optionValue = type
       if (type === 'add') {
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
-        this.dialog.isAdd = true
       } else if (type === 'update') {
-        sysUserGetById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
-          this.dialog.isAdd = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        sysUserGetById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        sysUserDeleteById(row.id).then(() => {
+        sysUserApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -179,7 +185,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      sysUserPage(this.page).then(resp => {
+      sysUserApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -187,18 +193,19 @@ export default {
 
     formSubmit() {
       this.dialog.dialogFormVisible = false
-      if (this.dialog.isAdd) {
-        sysUserAdd(this.form)
+      if (this.dialog.optionValue==='add') {
+        sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
-      } else if (!this.dialog.isAdd) {
-        sysUserUpdateById(this.form)
+      } else if (this.dialog.optionValue==='update') {
+        sysUserApi.updateById(this.form)
             .then(() => {
-              window.location.href='/UserManagement'
+              this.initTableData();
             })
       }
     },
+
 
     dialogClose() {
       this.form = {}
@@ -211,7 +218,7 @@ export default {
     },
 
     initTableData() {
-      sysUserPage(this.page)
+      sysUserApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total

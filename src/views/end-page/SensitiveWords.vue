@@ -1,24 +1,24 @@
 <template>
   <div class="p-div">
-
+    <el-row>
+      <el-col :span="1">
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+      </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
+    </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="title" label="名称"/>
-        <el-table-column prop="description" label="简介"/>
-        <el-table-column prop="type" label="文件类型"/>
-        <el-table-column prop="status" label="发布状态"/>
-        <el-table-column prop="createTime" width="150" label="发布时间"/>
-        <el-table-column prop="createBy" label="发布人"/>
-        <el-table-column prop="cover" label="封面地址">
-          <template #default="scope">
-            <el-image :src="scope.row.cover" width="300"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="fileName" label="文件名称"/>
+        <el-table-column prop="content" label="内容"/>
         <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="approved(scope.row)">审核通过</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
             <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
@@ -33,39 +33,14 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
-        <div v-if="dialog.optionValue==='detail'">
-          <el-form-item label="名称">
-            <el-input v-model="form.title"/>
-          </el-form-item>
-          <el-form-item label="简介">
-            <el-input v-model="form.description"/>
-          </el-form-item>
-          <el-form-item label="文件类型">
-            <el-input v-model="form.type"/>
-          </el-form-item>
-          <el-form-item label="发布状态">
-            <el-input v-model="form.status"/>
-          </el-form-item>
-          <el-form-item label="封面地址">
-            <el-input v-model="form.cover"/>
-          </el-form-item>
-          <el-form-item label="文件地址">
-            <el-input v-model="form.filePath"/>
-          </el-form-item>
-          <el-form-item label="文件id">
-            <el-input v-model="form.fileId"/>
-          </el-form-item>
-          <el-form-item label="文件名称">
-            <el-input v-model="form.fileName"/>
-          </el-form-item>
-
-        </div>
-
+        <el-form-item label="内容">
+          <el-input v-model="form.content"/>
+        </el-form-item>
       </el-form>
       <template #footer>
-      <span class="dialog-footer" v-if="dialog.optionValue!=='detail'">
-        <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+      <span class="dialog-footer" v-if="!dialog.formDisabled">
+          <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+        <el-button type="success" @click="formSubmit">确认</el-button>
       </span>
       </template>
     </el-dialog>
@@ -77,8 +52,8 @@
           small
           background
           :total="total"
-          @current-change="currentChange"
           :page-size="5"
+          @current-change="currentChange"
           layout="prev, pager, next"
       />
     </div>
@@ -90,11 +65,11 @@
 
 <script>
 
-import {resourcesApi} from "@/api/api";
+import {sensitiveWordsApi} from "@/api/api";
 
 
 export default {
-  name: "AuditManagement",
+  name: "SensitiveWords",
   data() {
     return {
       page: {
@@ -120,7 +95,7 @@ export default {
   methods: {
 
     search() {
-      resourcesApi.page(this.page)
+      sensitiveWordsApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -131,33 +106,28 @@ export default {
       this.form.avatar = response[0].url
     },
 
-
-    approved(data){
-      resourcesApi.approved(data)
-          .then(() => {
-            this.initTableData()
-          })
-    },
-
-
     clickButton(type, row) {
       this.dialog.optionValue = type
-      if (type === 'update') {
-        resourcesApi.getById(row.id).then((resp) => {
+      if (type === 'add') {
+        this.dialog.dialogFormVisible = true
+        this.dialog.optionName = '新增'
+        this.dialog.formDisabled = false
+      } else if (type === 'update') {
+        sensitiveWordsApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '审核'
+          this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        resourcesApi.getById(row.id).then((resp) => {
+        sensitiveWordsApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        resourcesApi.deleteById(row.id).then(() => {
+        sensitiveWordsApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -165,7 +135,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      resourcesApi.page(this.page).then(resp => {
+      sensitiveWordsApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -174,25 +144,25 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        resourcesApi.add(this.form)
+        sensitiveWordsApi.add(this.form)
             .then(() => {
-              this.initTableData()
+              this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        resourcesApi.updateById(this.form)
+        sensitiveWordsApi.updateById(this.form)
             .then(() => {
-              this.initTableData()
+              this.initTableData();
             })
       }
     },
+
 
     dialogClose() {
       this.form = {}
     },
 
-
     initTableData() {
-      resourcesApi.page(this.page)
+      sensitiveWordsApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -202,7 +172,6 @@ export default {
   },
   mounted() {
     this.initTableData()
-
   },
 
 }

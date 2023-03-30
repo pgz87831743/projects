@@ -13,7 +13,16 @@
         <el-menu-item index="/SearchResource">我要找资源</el-menu-item>
         <el-menu-item index="/PublishResource">我要发布资源</el-menu-item>
         <div class="flex-grow" />
-        <el-menu-item index="/PersonalCenter">个人中心</el-menu-item>
+        <el-sub-menu index="2-4">
+          <template #title>
+            <el-avatar :src="user.avatar"></el-avatar>
+          </template>
+          <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
+          <el-menu-item v-if="authShow('ADMIN')"  index="/UserManagement">后台管理</el-menu-item>
+          <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
+
+        </el-sub-menu>
+
       </el-menu>
     </el-affix>
     <router-view></router-view>
@@ -21,8 +30,37 @@
 </template>
 
 <script>
+import {logout, systemCurrentUser} from "@/api/api";
+import {removeItem} from "@/utils/storage";
+import router from "@/router";
+import {authShow} from "@/utils/authutil";
+
 export default {
-  name: "FontPage"
+  name: "FontPage",
+  data(){
+    return{
+      user: {}
+    }
+  },
+  methods:{
+    authShow,
+    userQuery() {
+      systemCurrentUser()
+          .then((resp) => {
+            this.user = resp.data.data
+          })
+    },
+
+    logout() {
+      logout().then(() => {
+        removeItem("TOKEN_INFO_KEY")
+        router.push({path: '/login'})
+      })
+    }
+  },
+  mounted() {
+    this.userQuery()
+  }
 }
 </script>
 

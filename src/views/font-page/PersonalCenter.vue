@@ -10,20 +10,24 @@
               </template>
               <el-row>
                 <el-col>
-                  <el-form class="div-form" model="form">
+                  <el-form class="div-form" model="form" :disabled="disabled">
                     <el-form-item>
-                      <el-avatar
-                          :src="form.avatar"
-                          :size="75"
-                      />
+
                       <el-upload
-                          class="upload-demo"
-                          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                          multiple
-                          :limit="1"
+                          class="avatar-uploader"
+                          action="/api/file/upload"
+                          :data="{fileTypeEnum:'FILE'}"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess"
+                          name="files"
                       >
-                        <el-button>更换头像</el-button>
+                        <el-avatar
+                            :src="form.avatar"
+                            :size="75"
+                        />
+                        <el-button style="margin-left: 20px">更换头像</el-button>
                       </el-upload>
+
                     </el-form-item>
                     <el-form-item label="昵称：">
                       <el-input v-model="form.nickname"></el-input>
@@ -40,15 +44,18 @@
                     <el-form-item label="学校：">
                       <el-input v-model="form.school"></el-input>
                     </el-form-item>
+                    <el-form-item label="密码：">
+                      <el-input type="password" show-password v-model="form.password"></el-input>
+                    </el-form-item>
                   </el-form>
                 </el-col>
               </el-row>
               <el-row justify="center">
                 <el-col :span="6">
-                  <el-button>编辑</el-button>
+                  <el-button @click="disabled=false">编辑</el-button>
                 </el-col>
                 <el-col :span="6">
-                  <el-button>保存</el-button>
+                  <el-button @click="saveUserInfoHandle">保存</el-button>
                 </el-col>
               </el-row>
             </el-card>
@@ -86,7 +93,7 @@
                               <el-icon>
                                 <Comment/>
                               </el-icon>
-                              123
+                              {{ item.commentNum }}
                             </div>
                           </div>
                         </div>
@@ -109,7 +116,7 @@
 
 import {Comment, View} from "@element-plus/icons-vue";
 import router from "@/router";
-import {resourcesListAll} from "@/api/api";
+import {resourcesApi, systemCurrentUser, sysUserApi} from "@/api/api";
 
 export default {
   name: "PersonalCenter",
@@ -118,14 +125,21 @@ export default {
     return {
       search: "",
       form: {
-        name: "苍井空",
-        sex: "男",
-        avatar: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        name: "",
+        sex: "",
+        avatar: ""
       },
+      disabled: true,
       list: []
     }
   },
   methods: {
+
+    handleAvatarSuccess(response){
+      this.form.avatar=response[0].url
+    },
+
+
     fileDetail(item) {
       console.log(item)
       let routeData = router.resolve({path: '/FileDetail', query: {id: item.id}});
@@ -133,14 +147,30 @@ export default {
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },
     initList() {
-      resourcesListAll()
+      resourcesApi.listAll()
           .then((resp) => {
             this.list = resp.data.data
+          })
+    },
+
+    initUserInfo() {
+      systemCurrentUser()
+          .then((resp) => {
+            this.form = resp.data.data
+          })
+    },
+
+
+    saveUserInfoHandle() {
+      sysUserApi.updateById(this.form)
+          .then(() => {
+              window.location.href='/PersonalCenter'
           })
     }
   },
   mounted() {
     this.initList()
+    this.initUserInfo()
   }
 }
 </script>

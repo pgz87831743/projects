@@ -52,6 +52,22 @@
               <el-input type="textarea" :autosize="{minRows:10}" v-model="form.description"></el-input>
             </el-descriptions-item>
 
+
+            <el-descriptions-item>
+              <template #label>
+                <div class="cell-item">
+                  文件类型
+                </div>
+              </template>
+              <el-select v-model="form.type">
+                <el-option label="图片" value="PIC">图片</el-option>
+                <el-option label="文档" value="DOC">文档</el-option>
+                <el-option label="音频" value="AUDIO">音频</el-option>
+                <el-option label="视频" value="VIDEO">视频</el-option>
+                <el-option label="压缩包" value="ZIP">压缩包</el-option>
+              </el-select>
+            </el-descriptions-item>
+
             <el-descriptions-item >
               <template #label>
                 <div class="cell-item">
@@ -63,8 +79,8 @@
                   action="/api/file/upload"
                   :data="{fileTypeEnum:'FILE'}"
                   :show-file-list="true"
+                  :file-list="fileList"
                   :on-success="handleFileSuccess"
-                  :limit="1"
                   name="files"
               >
                 <el-icon class="avatar-uploader-icon">
@@ -90,7 +106,7 @@
 
 
 import {Plus} from "@element-plus/icons-vue";
-import {resourcesAdd} from "@/api/api";
+import {resourcesApi} from "@/api/api";
 import router from "@/router";
 export default {
   name: "PublishResource",
@@ -106,7 +122,8 @@ export default {
         cover: '',
         filePath: '',
         fileName: '',
-      }
+      },
+      fileList:[],
     }
   },
   methods: {
@@ -117,10 +134,12 @@ export default {
     handleFileSuccess(response) {
       this.form.filePath = response[0].url
       this.form.fileName = response[0].name
+      this.form.fileId = response[0].id
+      this.fileList = [response[0]]
     },
 
     submitHandle() {
-      resourcesAdd(this.form)
+      resourcesApi.add(this.form)
           .then(() => {
             router.push({path:"/PersonalCenter"})
           });

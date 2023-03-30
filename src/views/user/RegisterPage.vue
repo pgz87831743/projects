@@ -22,10 +22,10 @@
                       <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item>
-                      <el-input :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
+                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
                     </el-form-item>
                     <el-form-item>
-                      <el-input :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
+                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
                     </el-form-item>
                     <el-row :gutter="10">
                       <el-col :span="15">
