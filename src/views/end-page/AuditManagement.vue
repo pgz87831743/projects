@@ -1,8 +1,19 @@
 <template>
   <div class="p-div">
-
     <el-row>
-      <el-table :data="tableData" border style="width: 100%">
+      <el-col :span="1">
+        <el-button type="primary" @click="approved(selectData)">批量审核</el-button>
+      </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
+    </el-row>
+    <el-row>
+      <el-table :data="tableData" border   @selection-change="handleSelectionChange"  style="width: 100%">
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="title" label="名称"/>
         <el-table-column prop="description" label="简介"/>
         <el-table-column prop="type" label="文件类型"/>
@@ -18,7 +29,7 @@
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="approved(scope.row)">审核通过</el-button>
+            <el-button size="small" type="success" @click="approved([scope.row])">审核通过</el-button>
             <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
@@ -105,7 +116,7 @@ export default {
       },
       visible: [],
       tableData: [],
-      roleData: [],
+      selectData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -119,20 +130,16 @@ export default {
 
   methods: {
 
-    search() {
-      resourcesApi.page(this.page)
-          .then(resp => {
-            this.tableData = resp.data.data.records
-            this.total = resp.data.data.total
-          })
-    },
 
-    handleAvatarSuccess(response) {
-      this.form.avatar = response[0].url
+    handleSelectionChange(item){
+       this.selectData=item
     },
 
 
     approved(data){
+      if (data.length===0){
+        return;
+      }
       resourcesApi.approved(data)
           .then(() => {
             this.initTableData()
@@ -171,20 +178,6 @@ export default {
       })
     },
 
-    formSubmit() {
-      this.dialog.dialogFormVisible = false
-      if (this.dialog.optionValue === 'add') {
-        resourcesApi.add(this.form)
-            .then(() => {
-              this.initTableData()
-            })
-      } else if (this.dialog.optionValue === 'update') {
-        resourcesApi.updateById(this.form)
-            .then(() => {
-              this.initTableData()
-            })
-      }
-    },
 
     dialogClose() {
       this.form = {}

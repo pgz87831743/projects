@@ -59,6 +59,10 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
+            },{
+                path: "/LogPage",
+                name: "LogPage",
+                component: () => import('../views/end-page/LogPage'),
             }
             , {
                 path: "/ResourcesManagement",

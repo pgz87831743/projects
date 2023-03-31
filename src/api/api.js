@@ -23,6 +23,11 @@ export const systemCurrentUser = () => {
     return request.get('/system/currentUser')
 }
 
+//文件相关
+export const systemUploadSecurity = (data) => {
+    return request.post('/file/uploadSecurity',data)
+}
+
 
 //用户管理
 export const sysUserApi = {
@@ -64,9 +69,6 @@ export const resourcesApi = {
     deleteById(id) {
         return request.delete('/resources/deleteById/' + id)
     },
-    updateById(data) {
-        return request.put('/resources/updateById', data)
-    },
     approved(data) {
         return request.post('/resources/approved', data)
     },
@@ -88,17 +90,9 @@ export const reportApi = {
     page(data) {
         return request.post('/report/page', data)
     },
-    getById(id) {
-        return request.get('/report/getById/' + id)
-    },
-    listAll() {
-        return request.get('/report/listAll')
-    },
+
     add(data) {
         return request.post('/report/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/report/deleteById/' + id)
     },
 
     deleteResource(data) {
@@ -106,15 +100,11 @@ export const reportApi = {
             data:data
         })
     },
-    updateById(data) {
-        return request.put('/report/updateById', data)
-    }
+
 
 }
 
 //敏感词
-
-//用户管理
 export const sensitiveWordsApi = {
     page(data) {
         return request.post('/sensitiveWords/page', data)
@@ -132,6 +122,21 @@ export const sensitiveWordsApi = {
         return request.put('/sensitiveWords/updateById', data)
     }
 }
+
+
+//日志管理
+export const logApi = {
+    page(data) {
+        return request.post('/log/page', data)
+    },
+    getById(id) {
+        return request.get('/log/getById/' + id)
+    },
+    deleteById(id) {
+        return request.delete('/log/deleteById/' + id)
+    }
+}
+
 
 
 

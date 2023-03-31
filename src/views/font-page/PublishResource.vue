@@ -4,7 +4,7 @@
       <template #header>
         <span class="pin-lun">文件发布</span>
       </template>
-      <el-row >
+      <el-row>
         <el-col :span="16">
           <el-descriptions
               class="margin-top"
@@ -68,7 +68,7 @@
               </el-select>
             </el-descriptions-item>
 
-            <el-descriptions-item >
+            <el-descriptions-item>
               <template #label>
                 <div class="cell-item">
                   文件
@@ -76,11 +76,9 @@
               </template>
               <el-upload
                   class="avatar-uploader"
-                  action="/api/file/upload"
-                  :data="{fileTypeEnum:'FILE'}"
                   :show-file-list="true"
                   :file-list="fileList"
-                  :on-success="handleFileSuccess"
+                  :http-request="uploadFiles"
                   name="files"
               >
                 <el-icon class="avatar-uploader-icon">
@@ -106,8 +104,10 @@
 
 
 import {Plus} from "@element-plus/icons-vue";
-import {resourcesApi} from "@/api/api";
+import {resourcesApi, systemUploadSecurity} from "@/api/api";
 import router from "@/router";
+
+
 export default {
   name: "PublishResource",
   components: {Plus},
@@ -118,12 +118,12 @@ export default {
       form: {
         title: '',
         description: '',
-        type: '',
+        type: 'PIC',
         cover: '',
         filePath: '',
         fileName: '',
       },
-      fileList:[],
+      fileList: [],
     }
   },
   methods: {
@@ -131,28 +131,58 @@ export default {
     handleCoverSuccess(response) {
       this.form.cover = response[0].url
     },
-    handleFileSuccess(response) {
-      this.form.filePath = response[0].url
-      this.form.fileName = response[0].name
-      this.form.fileId = response[0].id
-      this.fileList = [response[0]]
+
+
+    uploadFiles(data) {
+      let dto={
+        base:'',
+        fileTypeEnum:this.form.type,
+        fileName:data.file.name
+      }
+      this.getBase64(data.file).then(resBase64 => {
+        dto.base= resBase64.split(',')[1]
+        systemUploadSecurity(dto).then((response)=>{
+          this.form.filePath = response.data[0].url
+          this.form.fileName = response.data[0].name
+          this.form.fileId = response.data[0].id
+          this.fileList = [response.data[0]]
+        })
+      })
+    },
+
+
+    //文件转base64
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        let fileResult = "";
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          fileResult = reader.result;
+        };
+        reader.onerror = function (error) {
+          reject(error);
+        };
+        reader.onloadend = function () {
+          resolve(fileResult);
+        };
+      });
     },
 
     submitHandle() {
       resourcesApi.add(this.form)
           .then(() => {
-            router.push({path:"/PersonalCenter"})
+            router.push({path: "/PersonalCenter"})
           });
-    }
-
-  },
+    },
+  }
 }
 </script>
 
 <style scoped lang="scss">
 
 
-::v-deep(.el-descriptions__label.el-descriptions__cell.is-bordered-label){
+::v-deep(.el-descriptions__label.el-descriptions__cell.is-bordered-label) {
   width: 30px;
   padding: 30px;
 }

@@ -36,6 +36,7 @@
            <el-menu-item index="/AuditManagement">审核管理</el-menu-item>
            <el-menu-item index="/ReportingManagement">举报管理</el-menu-item>
            <el-menu-item index="/SensitiveWords">敏感词管理</el-menu-item>
+           <el-menu-item index="/LogPage">日志管理</el-menu-item>
          </el-menu>
        </el-col>
        <el-col :span="21">

@@ -37,13 +37,13 @@
                     <el-icon>
                       <View/>
                     </el-icon>
-                    {{item.commentNum}}
+                   {{item.times}}
                   </div>
                   <div>
                     <el-icon>
                       <Comment/>
                     </el-icon>
-                    {{item.times}}
+                    {{item.commentNum}}
                   </div>
                 </div>
               </div>
