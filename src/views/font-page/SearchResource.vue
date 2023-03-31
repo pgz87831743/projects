@@ -38,13 +38,13 @@
                         <img :src="item.cover" height="300">
                       </div>
                       <div>
-                        {{ item.title }}
+                        <span v-html="  item.title "></span>
                       </div>
                       <div class="card-div">
                         <div>
                           <el-avatar
                               :size="35"
-                              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                              :src="item.avatarPath"
                           />
                         </div>
                         <div>
@@ -54,13 +54,13 @@
                           <el-icon>
                             <View/>
                           </el-icon>
-                          {{ item.commentNum }}
+                           {{ item.times }}
                         </div>
                         <div>
                           <el-icon>
                             <Comment/>
                           </el-icon>
-                          {{ item.times }}
+                          {{ item.commentNum }}
                         </div>
                       </div>
                     </div>
