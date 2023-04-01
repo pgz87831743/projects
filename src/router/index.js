@@ -20,7 +20,7 @@ const routes = [
     {
         path: "/FileDetail",
         name: "FileDetail",
-        component: () => import('../views/font-page/FileDetail'),
+        component: () => import('../views/font-page/ProductDetail.vue'),
     },
 
 
@@ -34,19 +34,24 @@ const routes = [
                 component: () => import('../views/font-page/IndexPage'),
             },
             {
-                path: "/SearchResource",
-                name: "SearchResource",
-                component: () => import('../views/font-page/SearchResource'),
+                path: "/SearchShop",
+                name: "SearchShop",
+                component: () => import('../views/font-page/SearchShop.vue'),
             },
             {
-                path: "/PublishResource",
-                name: "PublishResource",
-                component: () => import('../views/font-page/PublishResource'),
+                path: "/ShoppingCart",
+                name: "ShoppingCart",
+                component: () => import('../views/font-page/ShoppingCart'),
             },
             {
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
+            },
+            {
+                path: "/ProductDetail",
+                name: "ProductDetail",
+                component: () => import('../views/font-page/ProductDetail.vue'),
             },
         ]
     }
@@ -83,11 +88,6 @@ const routes = [
                 path: "/SensitiveWords",
                 name: "SensitiveWords",
                 component: () => import('../views/end-page/SensitiveWords'),
-            },
-            {
-                path: "/endSearchResource",
-                name: "endSearchResource",
-                component: () => import('../views/font-page/SearchResource'),
             }
 
         ]

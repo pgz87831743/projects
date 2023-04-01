@@ -9,7 +9,7 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">热门帖</span>
+          <span class="pin-lun">产品推荐</span>
         </div>
       </template>
       <div class="row-div">
@@ -25,13 +25,10 @@
                 </div>
                 <div class="card-div">
                   <div>
-                    <el-avatar
-                        :size="35"
-                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                    />
+
                   </div>
                   <div>
-                    {{ item.createBy }}·{{ item.createTime }}
+                   {{ item.createTime }}
                   </div>
                   <div>
                     <el-icon>
@@ -83,7 +80,7 @@ export default {
 
     fileDetail(item) {
       console.log(item)
-      let routeData = router.resolve({path: '/FileDetail', query: {id: item.id}});
+      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },

@@ -8,10 +8,10 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">高校数字资源共享平台</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">农产品推荐系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/SearchResource">我要找资源</el-menu-item>
-        <el-menu-item index="/PublishResource">我要发布资源</el-menu-item>
+        <el-menu-item index="/SearchShop">我要找农产品</el-menu-item>
+        <el-menu-item index="/ShoppingCart">购物车</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
           <template #title>
