@@ -85,12 +85,6 @@
                              <el-form-item label="总价:">
                                {{item.priceNum.toFixed(2)}}元
                              </el-form-item>
-                             <el-form-item label="联系电话:">
-                               {{item.phone}}
-                             </el-form-item>
-                             <el-form-item label="收货地址:">
-                               {{item.address}}
-                             </el-form-item>
                              <el-form-item label="查看详情:">
                                <el-link type="primary" :href="'/OrderDetail?id='+item.id" target="_blank">点击查看</el-link>
                              </el-form-item>

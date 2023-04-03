@@ -49,6 +49,15 @@
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">
+              联系人
+            </div>
+          </template>
+          {{ item.contacts }}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
               操作
             </div>
           </template>

@@ -69,6 +69,10 @@
     <!--    结算弹窗-->
     <el-dialog v-model="itemDialogFormVisible" :title="'购物车结算'" @closed="dialogClose">
       <el-form :model="submitForm" label-position="right" label-width="150px">
+
+        <el-form-item label="联系人">
+          <el-input v-model="submitForm.contacts"/>
+        </el-form-item>
         <el-form-item label="联系电话">
           <el-input v-model="submitForm.phone"/>
         </el-form-item>

@@ -74,8 +74,8 @@ export const goodsApi = {
         return request.delete('/goods/deleteById/' + id)
     },
 
-    searchResource(data) {
-        return request.post('/goods/searchResource', data)
+    searchGoods(data) {
+        return request.post('/goods/searchGoods', data)
     }
 }
 

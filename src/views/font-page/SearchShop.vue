@@ -82,7 +82,7 @@ export default {
     },
 
     searchHandle() {
-      goodsApi.searchResource(this.searchParams)
+      goodsApi.searchGoods(this.searchParams)
           .then((resp) => {
             this.list = resp.data.data
           })
