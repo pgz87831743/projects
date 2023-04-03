@@ -12,10 +12,8 @@
                 class="input-with-select"
             >
               <template #append>
-                <el-button @click="searchHandle">
-                  <el-icon>
-                    <Search/>
-                  </el-icon>
+                <el-button type="primary" @click="searchHandle">
+                 搜索商品
                 </el-button>
               </template>
             </el-input>
@@ -37,7 +35,7 @@
 
                   </div>
                   <div>
-                   {{ item.createTime }}
+                   {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>
@@ -62,13 +60,13 @@
 </template>
 
 <script>
-import {Comment, Search, View} from "@element-plus/icons-vue";
+import {Comment, View} from "@element-plus/icons-vue";
 import router from "@/router";
-import {resourcesApi} from "@/api/api";
+import {goodsApi} from "@/api/api";
 
 export default {
   name: "SearchResource",
-  components: {Comment, View, Search},
+  components: {Comment, View},
   data() {
     return {
       searchParams: {
@@ -79,13 +77,12 @@ export default {
   },
   methods: {
     fileDetail(item) {
-      console.log(item)
-      let routeData = router.resolve({path: '/FileDetail', query: {id: item.id}});
+      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
     },
 
     searchHandle() {
-      resourcesApi.searchResource(this.searchParams)
+      goodsApi.searchResource(this.searchParams)
           .then((resp) => {
             this.list = resp.data.data
           })

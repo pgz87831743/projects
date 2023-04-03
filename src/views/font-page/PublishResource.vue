@@ -104,7 +104,7 @@
 
 
 import {Plus} from "@element-plus/icons-vue";
-import {resourcesApi, systemUploadSecurity} from "@/api/api";
+import {goodsApi, systemUploadSecurity} from "@/api/api";
 import router from "@/router";
 
 
@@ -170,7 +170,7 @@ export default {
     },
 
     submitHandle() {
-      resourcesApi.add(this.form)
+      goodsApi.add(this.form)
           .then(() => {
             router.push({path: "/PersonalCenter"})
           });

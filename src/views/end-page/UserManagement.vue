@@ -22,8 +22,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="school" label="学校"/>
-        <el-table-column prop="description" label="简介"/>
+        <el-table-column prop="phone" label="联系电话"/>
+        <el-table-column prop="address" label="联系地址"/>
         <el-table-column prop="role" label="角色"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
@@ -73,11 +73,11 @@
             <el-radio label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="学校">
-          <el-input v-model="form.school"/>
+        <el-form-item label="联系电话">
+          <el-input v-model="form.phone"/>
         </el-form-item>
-        <el-form-item label="简介">
-          <el-input type="textarea" v-model="form.description"/>
+        <el-form-item label="联系地址">
+          <el-input type="textarea" v-model="form.address"/>
         </el-form-item>
         <el-form-item label="角色">
           <el-select v-model="form.role">

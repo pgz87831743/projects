@@ -28,7 +28,7 @@
 
                   </div>
                   <div>
-                   {{ item.createTime }}
+                    {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>
@@ -57,7 +57,7 @@
 
 <script>
 import {Comment, View} from "@element-plus/icons-vue";
-import {resourcesApi} from "@/api/api";
+import {goodsApi} from "@/api/api";
 import router from "@/router";
 
 export default {
@@ -85,15 +85,15 @@ export default {
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
-    initHotResource() {
-      resourcesApi.hotResource()
+    inithotGoods() {
+      goodsApi.hotGoods()
           .then((resp) => {
             this.list = resp.data.data
           })
     }
   },
   mounted() {
-    this.initHotResource()
+    this.inithotGoods()
   }
 }
 </script>

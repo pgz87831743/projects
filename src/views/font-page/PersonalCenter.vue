@@ -10,9 +10,8 @@
               </template>
               <el-row>
                 <el-col>
-                  <el-form class="div-form" model="form" :disabled="disabled">
+                  <el-form class="div-form" model="form" :disabled="disabled"   label-width="100px">
                     <el-form-item>
-
                       <el-upload
                           class="avatar-uploader"
                           action="/api/file/upload"
@@ -38,11 +37,11 @@
                         <el-radio label="女">女</el-radio>
                       </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="简介：">
-                      <el-input v-model="form.description"></el-input>
+                    <el-form-item label="联系地址：">
+                      <el-input v-model="form.address"></el-input>
                     </el-form-item>
-                    <el-form-item label="学校：">
-                      <el-input v-model="form.school"></el-input>
+                    <el-form-item label="联系电话：">
+                      <el-input v-model="form.phone"></el-input>
                     </el-form-item>
                     <el-form-item label="密码：">
                       <el-input type="password" show-password v-model="form.password"></el-input>
@@ -64,37 +63,39 @@
         <el-col :span="18">
           <el-card shadow="hover" class="box-card">
             <template #header>
-              <span class="pin-lun">我的资源</span>
+              <span class="pin-lun">我的订单</span>
             </template>
             <el-row>
               <el-col>
                 <el-row :gutter="12">
                   <el-col v-bind:key="item.id" v-for="item in list" :span="6">
                     <div class="div">
-                      <el-card shadow="hover" @click="fileDetail(item)">
+                      <el-card shadow="hover">
                         <div>
                           <div>
-                            <img :src="item.cover" width="250">
+                           <el-image :src="item.goodsOrderDetails[0].goods.cover"
+                                     :preview-src-list="item.goodsOrderDetails.map(s=>s.goods.cover)"
+                           ></el-image>
                           </div>
-                          <div>
-                            {{ item.title }}
-                          </div>
-                          <div class="card-div">
-                            <div>
-                              {{ item.createTime }}
-                            </div>
-                            <div>
-                              <el-icon>
-                                <View/>
-                              </el-icon>
-                              {{ item.times }}
-                            </div>
-                            <div>
-                              <el-icon>
-                                <Comment/>
-                              </el-icon>
-                              {{ item.commentNum }}
-                            </div>
+                          <div style="font-size: 10px;">
+                           <el-form  label-width="80px">
+                             <el-form-item label="下单时间:">
+                               {{item.createTime}}
+                             </el-form-item>
+                             <el-form-item label="总价:">
+                               {{item.priceNum.toFixed(2)}}元
+                             </el-form-item>
+                             <el-form-item label="联系电话:">
+                               {{item.phone}}
+                             </el-form-item>
+                             <el-form-item label="收货地址:">
+                               {{item.address}}
+                             </el-form-item>
+                             <el-form-item label="查看详情:">
+                               <el-link type="primary" :href="'/OrderDetail?id='+item.id" target="_blank">点击查看</el-link>
+                             </el-form-item>
+
+                           </el-form>
                           </div>
                         </div>
                       </el-card>
@@ -114,13 +115,11 @@
 <script>
 
 
-import {Comment, View} from "@element-plus/icons-vue";
-import router from "@/router";
-import {resourcesApi, systemCurrentUser, sysUserApi} from "@/api/api";
+import {goodsOrderApi, systemCurrentUser, sysUserApi} from "@/api/api";
 
 export default {
   name: "PersonalCenter",
-  components: {Comment, View},
+
   data() {
     return {
       search: "",
@@ -140,14 +139,8 @@ export default {
     },
 
 
-    fileDetail(item) {
-      console.log(item)
-      let routeData = router.resolve({path: '/FileDetail', query: {id: item.id}});
-      window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
-    },
     initList() {
-      resourcesApi.listAll()
+      goodsOrderApi.listAll()
           .then((resp) => {
             this.list = resp.data.data
           })
@@ -178,6 +171,10 @@ export default {
 <style scoped lang="scss">
 ::v-deep(.box-card .el-card__header) {
   //border: none;
+}
+
+.box-card{
+  min-height: 600px;
 }
 
 ::v-deep(.div-form) {

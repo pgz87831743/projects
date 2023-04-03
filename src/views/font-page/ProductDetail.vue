@@ -41,38 +41,42 @@
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">
-              文件
+              浏览量
+            </div>
+          </template>
+          {{ item.times }}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              评论数
+            </div>
+          </template>
+          {{ item.commentNum }}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              店铺名称
+            </div>
+          </template>
+          {{ item.storeName }}
+        </el-descriptions-item>
+
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              操作
             </div>
           </template>
           <el-row>
-            <el-col :span="18">
-              <el-text size="large" type="success">{{ item.fileName }}</el-text>
-            </el-col>
             <el-col :span="6">
-              <el-button type="success" @click="previewHandle(item)">预览</el-button>
-              <el-button type="success" @click="downLoadHandle(item)">下载</el-button>
-
-
-              <el-popover
-                  :width="450"
-                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
-              >
-                <template #reference>
-                  <el-button type="success" @click="reportHandle(item)">举报</el-button>
-                </template>
-                <template #default>
-                  <el-row :gutter="20">
-                    <el-col :span="20">
-                      <el-input placeholder="请输入举报内容" clearable v-model="report.content"></el-input>
-                    </el-col>
-                  </el-row>
-                </template>
-              </el-popover>
-
+              <el-button type="success" @click="addGoodsCarHandle(item)">加入购物车</el-button>
             </el-col>
           </el-row>
-
-
         </el-descriptions-item>
 
       </el-descriptions>
@@ -168,7 +172,7 @@
 <script>
 
 
-import {commentAdd, reportApi, resourcesApi} from "@/api/api";
+import {commentAdd, goodsCarApi, goodsApi} from "@/api/api";
 
 
 export default {
@@ -177,12 +181,12 @@ export default {
   data() {
     return {
       comment: {
-        resourcesId: this.id,
+        goodsId: this.id,
         content: '',
         replyContent: ''
       },
       report: {
-        resourcesId: '',
+        goodsId: '',
         content: ''
       },
       item: {},
@@ -191,22 +195,14 @@ export default {
   methods: {
 
 
-    previewHandle(item) {
-      window.open(item.filePath, '_blank');
-    },
-    downLoadHandle(item) {
-      window.open('/api/file/download/' + item.fileId, '_blank');
-    },
-    reportHandle(item) {
-      if (this.report.content.trim().length===0){
-        return;
+    addGoodsCarHandle(item) {
+      let data={
+        goodsId:item.id,
+        shopNum:1
       }
-      this.report.resourcesId = item.id
-      reportApi.add(this.report)
-          .then(() => {
-            this.report = {}
-          })
+        goodsCarApi.add(data)
     },
+
 
     commentAddHandle() {
       if (this.comment.content.trim().length === 0) {
@@ -224,7 +220,7 @@ export default {
         return;
       }
       let com = {
-        resourcesId: item.resourcesId,
+        goodsId: item.goodsId,
         content: this.comment.replyContent,
         replyId: item.createBy,
         replyCommentId: item.id,
@@ -237,10 +233,10 @@ export default {
     },
 
     initData() {
-      resourcesApi.getById(this.item.id)
+      goodsApi.getById(this.item.id)
           .then((resp) => {
             this.item = resp.data.data
-            this.comment.resourcesId = resp.data.data.id
+            this.comment.goodsId = resp.data.data.id
           })
     }
 

@@ -18,9 +18,13 @@ const routes = [
         component: () => import('../views/user/LoginPage')
     },
     {
-        path: "/FileDetail",
-        name: "FileDetail",
-        component: () => import('../views/font-page/ProductDetail.vue'),
+        path: "/ProductDetail",
+        name: "ProductDetail",
+        component: () => import('../views/font-page/ProductDetail'),
+    },{
+        path: "/OrderDetail",
+        name: "OrderDetail",
+        component: () => import('../views/font-page/OrderDetail'),
     },
 
 
@@ -39,9 +43,9 @@ const routes = [
                 component: () => import('../views/font-page/SearchShop.vue'),
             },
             {
-                path: "/ShoppingCart",
-                name: "ShoppingCart",
-                component: () => import('../views/font-page/ShoppingCart'),
+                path: "/ShoppingCar",
+                name: "ShoppingCar",
+                component: () => import('../views/font-page/ShoppingCar'),
             },
             {
                 path: "/PersonalCenter",
@@ -65,29 +69,9 @@ const routes = [
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
             },{
-                path: "/LogPage",
-                name: "LogPage",
-                component: () => import('../views/end-page/LogPage'),
-            }
-            , {
-                path: "/ResourcesManagement",
-                name: "ResourcesManagement",
-                component: () => import('../views/end-page/ResourcesManagement'),
-            }
-            , {
-                path: "/ReportingManagement",
-                name: "ReportingManagement",
-                component: () => import('../views/end-page/ReportingManagement'),
-            }
-            , {
-                path: "/AuditManagement",
-                name: "AuditManagement",
-                component: () => import('../views/end-page/AuditManagement'),
-            },
-            {
-                path: "/SensitiveWords",
-                name: "SensitiveWords",
-                component: () => import('../views/end-page/SensitiveWords'),
+                path: "/GoodsManagement",
+                name: "GoodsManagement",
+                component: () => import('../views/end-page/GoodsManagement'),
             }
 
         ]
@@ -103,9 +87,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
 
-    if (to.href==='/login'||to.href==='/register'){
+    if (to.href === '/login' || to.href === '/register') {
         next()
-    } else{
+    } else {
         if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {
             next('/login')
         } else {
