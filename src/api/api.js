@@ -52,108 +52,81 @@ export const sysUserApi = {
 
 
 
+//药品求助管理
+export const drugHelpApi={
+    page(data){
+        return request.post('/drugHelp/page',data)
+    },
+    getById(id){
+        return request.get('/drugHelp/getById/'+id)
+    },
+    add(data){
+        return request.post('/drugHelp/add',data)
+    },
+    deleteById(id){
+        return request.delete('/drugHelp/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/drugHelp/updateById',data)
+    }
+}
 
-//商品管理相关
-export const goodsApi = {
-    page(data) {
-        return request.post('/goods/page', data)
+//交流论坛管理
+export const exchangeApi={
+    page(data){
+        return request.post('/exchange/page',data)
     },
-    getById(id) {
-        return request.get('/goods/getById/' + id)
+    getById(id){
+        return request.get('/exchange/getById/'+id)
     },
-    updateById(data) {
-        return request.put('/goods/updateById', data)
+    add(data){
+        return request.post('/exchange/add',data)
     },
-    add(data) {
-        return request.post('/goods/add', data)
+    deleteById(id){
+        return request.delete('/exchange/deleteById/'+id)
     },
-    hotGoods() {
-        return request.get('/goods/hotGoods')
-    },
-    deleteById(id) {
-        return request.delete('/goods/deleteById/' + id)
-    },
-
-    searchGoods(data) {
-        return request.post('/goods/searchGoods', data)
+    updateById(data){
+        return request.put('/exchange/updateById',data)
     }
 }
 
 
-//评论
-export const commentAdd = (data) => {
-    return request.post('/comment/add', data)
-}
-
-
-//购物车管理
-export const goodsCarApi = {
-    page(data) {
-        return request.post('/goodsCar/page', data)
+//物资管理
+export const goodsApi={
+    page(data){
+        return request.post('/goods/page',data)
     },
-    getById(id) {
-        return request.get('/goodsCar/getById/' + id)
+    getById(id){
+        return request.get('/goods/getById/'+id)
     },
-    add(data) {
-        return request.post('/goodsCar/add', data)
+    add(data){
+        return request.post('/goods/add',data)
     },
-    deleteById(id) {
-        return request.delete('/goodsCar/deleteById/' + id)
+    deleteById(id){
+        return request.delete('/goods/deleteById/'+id)
     },
-    updateById(data) {
-        return request.put('/goodsCar/updateById', data)
-    },
-
-    //前台
-    pageUser(data) {
-        return request.post('/goodsCar/pageUser', data)
-    },
-    submitBefore(data) {
-        return request.post('/goodsCar/submitBefore', data)
-    },
-    submitOrder(data) {
-        return request.post('/goodsCar/submitOrder', data)
-    },
-}
-
-//订单管理
-export const goodsOrderApi = {
-    page(data) {
-        return request.post('/goodsOrder/page', data)
-    },
-    listAll() {
-        return request.get('/goodsOrder/listAll')
-    },
-    getById(id) {
-        return request.get('/goodsOrder/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsOrder/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsOrder/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsOrder/updateById', data)
+    updateById(data){
+        return request.put('/goods/updateById',data)
     }
 }
 
 
-//订单明细管理
-export const goodsOrderDetailApi = {
-    page(data) {
-        return request.post('/goodsOrderDetail/page', data)
+
+//有偿求助管理
+export const paidHelpApi={
+    page(data){
+        return request.post('/paidHelp/page',data)
     },
-    getById(id) {
-        return request.get('/goodsOrderDetail/getById/' + id)
+    getById(id){
+        return request.get('/paidHelp/getById/'+id)
     },
-    add(data) {
-        return request.post('/goodsOrderDetail/add', data)
+    add(data){
+        return request.post('/paidHelp/add',data)
     },
-    deleteById(id) {
-        return request.delete('/goodsOrderDetail/deleteById/' + id)
+    deleteById(id){
+        return request.delete('/paidHelp/deleteById/'+id)
     },
-    updateById(data) {
-        return request.put('/goodsOrderDetail/updateById', data)
+    updateById(data){
+        return request.put('/paidHelp/updateById',data)
     }
 }

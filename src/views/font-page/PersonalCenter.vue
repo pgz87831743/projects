@@ -31,6 +31,9 @@
                     <el-form-item label="昵称：">
                       <el-input v-model="form.nickname"></el-input>
                     </el-form-item>
+                    <el-form-item label="身份证：">
+                      <el-input v-model="form.idCard"></el-input>
+                    </el-form-item>
                     <el-form-item label="性别：">
                       <el-radio-group v-model="form.sex">
                         <el-radio label="男">男</el-radio>
@@ -109,7 +112,7 @@
 <script>
 
 
-import {goodsOrderApi, systemCurrentUser, sysUserApi} from "@/api/api";
+import {systemCurrentUser, sysUserApi} from "@/api/api";
 
 export default {
   name: "PersonalCenter",
@@ -132,14 +135,6 @@ export default {
       this.form.avatar=response[0].url
     },
 
-
-    initList() {
-      goodsOrderApi.listAll()
-          .then((resp) => {
-            this.list = resp.data.data
-          })
-    },
-
     initUserInfo() {
       systemCurrentUser()
           .then((resp) => {
@@ -156,7 +151,6 @@ export default {
     }
   },
   mounted() {
-    this.initList()
     this.initUserInfo()
   }
 }

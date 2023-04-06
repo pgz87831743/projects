@@ -8,10 +8,20 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">农产品推荐系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">疫情互助系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/SearchShop">我要找农产品</el-menu-item>
-        <el-menu-item index="/ShoppingCar">购物车</el-menu-item>
+        <el-menu-item index="/DrugHelpFont">药品求助</el-menu-item>
+        <el-menu-item index="/GoodsFont">物质出售</el-menu-item>
+        <el-menu-item index="/PaidHelpFont">有偿求助</el-menu-item>
+        <el-menu-item index="/ExchangeFont">交流论坛</el-menu-item>
+        <el-sub-menu index="2-5">
+          <template #title>
+            信息广场
+          </template>
+          <el-menu-item index="/DrugHelpProvideFont">药品提供</el-menu-item>
+          <el-menu-item index="/GoodsBuyFont">物资购买</el-menu-item>
+          <el-menu-item index="/PaidHelpNeedFont">有偿需求</el-menu-item>
+        </el-sub-menu>
         <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">

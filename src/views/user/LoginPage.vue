@@ -3,7 +3,7 @@
 
     <div class="div1">
       <div style="text-align: left;color:#ffffff;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-        农产品推荐系统
+        疫情互助系统
       </div>
       <div>
         <div class="div2">
@@ -149,7 +149,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-oleksandr-pidvalnyi-1227513.jpg");
+  background-image:url("@/assets/pexels-atypeek-dgn-6366444.jpg");
   background-size: 1920px;
   height: 100vh;
 }

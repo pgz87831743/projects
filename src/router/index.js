@@ -17,15 +17,6 @@ const routes = [
         path: '/',
         component: () => import('../views/user/LoginPage')
     },
-    {
-        path: "/ProductDetail",
-        name: "ProductDetail",
-        component: () => import('../views/font-page/ProductDetail'),
-    },{
-        path: "/OrderDetail",
-        name: "OrderDetail",
-        component: () => import('../views/font-page/OrderDetail'),
-    },
 
 
     {
@@ -38,25 +29,41 @@ const routes = [
                 component: () => import('../views/font-page/IndexPage'),
             },
             {
-                path: "/SearchShop",
-                name: "SearchShop",
-                component: () => import('../views/font-page/SearchShop.vue'),
+                path: "/DrugHelpFont",
+                name: "DrugHelpFont",
+                component: () => import('../views/font-page/DrugHelpFont'),
             },
             {
-                path: "/ShoppingCar",
-                name: "ShoppingCar",
-                component: () => import('../views/font-page/ShoppingCar'),
+                path: "/ExchangeFont",
+                name: "ExchangeFont",
+                component: () => import('../views/font-page/ExchangeFont'),
+            },{
+                path: "/GoodsFont",
+                name: "GoodsFont",
+                component: () => import('../views/font-page/GoodsFont'),
+            },{
+                path: "/PaidHelpFont",
+                name: "PaidHelpFont",
+                component: () => import('../views/font-page/PaidHelpFont'),
             },
             {
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
+            },{
+                path: "/GoodsBuyFont",
+                name: "GoodsBuyFont",
+                component: () => import('../views/font-page/GoodsBuyFont'),
+            },{
+                path: "/PaidHelpNeedFont",
+                name: "PaidHelpNeedFont",
+                component: () => import('../views/font-page/PaidHelpNeedFont'),
+            },{
+                path: "/DrugHelpProvideFont",
+                name: "DrugHelpProvideFont",
+                component: () => import('../views/font-page/DrugHelpProvideFont'),
             },
-            {
-                path: "/ProductDetail",
-                name: "ProductDetail",
-                component: () => import('../views/font-page/ProductDetail.vue'),
-            },
+
         ]
     }
     , {
