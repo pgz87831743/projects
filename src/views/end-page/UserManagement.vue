@@ -128,7 +128,7 @@ import {
   sysUserGetById,
   sysUserPage,
   sysUserUpdateById
-} from "@/api/user";
+} from "@/api/api";
 
 export default {
   name: "UserManagement",

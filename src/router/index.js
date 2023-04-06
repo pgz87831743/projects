@@ -22,7 +22,6 @@ const routes = [
         component: () => import('../views/font-page/FileDetail'),
     },
 
-
     {
         path: '/FontPage',
         name: 'FontPage',
@@ -89,41 +88,7 @@ const routes = [
                 path: "/UserPage",
                 name: "UserPage",
                 component: () => import('../views/end-page/UserPage'),
-            },
-            {
-                path: "/UserManagement",
-                name: "UserManagement",
-                component: () => import('../views/end-page/UserManagement'),
-            }, {
-                path: "/RoleManagement",
-                name: "RoleManagement",
-                component: () => import('../views/end-page/RoleManagement'),
-            }, {
-                path: "/AuthorityManagement",
-                name: "AuthorityManagement",
-                component: () => import('../views/end-page/AuthorityManagement'),
             }
-            , {
-                path: "/ResourcesManagement",
-                name: "ResourcesManagement",
-                component: () => import('../views/end-page/ResourcesManagement'),
-            }
-            , {
-                path: "/ReportingManagement",
-                name: "ReportingManagement",
-                component: () => import('../views/end-page/ReportingManagement'),
-            }
-            , {
-                path: "/AuditManagement",
-                name: "AuditManagement",
-                component: () => import('../views/end-page/AuditManagement'),
-            },
-            {
-                path: "/endSearchResource",
-                name: "/endSearchResource",
-                component: () => import('../views/font-page/FacilityAndAppointment.vue'),
-            },
-
         ]
     }
 ]
@@ -135,14 +100,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    //第一个参数to，包含的内容是切换后的路由对象，也就是跳转后的路由对象
-    if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {
-        next('/login')
-    } else {
+    if (to.href === '/login' || to.href === '/register') {
         next()
+    } else {
+        if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {
+            next('/login')
+        } else {
+            next()
+        }
     }
-    //第二个参数from，包含的内容的是切换前的路由对象，也就是跳转前的路由对象
-    //第三个参数next()，是否往下执行，执行的话，如果不写的话路由就不会跳转，操作将会终止
 })
 
 

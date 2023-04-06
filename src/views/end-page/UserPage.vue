@@ -66,7 +66,7 @@
 
 <script>
 
-import {sysUserGetById, sysUserUpdateById} from "@/api/user";
+import {sysUserGetById, sysUserUpdateById} from "@/api/api";
 import {getItem} from "@/utils/storage";
 
 export default {

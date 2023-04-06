@@ -86,7 +86,7 @@ import {
   sysRolePage,
   sysRoleUpdateById,
   systemAuthorityTree,
-} from "@/api/user";
+} from "@/api/api";
 
 export default {
   name: "RoleManagement",

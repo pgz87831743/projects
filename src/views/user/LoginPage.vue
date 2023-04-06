@@ -29,20 +29,23 @@
 
 <script>
 
-import {login, systemCaptcha, sysUserRegister} from "@/api/user";
+import {login, systemCaptcha} from "@/api/api";
 import {useStore} from 'vuex'
 import router from "@/router";
-import {Lock,User} from "@element-plus/icons-vue";
+import {User,Lock,View} from "@element-plus/icons-vue";
 
 
 export default {
   name: "LoginPage",
   computed: {
+    User() {
+      return User
+    },
     Lock() {
       return Lock
     },
-    User(){
-      return User
+    View() {
+      return View
     }
   },
 
@@ -54,71 +57,49 @@ export default {
 
   data() {
     return {
-
       user: {
         username: '',
-        password: ''
-      },
-      form: {},
-      dialog: {},
-      fileList: []
+        password: '',
+        code:'',
+        uuid:'',
+        userCode:'',
+      }
     }
   },
   components: {},
   methods: {
 
-
-    loginHandler(){
-      router.push({path: '/IndexPage'})
+    registerHandler(){
+      router.push({path: '/register'})
     },
 
-    formSubmit() {
-      sysUserRegister(this.form)
-          .then(() => {
-            this.dialog.dialogFormVisible = false
-            this.user.username=this.form.username
-            this.user.password=this.form.password
-            this.onsubmit()
-          })
+    changeCapHandler(){
+      systemCaptcha().then((resp) => {
+        let data= resp.data.data
+        this.user.code=data.code
+        this.user.uuid=data.uuid
+      })
     },
 
-    clickButton() {
-      this.dialog.dialogFormVisible = true
-    },
-
-    fileSuccess(response) {
-      this.form.avatar = response[0].url
-      this.fileList = [response[0]]
-    },
-    handleRemove() {
-      this.fileList = []
-      this.form.avatar = ''
-    },
-
-
-    dialogClose() {
-      this.form = {}
-      this.oldFormQuery()
-    },
-
-
-    onsubmit() {
+    loginHandler() {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/UserPage'})
+          router.push({path: '/IndexPage'})
         }
       }))
     },
   },
   mounted() {
-    systemCaptcha().then((resp)=>{
-      this.user=resp.data.data()
+
+    systemCaptcha().then((resp) => {
+      this.user = resp.data.data;
     })
   },
 
 }
 </script>
+
 
 
 <style lang="scss" scoped>

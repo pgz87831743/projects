@@ -65,7 +65,7 @@
 
 <script>
 
-import {logout, sysUserGetById} from "@/api/user";
+import {logout, sysUserGetById} from "@/api/api";
 import {getItem, removeItem} from "@/utils/storage";
 import router from "@/router";
 

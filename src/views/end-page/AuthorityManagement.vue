@@ -66,7 +66,7 @@
 
 <script>
 
-import {sysAuthorityAdd, sysAuthorityDeleteById,  sysAuthorityUpdateById,systemAuthorityTree} from "@/api/user";
+import {sysAuthorityAdd, sysAuthorityDeleteById,  sysAuthorityUpdateById,systemAuthorityTree} from "@/api/api";
 
 export default {
   name: "AuthorityManagement.vue",

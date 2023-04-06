@@ -2,7 +2,6 @@ import axios from "axios";
 import { ElNotification } from 'element-plus'
 import {getItem} from "@/utils/storage";
 import router from "@/router";
-// import {getItem} from './storage'
 
 const request = axios.create({
     baseURL: '/api',
