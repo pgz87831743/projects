@@ -14,12 +14,11 @@
 <el-row>
 <el-table :data="tableData" border style="width: 100%">
 <el-table-column prop="id" label="主键"/>
-<el-table-column prop="temperature" label="体温"/>
-<el-table-column prop="symptom" label="症状"/>
-<el-table-column prop="drugSituation" label="用药情况"/>
-<el-table-column prop="level" label="患病的程度"/>
-<el-table-column prop="createTime" label="创建时间"/>
+<el-table-column prop="content" label="消息"/>
 <el-table-column prop="createBy" label="创建人"/>
+<el-table-column prop="createTime" label="创建时间"/>
+<el-table-column prop="targetId" label="记录ID"/>
+<el-table-column prop="toUser" label="接收人"/>
 <el-table-column label="操作" width="300px">
 <template #default="scope">
 <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -40,23 +39,20 @@
 <el-form-item label="主键">
 <el-input v-model="form.id"/>
 </el-form-item>
-<el-form-item label="体温">
-<el-input v-model="form.temperature"/>
+<el-form-item label="消息">
+<el-input v-model="form.content"/>
 </el-form-item>
-<el-form-item label="症状">
-<el-input v-model="form.symptom"/>
-</el-form-item>
-<el-form-item label="用药情况">
-<el-input v-model="form.drugSituation"/>
-</el-form-item>
-<el-form-item label="患病的程度">
-<el-input v-model="form.level"/>
+<el-form-item label="创建人">
+<el-input v-model="form.createBy"/>
 </el-form-item>
 <el-form-item label="创建时间">
 <el-input v-model="form.createTime"/>
 </el-form-item>
-<el-form-item label="创建人">
-<el-input v-model="form.createBy"/>
+<el-form-item label="记录ID">
+<el-input v-model="form.targetId"/>
+</el-form-item>
+<el-form-item label="接收人">
+<el-input v-model="form.toUser"/>
 </el-form-item>
 </el-form>
 <template #footer>
@@ -87,11 +83,11 @@
 
 <script>
 
-import {exchangeApi} from "@/api/api";
+import {messageApi} from "@/api/api";
 
 
         export default {
-        name: "Exchange",
+        name: "Message",
         data() {
         return {
         page: {
@@ -116,7 +112,7 @@ import {exchangeApi} from "@/api/api";
         methods: {
 
         search() {
-        exchangeApi.page(this.page)
+        messageApi.page(this.page)
         .then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
@@ -131,21 +127,21 @@ import {exchangeApi} from "@/api/api";
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
         } else if (type === 'update') {
-        exchangeApi.getById(row.id).then((resp) => {
+        messageApi.getById(row.id).then((resp) => {
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '修改'
         this.dialog.formDisabled = false
         this.form = resp.data.data
         })
         } else if (type === 'detail') {
-        exchangeApi.getById(row.id).then((resp) => {
+        messageApi.getById(row.id).then((resp) => {
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '详情'
         this.dialog.formDisabled = true
         this.form = resp.data.data
         })
         } else if (type === 'delete') {
-        exchangeApi.deleteById(row.id).then(() => {
+        messageApi.deleteById(row.id).then(() => {
         this.initTableData()
         })
         }
@@ -153,7 +149,7 @@ import {exchangeApi} from "@/api/api";
 
         currentChange(number) {
         this.page.pageNum = number
-        exchangeApi.page(this.page).then(resp => {
+        messageApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
         })
@@ -162,12 +158,12 @@ import {exchangeApi} from "@/api/api";
         formSubmit() {
         this.dialog.dialogFormVisible = false
         if (this.dialog.optionValue === 'add') {
-        exchangeApi.add(this.form)
+        messageApi.add(this.form)
         .then(() => {
         this.initTableData();
         })
         } else if (this.dialog.optionValue === 'update') {
-        exchangeApi.updateById(this.form)
+        messageApi.updateById(this.form)
         .then(() => {
         this.initTableData();
         })
@@ -180,7 +176,7 @@ import {exchangeApi} from "@/api/api";
         },
 
         initTableData() {
-        exchangeApi.page(this.page)
+        messageApi.page(this.page)
         .then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
@@ -237,5 +233,3 @@ import {exchangeApi} from "@/api/api";
 
 </style>
 
-
-        }

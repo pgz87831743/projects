@@ -4,13 +4,13 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+    
+<!--      <el-col :span="5" :offset="1">-->
+<!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1" :offset="1">-->
+<!--        <el-button type="success" @click="search">搜索</el-button>-->
+<!--      </el-col>-->
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
@@ -23,8 +23,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="address" label="联系地址"/>
+        <el-table-column prop="num" label="医生工号"/>
+        <el-table-column prop="description" label="擅长领域"/>
+        <el-table-column prop="dept" label="科室"/>
         <el-table-column prop="role" label="角色"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
@@ -63,10 +64,8 @@
               :on-success="handleAvatarSuccess"
               name="files"
           >
-            <img :src="form.avatar" width="100"/>
-            <el-icon class="avatar-uploader-icon">
-              <Plus/>
-            </el-icon>
+            <img  :src="form.avatar"  width="100" />
+            <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
 
         </el-form-item>
@@ -76,15 +75,18 @@
             <el-radio label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="联系电话">
-          <el-input v-model="form.phone"/>
+        <el-form-item label="医生工号">
+          <el-input v-model="form.num"/>
         </el-form-item>
-        <el-form-item label="联系地址">
-          <el-input type="textarea" v-model="form.address"/>
+        <el-form-item label="科室">
+          <el-input  v-model="form.dept"/>
+        </el-form-item>
+        <el-form-item label="擅长领域">
+          <el-input type="textarea" v-model="form.description"/>
         </el-form-item>
         <el-form-item label="角色">
           <el-select v-model="form.role">
-            <el-option label="USER" value="USER"/>
+            <el-option label="DOCTOR" value="DOCTOR"/>
           </el-select>
         </el-form-item>
 
@@ -118,11 +120,11 @@
 
 <script>
 
-import { sysUserApi} from "@/api/api";
+import {  sysUserApi} from "@/api/api";
 import {Plus} from "@element-plus/icons-vue";
 
 export default {
-  name: "UserManagement",
+  name: "DoctorManagement",
   data() {
     return {
       page: {
@@ -130,7 +132,7 @@ export default {
         pageNum: 1,
         tootle: 100,
         search: '',
-        roleTypeEnum: 'USER'
+        roleTypeEnum:'DOCTOR'
       },
       visible: [],
       tableData: [],
@@ -142,7 +144,7 @@ export default {
         optionValue: null
       },
       form: {
-        role: 'USER'
+        role:'DOCTOR'
       },
       total: 0,
     }
@@ -150,7 +152,7 @@ export default {
   components: {Plus},
   methods: {
 
-    search() {
+    search(){
       sysUserApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
@@ -158,8 +160,8 @@ export default {
           })
     },
 
-    handleAvatarSuccess(response) {
-      this.form.avatar = response[0].url
+    handleAvatarSuccess(response){
+      this.form.avatar=response[0].url
     },
 
     clickButton(type, row) {
@@ -199,12 +201,12 @@ export default {
 
     formSubmit() {
       this.dialog.dialogFormVisible = false
-      if (this.dialog.optionValue === 'add') {
+      if (this.dialog.optionValue==='add') {
         sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
-      } else if (this.dialog.optionValue === 'update') {
+      } else if (this.dialog.optionValue==='update') {
         sysUserApi.updateById(this.form)
             .then(() => {
               this.initTableData();
@@ -215,9 +217,10 @@ export default {
 
     dialogClose() {
       this.form = {
-        role: 'USER'
+        role:'DOCTOR'
       }
     },
+
 
 
     initTableData() {
@@ -231,7 +234,6 @@ export default {
   },
   mounted() {
     this.initTableData()
-
   },
 
 }
@@ -246,7 +248,6 @@ export default {
 .el-row {
   margin-top: 30px;
 }
-
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;

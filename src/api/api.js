@@ -34,6 +34,9 @@ export const sysUserApi = {
     page(data) {
         return request.post('/sys/sysUser/page', data)
     },
+    doctorList() {
+        return request.post('/sys/sysUser/doctorList')
+    },
     getById(id) {
         return request.get('/sys/sysUser/getById/' + id)
     },
@@ -128,5 +131,91 @@ export const paidHelpApi={
     },
     updateById(data){
         return request.put('/paidHelp/updateById',data)
+    }
+}
+
+
+//消息管理
+export const messageApi={
+    page(data){
+        return request.post('/message/page',data)
+    },
+    getById(id){
+        return request.get('/message/getById/'+id)
+    },
+    listAll(username){
+      return request.get('/message/listAll?targetID='+username)
+    },
+    add(data){
+        return request.post('/message/add',data)
+    },
+    deleteById(id){
+        return request.delete('/message/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/message/updateById',data)
+    }
+}
+
+
+//抗原检测管理
+export const antigenApi={
+    page(data){
+        return request.post('/antigen/page',data)
+    },
+    getById(id){
+        return request.get('/antigen/getById/'+id)
+    },
+    add(data){
+        return request.post('/antigen/add',data)
+    },
+    deleteById(id){
+        return request.delete('/antigen/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/antigen/updateById',data)
+    }
+}
+
+
+//药品求助管理
+export const nucleicAcidApi = {
+    page(data) {
+        return request.post('/nucleicAcid/page', data)
+    },
+    getById(id) {
+        return request.get('/nucleicAcid/getById/' + id)
+    },
+    add(data) {
+        return request.post('/nucleicAcid/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/nucleicAcid/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/nucleicAcid/updateById', data)
+    }
+}
+
+
+//问诊会话管理
+export const onlineInfoApi={
+    page(data){
+        return request.post('/onlineInfo/page',data)
+    },
+    getById(id){
+        return request.get('/onlineInfo/getById/'+id)
+    },
+    listAll(){
+        return request.get('/onlineInfo/listAll')
+    },
+    add(data){
+        return request.post('/onlineInfo/add',data)
+    },
+    deleteById(id){
+        return request.delete('/onlineInfo/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/onlineInfo/updateById',data)
     }
 }

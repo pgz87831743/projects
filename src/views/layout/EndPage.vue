@@ -31,8 +31,19 @@
              router
              :default-active="$route.fullPath"
          >
-           <el-menu-item index="/UserManagement">用户管理</el-menu-item>
-           <el-menu-item index="/GoodsManagement">商品管理</el-menu-item>
+          <el-sub-menu>
+            <template #title>
+              账号管理
+            </template>
+            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
+            <el-menu-item index="/DoctorManagement">医生管理</el-menu-item>
+          </el-sub-menu>
+           <el-menu-item index="/DrugHelp">药品求助管理</el-menu-item>
+           <el-menu-item index="/Goods">物资管理</el-menu-item>
+           <el-menu-item index="/PaidHelp">有偿求助管理</el-menu-item>
+           <el-menu-item index="/Exchange">交流论坛管理</el-menu-item>
+           <el-menu-item index="/Antigen">自主检测管理</el-menu-item>
+           <el-menu-item index="/NucleicAcid">核酸记录管理</el-menu-item>
          </el-menu>
        </el-col>
        <el-col :span="21">

@@ -8,17 +8,16 @@
             <el-table-column prop="description" label="需求描述"/>
             <el-table-column prop="img" label="药品图片">
               <template #default="scope">
-                <el-image :src="scope.row.img"></el-image>
+                <img :src="scope.row.img" width="80"/>
               </template>
             </el-table-column>
             <el-table-column prop="status" label="是否解决"/>
             <el-table-column prop="createTime" label="创建时间"/>
             <el-table-column prop="createBy" label="创建人"/>
-            >
             <el-table-column label="操作" width="300px">
               <template #default="scope">
-                <el-button size="small" type="success" @click="clickButton('update', scope.row)">沟通</el-button>
-                <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">捐赠</el-button>
+                <el-button size="small" type="success" @click="clickButton('gt', scope.row)">沟通</el-button>
+                <el-button  v-if="scope.row.createBy===getUser().username&&scope.row.status==='待解决'" type="primary" size="small" @click="clickButton('xx', scope.row)">下线互助</el-button>
 
               </template>
             </el-table-column>
@@ -27,35 +26,57 @@
 
 
         <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-          <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-            <el-form-item label="主键">
-              <el-input v-model="form.id"/>
-            </el-form-item>
-            <el-form-item label="药品名称">
-              <el-input v-model="form.name"/>
-            </el-form-item>
-            <el-form-item label="需求描述">
-              <el-input v-model="form.description"/>
-            </el-form-item>
-            <el-form-item label="药品图片">
-              <el-input v-model="form.img"/>
-            </el-form-item>
-            <el-form-item label="是否解决">
-              <el-input v-model="form.status"/>
-            </el-form-item>
-            <el-form-item label="创建时间">
-              <el-input v-model="form.createTime"/>
-            </el-form-item>
-            <el-form-item label="创建人">
-              <el-input v-model="form.createBy"/>
-            </el-form-item>
-          </el-form>
-          <template #footer>
-<span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
-</span>
-          </template>
+          <div style=" overflow:auto;height:480px;" id="divscope">
+            <div class="lt">
+              <div>
+
+                <el-row v-for="item in messageData" v-bind:key="item.id">
+
+                  <el-col :span="22" v-if="item.createBy===getItem('TOKEN_INFO_KEY').user.username">
+                    <div style="background: white">
+                      <div style="width: 98%">
+                        <div style="float: right">{{ item.createTime }}</div>
+                        <div style="float: right">{{ item.createBy }}&nbsp;&nbsp;</div>
+                        <div style="clear:both"></div>
+                        <span
+                            style="min-width: 100px;float: right;background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{ item.content }}</span>
+                      </div>
+                    </div>
+                  </el-col>
+                  <el-col :span="2">
+                    <div>
+                      <el-avatar :size="50"
+                                 src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"></el-avatar>
+                    </div>
+                  </el-col>
+                  <el-col :span="22" v-if="item.createBy!==getItem('TOKEN_INFO_KEY').user.username">
+                    <div style="background: white">
+                      <div style="width: 98%">
+                        <div style="float: left">{{ item.createBy }}&nbsp;&nbsp;</div>
+                        <div style="float: left">{{ item.createTime }}</div>
+                        <div style="clear:both"></div>
+                        <span
+                            style="min-width: 100px;float: left; background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{ item.content }}</span>
+                      </div>
+
+                    </div>
+                  </el-col>
+
+                </el-row>
+              </div>
+            </div>
+          </div>
+          <dov>
+            <el-row justify="center" :gutter="20">
+              <el-col :span="20">
+                <el-input v-model="form.content"></el-input>
+              </el-col>
+              <el-col :span="2">
+                <el-button type="success" @click="send">发送</el-button>
+              </el-col>
+            </el-row>
+          </dov>
+
         </el-dialog>
 
 
@@ -78,7 +99,9 @@
 
 <script>
 
-import {drugHelpApi} from "@/api/api";
+import {drugHelpApi, messageApi} from "@/api/api";
+import {getItem} from "@/utils/storage";
+import {getUser} from "@/utils/authutil";
 
 
 export default {
@@ -93,20 +116,22 @@ export default {
       },
       visible: [],
       tableData: [],
-      roleData: [],
+      messageData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
         formDisabled: true,
         optionValue: null
       },
+      ws: {},
       form: {},
       total: 0,
     }
   },
 
   methods: {
-
+    getUser,
+    getItem,
     search() {
       drugHelpApi.page(this.page)
           .then(resp => {
@@ -114,32 +139,26 @@ export default {
             this.total = resp.data.data.total
           })
     },
-
-
     clickButton(type, row) {
-      this.dialog.optionValue = type
-      if (type === 'add') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
-        this.dialog.formDisabled = false
-      } else if (type === 'update') {
-        drugHelpApi.getById(row.id).then((resp) => {
-          this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
-          this.dialog.formDisabled = false
-          this.form = resp.data.data
-        })
-      } else if (type === 'detail') {
-        drugHelpApi.getById(row.id).then((resp) => {
-          this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
-          this.dialog.formDisabled = true
-          this.form = resp.data.data
-        })
-      } else if (type === 'delete') {
-        drugHelpApi.deleteById(row.id).then(() => {
-          this.initTableData()
-        })
+      if (type==='gt'){
+        messageApi.listAll(row.id)
+            .then((resp) => {
+              this.messageData = resp.data.data
+              this.dialog.dialogFormVisible = true
+              this.dialog.optionName = '在线沟通'
+              this.form.toUser = row.createBy
+              this.form.targetId = row.id
+
+              this.scope()
+            })
+      }
+
+      if (type==='xx'){
+        row.status='已解决'
+        drugHelpApi.updateById(row)
+            .then(() => {
+              this.initTableData()
+            })
       }
     },
 
@@ -149,21 +168,6 @@ export default {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
-    },
-
-    formSubmit() {
-      this.dialog.dialogFormVisible = false
-      if (this.dialog.optionValue === 'add') {
-        drugHelpApi.add(this.form)
-            .then(() => {
-              this.initTableData();
-            })
-      } else if (this.dialog.optionValue === 'update') {
-        drugHelpApi.updateById(this.form)
-            .then(() => {
-              this.initTableData();
-            })
-      }
     },
 
 
@@ -179,16 +183,54 @@ export default {
           })
     },
 
+    onmessage(data) {
+      let msg = JSON.parse(data.data)
+      if (this.form.targetId === msg.targetId) {
+        this.messageData.push(msg)
+      }
+      this.scope()
+    },
+    onOpen(data) {
+      console.log(data.data)
+    },
+    send() {
+      this.ws.send(JSON.stringify(this.form))
+    },
+
+    scope(){
+      let div= document.getElementById("divscope")
+      div.scrollTop = div.scrollHeight;
+    }
+
+
   },
+
+  unmounted() {
+    this.ws.close()
+  },
+
   mounted() {
     this.initTableData()
+    this.ws = new WebSocket("ws://localhost:9001/websocket/" + getItem('TOKEN_INFO_KEY').user.username)
+    this.ws.onmessage = this.onmessage
+    this.ws.onopen = this.onOpen
+
   },
+
+
 
 }
 </script>
 
 
 <style lang="scss" scoped>
+
+
+.lt {
+  width: 100%;
+  margin: 0 auto;
+}
+
 .el-row:nth-child(1) {
   margin-top: 0;
 }

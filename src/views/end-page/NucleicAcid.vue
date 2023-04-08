@@ -14,12 +14,11 @@
 <el-row>
 <el-table :data="tableData" border style="width: 100%">
 <el-table-column prop="id" label="主键"/>
-<el-table-column prop="temperature" label="体温"/>
-<el-table-column prop="symptom" label="症状"/>
-<el-table-column prop="drugSituation" label="用药情况"/>
-<el-table-column prop="level" label="患病的程度"/>
-<el-table-column prop="createTime" label="创建时间"/>
+<el-table-column prop="person" label="检测人"/>
+<el-table-column prop="result" label="检测结果"/>
+<el-table-column prop="dept" label="检测机构"/>
 <el-table-column prop="createBy" label="创建人"/>
+<el-table-column prop="createTime" label="检测时间"/>
 <el-table-column label="操作" width="300px">
 <template #default="scope">
 <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -40,23 +39,20 @@
 <el-form-item label="主键">
 <el-input v-model="form.id"/>
 </el-form-item>
-<el-form-item label="体温">
-<el-input v-model="form.temperature"/>
+<el-form-item label="检测人">
+<el-input v-model="form.person"/>
 </el-form-item>
-<el-form-item label="症状">
-<el-input v-model="form.symptom"/>
+<el-form-item label="检测结果">
+<el-input v-model="form.result"/>
 </el-form-item>
-<el-form-item label="用药情况">
-<el-input v-model="form.drugSituation"/>
-</el-form-item>
-<el-form-item label="患病的程度">
-<el-input v-model="form.level"/>
-</el-form-item>
-<el-form-item label="创建时间">
-<el-input v-model="form.createTime"/>
+<el-form-item label="检测机构">
+<el-input v-model="form.dept"/>
 </el-form-item>
 <el-form-item label="创建人">
 <el-input v-model="form.createBy"/>
+</el-form-item>
+<el-form-item label="检测时间">
+<el-input v-model="form.createTime"/>
 </el-form-item>
 </el-form>
 <template #footer>
@@ -87,11 +83,11 @@
 
 <script>
 
-import {exchangeApi} from "@/api/api";
+import {nucleicAcidApi} from "@/api/api";
 
 
         export default {
-        name: "Exchange",
+        name: "NucleicAcid",
         data() {
         return {
         page: {
@@ -116,7 +112,7 @@ import {exchangeApi} from "@/api/api";
         methods: {
 
         search() {
-        exchangeApi.page(this.page)
+        nucleicAcidApi.page(this.page)
         .then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
@@ -131,21 +127,21 @@ import {exchangeApi} from "@/api/api";
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
         } else if (type === 'update') {
-        exchangeApi.getById(row.id).then((resp) => {
+        nucleicAcidApi.getById(row.id).then((resp) => {
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '修改'
         this.dialog.formDisabled = false
         this.form = resp.data.data
         })
         } else if (type === 'detail') {
-        exchangeApi.getById(row.id).then((resp) => {
+        nucleicAcidApi.getById(row.id).then((resp) => {
         this.dialog.dialogFormVisible = true
         this.dialog.optionName = '详情'
         this.dialog.formDisabled = true
         this.form = resp.data.data
         })
         } else if (type === 'delete') {
-        exchangeApi.deleteById(row.id).then(() => {
+        nucleicAcidApi.deleteById(row.id).then(() => {
         this.initTableData()
         })
         }
@@ -153,7 +149,7 @@ import {exchangeApi} from "@/api/api";
 
         currentChange(number) {
         this.page.pageNum = number
-        exchangeApi.page(this.page).then(resp => {
+        nucleicAcidApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
         })
@@ -162,12 +158,12 @@ import {exchangeApi} from "@/api/api";
         formSubmit() {
         this.dialog.dialogFormVisible = false
         if (this.dialog.optionValue === 'add') {
-        exchangeApi.add(this.form)
+        nucleicAcidApi.add(this.form)
         .then(() => {
         this.initTableData();
         })
         } else if (this.dialog.optionValue === 'update') {
-        exchangeApi.updateById(this.form)
+        nucleicAcidApi.updateById(this.form)
         .then(() => {
         this.initTableData();
         })
@@ -180,7 +176,7 @@ import {exchangeApi} from "@/api/api";
         },
 
         initTableData() {
-        exchangeApi.page(this.page)
+        nucleicAcidApi.page(this.page)
         .then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
@@ -237,5 +233,3 @@ import {exchangeApi} from "@/api/api";
 
 </style>
 
-
-        }

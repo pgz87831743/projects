@@ -13,21 +13,11 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="cover" label="产品图">
-          <template #default="scope">
-            <el-image :src="scope.row.cover"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="title" label="名称" width="300px"/>
-        <el-table-column prop="storeName" label="店铺名称" width="150px"/>
-        <el-table-column prop="description" label="简介" width="300px"/>
-        <el-table-column prop="price" label="价格"/>
-        <el-table-column prop="createTime" label="发布时间" width="150px"/>
-        <el-table-column prop="createBy" label="发布人"/>
-        <el-table-column prop="times" label="浏览次数"/>
-        <el-table-column prop="commentNum" label="评论次数"/>
-        >
-        <el-table-column label="操作" width="250px">
+        <el-table-column prop="id" label="主键"/>
+        <el-table-column prop="img" label="检测图片"/>
+        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="createTime" label="创建时间"/>
+        <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
             <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
@@ -44,36 +34,14 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="名称">
-          <el-input v-model="form.title"/>
+        <el-form-item label="检测图片">
+          <el-input v-model="form.img"/>
         </el-form-item>
-        <el-form-item label="店铺名称">
-          <el-input v-model="form.storeName"/>
-        </el-form-item>
-        <el-form-item label="简介">
-          <el-input v-model="form.description"/>
-        </el-form-item>
-        <el-form-item label="价格">
-          <el-input v-model="form.price"/>
-        </el-form-item>
-        <el-form-item label="发布人">
+        <el-form-item label="创建人">
           <el-input v-model="form.createBy"/>
         </el-form-item>
-        <el-form-item label="产品主图">
-          <el-upload
-              class="avatar-uploader"
-              action="/api/file/upload"
-              :data="{fileTypeEnum:'FILE'}"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              name="files"
-          >
-            <img
-                :src="form.cover"
-                width="220"
-            />
-            <el-button style="margin-left: 20px">更换主图</el-button>
-          </el-upload>
+        <el-form-item label="创建时间">
+          <el-input v-model="form.createTime"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -104,11 +72,11 @@
 
 <script>
 
-import {goodsApi} from "@/api/api";
+import {antigenApi} from "@/api/api";
 
 
 export default {
-  name: "Goods",
+  name: "Antigen",
   data() {
     return {
       page: {
@@ -119,7 +87,6 @@ export default {
       },
       visible: [],
       tableData: [],
-      roleData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -134,15 +101,11 @@ export default {
   methods: {
 
     search() {
-      goodsApi.page(this.page)
+      antigenApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
-    },
-
-    handleAvatarSuccess(response){
-      this.form.cover=response[0].url
     },
 
 
@@ -153,21 +116,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        goodsApi.getById(row.id).then((resp) => {
+        antigenApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        goodsApi.getById(row.id).then((resp) => {
+        antigenApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        goodsApi.deleteById(row.id).then(() => {
+        antigenApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -175,7 +138,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      goodsApi.page(this.page).then(resp => {
+      antigenApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -184,12 +147,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        goodsApi.add(this.form)
+        antigenApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        goodsApi.updateById(this.form)
+        antigenApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -202,7 +165,7 @@ export default {
     },
 
     initTableData() {
-      goodsApi.page(this.page)
+      antigenApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total

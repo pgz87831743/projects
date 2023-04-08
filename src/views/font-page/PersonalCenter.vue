@@ -31,21 +31,43 @@
                     <el-form-item label="昵称：">
                       <el-input v-model="form.nickname"></el-input>
                     </el-form-item>
-                    <el-form-item label="身份证：">
-                      <el-input v-model="form.idCard"></el-input>
-                    </el-form-item>
                     <el-form-item label="性别：">
                       <el-radio-group v-model="form.sex">
                         <el-radio label="男">男</el-radio>
                         <el-radio label="女">女</el-radio>
                       </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="联系地址：">
-                      <el-input v-model="form.address"></el-input>
-                    </el-form-item>
-                    <el-form-item label="联系电话：">
-                      <el-input v-model="form.phone"></el-input>
-                    </el-form-item>
+
+
+                    <div v-if="getUser().role==='USER'">
+                      <el-form-item label="身份证：">
+                        <el-input v-model="form.idCard"></el-input>
+                      </el-form-item>
+                      <el-form-item label="联系地址：">
+                        <el-input v-model="form.address"></el-input>
+                      </el-form-item>
+                      <el-form-item label="联系电话：">
+                        <el-input v-model="form.phone"></el-input>
+                      </el-form-item>
+                      <el-form-item label="症状描述：">
+                        <el-input v-model="form.description" type="textarea"></el-input>
+                      </el-form-item>
+                    </div>
+
+
+                    <div v-if="getUser().role==='DOCTOR'">
+                      <el-form-item label="医生工号">
+                        <el-input v-model="form.num"></el-input>
+                      </el-form-item>
+                      <el-form-item label="科室">
+                        <el-input v-model="form.dept"></el-input>
+                      </el-form-item>
+                      <el-form-item label="擅长领域">
+                        <el-input v-model="form.description" type="textarea"></el-input>
+                      </el-form-item>
+                    </div>
+
+
                     <el-form-item label="密码：">
                       <el-input type="password" show-password v-model="form.password"></el-input>
                     </el-form-item>
@@ -113,6 +135,7 @@
 
 
 import {systemCurrentUser, sysUserApi} from "@/api/api";
+import {getUser} from "@/utils/authutil";
 
 export default {
   name: "PersonalCenter",
@@ -130,6 +153,7 @@ export default {
     }
   },
   methods: {
+    getUser,
 
     handleAvatarSuccess(response){
       this.form.avatar=response[0].url

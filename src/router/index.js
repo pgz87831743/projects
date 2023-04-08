@@ -62,6 +62,18 @@ const routes = [
                 path: "/DrugHelpProvideFont",
                 name: "DrugHelpProvideFont",
                 component: () => import('../views/font-page/DrugHelpProvideFont'),
+            },{
+                path: "/AntigenFont",
+                name: "AntigenFont",
+                component: () => import('../views/font-page/AntigenFont'),
+            },{
+                path: "/NucleicAcidFont",
+                name: "NucleicAcidFont",
+                component: () => import('../views/font-page/NucleicAcidFont'),
+            },{
+                path: "/OnlineConsultation",
+                name: "OnlineConsultation",
+                component: () => import('../views/font-page/OnlineConsultation'),
             },
 
         ]
@@ -75,11 +87,40 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
+            },
+            {
+                path: "/DoctorManagement",
+                name: "DoctorManagement",
+                component: () => import('../views/end-page/DoctorManagement'),
+            },
+            {
+                path: "/DrugHelp",
+                name: "DrugHelp",
+                component: () => import('../views/end-page/DrugHelp'),
             },{
-                path: "/GoodsManagement",
-                name: "GoodsManagement",
-                component: () => import('../views/end-page/GoodsManagement'),
+                path: "/Goods",
+                name: "Goods",
+                component: () => import('../views/end-page/Goods'),
             }
+            ,{
+                path: "/PaidHelp",
+                name: "PaidHelp",
+                component: () => import('../views/end-page/PaidHelp'),
+            },
+            {
+                path: "/Exchange",
+                name: "Exchange",
+                component: () => import('../views/end-page/Exchange'),
+            }, {
+                path: "/Antigen",
+                name: "Antigen",
+                component: () => import('../views/end-page/Antigen'),
+            },{
+                path: "/NucleicAcid",
+                name: "NucleicAcid",
+                component: () => import('../views/end-page/NucleicAcid'),
+            },
+
 
         ]
     }

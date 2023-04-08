@@ -22,6 +22,14 @@
           <el-menu-item index="/GoodsBuyFont">物资购买</el-menu-item>
           <el-menu-item index="/PaidHelpNeedFont">有偿需求</el-menu-item>
         </el-sub-menu>
+        <el-sub-menu index="2-6">
+          <template #title>
+            自主检测
+          </template>
+          <el-menu-item index="/NucleicAcidFont">核酸查询</el-menu-item>
+          <el-menu-item index="/AntigenFont">抗原上传</el-menu-item>
+        </el-sub-menu>
+        <el-menu-item index="/OnlineConsultation">在线问诊</el-menu-item>
         <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
