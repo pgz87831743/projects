@@ -39,60 +39,86 @@
 
         <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
 
-          <div style=" overflow:auto;height:480px;" id="divscope3">
-            <div class="lt">
-              <div>
+          <div v-if="this.dialog.optionValue==='jl'">
+            <div style=" overflow:auto;height:480px;" id="divscope3">
+              <div class="lt">
+                <div>
 
-                <el-row v-for="item in messageData" v-bind:key="item.id">
+                  <el-row v-for="item in messageData" v-bind:key="item.id">
 
-                  <el-col :span="22" v-if="item.createBy===getUser().username">
-                    <div style="background: white">
-                      <div style="width: 98%">
-                        <div style="float: right">{{ item.createTime }}</div>
-                        <div style="float: right">{{ item.createBy }}&nbsp;&nbsp;</div>
-                        <div style="clear:both"></div>
-                        <span
-                            style="min-width: 100px;float: right;background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{
-                            item.content
-                          }}</span>
+                    <el-col :span="22" v-if="item.createBy===getUser().username">
+                      <div style="background: white">
+                        <div style="width: 98%">
+                          <div style="float: right">{{ item.createTime }}</div>
+                          <div style="float: right">{{ item.createBy }}&nbsp;&nbsp;</div>
+                          <div style="clear:both"></div>
+                          <span
+                              style="min-width: 100px;float: right;background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{
+                              item.content
+                            }}</span>
+                        </div>
                       </div>
-                    </div>
-                  </el-col>
-                  <el-col :span="2">
-                    <div>
-                      <el-avatar :size="50"
-                                 src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"></el-avatar>
-                    </div>
-                  </el-col>
-                  <el-col :span="22" v-if="item.createBy!==getUser().username">
-                    <div style="background: white">
-                      <div style="width: 98%">
-                        <div style="float: left">{{ item.createBy }}&nbsp;&nbsp;</div>
-                        <div style="float: left">{{ item.createTime }}</div>
-                        <div style="clear:both"></div>
-                        <span
-                            style="min-width: 100px;float: left; background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{
-                            item.content
-                          }}</span>
+                    </el-col>
+                    <el-col :span="2">
+                      <div>
+                        <el-avatar :size="50"
+                                   src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"></el-avatar>
                       </div>
+                    </el-col>
+                    <el-col :span="22" v-if="item.createBy!==getUser().username">
+                      <div style="background: white">
+                        <div style="width: 98%">
+                          <div style="float: left">{{ item.createBy }}&nbsp;&nbsp;</div>
+                          <div style="float: left">{{ item.createTime }}</div>
+                          <div style="clear:both"></div>
+                          <span
+                              style="min-width: 100px;float: left; background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{
+                              item.content
+                            }}</span>
+                        </div>
 
-                    </div>
-                  </el-col>
+                      </div>
+                    </el-col>
 
-                </el-row>
+                  </el-row>
+                </div>
               </div>
             </div>
+            <dov>
+              <el-row justify="center" :gutter="20">
+                <el-col :span="20">
+                  <el-input v-model="form.content"></el-input>
+                </el-col>
+                <el-col :span="2">
+                  <el-button type="success" @click="send">发送</el-button>
+                </el-col>
+              </el-row>
+            </dov>
           </div>
-          <dov>
-            <el-row justify="center" :gutter="20">
-              <el-col :span="20">
-                <el-input v-model="form.content"></el-input>
-              </el-col>
-              <el-col :span="2">
-                <el-button type="success" @click="send">发送</el-button>
-              </el-col>
-            </el-row>
-          </dov>
+
+
+          <div v-if="this.dialog.optionValue==='add'">
+            <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+              <el-form-item label="体温">
+                <el-input v-model="form.temperature"/>
+              </el-form-item>
+              <el-form-item label="症状">
+                <el-input v-model="form.symptom"/>
+              </el-form-item>
+              <el-form-item label="用药情况">
+                <el-input v-model="form.drugSituation"/>
+              </el-form-item>
+              <el-form-item label="患病的程度">
+                <el-input v-model="form.level"/>
+              </el-form-item>
+            </el-form>
+          </div>
+          <template #footer v-if="this.dialog.optionValue==='add'">
+      <span class="dialog-footer" v-if="!dialog.formDisabled">
+      <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+      <el-button type="success" @click="formSubmit">确认</el-button>
+      </span>
+          </template>
         </el-dialog>
 
 
@@ -159,6 +185,14 @@ export default {
 
     clickButton(type, row) {
       this.dialog.optionValue = type
+
+      if (type === 'add') {
+        this.dialog.dialogFormVisible = true
+        this.dialog.optionName = '新增'
+        this.dialog.formDisabled = false
+      }
+
+
       if (type === 'jl') {
         messageApi.listAll(row.id)
             .then((resp) => {
@@ -228,10 +262,9 @@ export default {
     },
 
 
-    scope(){
-      document.getElementById("divscope3").scrollTop=document.getElementById("divscope3").scrollHeight
+    scope() {
+      document.getElementById("divscope3").scrollTop = document.getElementById("divscope3").scrollHeight
     }
-
 
 
   },
