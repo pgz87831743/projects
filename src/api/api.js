@@ -60,6 +60,10 @@ export const drugHelpApi={
     page(data){
         return request.post('/drugHelp/page',data)
     },
+    listAll(){
+        return request.get('/drugHelp/listAll')
+    },
+
     getById(id){
         return request.get('/drugHelp/getById/'+id)
     },
@@ -217,5 +221,25 @@ export const onlineInfoApi={
     },
     updateById(data){
         return request.put('/onlineInfo/updateById',data)
+    }
+}
+
+
+//订单管理
+export const ordersApi={
+    page(data){
+        return request.post('/orders/page',data)
+    },
+    getById(id){
+        return request.get('/orders/getById/'+id)
+    },
+    add(data){
+        return request.post('/orders/add',data)
+    },
+    deleteById(id){
+        return request.delete('/orders/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/orders/updateById',data)
     }
 }

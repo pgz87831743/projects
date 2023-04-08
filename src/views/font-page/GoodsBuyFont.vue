@@ -4,7 +4,7 @@
     <el-card>
       <div class="p-div">
         <el-row>
-          <el-col :span="5" >
+          <el-col :span="5">
             <el-input v-model="page.search" placeholder="请输入物质分类" clearable/>
           </el-col>
           <el-col :span="1" :offset="1">
@@ -29,9 +29,11 @@
 
             <el-table-column label="操作" width="300px">
               <template #default="scope">
-                <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-                <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+                <el-button v-if="scope.row.createBy!==getUser().username" size="small" type="success"
+                           @click="clickButton('buy', scope.row)">购买
+                </el-button>
                 <el-button
+                    v-if="scope.row.createBy===getUser().username"
                     size="small"
                     type="danger"
                     @click="clickButton('delete',scope.row)">删除
@@ -99,7 +101,8 @@
 
 <script>
 
-import {goodsApi} from "@/api/api";
+import {goodsApi, ordersApi} from "@/api/api";
+import {getUser} from "@/utils/authutil";
 
 
 export default {
@@ -127,6 +130,7 @@ export default {
   },
 
   methods: {
+    getUser,
 
     search() {
       goodsApi.page(this.page)
@@ -139,10 +143,13 @@ export default {
 
     clickButton(type, row) {
       this.dialog.optionValue = type
-      if (type === 'add') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
-        this.dialog.formDisabled = false
+      if (type === 'buy') {
+
+        let from = {
+          goods: row
+        }
+        ordersApi.add(from)
+
       } else if (type === 'update') {
         goodsApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true

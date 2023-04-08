@@ -14,7 +14,11 @@
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="id" label="主键"/>
-        <el-table-column prop="img" label="检测图片"/>
+        <el-table-column prop="img" label="检测图片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="80"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column label="操作" width="300px">

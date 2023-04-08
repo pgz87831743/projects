@@ -16,7 +16,7 @@
           <el-input v-model="form.name"/>
         </el-descriptions-item>
         <el-descriptions-item label="物资价格">
-          <el-input type="number"  v-model="form.price"/>
+          <el-input type="number" v-model="form.price"/>
         </el-descriptions-item>
         <el-descriptions-item label="物资类型">
           <el-input v-model="form.type"/>

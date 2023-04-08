@@ -11,6 +11,8 @@
                 <img :src="scope.row.img" width="80"/>
               </template>
             </el-table-column>
+            <el-table-column prop="person" label="联系人"/>
+            <el-table-column prop="phone" label="联系电话"/>
             <el-table-column prop="status" label="是否解决"/>
             <el-table-column prop="createTime" label="创建时间"/>
             <el-table-column prop="createBy" label="创建人"/>
