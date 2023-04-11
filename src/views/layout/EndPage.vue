@@ -9,7 +9,7 @@
            router
            :default-active="$route.fullPath"
        >
-         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">疫情互助系统</div></el-menu-item>
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">健康管理系统</div></el-menu-item>
          <div class="flex-grow" />
          <el-sub-menu index="2-4">
            <template #title>
@@ -17,7 +17,6 @@
            </template>
            <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
            <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
-
          </el-sub-menu>
 
        </el-menu>
@@ -33,17 +32,20 @@
          >
           <el-sub-menu>
             <template #title>
-              账号管理
+              系统管理
             </template>
-            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
-            <el-menu-item index="/DoctorManagement">医生管理</el-menu-item>
+            <el-menu-item index="/UserManagement">管理员管理</el-menu-item>
+            <el-menu-item index="/DoctorManagement">健康新闻管理</el-menu-item>
           </el-sub-menu>
-           <el-menu-item index="/DrugHelp">药品求助管理</el-menu-item>
-           <el-menu-item index="/Goods">物资管理</el-menu-item>
-           <el-menu-item index="/PaidHelp">有偿求助管理</el-menu-item>
-           <el-menu-item index="/Exchange">交流论坛管理</el-menu-item>
-           <el-menu-item index="/Antigen">自主检测管理</el-menu-item>
-           <el-menu-item index="/NucleicAcid">核酸记录管理</el-menu-item>
+
+           <el-sub-menu>
+             <template #title>
+               教师管理
+             </template>
+             <el-menu-item index="/UserManagement">教师个人信息管理</el-menu-item>
+             <el-menu-item index="/DoctorManagement">教师体检信息管理</el-menu-item>
+           </el-sub-menu>
+
          </el-menu>
        </el-col>
        <el-col :span="21">

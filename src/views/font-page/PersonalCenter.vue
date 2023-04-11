@@ -103,11 +103,9 @@
 
 import {systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
-import Order from "@/views/font-page/OrdersFont.vue";
 
 export default {
   name: "PersonalCenter",
-  components: {Order},
 
   data() {
     return {
