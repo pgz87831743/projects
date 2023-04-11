@@ -34,6 +34,9 @@ export const sysUserApi = {
     page(data) {
         return request.post('/sys/sysUser/page', data)
     },
+    listAll() {
+        return request.get('/sys/sysUser/listAll')
+    },
     getById(id) {
         return request.get('/sys/sysUser/getById/' + id)
     },
