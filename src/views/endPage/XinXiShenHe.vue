@@ -16,6 +16,16 @@
         <el-table-column prop="amount" label="贷款金额"/>
         <el-table-column prop="amountPaid" label="已还金额"/>
         <el-table-column prop="interest" label="利息"/>
+        <el-table-column label="身份证正面" width="200">
+          <template #default="scope">
+            <img :src="scope.row.sfzZm" >
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证反面" width="200">
+          <template #default="scope">
+            <img :src="scope.row.sfzZm" >
+          </template>
+        </el-table-column>
         <el-table-column label="剩余待还">
           <template #default="scope">
             {{ (scope.row.interest + scope.row.amount - scope.row.amountPaid).toFixed(2) }}
@@ -99,6 +109,16 @@
           <el-form-item label="已还金额">
             <el-input v-model="form.amountPaid"/>
           </el-form-item>
+
+          <el-form-item label="身份证正面">
+            <img  :src="form.sfzZm"/>
+          </el-form-item>
+
+          <el-form-item label="身份证反面">
+            <img  :src="form.sfzZm"/>
+          </el-form-item>
+
+
           <el-form-item label="信审人员">
             <el-radio-group v-model="form.xdSh">
               <el-radio label="1">通过</el-radio>

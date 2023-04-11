@@ -19,6 +19,17 @@
         <el-table-column prop="amount" label="贷款金额"/>
         <el-table-column prop="amountPaid" label="已还金额"/>
         <el-table-column prop="interest" label="利息"/>
+        <el-table-column label="身份证正面" width="200">
+          <template #default="scope">
+            <img :src="scope.row.sfzZm" >
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证反面" width="200">
+          <template #default="scope">
+            <img :src="scope.row.sfzZm" >
+          </template>
+        </el-table-column>
+
         <el-table-column label="剩余待还">
           <template #default="scope">
             {{ (scope.row.interest + scope.row.amount - scope.row.amountPaid).toFixed(2) }}
@@ -139,6 +150,34 @@
           </el-form-item>
           <el-form-item label="利息"><span style="color: red">{{ form.interest }}</span></el-form-item>
         </div>
+        <el-form-item label="身份证正面">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.sfzZm"  :src="form.sfzZm"  width="100" />
+            <el-button v-else>点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="身份证反面">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess1"
+              name="files"
+          >
+            <img v-if="form.sfzFm"  :src="form.sfzFm"  width="100" />
+            <el-button v-else>点击上传</el-button>
+          </el-upload>
+        </el-form-item>
+
+
 
       </el-form>
       <template #footer>
@@ -209,6 +248,16 @@ export default {
   },
   components: {},
   methods: {
+
+    handleAvatarSuccess(response){
+      this.form.sfzZm=response[0].url
+    },
+
+    handleAvatarSuccess1(response){
+      this.form.sfzFm=response[0].url
+    },
+
+
 
     submitRole(row) {
       let data = {userId: row.id, roles: row.role}
