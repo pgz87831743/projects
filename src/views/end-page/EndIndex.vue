@@ -1,12 +1,12 @@
 <template>
-<div>
-  工作台
-</div>
+  <div>
+    搜也
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Staging"
+  name: "EndIndex"
 }
 </script>
 

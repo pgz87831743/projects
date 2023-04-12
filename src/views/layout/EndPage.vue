@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">莱西市城建档案信息查询</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">健康管理系统</div>
         </el-menu-item>
         <el-menu-item v-if="span.show" index="" @click="feachHandle('left')">
           <el-icon>
@@ -25,31 +25,22 @@
         <div class="flex-grow"/>
 
         <el-menu-item index="">
-          <el-icon><User /></el-icon>
-          <template #title>管理员</template>
+          <el-icon>
+            <User/>
+          </el-icon>
+          <template #title>{{ getUser().username }}</template>
         </el-menu-item>
 
-        <el-menu-item index="">
-          <el-icon><Bell /></el-icon>
-          <template #title></template>
-        </el-menu-item>
-
-        <el-menu-item index="">
-          <el-icon><HomeFilled /></el-icon>
-          <template #title></template>
+        <el-menu-item index="/IndexPage">
+          <template #title>前台</template>
         </el-menu-item>
 
 
+        <el-menu-item index="/login" @click="logout">
+          <template #title>退出登录</template>
+        </el-menu-item>
 
 
-
-<!--        <el-sub-menu index="2-4">-->
-<!--          <template #title>-->
-<!--            <el-avatar :src="user.avatar"></el-avatar>-->
-<!--          </template>-->
-<!--          <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>-->
-<!--          <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>-->
-<!--        </el-sub-menu>-->
       </el-menu>
 
     </div>
@@ -63,34 +54,42 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-            <el-menu-item index="/Staging">
+            <el-menu-item index="/EndIndex">
               <el-icon>
                 <Monitor/>
               </el-icon>
-              <template #title>工作台</template>
+              <template #title>首页</template>
             </el-menu-item>
 
-            <el-menu-item index="/EntryForm">
-              <el-icon>
-                <Collection/>
-              </el-icon>
-              <template #title>案卷著录单</template>
-            </el-menu-item>
+
+            <el-sub-menu index="2-4">
+              <template #title>
+                <el-icon>
+                  <Monitor/>
+                </el-icon>
+                <span>系统管理</span>
+              </template>
+              <el-menu-item index="/AdminManagement">管理员管理</el-menu-item>
+              <el-menu-item index="/PersonalCenter">健康新闻管理</el-menu-item>
+            </el-sub-menu>
+
+
+            <el-sub-menu index="2-5">
+              <template #title>
+                <el-icon>
+                  <Monitor/>
+                </el-icon>
+                <span>教师管理</span>
+              </template>
+              <el-menu-item index="/UserManagement">教师个人信息管理</el-menu-item>
+              <el-menu-item index="/PersonalCenter">骄傲是体检信息管理</el-menu-item>
+            </el-sub-menu>
+
+
+
           </el-menu>
         </el-col>
         <el-col :span="span.right">
-          <div class="tdiv">
-            <el-tag
-                v-for="tag in tags"
-                :key="tag.name"
-                class="tcs"
-                size="large"
-                :style="{color:tag.color}"
-                :closable="tag.closeAble"
-            >
-              {{ tag.name }}
-            </el-tag>
-          </div>
           <div class="div">
             <el-card shadow="hover">
               <router-view/>
@@ -109,7 +108,8 @@
 import {logout, systemCurrentUser} from "@/api/api";
 import {removeItem} from "@/utils/storage";
 import router from "@/router";
-import {Bell, Collection, Expand, Fold, HomeFilled, Monitor, User} from "@element-plus/icons-vue";
+import { Expand, Fold, Monitor, User} from "@element-plus/icons-vue";
+import {getUser} from "@/utils/authutil";
 
 export default {
   name: "EndPage",
@@ -127,8 +127,9 @@ export default {
       ]
     }
   },
-  components: {User, HomeFilled, Bell, Expand, Fold, Collection, Monitor},
+  components: {User, Expand, Fold, Monitor},
   methods: {
+    getUser,
     userQuery() {
       systemCurrentUser()
           .then((resp) => {
@@ -172,51 +173,23 @@ export default {
 
 .mean2 {
 
-  ::v-deep(.el-tag .el-tag__close) {
-    color: black;
-    //background: white;
-  }
-
-  .tcs {
-    background: white;
-    color: #252933;
-    border: none;
-    margin: 10px 10px 0 0;
-    min-width: 90px;
-    font-size: 14px;
-  }
 
   .tdiv {
     min-height: 50px;
     margin: 10px 20px;
   }
 
-
-  .el-menu {
-    height: 94vh;
-    //border-right: 1px lavender solid;
-    background: #2a374a;
-  }
-
-  .el-menu-item {
-    color: white;
-  }
-
-
-  .el-menu-item:hover {
-    background: #2a374a;
-    color: white;
-  }
-
-  .el-menu-item.is-active {
-    background: #5b6476;
-    color: white;
-  }
-
   .el-card {
     height: 83vh;
     overflow: auto;
   }
+
+  .el-menu {
+    height: 94vh;
+    border: none;
+
+  }
+
 
 }
 
@@ -229,7 +202,7 @@ export default {
 
     .el-menu-item {
       color: white;
-      border-right: 1px rgba(255,255,255,0.17) solid;
+      //border-right: 1px rgba(255,255,255,0.17) solid;
 
     }
 

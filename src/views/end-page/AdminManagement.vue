@@ -5,12 +5,6 @@
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
 
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
@@ -22,12 +16,11 @@
             <img :src="scope.row.avatar" width="100">
           </template>
         </el-table-column>
+        <el-table-column prop="email" label="邮箱"/>
+        <el-table-column prop="phone" label="电话号码"/>
+        <el-table-column prop="age" label="年龄"/>
         <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="address" label="联系地址"/>
-        <el-table-column prop="role" label="角色"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
