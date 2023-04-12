@@ -42,14 +42,20 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: "/UserManagement",
-                name: "UserManagement",
-                component: () => import('../views/end-page/UserManagement'),
+                path: "/Staging",
+                name: "Staging",
+                component: () => import('../views/end-page/Staging'),
+                meta:{
+                    name:'工作台'
+                }
             },
             {
                 path: "/EntryForm",
                 name: "EntryForm",
                 component: () => import('../views/end-page/EntryForm'),
+                meta:{
+                    name:'案卷著录单'
+                }
             },
 
 
