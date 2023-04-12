@@ -45,7 +45,12 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
-            }
+            },
+            {
+                path: "/EntryForm",
+                name: "EntryForm",
+                component: () => import('../views/end-page/EntryForm'),
+            },
 
 
         ]

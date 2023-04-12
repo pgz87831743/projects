@@ -8,7 +8,7 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">健康管理系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">莱西市城建档案信息查询</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
         <el-menu-item index="/DrugHelpFont">药品求助</el-menu-item>
         <el-menu-item index="/GoodsFont">物质出售</el-menu-item>
