@@ -32,9 +32,11 @@
       </el-col>
     </el-row>
     <el-row>
-      <div id="ec1">
+      <el-col>
+        <div id="ec1">
 
-      </div>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -50,6 +52,34 @@ export default {
     }
   },
   methods: {
+
+    dkqj() {
+      let myChart = this.$echarts.init(document.getElementById("ec1"));
+      // 绘制图表
+      myChart.setOption( {
+        title: {
+          text: 'Temperature Change in the Coming Week'
+        },
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [150, 230, 224, 218, 135, 147, 260],
+            type: 'line'
+          },
+          {
+            data: [15, 23, 24, 28, 135, 47, 11],
+            type: 'line'
+          }
+        ]
+      })
+    },
+
     initTeacherCheck() {
       healthCheckupApi.listAll()
           .then((resp) => {
@@ -59,6 +89,7 @@ export default {
   },
   mounted() {
     this.initTeacherCheck()
+    this.dkqj()
   }
 }
 </script>
