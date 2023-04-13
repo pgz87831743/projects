@@ -38,7 +38,7 @@
       </el-descriptions>
 
       <div>
-        您当前目标热量值为：{{ this.power }}（千卡）
+        您当前目标热量值为：<span style="color: red">{{ this.power.toFixed(2) }}</span>（千卡）
       </div>
     </el-card>
 
