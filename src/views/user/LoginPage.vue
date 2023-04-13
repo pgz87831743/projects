@@ -116,7 +116,7 @@ export default {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/IndexPage'})
+          router.push({path: '/EntryForm'})
         }
       }))
     },

@@ -18,25 +18,7 @@ const routes = [
         component: () => import('../views/user/LoginPage')
     },
 
-
     {
-        path: '/FontPage',
-        component: () => import('../views/layout/FontPage'),
-        children: [
-            {
-                path: "/IndexPage",
-                name: "IndexPage",
-                component: () => import('../views/font-page/IndexPage'),
-            },
-            {
-                path: "/PersonalCenter",
-                name: "PersonalCenter",
-                component: () => import('../views/font-page/PersonalCenter'),
-            }
-
-        ]
-    }
-    , {
         path: '/EndPage',
         name: 'EndPage',
         component: () => import('../views/layout/EndPage'),
