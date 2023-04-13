@@ -60,7 +60,12 @@
               </el-icon>
               <template #title>首页</template>
             </el-menu-item>
-
+            <el-menu-item index="/Foods">
+              <el-icon>
+                <Monitor/>
+              </el-icon>
+              <template #title>食物管理</template>
+            </el-menu-item>
 
             <el-sub-menu index="2-4">
               <template #title>
@@ -70,7 +75,7 @@
                 <span>系统管理</span>
               </template>
               <el-menu-item index="/AdminManagement">管理员管理</el-menu-item>
-              <el-menu-item index="/PersonalCenter">健康新闻管理</el-menu-item>
+              <el-menu-item index="/News">健康新闻管理</el-menu-item>
             </el-sub-menu>
 
 
@@ -81,12 +86,10 @@
                 </el-icon>
                 <span>教师管理</span>
               </template>
-              <el-menu-item index="/UserManagement">教师个人信息管理</el-menu-item>
-              <el-menu-item index="/PersonalCenter">骄傲是体检信息管理</el-menu-item>
+              <el-menu-item index="/TeacherManagement">教师个人信息管理</el-menu-item>
+              <el-menu-item index="/HealthCheckup">教师体检信息管理</el-menu-item>
+              <el-menu-item index="/HealthLogs">教师健康日志</el-menu-item>
             </el-sub-menu>
-
-
-
           </el-menu>
         </el-col>
         <el-col :span="span.right">

@@ -87,6 +87,8 @@
       </template>
     </el-dialog>
 
+
+    <!-- 分页 -->
     <!-- 分页 -->
     <el-affix position="bottom" :offset="20">
       <div class="paginationClass">
@@ -120,7 +122,7 @@ export default {
         pageNum: 1,
         tootle: 100,
         search: '',
-        roleTypeEnum: 'ADMIN'
+        roleTypeEnum: 'TEACHER'
       },
       visible: [],
       tableData: [],
@@ -132,7 +134,7 @@ export default {
         optionValue: null
       },
       form: {
-        role: 'ADMIN'
+        role: 'TEACHER'
       },
       total: 0,
     }
@@ -205,7 +207,7 @@ export default {
 
     dialogClose() {
       this.form = {
-        role: 'ADMIN'
+        role: 'TEACHER'
       }
     },
 

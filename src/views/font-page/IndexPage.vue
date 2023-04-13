@@ -12,7 +12,7 @@
         <template #header>
           <el-row>
             <el-col :span="3">
-              <div style="font-size: 20px;font-weight: bold;">药品求助</div>
+              <div style="font-size: 20px;font-weight: bold;">健康新闻</div>
             </el-col>
           </el-row>
 
@@ -24,20 +24,17 @@
               </div>
               <div>
                 <el-form>
-                  <el-form-item label="药品名称">
-                    {{item.name}}
+                  <el-form-item label="标题">
+                    {{item.title}}
                   </el-form-item>
-                  <el-form-item label="需求描述">
-                    {{item.description}}
+                  <el-form-item label="创建人">
+                    {{item.createBy}}
                   </el-form-item>
                   <el-form-item label="创建时间">
                     {{item.createTime}}
                   </el-form-item>
-                  <el-form-item label="联系人">
-                    {{item.person}}
-                  </el-form-item>
-                  <el-form-item label="联系电话">
-                    {{item.phone}}
+                  <el-form-item label="创建时间">
+                      <el-link type="primary" :href="'/NewsInfo?id='+item.id" target="_blank">查看详细</el-link>
                   </el-form-item>
                 </el-form>
               </div>
@@ -60,7 +57,7 @@
 <script>
 
 
-import {drugHelpApi} from "@/api/api";
+import {newsApi} from "@/api/api";
 
 export default {
   name: "IndexPage",
@@ -77,15 +74,15 @@ export default {
     }
   },
   methods: {
-    initDrugHelp() {
-      drugHelpApi.listAll()
-          .then((resp) => {
-            this.list = resp.data.data
+    initNews() {
+      newsApi.listAll()
+          .then((resp)=>{
+            this.list=resp.data.data
           })
     }
   },
   mounted() {
-    this.initDrugHelp()
+    this.initNews()
   }
 }
 </script>
@@ -94,7 +91,6 @@ export default {
 .car-div {
   width: 400px;
   height: 450px;
-  background: #c7e0c7;
   margin: 20px 30px;
   display: inline-block;
 }

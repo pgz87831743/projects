@@ -17,6 +17,10 @@ const routes = [
         path: '/',
         component: () => import('../views/user/LoginPage')
     },
+    {
+        path: '/NewsInfo',
+        component: () => import('../views/font-page/NewsInfo')
+    },
 
 
     {
@@ -32,6 +36,21 @@ const routes = [
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
+            },
+            {
+                path: "/HealthLogsFont",
+                name: "HealthLogsFont",
+                component: () => import('../views/font-page/HealthLogsFont'),
+            },
+            {
+                path: "/TeacherFoods",
+                name: "TeacherFoods",
+                component: () => import('../views/font-page/TeacherFoods'),
+            },
+            {
+                path: "/TeacherCheckup",
+                name: "TeacherCheckup",
+                component: () => import('../views/font-page/TeacherCheckup'),
             }
 
         ]
@@ -42,9 +61,9 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: "/UserManagement",
-                name: "UserManagement",
-                component: () => import('../views/end-page/UserManagement'),
+                path: "/TeacherManagement",
+                name: "TeacherManagement",
+                component: () => import('../views/end-page/TeacherManagement'),
             },
             {
                 path: "/AdminManagement",
@@ -55,6 +74,26 @@ const routes = [
                 path: "/EndIndex",
                 name: "EndIndex",
                 component: () => import('../views/end-page/EndIndex'),
+            },
+            {
+                path: "/News",
+                name: "News",
+                component: () => import('../views/end-page/News'),
+            },
+            {
+                path: "/HealthCheckup",
+                name: "HealthCheckup",
+                component: () => import('../views/end-page/HealthCheckup'),
+            },
+            {
+                path: "/HealthLogs",
+                name: "HealthLogs",
+                component: () => import('../views/end-page/HealthLogs'),
+            },
+            {
+                path: "/Foods",
+                name: "Foods",
+                component: () => import('../views/end-page/Foods'),
             }
 
 

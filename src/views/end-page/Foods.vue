@@ -1,26 +1,22 @@
 <template>
   <div class="p-div">
-    <el-row :gutter="10">
+    <el-row>
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="username" label="用户名"/>
-        <el-table-column prop="password" label="密码"/>
-        <el-table-column prop="nickname" label="昵称"/>
-        <el-table-column prop="avatar" label="头像">
-          <template #default="scope">
-            <img :src="scope.row.avatar" width="100">
-          </template>
-        </el-table-column>
-        <el-table-column prop="email" label="邮箱"/>
-        <el-table-column prop="phone" label="电话号码"/>
-        <el-table-column prop="age" label="年龄"/>
-        <el-table-column prop="sex" label="性别"/>
-
+        <el-table-column prop="name" label="食物名称"/>
+        <el-table-column prop="hotNum" label="热量"/>
+        <el-table-column prop="createTime" label="创建时间"/>
+        <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -38,54 +34,21 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username"/>
+        <el-form-item label="食物名称">
+          <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="form.password"/>
+        <el-form-item label="热量">
+          <el-input v-model="form.hotNum" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname"/>
-        </el-form-item>
-        <el-form-item label="头像">
-          <el-upload
-              class="avatar-uploader"
-              action="/api/file/upload"
-              :data="{fileTypeEnum:'FILE'}"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              name="files"
-          >
-            <img :src="form.avatar" width="100"/>
-            <el-icon class="avatar-uploader-icon">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="form.sex">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="form.email"/>
-        </el-form-item>
-        <el-form-item label="电话号码">
-          <el-input v-model="form.phone"/>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age"/>
-        </el-form-item>
-
       </el-form>
       <template #footer>
-      <span class="dialog-footer" v-if="!dialog.formDisabled">
-          <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-        <el-button type="success" @click="formSubmit">确认</el-button>
-      </span>
+<span class="dialog-footer" v-if="!dialog.formDisabled">
+<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+<el-button type="success" @click="formSubmit">确认</el-button>
+</span>
       </template>
     </el-dialog>
+
 
     <!-- 分页 -->
     <el-affix position="bottom" :offset="20">
@@ -108,49 +71,42 @@
 
 <script>
 
-import { sysUserApi} from "@/api/api";
-import {Plus} from "@element-plus/icons-vue";
+import {foodsApi} from "@/api/api";
+
 
 export default {
-  name: "UserManagement",
+  name: "Foods",
   data() {
     return {
       page: {
         pageSize: 5,
         pageNum: 1,
         tootle: 100,
-        search: '',
-        roleTypeEnum: 'ADMIN'
+        search: ''
       },
       visible: [],
       tableData: [],
-      roleData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
         formDisabled: true,
         optionValue: null
       },
-      form: {
-        role: 'ADMIN'
-      },
+      form: {},
       total: 0,
     }
   },
-  components: {Plus},
+
   methods: {
 
     search() {
-      sysUserApi.page(this.page)
+      foodsApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
-    handleAvatarSuccess(response) {
-      this.form.avatar = response[0].url
-    },
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -159,21 +115,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        sysUserApi.getById(row.id).then((resp) => {
+        foodsApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        sysUserApi.getById(row.id).then((resp) => {
+        foodsApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        sysUserApi.deleteById(row.id).then(() => {
+        foodsApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -181,7 +137,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      sysUserApi.page(this.page).then(resp => {
+      foodsApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -190,12 +146,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        sysUserApi.add(this.form)
+        foodsApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        sysUserApi.updateById(this.form)
+        foodsApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -204,14 +160,11 @@ export default {
 
 
     dialogClose() {
-      this.form = {
-        role: 'ADMIN'
-      }
+      this.form = {}
     },
 
-
     initTableData() {
-      sysUserApi.page(this.page)
+      foodsApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -221,7 +174,6 @@ export default {
   },
   mounted() {
     this.initTableData()
-
   },
 
 }
@@ -268,3 +220,4 @@ export default {
 }
 
 </style>
+

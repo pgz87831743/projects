@@ -10,33 +10,15 @@
       >
         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">健康管理系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/DrugHelpFont">药品求助</el-menu-item>
-        <el-menu-item index="/GoodsFont">物质出售</el-menu-item>
-        <el-menu-item index="/PaidHelpFont">有偿求助</el-menu-item>
-        <el-menu-item index="/ExchangeFont">交流论坛</el-menu-item>
-        <el-sub-menu index="2-5">
-          <template #title>
-            信息广场
-          </template>
-          <el-menu-item index="/DrugHelpProvideFont">药品提供</el-menu-item>
-          <el-menu-item index="/GoodsBuyFont">物资购买</el-menu-item>
-          <el-menu-item index="/PaidHelpNeedFont">有偿需求</el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="2-6">
-          <template #title>
-            自主检测
-          </template>
-          <el-menu-item index="/NucleicAcidFont">核酸查询</el-menu-item>
-          <el-menu-item index="/AntigenFont">抗原上传</el-menu-item>
-        </el-sub-menu>
-        <el-menu-item index="/OnlineConsultation">在线问诊</el-menu-item>
-        <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
+        <el-menu-item index="/TeacherCheckup">教师体检管理</el-menu-item>
+        <el-menu-item index="/TeacherFoods">教师饮食管理</el-menu-item>
+        <el-menu-item index="/HealthLogsFont">教师健康日志</el-menu-item>
+        <el-menu-item index="/PersonalCenter">个人信息</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
           <template #title>
             <el-avatar :src="user.avatar"></el-avatar>
           </template>
-          <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
           <el-menu-item v-if="authShow('ADMIN')"  index="/EndIndex">后台管理</el-menu-item>
           <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 

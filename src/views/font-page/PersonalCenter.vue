@@ -26,7 +26,6 @@
                         />
                         <el-button style="margin-left: 20px">更换头像</el-button>
                       </el-upload>
-
                     </el-form-item>
                     <el-form-item label="昵称：">
                       <el-input v-model="form.nickname"></el-input>
@@ -38,34 +37,16 @@
                       </el-radio-group>
                     </el-form-item>
 
+                    <el-form-item label="邮箱：">
+                      <el-input v-model="form.email"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话：">
+                      <el-input v-model="form.phone"></el-input>
+                    </el-form-item>
 
-                    <div v-if="getUser().role==='USER'">
-                      <el-form-item label="身份证：">
-                        <el-input v-model="form.idCard"></el-input>
-                      </el-form-item>
-                      <el-form-item label="联系地址：">
-                        <el-input v-model="form.address"></el-input>
-                      </el-form-item>
-                      <el-form-item label="联系电话：">
-                        <el-input v-model="form.phone"></el-input>
-                      </el-form-item>
-                      <el-form-item label="症状描述：">
-                        <el-input v-model="form.description" type="textarea"></el-input>
-                      </el-form-item>
-                    </div>
-
-
-                    <div v-if="getUser().role==='DOCTOR'">
-                      <el-form-item label="医生工号">
-                        <el-input v-model="form.num"></el-input>
-                      </el-form-item>
-                      <el-form-item label="科室">
-                        <el-input v-model="form.dept"></el-input>
-                      </el-form-item>
-                      <el-form-item label="擅长领域">
-                        <el-input v-model="form.description" type="textarea"></el-input>
-                      </el-form-item>
-                    </div>
+                    <el-form-item label="年龄：">
+                      <el-input v-model="form.age"></el-input>
+                    </el-form-item>
 
 
                     <el-form-item label="密码：">
@@ -85,14 +66,14 @@
             </el-card>
           </el-affix>
         </el-col>
-        <el-col :span="18">
-          <el-card shadow="hover" class="box-card">
-            <template #header>
-              <span class="pin-lun">已购物资</span>
-            </template>
-            <Order/>
-          </el-card>
-        </el-col>
+<!--        <el-col :span="18">-->
+<!--          <el-card shadow="hover" class="box-card">-->
+<!--            <template #header>-->
+<!--              <span class="pin-lun">已购物资</span>-->
+<!--            </template>-->
+<!--            <Order/>-->
+<!--          </el-card>-->
+<!--        </el-col>-->
       </el-row>
     </div>
   </div>
