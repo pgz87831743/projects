@@ -39,6 +39,12 @@
           <template #title></template>
         </el-menu-item>
 
+        <el-menu-item index="">
+          <template #title>
+              <span @click="logout"> 退出登录</span>
+          </template>
+        </el-menu-item>
+
 
 
 

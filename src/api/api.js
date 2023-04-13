@@ -9,9 +9,6 @@ export const logout = () => {
 }
 
 
-export const register = (data) => {
-    return request.post('/system/register', data)
-}
 export const systemCaptcha = () => {
     return request.post('/system/captcha')
 }
