@@ -57,7 +57,7 @@
             small
             background
             :total="total"
-            :page-size="5"
+            :page-size="this.page.pageSize"
             @current-change="currentChange"
             layout="prev, pager, next"
         />
@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       page: {
-        pageSize: 5,
+        pageSize: 10,
         pageNum: 1,
         tootle: 100,
         search: ''

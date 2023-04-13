@@ -33,11 +33,12 @@
     </el-row>
     <el-row>
       <el-col>
-        <div id="ec1">
+        <div id="ec1" style="width: 100%;height: 600px">
 
         </div>
       </el-col>
     </el-row>
+
   </div>
 </template>
 
@@ -57,23 +58,37 @@ export default {
       let myChart = this.$echarts.init(document.getElementById("ec1"));
       // 绘制图表
       myChart.setOption( {
+        legend: {
+          data: ['舒张压', '收缩压']
+        },
         title: {
-          text: 'Temperature Change in the Coming Week'
+          text: 'Temperature Change in the Coming Week',
+          top:10,
+          left:10
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.tableData.map((item)=>{return item.checkTim})
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          name:'毫米汞柱mmHg'.split("").join("\n"),
+          nameLocation:'left',
+          nameTextStyle:{
+            color:'#000000',
+            fontSize:26,
+            padding:[0,150,-100,0],
+          }
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            name: '舒张压',
+            data: this.tableData.map((item)=>{return item.szy}),
             type: 'line'
           },
           {
-            data: [15, 23, 24, 28, 135, 47, 11],
+            name: '收缩压',
+            data: this.tableData.map((item)=>{return item.ssy}),
             type: 'line'
           }
         ]
@@ -84,12 +99,12 @@ export default {
       healthCheckupApi.listAll()
           .then((resp) => {
             this.tableData = resp.data.data
+            this.dkqj()
           })
     }
   },
   mounted() {
     this.initTeacherCheck()
-    this.dkqj()
   }
 }
 </script>

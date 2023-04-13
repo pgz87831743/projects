@@ -52,9 +52,9 @@
         <el-form-item label="体检时间">
           <el-date-picker
               v-model="form.checkTim"
-              type="datetime"
+              type="date"
               placeholder="请选择"
-              value-format="YYYY-MM-DD HH:mm:ss"
+              value-format="YYYY-MM-DD"
           />
         </el-form-item>
         <el-form-item label="体检教师">

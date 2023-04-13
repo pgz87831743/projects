@@ -10,7 +10,7 @@
               </template>
               <el-row>
                 <el-col>
-                  <el-form class="div-form" model="form" :disabled="disabled"   label-width="100px">
+                  <el-form class="div-form" model="form" :disabled="disabled" label-width="100px">
                     <el-form-item>
                       <el-upload
                           class="avatar-uploader"
@@ -66,14 +66,35 @@
             </el-card>
           </el-affix>
         </el-col>
-<!--        <el-col :span="18">-->
-<!--          <el-card shadow="hover" class="box-card">-->
-<!--            <template #header>-->
-<!--              <span class="pin-lun">已购物资</span>-->
-<!--            </template>-->
-<!--            <Order/>-->
-<!--          </el-card>-->
-<!--        </el-col>-->
+        <el-col :span="18">
+          <el-card shadow="hover" class="box-card">
+            <template #header>
+              <span class="pin-lun">我的健康日志</span>
+            </template>
+            <el-table :data="tableData" border style="width: 100%">
+              <el-table-column prop="content" label="日志内容"/>
+              <el-table-column prop="sleepTime" label="睡眠时间"/>
+              <el-table-column prop="mood" label="心情"/>
+              <el-table-column prop="smoke" label="抽烟"/>
+              <el-table-column prop="weight" label="体重"/>
+              <el-table-column prop="pressure" label="压力"/>
+              <el-table-column prop="bpH" label="高压"/>
+              <el-table-column prop="dbL" label="底压"/>
+              <el-table-column prop="bloodSugar" label="血糖"/>
+              <el-table-column prop="eatFood" label="吃的食物"/>
+              <el-table-column prop="createTime" label="创建时间"/>
+              <el-table-column label="操作" width="300px">
+                <template #default="scope">
+                  <el-button
+                      size="small"
+                      type="danger"
+                      @click="deleteById(scope.row)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-card>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -82,7 +103,7 @@
 <script>
 
 
-import {systemCurrentUser, sysUserApi} from "@/api/api";
+import {healthLogsApi, systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
 
 export default {
@@ -97,14 +118,15 @@ export default {
         avatar: ""
       },
       disabled: true,
-      list: []
+      list: [],
+      tableData: []
     }
   },
   methods: {
     getUser,
 
-    handleAvatarSuccess(response){
-      this.form.avatar=response[0].url
+    handleAvatarSuccess(response) {
+      this.form.avatar = response[0].url
     },
 
     initUserInfo() {
@@ -114,16 +136,30 @@ export default {
           })
     },
 
+    deleteById(row) {
+      healthLogsApi.deleteById(row.id)
+          .then(()=>{
+            this.initTableList()
+          })
+    },
+
 
     saveUserInfoHandle() {
       sysUserApi.updateById(this.form)
           .then(() => {
-              window.location.href='/PersonalCenter'
+            window.location.href = '/PersonalCenter'
+          })
+    },
+    initTableList() {
+      healthLogsApi.listAllUser()
+          .then((resp) => {
+            this.tableData = resp.data.data
           })
     }
   },
   mounted() {
     this.initUserInfo()
+    this.initTableList()
   }
 }
 </script>
@@ -133,7 +169,7 @@ export default {
   //border: none;
 }
 
-.box-card{
+.box-card {
   min-height: 80vh;
 }
 

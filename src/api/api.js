@@ -50,106 +50,112 @@ export const sysUserApi = {
         return request.put('/sys/sysUser/updateById', data)
     },
 
-    allUserByType(type){
-        return request.get('/sys/sysUser/allUserByType/'+type)
+    allUserByType(type) {
+        return request.get('/sys/sysUser/allUserByType/' + type)
     }
 }
 
 
-
 //新闻管理管理
-export const newsApi={
-    page(data){
-        return request.post('/news/page',data)
+export const newsApi = {
+    page(data) {
+        return request.post('/news/page', data)
     },
-    getById(id){
-        return request.get('/news/getById/'+id)
+    getById(id) {
+        return request.get('/news/getById/' + id)
     },
-    listAll(){
+    listAll() {
         return request.get('/news/listAll/')
     },
-    add(data){
-        return request.post('/news/add',data)
+    add(data) {
+        return request.post('/news/add', data)
     },
-    deleteById(id){
-        return request.delete('/news/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/news/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/news/updateById',data)
+    updateById(data) {
+        return request.put('/news/updateById', data)
     }
 }
 
 //教师体检记录管理
-export const healthCheckupApi={
-    page(data){
-        return request.post('/healthCheckup/page',data)
+export const healthCheckupApi = {
+    page(data) {
+        return request.post('/healthCheckup/page', data)
     },
 
-    listAll(){
+    listAll() {
         return request.get('/healthCheckup/listAll')
     },
-    getById(id){
-        return request.get('/healthCheckup/getById/'+id)
+    getById(id) {
+        return request.get('/healthCheckup/getById/' + id)
     },
-    add(data){
-        return request.post('/healthCheckup/add',data)
+    add(data) {
+        return request.post('/healthCheckup/add', data)
     },
-    deleteById(id){
-        return request.delete('/healthCheckup/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/healthCheckup/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/healthCheckup/updateById',data)
+    updateById(data) {
+        return request.put('/healthCheckup/updateById', data)
     }
 }
 
 
 //教师健康日志管理
-export const healthLogsApi={
-    page(data){
-        return request.post('/healthLogs/page',data)
+export const healthLogsApi = {
+    page(data) {
+        return request.post('/healthLogs/page', data)
     },
-    getById(id){
-        return request.get('/healthLogs/getById/'+id)
+    getById(id) {
+        return request.get('/healthLogs/getById/' + id)
     },
-    listAll(){
+    listAll() {
         return request.get('/healthLogs/listAll')
+    }
+    , listAllUser() {
+        return request.get('/healthLogs/listAllUser')
     },
-    searchOne(localDate){
-        return request.get('/healthLogs/searchOne/?localDate='+localDate)
+    searchOne(localDate) {
+        return request.get('/healthLogs/searchOne/?localDate=' + localDate)
     },
-    add(data){
-        return request.post('/healthLogs/add',data)
+    add(data) {
+        return request.post('/healthLogs/add', data)
     },
-    deleteById(id){
-        return request.delete('/healthLogs/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/healthLogs/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/healthLogs/updateById',data)
+    updateById(data) {
+        return request.put('/healthLogs/updateById', data)
     }
 }
 
 
 //食物管理管理
-export const foodsApi={
-    page(data){
-        return request.post('/foods/page',data)
+export const foodsApi = {
+    page(data) {
+        return request.post('/foods/page', data)
     },
-    listAll(){
+    listAll() {
         return request.get('/foods/listAll')
     },
-    getById(id){
-        return request.get('/foods/getById/'+id)
+    getById(id) {
+        return request.get('/foods/getById/' + id)
     },
-    add(data){
-        return request.post('/foods/add',data)
+    add(data) {
+        return request.post('/foods/add', data)
     },
-    power(data){
-        return request.post('/foods/power',data)
+    power(data) {
+        return request.post('/foods/power', data)
     },
-    deleteById(id){
-        return request.delete('/foods/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/foods/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/foods/updateById',data)
+    updateById(data) {
+        return request.put('/foods/updateById', data)
     }
+}
+
+export const statics = () => {
+    return request.get('/healthCheckup/statics')
 }
