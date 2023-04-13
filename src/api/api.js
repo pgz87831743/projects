@@ -156,6 +156,7 @@ export const foodsApi = {
     }
 }
 
+//统计接口
 export const statics = () => {
     return request.get('/healthCheckup/statics')
 }
