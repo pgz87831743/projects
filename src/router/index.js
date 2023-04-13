@@ -36,21 +36,6 @@ const routes = [
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
-            },
-            {
-                path: "/HealthLogsFont",
-                name: "HealthLogsFont",
-                component: () => import('../views/font-page/HealthLogsFont'),
-            },
-            {
-                path: "/TeacherFoods",
-                name: "TeacherFoods",
-                component: () => import('../views/font-page/TeacherFoods'),
-            },
-            {
-                path: "/TeacherCheckup",
-                name: "TeacherCheckup",
-                component: () => import('../views/font-page/TeacherCheckup'),
             }
 
         ]
@@ -80,21 +65,6 @@ const routes = [
                 name: "News",
                 component: () => import('../views/end-page/News'),
             },
-            {
-                path: "/HealthCheckup",
-                name: "HealthCheckup",
-                component: () => import('../views/end-page/HealthCheckup'),
-            },
-            {
-                path: "/HealthLogs",
-                name: "HealthLogs",
-                component: () => import('../views/end-page/HealthLogs'),
-            },
-            {
-                path: "/Foods",
-                name: "Foods",
-                component: () => import('../views/end-page/Foods'),
-            }
 
 
         ]

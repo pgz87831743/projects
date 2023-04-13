@@ -27,6 +27,13 @@
                     <el-form-item>
                       <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
                     </el-form-item>
+                    <el-form-item label="角色：">
+                      <el-radio-group v-model="user.role">
+                        <el-radio label="USER" name="roleType">患者</el-radio>
+                        <el-radio label="DOCTOR" name="roleType">医生</el-radio>
+                        <el-radio label="WORKER" name="roleType">工作者</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
                     <el-row :gutter="10">
                       <el-col :span="15">
                         <el-form-item>
