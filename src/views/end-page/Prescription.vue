@@ -2,6 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
+        <el-table-column prop="user.nickname" label="患者"/>
         <el-table-column prop="doctorIdUser.nickname" label="医生"/>
         <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
         <el-table-column prop="officesIdOffices.name" label="科室"/>

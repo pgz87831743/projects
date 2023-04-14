@@ -10,16 +10,14 @@
       >
         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">医务社区管理系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/TeacherCheckup">教师体检管理</el-menu-item>
-        <el-menu-item index="/TeacherFoods">教师饮食管理</el-menu-item>
-        <el-menu-item index="/HealthLogsFont">教师健康日志</el-menu-item>
         <el-menu-item index="/PersonalCenter">个人信息</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
           <template #title>
             <el-avatar :src="user.avatar"></el-avatar>
           </template>
-          <el-menu-item v-if="authShow('ADMIN')"  index="/EndPage">后台管理</el-menu-item>
+<!--          <el-menu-item v-if="authShow('ADMIN')"  index="/EndPage">后台管理</el-menu-item>-->
+          <el-menu-item  index="/EndPage">后台管理</el-menu-item>
           <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 
         </el-sub-menu>

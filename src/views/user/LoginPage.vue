@@ -2,7 +2,7 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#ffffff;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+      <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
        医务社区管理系统
       </div>
       <div>
@@ -149,7 +149,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-atypeek-dgn-6366444.jpg");
+  background-image:url("@/assets/pexels-pixabay-40568.jpg");
   background-size: 1920px;
   height: 100vh;
 }

@@ -46,16 +46,6 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: "/TeacherManagement",
-                name: "TeacherManagement",
-                component: () => import('../views/end-page/TeacherManagement'),
-            },
-            {
-                path: "/AdminManagement",
-                name: "AdminManagement",
-                component: () => import('../views/end-page/AdminManagement'),
-            },
-            {
                 path: "/News",
                 name: "News",
                 component: () => import('../views/end-page/News'),
@@ -64,6 +54,10 @@ const routes = [
                 path: "/Appointment",
                 name: "Appointment",
                 component: () => import('../views/end-page/Appointment'),
+            },{
+                path: "/Drug",
+                name: "Drug",
+                component: () => import('../views/end-page/Drug'),
             },
             {
                 path: "/Drugstore",

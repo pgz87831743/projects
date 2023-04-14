@@ -13,10 +13,10 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
+        <el-table-column prop="user.nickname" label="患者"/>
         <el-table-column prop="doctorIdUser.nickname" label="医生"/>
         <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
         <el-table-column prop="officesIdOffices.name" label="科室"/>
-
         <el-table-column prop="time" label="预约时间"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
@@ -37,10 +37,9 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
-        <el-form-item label="医生">
-          <el-select v-model="form.doctorId" placeholder="请选择">
-            <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
+        <el-form-item label="预约人">
+          <el-select v-model="form.userId" placeholder="请选择">
+            <el-option v-for="item in userList" :label="item.username" v-bind:key="item.id"
                        :value=" item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -53,6 +52,12 @@
         <el-form-item label="科室">
           <el-select v-model="form.officesId" placeholder="请选择">
             <el-option v-for="item in officesList" :label="item.name" v-bind:key="item.id"
+                       :value=" item.id"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="医生">
+          <el-select v-model="form.doctorId" placeholder="请选择">
+            <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
                        :value=" item.id"></el-option>
           </el-select>
         </el-form-item>
@@ -117,6 +122,7 @@ export default {
       doctorList:[],
       medicalList: [],
       officesList: [],
+      userList: [],
     }
   },
 
@@ -215,6 +221,13 @@ export default {
           })
     },
 
+    initUserList() {
+      sysUserApi.allUserByType('USER')
+          .then(resp => {
+            this.userList = resp.data.data
+          })
+    },
+
 
 
   },
@@ -222,6 +235,7 @@ export default {
     this.initTableData()
     this.initMedicalList()
     this.initDoctorList()
+    this.initUserList()
   },
 
 }

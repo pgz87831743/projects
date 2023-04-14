@@ -13,6 +13,7 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
+        <el-table-column prop="user.nickname" label="患者"/>
         <el-table-column prop="doctorIdUser.nickname" label="医生"/>
         <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
         <el-table-column prop="officesIdOffices.name" label="科室"/>
@@ -38,7 +39,12 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
+        <el-form-item label="就诊人">
+          <el-select v-model="form.userId" placeholder="请选择">
+            <el-option v-for="item in userList" :label="item.username" v-bind:key="item.id"
+                       :value=" item.id"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="医生">
           <el-select v-model="form.doctorId" placeholder="请选择">
             <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
@@ -123,6 +129,7 @@ export default {
       form: {},
       total: 0,
       doctorList:[],
+      userList:[],
       medicalList: [],
       officesList: [],
     }
@@ -209,6 +216,14 @@ export default {
           })
     },
 
+    initUserList() {
+      sysUserApi.allUserByType('USER')
+          .then(resp => {
+            this.userList = resp.data.data
+          })
+    },
+
+
     initMedicalList() {
       medicalApi.listAll()
           .then(resp => {
@@ -230,6 +245,7 @@ export default {
     this.initTableData()
     this.initMedicalList()
     this.initDoctorList()
+    this.initUserList()
   },
 
 }

@@ -215,3 +215,26 @@ export const workforceApi = {
         return request.put('/workforce/updateById', data)
     }
 }
+
+
+//药品管理管理
+export const drugApi={
+    page(data){
+        return request.post('/drug/page',data)
+    },
+    listAll(){
+        return request.get('/drug/listAll')
+    },
+    getById(id){
+        return request.get('/drug/getById/'+id)
+    },
+    add(data){
+        return request.post('/drug/add',data)
+    },
+    deleteById(id){
+        return request.delete('/drug/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/drug/updateById',data)
+    }
+}
