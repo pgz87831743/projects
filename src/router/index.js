@@ -56,14 +56,54 @@ const routes = [
                 component: () => import('../views/end-page/AdminManagement'),
             },
             {
-                path: "/EndIndex",
-                name: "EndIndex",
-                component: () => import('../views/end-page/EndIndex'),
-            },
-            {
                 path: "/News",
                 name: "News",
                 component: () => import('../views/end-page/News'),
+            },
+            {
+                path: "/Appointment",
+                name: "Appointment",
+                component: () => import('../views/end-page/Appointment'),
+            },
+            {
+                path: "/Drugstore",
+                name: "Drugstore",
+                component: () => import('../views/end-page/Drugstore'),
+            },
+            {
+                path: "/Medical",
+                name: "Medical",
+                component: () => import('../views/end-page/Medical'),
+            },
+            {
+                path: "/Offices",
+                name: "Offices",
+                component: () => import('../views/end-page/Offices'),
+            },
+            {
+                path: "/Visit",
+                name: "Visit",
+                component: () => import('../views/end-page/Visit'),
+            },
+            {
+                path: "/Workforce",
+                name: "Workforce",
+                component: () => import('../views/end-page/Workforce'),
+            },
+            {
+                path: "/Doctor",
+                name: "Doctor",
+                component: () => import('../views/end-page/Doctor'),
+            },
+            {
+                path: "/Patient",
+                name: "Patient",
+                component: () => import('../views/end-page/Patient'),
+            },
+            {
+                path: "/Prescription",
+                name: "Prescription",
+                component: () => import('../views/end-page/Prescription'),
             },
 
 

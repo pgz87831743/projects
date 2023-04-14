@@ -10,19 +10,11 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">健康管理系统</div>
-        </el-menu-item>
-        <el-menu-item v-if="span.show" index="" @click="feachHandle('left')">
-          <el-icon>
-            <Fold/>
-          </el-icon>
-        </el-menu-item>
-        <el-menu-item v-if="!span.show" index="" @click="feachHandle('right')">
-          <el-icon>
-            <Expand/>
-          </el-icon>
+          <div style="color: white;font-size: 20px;font-weight: bold">医务社区管理系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
+
+
 
         <el-menu-item index="">
           <el-icon>
@@ -54,42 +46,19 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-            <el-menu-item index="/EndIndex">
-              <el-icon>
-                <Monitor/>
-              </el-icon>
-              <template #title>首页</template>
-            </el-menu-item>
-            <el-menu-item index="/Foods">
-              <el-icon>
-                <Monitor/>
-              </el-icon>
-              <template #title>食物管理</template>
-            </el-menu-item>
 
-            <el-sub-menu index="2-4">
-              <template #title>
-                <el-icon>
-                  <Monitor/>
-                </el-icon>
-                <span>系统管理</span>
-              </template>
-              <el-menu-item index="/AdminManagement">管理员管理</el-menu-item>
-              <el-menu-item index="/News">健康新闻管理</el-menu-item>
-            </el-sub-menu>
+            <el-menu-item index="/Drugstore">药店管理</el-menu-item>
+            <el-menu-item index="/Medical">医疗机构管理</el-menu-item>
+            <el-menu-item index="/Offices">科室管理</el-menu-item>
+            <el-menu-item index="/Doctor">医生管理</el-menu-item>
+            <el-menu-item index="/Workforce">医院排班</el-menu-item>
+            <el-menu-item index="/Appointment">就诊预约</el-menu-item>
+            <el-menu-item index="/Visit">就诊记录</el-menu-item>
+            <el-menu-item index="/News">健康新闻</el-menu-item>
+            <el-menu-item index="/Patient">患者管理</el-menu-item>
+            <el-menu-item index="/Prescription">处方管理</el-menu-item>
 
 
-            <el-sub-menu index="2-5">
-              <template #title>
-                <el-icon>
-                  <Monitor/>
-                </el-icon>
-                <span>教师管理</span>
-              </template>
-              <el-menu-item index="/TeacherManagement">教师个人信息管理</el-menu-item>
-              <el-menu-item index="/HealthCheckup">教师体检信息管理</el-menu-item>
-              <el-menu-item index="/HealthLogs">教师健康日志</el-menu-item>
-            </el-sub-menu>
           </el-menu>
         </el-col>
         <el-col :span="span.right">
@@ -111,7 +80,7 @@
 import {logout, systemCurrentUser} from "@/api/api";
 import {removeItem} from "@/utils/storage";
 import router from "@/router";
-import { Expand, Fold, Monitor, User} from "@element-plus/icons-vue";
+import { User} from "@element-plus/icons-vue";
 import {getUser} from "@/utils/authutil";
 
 export default {
@@ -130,7 +99,7 @@ export default {
       ]
     }
   },
-  components: {User, Expand, Fold, Monitor},
+  components: {User},
   methods: {
     getUser,
     userQuery() {

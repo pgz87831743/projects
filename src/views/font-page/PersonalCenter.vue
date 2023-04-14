@@ -71,28 +71,28 @@
             <template #header>
               <span class="pin-lun">我的健康日志</span>
             </template>
-            <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="content" label="日志内容"/>
-              <el-table-column prop="sleepTime" label="睡眠时间"/>
-              <el-table-column prop="mood" label="心情"/>
-              <el-table-column prop="smoke" label="抽烟"/>
-              <el-table-column prop="weight" label="体重"/>
-              <el-table-column prop="pressure" label="压力"/>
-              <el-table-column prop="bpH" label="高压"/>
-              <el-table-column prop="dbL" label="底压"/>
-              <el-table-column prop="bloodSugar" label="血糖"/>
-              <el-table-column prop="eatFood" label="吃的食物"/>
-              <el-table-column prop="createTime" label="创建时间"/>
-              <el-table-column label="操作" width="300px">
-                <template #default="scope">
-                  <el-button
-                      size="small"
-                      type="danger"
-                      @click="deleteById(scope.row)">删除
-                  </el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+<!--            <el-table :data="tableData" border style="width: 100%">-->
+<!--              <el-table-column prop="content" label="日志内容"/>-->
+<!--              <el-table-column prop="sleepTime" label="睡眠时间"/>-->
+<!--              <el-table-column prop="mood" label="心情"/>-->
+<!--              <el-table-column prop="smoke" label="抽烟"/>-->
+<!--              <el-table-column prop="weight" label="体重"/>-->
+<!--              <el-table-column prop="pressure" label="压力"/>-->
+<!--              <el-table-column prop="bpH" label="高压"/>-->
+<!--              <el-table-column prop="dbL" label="底压"/>-->
+<!--              <el-table-column prop="bloodSugar" label="血糖"/>-->
+<!--              <el-table-column prop="eatFood" label="吃的食物"/>-->
+<!--              <el-table-column prop="createTime" label="创建时间"/>-->
+<!--              <el-table-column label="操作" width="300px">-->
+<!--                <template #default="scope">-->
+<!--                  <el-button-->
+<!--                      size="small"-->
+<!--                      type="danger"-->
+<!--                      @click="deleteById(scope.row)">删除-->
+<!--                  </el-button>-->
+<!--                </template>-->
+<!--              </el-table-column>-->
+<!--            </el-table>-->
           </el-card>
         </el-col>
       </el-row>
@@ -103,7 +103,7 @@
 <script>
 
 
-import {healthLogsApi, systemCurrentUser, sysUserApi} from "@/api/api";
+import { systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
 
 export default {
@@ -136,12 +136,12 @@ export default {
           })
     },
 
-    deleteById(row) {
-      healthLogsApi.deleteById(row.id)
-          .then(()=>{
-            this.initTableList()
-          })
-    },
+    // deleteById(row) {
+    //   healthLogsApi.deleteById(row.id)
+    //       .then(()=>{
+    //         this.initTableList()
+    //       })
+    // },
 
 
     saveUserInfoHandle() {
@@ -150,16 +150,16 @@ export default {
             window.location.href = '/PersonalCenter'
           })
     },
-    initTableList() {
-      healthLogsApi.listAllUser()
-          .then((resp) => {
-            this.tableData = resp.data.data
-          })
-    }
+    // initTableList() {
+    //   healthLogsApi.listAllUser()
+    //       .then((resp) => {
+    //         this.tableData = resp.data.data
+    //       })
+    // }
   },
   mounted() {
     this.initUserInfo()
-    this.initTableList()
+    // this.initTableList()
   }
 }
 </script>
