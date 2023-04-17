@@ -4,6 +4,7 @@ module.exports = defineConfig({
   devServer: {
     open: true,
     host: 'localhost',
+    allowedHosts: 'all',
     port: 8080,
     https: false,
     //以上的ip和端口是我们本机的;下面为需要跨域的
