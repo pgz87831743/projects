@@ -4,7 +4,7 @@
     <div class="div1">
       <div
           style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       医务社区管理系统
+       城市信息系统
       </div>
       <div>
         <div class="div2">
@@ -29,9 +29,8 @@
                     </el-form-item>
                     <el-form-item label="角色：">
                       <el-radio-group v-model="user.role">
-                        <el-radio label="USER" name="roleType">患者</el-radio>
-                        <el-radio label="DOCTOR" name="roleType">医生</el-radio>
-                        <el-radio label="WORKER" name="roleType">工作者</el-radio>
+                        <el-radio label="USER" name="roleType">用户</el-radio>
+                        <el-radio label="ADMIN" name="roleType">管理员</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-row :gutter="10">
@@ -161,9 +160,13 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-pixabay-40568.jpg");
+  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
   background-size: 1920px;
   height: 100vh;
+}
+
+.el-card{
+  background: rgba(255, 255, 255, 0.5);
 }
 
 

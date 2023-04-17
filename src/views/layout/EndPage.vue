@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">医务社区管理系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">城市信息系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
@@ -46,17 +46,14 @@
               :default-active="$route.fullPath"
           >
 
-            <el-menu-item v-if="authShow(['WORKER'])" index="/Drugstore">药店管理</el-menu-item>
-            <el-menu-item v-if="authShow(['WORKER'])" index="/Drug">药品管理</el-menu-item>
-            <el-menu-item v-if="authShow(['WORKER'])" index="/Medical">医疗机构管理</el-menu-item>
-            <el-menu-item v-if="authShow(['WORKER'])" index="/Offices">科室管理</el-menu-item>
-            <el-menu-item v-if="authShow(['WORKER'])" index="/Doctor">医生管理</el-menu-item>
-            <el-menu-item v-if="authShow(['DOCTOR'])" index="/Workforce">医院排班</el-menu-item>
-            <el-menu-item v-if="authShow(['USER','WORKER'])"  index="/Appointment">就诊预约</el-menu-item>
-            <el-menu-item v-if="authShow(['DOCTOR','WORKER'])" index="/Visit">就诊记录</el-menu-item>
-            <el-menu-item v-if="authShow(['WORKER'])" index="/News">健康新闻</el-menu-item>
-            <el-menu-item v-if="authShow(['DOCTOR'])" index="/Patient">患者管理</el-menu-item>
-            <el-menu-item v-if="authShow(['DOCTOR'])" index="/Prescription">处方管理</el-menu-item>
+            <el-menu-item index="/Drugstore">基本信息管理</el-menu-item>
+            <el-menu-item index="/Drug">人口信息管理</el-menu-item>
+            <el-menu-item index="/Medical">经济信息管理</el-menu-item>
+            <el-menu-item index="/Offices">地理信息管理</el-menu-item>
+            <el-menu-item index="/Doctor">设施信息管理</el-menu-item>
+            <el-menu-item index="/Workforce">环境信息管理</el-menu-item>
+            <el-menu-item index="/Appointment">事件管理</el-menu-item>
+
           </el-menu>
         </el-col>
         <el-col :span="span.right">

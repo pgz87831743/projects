@@ -3,12 +3,12 @@
 
     <div class="div1">
       <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       医务社区管理系统
+       城市信息系统
       </div>
       <div>
         <div class="div2">
           <div class="div3">
-              <el-card>
+              <el-card :shadow="'hover'">
                 <template #header>
                   <div style="font-size: 26px">
                     请登录
@@ -141,6 +141,7 @@ export default {
   width: 400px;
   .div3{
     position: absolute;
+
     top: 100px;
     bottom: 0;
     left: 0;
@@ -149,9 +150,13 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-pixabay-40568.jpg");
+  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
   background-size: 1920px;
   height: 100vh;
+}
+
+.el-card{
+  background: rgba(255, 255, 255,  0.5);
 }
 
 
