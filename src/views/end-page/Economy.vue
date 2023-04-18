@@ -13,13 +13,14 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="user.nickname" label="患者"/>
-        <el-table-column prop="doctorIdUser.nickname" label="医生"/>
-        <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
-        <el-table-column prop="officesIdOffices.name" label="科室"/>
-        <el-table-column prop="time" label="预约时间"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="id" label="ID"/>
+        <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="gdp" label="GDP(亿)"/>
+        <el-table-column prop="gdpGrowthRate" label="该城市的GDP增长率，以百分比表示"/>
+        <el-table-column prop="perCapitaGdp" label="该城市的人均GDP，以元为单位"/>
+        <el-table-column prop="disposableIncome" label="该城市的人均可支配收入，以元为单位"/>
+        <el-table-column prop="inflationRate" label="该城市的通货膨胀率，以百分比表示"/>
+        <el-table-column prop="unemploymentRate" label="该城市的失业率，以百分比表示"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -27,7 +28,7 @@
             <el-button
                 size="small"
                 type="danger"
-                @click="clickButton('delete',scope.row)">取消预约
+                @click="clickButton('delete',scope.row)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -37,35 +38,29 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="预约人">
-          <el-select v-model="form.userId" placeholder="请选择">
-            <el-option v-for="item in userList" :label="item.username" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
+        <el-form-item label="城市">
+          <el-select v-model="form.cityId" placeholder="请选择" :disabled="dialog.optionValue!=='add'">
+            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="医疗机构">
-          <el-select v-model="form.medicalId" placeholder="请选择" @change="change">
-            <el-option v-for="item in medicalList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="GDP(亿)">
+          <el-input type="number" v-model="form.gdp" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="科室">
-          <el-select v-model="form.officesId" placeholder="请选择">
-            <el-option v-for="item in officesList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="GDP增长率">
+          <el-input  type="number" v-model="form.gdpGrowthRate" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="医生">
-          <el-select v-model="form.doctorId" placeholder="请选择">
-            <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="人均GDP">
+          <el-input type="number" v-model="form.perCapitaGdp" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="预约时间">
-          <el-date-picker value-format="YYYY-MM-DD" type="date" v-model="form.time" placeholder="请选择">
-          </el-date-picker>
+        <el-form-item label="人均可支配收入">
+          <el-input type="number" v-model="form.disposableIncome" placeholder="请输入"/>
         </el-form-item>
-
+        <el-form-item label="通货膨胀率">
+          <el-input type="number" v-model="form.inflationRate" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="失业率">
+          <el-input  type="number" v-model="form.unemploymentRate" placeholder="请输入"/>
+        </el-form-item>
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -97,11 +92,12 @@
 
 <script>
 
-import {appointmentApi, medicalApi, sysUserApi} from "@/api/api";
+import {cityApi, economyApi} from "@/api/api";
+
 
 
 export default {
-  name: "Appointment",
+  name: "Economy",
   data() {
     return {
       page: {
@@ -111,6 +107,7 @@ export default {
         search: ''
       },
       tableData: [],
+      cityList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -119,17 +116,13 @@ export default {
       },
       form: {},
       total: 0,
-      doctorList:[],
-      medicalList: [],
-      officesList: [],
-      userList: [],
     }
   },
 
   methods: {
 
     search() {
-      appointmentApi.page(this.page)
+      economyApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -144,21 +137,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        appointmentApi.getById(row.id).then((resp) => {
+        economyApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        appointmentApi.getById(row.id).then((resp) => {
+        economyApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        appointmentApi.deleteById(row.id).then(() => {
+        economyApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -166,7 +159,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      appointmentApi.page(this.page).then(resp => {
+      economyApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -175,12 +168,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        appointmentApi.add(this.form)
+        economyApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        appointmentApi.updateById(this.form)
+        economyApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -193,49 +186,23 @@ export default {
     },
 
     initTableData() {
-      appointmentApi.page(this.page)
+      economyApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
-
-    initMedicalList() {
-      medicalApi.listAll()
+    initCityList() {
+      cityApi.listAll()
           .then(resp => {
-            this.medicalList = resp.data.data
+            this.cityList = resp.data.data
           })
     },
-
-    change(id) {
-      medicalApi.getById(id)
-          .then((resp) => {
-            this.form.officesId=null
-            this.officesList = resp.data.data.officesList
-          })
-    },
-    initDoctorList() {
-      sysUserApi.allUserByType('DOCTOR')
-          .then(resp => {
-            this.doctorList = resp.data.data
-          })
-    },
-
-    initUserList() {
-      sysUserApi.allUserByType('USER')
-          .then(resp => {
-            this.userList = resp.data.data
-          })
-    },
-
-
 
   },
   mounted() {
     this.initTableData()
-    this.initMedicalList()
-    this.initDoctorList()
-    this.initUserList()
+    this.initCityList()
   },
 
 }

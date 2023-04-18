@@ -13,15 +13,16 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="user.nickname" label="患者"/>
-        <el-table-column prop="doctorIdUser.nickname" label="医生"/>
-        <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
-        <el-table-column prop="officesIdOffices.name" label="科室"/>
-        <el-table-column prop="time" label="就诊时间"/>
-        <el-table-column prop="result" label="检查结果"/>
-        <el-table-column prop="preInfo" label="处方信息"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="avatar" label="图片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="100">
+          </template>
+        </el-table-column>
+        <el-table-column prop="airQuality" label="空气质量，取值范围0-100"/>
+        <el-table-column prop="waterQuality" label="水质，取值范围0-100"/>
+        <el-table-column prop="noiseLevel" label="噪音水平，取值范围0-100"/>
+        <el-table-column prop="pollutionLevel" label="污染水平，取值范围0-100"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -39,42 +40,38 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="就诊人">
-          <el-select v-model="form.userId" placeholder="请选择">
-            <el-option v-for="item in userList" :label="item.username" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
+        <el-form-item label="城市">
+          <el-select v-model="form.cityId" placeholder="请选择">
+            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="医生">
-          <el-select v-model="form.doctorId" placeholder="请选择">
-            <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="图片">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="100"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="医疗机构">
-          <el-select v-model="form.medicalId" placeholder="请选择" @change="change">
-            <el-option v-for="item in medicalList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="空气质量">
+          <el-input type="number" min="0" max="100"  v-model="form.airQuality" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="科室">
-          <el-select v-model="form.officesId" placeholder="请选择">
-            <el-option v-for="item in officesList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="水质">
+          <el-input type="number" min="0" max="100"  v-model="form.waterQuality" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="就诊时间">
-          <el-date-picker value-format="YYYY-MM-DD" type="date" v-model="form.time" placeholder="请选择">
-          </el-date-picker>
+        <el-form-item label="噪音水平">
+          <el-input type="number" min="0" max="100"  v-model="form.noiseLevel" placeholder="请输入"/>
         </el-form-item>
-
-        <el-form-item label="检查结果">
-          <el-input type="textarea" :autosize="{minRows:10}" v-model="form.result" placeholder="请输入"/>
+        <el-form-item label="污染水平">
+          <el-input type="number" min="0" max="100"  v-model="form.pollutionLevel" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="处方信息">
-          <el-input  type="textarea" :autosize="{minRows:10}" v-model="form.preInfo" placeholder="请输入"/>
-        </el-form-item>
-
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -106,11 +103,13 @@
 
 <script>
 
-import {medicalApi, sysUserApi, visitApi} from "@/api/api";
+import {cityApi, environmentApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
-  name: "Visit",
+  name: "Environment",
+  components: {Plus},
   data() {
     return {
       page: {
@@ -120,6 +119,7 @@ export default {
         search: ''
       },
       tableData: [],
+      cityList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -128,22 +128,23 @@ export default {
       },
       form: {},
       total: 0,
-      doctorList:[],
-      userList:[],
-      medicalList: [],
-      officesList: [],
     }
   },
 
   methods: {
 
     search() {
-      visitApi.page(this.page)
+      environmentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
+
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
+    },
+
 
 
     clickButton(type, row) {
@@ -153,21 +154,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        visitApi.getById(row.id).then((resp) => {
+        environmentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        visitApi.getById(row.id).then((resp) => {
+        environmentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        visitApi.deleteById(row.id).then(() => {
+        environmentApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -175,7 +176,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      visitApi.page(this.page).then(resp => {
+      environmentApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -184,12 +185,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        visitApi.add(this.form)
+        environmentApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        visitApi.updateById(this.form)
+        environmentApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -202,50 +203,24 @@ export default {
     },
 
     initTableData() {
-      visitApi.page(this.page)
+      environmentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
-    initDoctorList() {
-      sysUserApi.allUserByType('DOCTOR')
+    initCityList() {
+      cityApi.listAll()
           .then(resp => {
-            this.doctorList = resp.data.data
+            this.cityList = resp.data.data
           })
     },
-
-    initUserList() {
-      sysUserApi.allUserByType('USER')
-          .then(resp => {
-            this.userList = resp.data.data
-          })
-    },
-
-
-    initMedicalList() {
-      medicalApi.listAll()
-          .then(resp => {
-            this.medicalList = resp.data.data
-          })
-    },
-
-    change(id) {
-      medicalApi.getById(id)
-          .then((resp) => {
-            this.form.officesId=null
-            this.officesList = resp.data.data.officesList
-          })
-    }
-
 
   },
   mounted() {
     this.initTableData()
-    this.initMedicalList()
-    this.initDoctorList()
-    this.initUserList()
+    this.initCityList()
   },
 
 }
@@ -292,4 +267,3 @@ export default {
 }
 
 </style>
-

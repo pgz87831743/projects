@@ -46,13 +46,13 @@
               :default-active="$route.fullPath"
           >
 
-            <el-menu-item index="/Drugstore">基本信息管理</el-menu-item>
-            <el-menu-item index="/Drug">人口信息管理</el-menu-item>
-            <el-menu-item index="/Medical">经济信息管理</el-menu-item>
-            <el-menu-item index="/Offices">地理信息管理</el-menu-item>
-            <el-menu-item index="/Doctor">设施信息管理</el-menu-item>
-            <el-menu-item index="/Workforce">环境信息管理</el-menu-item>
-            <el-menu-item index="/Appointment">事件管理</el-menu-item>
+            <el-menu-item index="/City">城市基本信息管理</el-menu-item>
+            <el-menu-item index="/Population">人口信息管理</el-menu-item>
+            <el-menu-item index="/Economy">经济信息管理</el-menu-item>
+            <el-menu-item index="/Geography">地理信息管理</el-menu-item>
+            <el-menu-item index="/Facility">设施信息管理</el-menu-item>
+            <el-menu-item index="/Environment">环境信息管理</el-menu-item>
+            <el-menu-item index="/CityEvent">事件管理</el-menu-item>
 
           </el-menu>
         </el-col>

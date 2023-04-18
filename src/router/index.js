@@ -51,56 +51,50 @@ const routes = [
                 component: () => import('../views/end-page/News'),
             },
             {
-                path: "/Appointment",
-                name: "Appointment",
-                component: () => import('../views/end-page/Appointment'),
-            },{
-                path: "/Drug",
-                name: "Drug",
-                component: () => import('../views/end-page/Drug'),
-            },
-            {
-                path: "/Drugstore",
-                name: "Drugstore",
-                component: () => import('../views/end-page/Drugstore'),
-            },
-            {
-                path: "/Medical",
-                name: "Medical",
-                component: () => import('../views/end-page/Medical'),
-            },
-            {
-                path: "/Offices",
-                name: "Offices",
-                component: () => import('../views/end-page/Offices'),
-            },
-            {
-                path: "/Visit",
-                name: "Visit",
-                component: () => import('../views/end-page/Visit'),
-            },
-            {
-                path: "/Workforce",
-                name: "Workforce",
-                component: () => import('../views/end-page/Workforce'),
-            },
-            {
                 path: "/Doctor",
                 name: "Doctor",
                 component: () => import('../views/end-page/Doctor'),
+            }
+            ,
+            {
+                path: "/City",
+                name: "City",
+                component: () => import('../views/end-page/City'),
+            }
+            ,
+            {
+                path: "/CityEvent",
+                name: "CityEvent",
+                component: () => import('../views/end-page/CityEvent'),
             },
             {
-                path: "/Patient",
-                name: "Patient",
-                component: () => import('../views/end-page/Patient'),
+                path: "/Economy",
+                name: "Economy",
+                component: () => import('../views/end-page/Economy'),
             },
             {
-                path: "/Prescription",
-                name: "Prescription",
-                component: () => import('../views/end-page/Prescription'),
-            },
-
-
+                path: "/Environment",
+                name: "Environment",
+                component: () => import('../views/end-page/Environment'),
+            }
+            ,
+            {
+                path: "/Facility",
+                name: "Facility",
+                component: () => import('../views/end-page/Facility'),
+            }
+            ,
+            {
+                path: "/Geography",
+                name: "Geography",
+                component: () => import('../views/end-page/Geography'),
+            }
+            ,
+            {
+                path: "/Population",
+                name: "Population",
+                component: () => import('../views/end-page/Population'),
+            }
         ]
     }
 ]

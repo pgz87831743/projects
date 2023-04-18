@@ -2,20 +2,28 @@
   <div>
     <el-row :justify="'center'" >
       <el-col :span="18">
-        <div>
-          <h1>{{item.title}}</h1>
-        </div>
-        <div>
-          <h2>{{item.createTime}}</h2>
-        </div>
-        <div v-html="item.content"></div>
+        <el-card>
+          <div>
+            <img :src="item.img">
+          </div>
+          <div>
+            <h1>{{item.title}}</h1>
+          </div>
+          <div>
+            {{item.eventTime}}
+          </div>
+          <div>
+            {{item.eventType}}
+          </div>
+          <div v-html="item.description"></div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {newsApi} from "@/api/api";
+import {cityEventApi} from "@/api/api";
 
 export default {
   name: "NewsInfo",
@@ -27,7 +35,7 @@ export default {
   },
   methods: {
     initItem() {
-      newsApi.getById(this.id)
+      cityEventApi.getById(this.id)
           .then((resp) => {
             this.item = resp.data.data
           })

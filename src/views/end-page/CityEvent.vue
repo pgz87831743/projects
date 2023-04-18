@@ -4,22 +4,24 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+      <el-col :span="5" :offset="1">
+        <el-input v-model="page.search" placeholder="请输入事件标题" clearable/>
+      </el-col>
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="search">搜索</el-button>
+      </el-col>
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="doctorIdUser.nickname" label="医生"/>
-        <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
-        <el-table-column prop="officesIdOffices.name" label="科室"/>
-        <el-table-column prop="address" label="出诊地点"/>
-        <el-table-column prop="time" label="出诊时间"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="avatar" label="图片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="100">
+          </template>
+        </el-table-column>
+        <el-table-column prop="eventType" label="事件类型"/>
+        <el-table-column prop="eventTime" label="事件发生时间"/>
+        <el-table-column prop="title" label="事件标题"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -37,30 +39,38 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="医生">
-          <el-select v-model="form.doctorId" placeholder="请选择">
-            <el-option v-for="item in doctorList" :label="item.username" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
+        <el-form-item label="城市">
+          <el-select v-model="form.cityId" placeholder="请选择">
+            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="医疗机构">
-          <el-select v-model="form.medicalId" placeholder="请选择" @change="change">
-            <el-option v-for="item in medicalList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="图片">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="100"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="科室">
-          <el-select v-model="form.officesId" placeholder="请选择">
-            <el-option v-for="item in officesList" :label="item.name" v-bind:key="item.id"
-                       :value=" item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="出诊地点">
-          <el-input v-model="form.address" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="出诊时间">
-          <el-date-picker value-format="YYYY-MM-DD" type="date" v-model="form.time" placeholder="请选择">
+        <el-form-item label="事件发生时间">
+          <el-date-picker value-format="YYYY-MM-DD HH:mm:ss" v-model="form.eventTime" type="datetime">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="事件类型">
+          <el-input v-model="form.eventType" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="事件标题">
+          <el-input v-model="form.title" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="事件描述">
+          <MyEditor @onChange="onChange" v-model="form.description"></MyEditor>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -93,11 +103,14 @@
 
 <script>
 
-import {medicalApi, sysUserApi, workforceApi} from "@/api/api";
+import {cityApi, cityEventApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
+import MyEditor from "@/views/components/MyEditor.vue";
 
 
 export default {
-  name: "Workforce",
+  name: "CityEvent",
+  components: {MyEditor, Plus},
   data() {
     return {
       page: {
@@ -107,6 +120,7 @@ export default {
         search: ''
       },
       tableData: [],
+      cityList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -115,21 +129,28 @@ export default {
       },
       form: {},
       total: 0,
-      doctorList:[],
-      medicalList: [],
-      officesList: [],
     }
   },
 
   methods: {
 
     search() {
-      workforceApi.page(this.page)
+      cityEventApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
+
+    onChange(value) {
+      this.form.description = value
+    },
+
+
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
+    },
+
 
 
     clickButton(type, row) {
@@ -139,21 +160,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        workforceApi.getById(row.id).then((resp) => {
+        cityEventApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        workforceApi.getById(row.id).then((resp) => {
+        cityEventApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        workforceApi.deleteById(row.id).then(() => {
+        cityEventApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -161,7 +182,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      workforceApi.page(this.page).then(resp => {
+      cityEventApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -170,12 +191,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        workforceApi.add(this.form)
+        cityEventApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        workforceApi.updateById(this.form)
+        cityEventApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -188,40 +209,23 @@ export default {
     },
 
     initTableData() {
-      workforceApi.page(this.page)
+      cityEventApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
-
-    initDoctorList() {
-      sysUserApi.allUserByType('DOCTOR')
+    initCityList() {
+      cityApi.listAll()
           .then(resp => {
-            this.doctorList = resp.data.data
+            this.cityList = resp.data.data
           })
     },
-
-    initMedicalList() {
-      medicalApi.listAll()
-          .then(resp => {
-            this.medicalList = resp.data.data
-          })
-    },
-
-    change(id) {
-      medicalApi.getById(id)
-          .then((resp) => {
-            this.form.officesId=null
-            this.officesList = resp.data.data.officesList
-          })
-    }
 
   },
   mounted() {
     this.initTableData()
-    this.initDoctorList()
-    this.initMedicalList()
+    this.initCityList()
   },
 
 }

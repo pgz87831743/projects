@@ -5,7 +5,7 @@
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
             <el-col :span="5" :offset="1">
-              <el-input v-model="page.search" placeholder="请输入科室名称" clearable/>
+              <el-input v-model="page.search" placeholder="请输入设施名称" clearable/>
             </el-col>
             <el-col :span="1" :offset="1">
               <el-button type="success" @click="search">搜索</el-button>
@@ -13,10 +13,18 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="name" label="科室名称"/>
-        <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="avatar" label="图片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="100">
+          </template>
+        </el-table-column>
+        <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
+        <el-table-column prop="name" label="设施名称"/>
+        <el-table-column prop="address" label="设施地址"/>
+        <el-table-column prop="latitude" label="设施所在的纬度，以度为单位"/>
+        <el-table-column prop="longitude" label="设施所在的经度，以度为单位"/>
+        <el-table-column prop="rating" label="设施评级，范围在0到5之间"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -34,13 +42,43 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="科室名称">
+        <el-form-item label="城市">
+          <el-select v-model="form.cityId" placeholder="请选择">
+            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="图片">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="100"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="设施类型">
+          <el-input v-model="form.facilityType" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="设施名称">
           <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="医疗机构">
-          <el-select  v-model="form.medicalId" placeholder="请选择">
-            <el-option v-for="item in medicalList" :label="item.name"  v-bind:key="item.id" :value=" item.id"></el-option>
-          </el-select>
+        <el-form-item label="设施地址">
+          <el-input v-model="form.address" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="设施所在的纬度">
+          <el-input  type="number" v-model="form.latitude" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="设施所在的经度">
+          <el-input  type="number" v-model="form.longitude" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="设施评级">
+          <el-input type="number" max="5" min="1" v-model="form.rating" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -73,11 +111,13 @@
 
 <script>
 
-import {medicalApi, officesApi} from "@/api/api";
+import {cityApi, facilityApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
-  name: "Offices",
+  name: "Facility",
+  components: {Plus},
   data() {
     return {
       page: {
@@ -87,6 +127,7 @@ export default {
         search: ''
       },
       tableData: [],
+      cityList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -95,20 +136,22 @@ export default {
       },
       form: {},
       total: 0,
-      medicalList: [],
     }
   },
 
   methods: {
 
     search() {
-      officesApi.page(this.page)
+      facilityApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
+    },
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -117,21 +160,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        officesApi.getById(row.id).then((resp) => {
+        facilityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        officesApi.getById(row.id).then((resp) => {
+        facilityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        officesApi.deleteById(row.id).then(() => {
+        facilityApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -139,7 +182,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      officesApi.page(this.page).then(resp => {
+      facilityApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -148,12 +191,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        officesApi.add(this.form)
+        facilityApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        officesApi.updateById(this.form)
+        facilityApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -166,24 +209,23 @@ export default {
     },
 
     initTableData() {
-      officesApi.page(this.page)
+      facilityApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
-
-    initMedicalList() {
-      medicalApi.listAll()
+    initCityList() {
+      cityApi.listAll()
           .then(resp => {
-            this.medicalList = resp.data.data
+            this.cityList = resp.data.data
           })
     },
 
   },
   mounted() {
     this.initTableData()
-    this.initMedicalList()
+    this.initCityList()
   },
 
 }

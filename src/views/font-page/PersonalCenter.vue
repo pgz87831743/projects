@@ -1,8 +1,8 @@
 <template>
   <div class="div">
     <div>
-      <el-row :gutter="20">
-        <el-col :span="6">
+      <el-row :gutter="20" :justify="'center'">
+        <el-col :span="18">
           <el-affix :offset="90">
             <el-card shadow="hover" class="box-card">
               <template #header>
@@ -65,23 +65,6 @@
             </el-card>
           </el-affix>
         </el-col>
-        <el-col :span="18">
-          <el-card shadow="hover" class="box-card">
-            <template #header>
-              <span class="pin-lun">我的就诊记录</span>
-            </template>
-            <el-table :data="tableData" border height="450" style="width: 100%">
-              <el-table-column prop="doctorIdUser.nickname" label="医生"/>
-              <el-table-column prop="medicalIdMedical.name" label="医疗机构"/>
-              <el-table-column prop="officesIdOffices.name" label="科室"/>
-              <el-table-column prop="time" label="就诊时间"/>
-              <el-table-column prop="result" label="检查结果"/>
-              <el-table-column prop="preInfo" label="处方信息"/>
-              <el-table-column prop="createTime" label="创建时间"/>
-              <el-table-column prop="createBy" label="创建人"/>
-            </el-table>
-          </el-card>
-        </el-col>
       </el-row>
     </div>
   </div>
@@ -90,7 +73,7 @@
 <script>
 
 
-import {systemCurrentUser, sysUserApi, visitApi} from "@/api/api";
+import {systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
 
 export default {
@@ -131,16 +114,10 @@ export default {
             window.location.href = '/PersonalCenter'
           })
     },
-    initTableList() {
-      visitApi.listAll()
-          .then((resp) => {
-            this.tableData = resp.data.data
-          })
-    }
+
   },
   mounted() {
     this.initUserInfo()
-    this.initTableList()
   }
 }
 </script>

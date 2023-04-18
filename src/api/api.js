@@ -79,162 +79,164 @@ export const newsApi = {
 }
 
 
-//预约挂号管理
-export const appointmentApi = {
-    page(data) {
-        return request.post('/appointment/page', data)
-    },
-    listAll() {
-        return request.get('/appointment/listAll')
-    },
-    getById(id) {
-        return request.get('/appointment/getById/' + id)
-    },
-    add(data) {
-        return request.post('/appointment/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/appointment/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/appointment/updateById', data)
-    }
-}
 
 
-//药店管理
-export const drugstoreApi = {
-    page(data) {
-        return request.post('/drugstore/page', data)
-    },
-    listAll() {
-        return request.get('/drugstore/listAll')
-    },
-    getById(id) {
-        return request.get('/drugstore/getById/' + id)
-    },
-    add(data) {
-        return request.post('/drugstore/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/drugstore/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/drugstore/updateById', data)
-    }
-}
 
-
-//医疗机构管理
-export const medicalApi = {
-    page(data) {
-        return request.post('/medical/page', data)
-    },
-    listAll() {
-        return request.get('/medical/listAll')
-    },
-    getById(id) {
-        return request.get('/medical/getById/' + id)
-    },
-    add(data) {
-        return request.post('/medical/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/medical/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/medical/updateById', data)
-    }
-}
-
-
-//科室管理
-export const officesApi = {
-    page(data) {
-        return request.post('/offices/page', data)
-    },
-    listAll() {
-        return request.get('/offices/listAll')
-    },
-    getById(id) {
-        return request.get('/offices/getById/' + id)
-    },
-    add(data) {
-        return request.post('/offices/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/offices/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/offices/updateById', data)
-    }
-}
-
-
-//就诊管理
-export const visitApi = {
-    page(data) {
-        return request.post('/visit/page', data)
-    },
-    listAll() {
-        return request.get('/visit/listAll')
-    },
-    getById(id) {
-        return request.get('/visit/getById/' + id)
-    },
-    add(data) {
-        return request.post('/visit/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/visit/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/visit/updateById', data)
-    }
-}
-
-
-//排班管理
-export const workforceApi = {
-    page(data) {
-        return request.post('/workforce/page', data)
-    },
-    listAll() {
-        return request.get('/workforce/listAll')
-    },
-    getById(id) {
-        return request.get('/workforce/getById/' + id)
-    },
-    add(data) {
-        return request.post('/workforce/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/workforce/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/workforce/updateById', data)
-    }
-}
-
-
-//药品管理管理
-export const drugApi={
+//城市基本信息管理
+export const cityApi={
     page(data){
-        return request.post('/drug/page',data)
+        return request.post('/city/page',data)
     },
     listAll(){
-        return request.get('/drug/listAll')
+        return request.get('/city/listAll')
     },
     getById(id){
-        return request.get('/drug/getById/'+id)
+        return request.get('/city/getById/'+id)
     },
     add(data){
-        return request.post('/drug/add',data)
+        return request.post('/city/add',data)
     },
     deleteById(id){
-        return request.delete('/drug/deleteById/'+id)
+        return request.delete('/city/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/drug/updateById',data)
+        return request.put('/city/updateById',data)
+    }
+}
+
+//城市事件表管理
+export const cityEventApi={
+    page(data){
+        return request.post('/cityEvent/page',data)
+    },
+    listAll(){
+        return request.get('/cityEvent/listAll')
+    },
+    getById(id){
+        return request.get('/cityEvent/getById/'+id)
+    },
+    add(data){
+        return request.post('/cityEvent/add',data)
+    },
+    deleteById(id){
+        return request.delete('/cityEvent/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/cityEvent/updateById',data)
+    }
+}
+
+//城市经济数据表管理
+export const economyApi={
+    page(data){
+        return request.post('/economy/page',data)
+    },
+    listAll(){
+        return request.get('/economy/listAll')
+    },
+    getById(id){
+        return request.get('/economy/getById/'+id)
+    },
+    add(data){
+        return request.post('/economy/add',data)
+    },
+    deleteById(id){
+        return request.delete('/economy/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/economy/updateById',data)
+    }
+}
+
+
+
+//城市环境信息表管理
+export const environmentApi={
+    page(data){
+        return request.post('/environment/page',data)
+    },
+    listAll(){
+        return request.get('/environment/listAll')
+    },
+    getById(id){
+        return request.get('/environment/getById/'+id)
+    },
+    add(data){
+        return request.post('/environment/add',data)
+    },
+    deleteById(id){
+        return request.delete('/environment/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/environment/updateById',data)
+    }
+}
+
+
+
+//城市设施表，记录了城市中各种设施的信息，包括名称、位置和评级等管理
+export const facilityApi={
+    page(data){
+        return request.post('/facility/page',data)
+    },
+    listAll(){
+        return request.get('/facility/listAll')
+    },
+    getById(id){
+        return request.get('/facility/getById/'+id)
+    },
+    add(data){
+        return request.post('/facility/add',data)
+    },
+    deleteById(id){
+        return request.delete('/facility/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/facility/updateById',data)
+    }
+}
+
+
+//城市地理信息表管理
+export const geographyApi={
+    page(data){
+        return request.post('/geography/page',data)
+    },
+    listAll(){
+        return request.get('/geography/listAll')
+    },
+    getById(id){
+        return request.get('/geography/getById/'+id)
+    },
+    add(data){
+        return request.post('/geography/add',data)
+    },
+    deleteById(id){
+        return request.delete('/geography/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/geography/updateById',data)
+    }
+}
+
+//人口信息管理
+export const populationApi={
+    page(data){
+        return request.post('/population/page',data)
+    },
+    listAll(){
+        return request.get('/population/listAll')
+    },
+    getById(id){
+        return request.get('/population/getById/'+id)
+    },
+    add(data){
+        return request.post('/population/add',data)
+    },
+    deleteById(id){
+        return request.delete('/population/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/population/updateById',data)
     }
 }
