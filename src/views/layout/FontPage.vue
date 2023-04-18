@@ -16,8 +16,7 @@
           <template #title>
             <el-avatar :src="user.avatar"></el-avatar>
           </template>
-<!--          <el-menu-item v-if="authShow('ADMIN')"  index="/EndPage">后台管理</el-menu-item>-->
-          <el-menu-item  index="/EndPage">后台管理</el-menu-item>
+          <el-menu-item v-if="authShow('ADMIN')"  index="/EndPage">后台管理</el-menu-item>
           <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 
         </el-sub-menu>
