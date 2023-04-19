@@ -35,6 +35,7 @@
            <el-menu-item index="/GoodsManagement">商品管理</el-menu-item>
            <el-menu-item index="/Pet">宠物管理</el-menu-item>
            <el-menu-item index="/Adopt">领养管理</el-menu-item>
+           <el-menu-item index="/News">陪宠教学分享</el-menu-item>
          </el-menu>
        </el-col>
        <el-col :span="21">

@@ -82,6 +82,11 @@ const routes = [
                 name: "Adopt",
                 component: () => import('../views/end-page/Adopt'),
             }
+            ,{
+                path: "/News",
+                name: "News",
+                component: () => import('../views/end-page/News'),
+            }
 
         ]
     }

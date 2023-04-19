@@ -203,3 +203,26 @@ export const petApi={
         return request.put('/pet/updateById',data)
     }
 }
+
+
+//陪宠经验分享管理
+export const newsApi = {
+    page(data) {
+        return request.post('/news/page', data)
+    },
+    getById(id) {
+        return request.get('/news/getById/' + id)
+    },
+    listAll() {
+        return request.get('/news/listAll/')
+    },
+    add(data) {
+        return request.post('/news/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/news/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/news/updateById', data)
+    }
+}
