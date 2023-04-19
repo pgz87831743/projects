@@ -2,7 +2,7 @@
   <div class="div">
     <el-carousel :interval="4000" type="card" height="480px">
       <el-carousel-item v-for="item in top" :key="item">
-        <div @click="info(item)">
+        <div >
           <img :src="item.img" height="480" >
         </div>
       </el-carousel-item>
@@ -107,25 +107,19 @@ export default {
       img: require("@/assets/a.png"),
       list: [],
       top:[
-          require("@/assets/index1.jpg"),
-          require("@/assets/index2.jpg"),
-          require("@/assets/index3.jpg"),
-          require("@/assets/index4.jpg"),
-          require("@/assets/index5.jpg"),
+
       ]
     }
   },
   methods: {
 
     fileDetail(item) {
-      console.log(item)
       let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
     petDetail(item) {
-      console.log(item)
       let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
       // router.push({path:"/FileDetail",query:{id:item.id}})
@@ -138,9 +132,7 @@ export default {
           })
     },
 
-    info(item){
-      alert(JSON.stringify(item))
-    },
+
     initPet(){
       petApi.listAll()
           .then((resp)=>{
