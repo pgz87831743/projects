@@ -9,7 +9,7 @@
            router
            :default-active="$route.fullPath"
        >
-         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">农产品推荐系统管理系统</div></el-menu-item>
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
          <div class="flex-grow" />
          <el-sub-menu index="2-4">
            <template #title>
@@ -33,6 +33,8 @@
          >
            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
            <el-menu-item index="/GoodsManagement">商品管理</el-menu-item>
+           <el-menu-item index="/Pet">宠物管理</el-menu-item>
+           <el-menu-item index="/Adopt">领养管理</el-menu-item>
          </el-menu>
        </el-col>
        <el-col :span="21">

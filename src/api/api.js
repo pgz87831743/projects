@@ -157,3 +157,49 @@ export const goodsOrderDetailApi = {
         return request.put('/goodsOrderDetail/updateById', data)
     }
 }
+
+
+//宠物领养信息管理
+export const adoptApi={
+    page(data){
+        return request.post('/adopt/page',data)
+    },
+    listAll(){
+        return request.get('/adopt/listAll')
+    },
+    getById(id){
+        return request.get('/adopt/getById/'+id)
+    },
+    add(data){
+        return request.post('/adopt/add',data)
+    },
+    deleteById(id){
+        return request.delete('/adopt/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/adopt/updateById',data)
+    }
+}
+
+
+//宠物信息管理
+export const petApi={
+    page(data){
+        return request.post('/pet/page',data)
+    },
+    listAll(){
+        return request.get('/pet/listAll')
+    },
+    getById(id){
+        return request.get('/pet/getById/'+id)
+    },
+    add(data){
+        return request.post('/pet/add',data)
+    },
+    deleteById(id){
+        return request.delete('/pet/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/pet/updateById',data)
+    }
+}

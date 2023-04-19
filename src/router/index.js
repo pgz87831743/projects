@@ -72,6 +72,15 @@ const routes = [
                 path: "/GoodsManagement",
                 name: "GoodsManagement",
                 component: () => import('../views/end-page/GoodsManagement'),
+            },{
+                path: "/Pet",
+                name: "Pet",
+                component: () => import('../views/end-page/Pet'),
+            }
+            ,{
+                path: "/Adopt",
+                name: "Adopt",
+                component: () => import('../views/end-page/Adopt'),
             }
 
         ]
