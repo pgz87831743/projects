@@ -4,20 +4,25 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+      <el-col :span="5" :offset="1">
+        <el-input v-model="page.search" placeholder="请输入宠物名称" clearable @clear="initTableData"/>
+      </el-col>
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="search">搜索</el-button>
+      </el-col>
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
+        <el-table-column prop="id" label="ID"/>
         <el-table-column prop="name" label="宠物名称"/>
         <el-table-column prop="type" label="宠物种类"/>
         <el-table-column prop="sex" label="性别"/>
         <el-table-column prop="birth" label="生日"/>
-        <el-table-column prop="img" label="照片"/>
+        <el-table-column prop="pet.img" label="宠物照片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="300"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" label="领养状态"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
@@ -45,17 +50,30 @@
           <el-input v-model="form.type" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="性别">
-          <el-radio-group v-model="form.sex" >
+          <el-radio-group v-model="form.sex">
             <el-radio label="雄性" name="sex"></el-radio>
             <el-radio label="雌性" name="sex"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="生日">
-          <el-date-picker  v-model="form.birth" value-format="YYYY-MM-DD"></el-date-picker>
+          <el-date-picker v-model="form.birth" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="照片">
-          <el-input v-model="form.img" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="100"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
+
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -88,10 +106,12 @@
 <script>
 
 import {petApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Pet",
+  components: {Plus},
   data() {
     return {
       page: {

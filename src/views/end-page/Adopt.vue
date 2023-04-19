@@ -39,9 +39,6 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="ID">
-          <el-input v-model="form.id" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="宠物ID">
           <el-input v-model="form.petId" placeholder="请输入"/>
         </el-form-item>
