@@ -5,7 +5,7 @@
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
             <el-col :span="5" :offset="1">
-              <el-input v-model="page.search" placeholder="请输入标题内容" clearable/>
+              <el-input v-model="page.search" placeholder="请输入标题内容" clearable @clear="initTableData"/>
             </el-col>
             <el-col :span="1" :offset="1">
               <el-button type="success" @click="search">搜索</el-button>
@@ -70,16 +70,18 @@
 
 
     <!-- 分页 -->
-    <div class="paginationClass">
-      <el-pagination
-          small
-          background
-          :total="total"
-          :page-size="5"
-          @current-change="currentChange"
-          layout="prev, pager, next"
-      />
-    </div>
+    <el-affix position="bottom" :offset="20">
+      <div class="paginationClass">
+        <el-pagination
+            small
+            background
+            :total="total"
+            :page-size="this.page.pageSize"
+            @current-change="currentChange"
+            layout="total,prev, pager, next, jumper"
+        />
+      </div>
+    </el-affix>
   </div>
 
 

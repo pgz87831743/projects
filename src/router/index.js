@@ -21,10 +21,19 @@ const routes = [
         path: "/ProductDetail",
         name: "ProductDetail",
         component: () => import('../views/font-page/ProductDetail'),
-    },{
+    }, {
         path: "/OrderDetail",
         name: "OrderDetail",
         component: () => import('../views/font-page/OrderDetail'),
+    }, {
+        path: "/PetDetail",
+        name: "PetDetail",
+        component: () => import('../views/font-page/PetDetail'),
+    },
+    {
+        path: "/NewsInfo",
+        name: "NewsInfo",
+        component: () => import('../views/font-page/NewsInfo'),
     },
 
 
@@ -36,6 +45,10 @@ const routes = [
                 path: "/IndexPage",
                 name: "IndexPage",
                 component: () => import('../views/font-page/IndexPage'),
+            }, {
+                path: "/MyAdeptList",
+                name: "MyAdeptList",
+                component: () => import('../views/font-page/MyAdeptList'),
             },
             {
                 path: "/SearchShop",
@@ -55,7 +68,12 @@ const routes = [
             {
                 path: "/ProductDetail",
                 name: "ProductDetail",
-                component: () => import('../views/font-page/ProductDetail.vue'),
+                component: () => import('../views/font-page/ProductDetail'),
+            },
+            {
+                path: "/Teaching",
+                name: "Teaching",
+                component: () => import('../views/font-page/Teaching'),
             },
         ]
     }
@@ -68,26 +86,26 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
-            },{
+            }, {
                 path: "/GoodsManagement",
                 name: "GoodsManagement",
                 component: () => import('../views/end-page/GoodsManagement'),
-            },{
+            }, {
                 path: "/Pet",
                 name: "Pet",
                 component: () => import('../views/end-page/Pet'),
             }
-            ,{
+            , {
                 path: "/Adopt",
                 name: "Adopt",
                 component: () => import('../views/end-page/Adopt'),
             }
-            ,{
+            , {
                 path: "/News",
                 name: "News",
                 component: () => import('../views/end-page/News'),
             }
-            ,{
+            , {
                 path: "/AdoptExamine",
                 name: "AdoptExamine",
                 component: () => import('../views/end-page/AdoptExamine'),

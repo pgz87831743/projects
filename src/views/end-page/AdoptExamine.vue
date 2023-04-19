@@ -1,9 +1,15 @@
 <template>
   <div class="p-div">
+
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="petId" label="宠物ID"/>
+        <el-table-column prop="pet.name" label="宠物名称"/>
+        <el-table-column prop="pet.img" label="宠物照片" width="500">
+          <template #default="scope" >
+            <img :src="scope.row.pet.img" height="300"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="status" label="领养状态"/>
         <el-table-column prop="description" label="领养理由"/>
         <el-table-column prop="createTime" label="申请时间"/>
@@ -56,7 +62,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>
@@ -110,9 +116,10 @@ export default {
 
     adopt(row, status) {
       row.status=status
+      row.pet=null
       adoptExamineApi.updateById(row)
-          .then((resp)=>{
-            console.log(resp)
+          .then(()=>{
+            this.initTableData()
           })
     },
 

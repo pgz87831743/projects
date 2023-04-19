@@ -1,10 +1,49 @@
 <template>
   <div class="div">
-    <el-carousel :interval="4000" type="card" height="350px">
+    <el-carousel :interval="4000" type="card" height="480px">
       <el-carousel-item v-for="item in top" :key="item">
-        <img :src="item" width="930" >
+        <div @click="info(item)">
+          <img :src="item.img" height="480" >
+        </div>
       </el-carousel-item>
     </el-carousel>
+
+
+    <el-card class="box-card" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span class="pin-lun">宠物领养</span>
+        </div>
+      </template>
+      <div class="row-div">
+        <el-row :gutter="12" >
+          <el-col v-bind:key="item.id" v-for="item in top" :span="6">
+            <el-card shadow="hover" @click="petDetail(item)"  style="margin: 10px">
+              <div>
+                <div>
+                  <img :src="item.img" height="300">
+                </div>
+                <div>
+                  {{item.type}}-{{ item.name }}
+                </div>
+                <div class="card-div">
+                  <div>
+
+                  </div>
+                  <div>
+                    {{ item.sex }}
+                  </div>
+                  <div>
+                    {{item.createTime}}
+                  </div>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+
+      </div>
+    </el-card>
 
     <el-card class="box-card" shadow="hover">
       <template #header>
@@ -57,7 +96,7 @@
 
 <script>
 import {Comment, View} from "@element-plus/icons-vue";
-import {goodsApi} from "@/api/api";
+import {goodsApi, petApi} from "@/api/api";
 import router from "@/router";
 
 export default {
@@ -85,15 +124,33 @@ export default {
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
+    petDetail(item) {
+      console.log(item)
+      let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
+      window.open(routeData.href, '_blank');
+      // router.push({path:"/FileDetail",query:{id:item.id}})
+    },
+
     inithotGoods() {
       goodsApi.hotGoods()
           .then((resp) => {
             this.list = resp.data.data
           })
+    },
+
+    info(item){
+      alert(JSON.stringify(item))
+    },
+    initPet(){
+      petApi.listAll()
+          .then((resp)=>{
+            this.top=resp.data.data
+          })
     }
   },
   mounted() {
     this.inithotGoods()
+    this.initPet()
   }
 }
 </script>

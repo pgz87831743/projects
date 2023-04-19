@@ -1,9 +1,9 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
-      </el-col>
+<!--      <el-col :span="1">-->
+<!--        <el-button type="primary" @click="clickButton('add')">新增</el-button>-->
+<!--      </el-col>-->
       <!--      <el-col :span="5" :offset="1">-->
       <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
       <!--      </el-col>-->
@@ -15,9 +15,9 @@
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="id" label="ID"/>
         <el-table-column prop="pet.name" label="宠物名称"/>
-        <el-table-column prop="pet.img" label="宠物照片">
-          <template #default="scope">
-            <img :src="scope.row.pet.img" width="300"/>
+        <el-table-column prop="pet.img" label="宠物照片" width="500">
+          <template #default="scope" >
+            <img :src="scope.row.pet.img" height="300"/>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="领养时间"/>
@@ -67,7 +67,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>

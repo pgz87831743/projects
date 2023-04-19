@@ -86,16 +86,18 @@
 
 
     <!-- 分页 -->
-    <div class="paginationClass">
-      <el-pagination
-          small
-          background
-          :total="total"
-          :page-size="this.page.pageSize"
-          @current-change="currentChange"
-          layout="prev, pager, next"
-      />
-    </div>
+    <el-affix position="bottom" :offset="20">
+      <div class="paginationClass">
+        <el-pagination
+            small
+            background
+            :total="total"
+            :page-size="this.page.pageSize"
+            @current-change="currentChange"
+            layout="total,prev, pager, next, jumper"
+        />
+      </div>
+    </el-affix>
   </div>
 
 

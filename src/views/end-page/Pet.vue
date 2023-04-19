@@ -12,15 +12,15 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
+      <el-table :data="tableData" border height="600" style="width: 100%">
         <el-table-column prop="id" label="ID"/>
         <el-table-column prop="name" label="宠物名称"/>
         <el-table-column prop="type" label="宠物种类"/>
         <el-table-column prop="sex" label="性别"/>
         <el-table-column prop="birth" label="生日"/>
-        <el-table-column prop="pet.img" label="宠物照片">
-          <template #default="scope">
-            <img :src="scope.row.img" width="300"/>
+        <el-table-column prop="pet.img" label="宠物照片" width="500">
+          <template #default="scope" >
+            <img :src="scope.row.img" height="300"/>
           </template>
         </el-table-column>
         <el-table-column prop="status" label="领养状态"/>
@@ -93,7 +93,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>

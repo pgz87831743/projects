@@ -32,7 +32,7 @@
              :default-active="$route.fullPath"
          >
            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
-           <el-menu-item index="/GoodsManagement">商品管理</el-menu-item>
+           <el-menu-item index="/GoodsManagement">宠物商品管理</el-menu-item>
            <el-menu-item index="/Pet">宠物管理</el-menu-item>
            <el-menu-item index="/Adopt">领养管理</el-menu-item>
            <el-menu-item index="/AdoptExamine">领养审核管理</el-menu-item>
