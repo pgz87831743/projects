@@ -1,30 +1,17 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
-      </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
-    </el-row>
-    <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="name" label="宠物名称"/>
-        <el-table-column prop="type" label="宠物种类"/>
-        <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="birth" label="生日"/>
-        <el-table-column prop="img" label="照片"/>
+        <el-table-column prop="id" label="ID"/>
+        <el-table-column prop="petId" label="宠物ID"/>
         <el-table-column prop="status" label="领养状态"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="description" label="领养理由"/>
+        <el-table-column prop="createTime" label="申请时间"/>
+        <el-table-column prop="createBy" label="领养人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" type="success" @click="adopt(scope.row,'通过')">通过</el-button>
+            <el-button type="primary" size="small" @click="adopt(scope.row,'驳回')">驳回</el-button>
             <el-button
                 size="small"
                 type="danger"
@@ -38,23 +25,17 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="宠物名称">
-          <el-input v-model="form.name" placeholder="请输入"/>
+        <el-form-item label="宠物ID">
+          <el-input v-model="form.petId" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="宠物种类">
-          <el-input v-model="form.type" placeholder="请输入"/>
+        <el-form-item label="领养状态">
+          <el-input v-model="form.status" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="form.sex" >
-            <el-radio label="雄性" name="sex"></el-radio>
-            <el-radio label="雌性" name="sex"></el-radio>
-          </el-radio-group>
+        <el-form-item label="领养理由">
+          <el-input v-model="form.description" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker  v-model="form.birth" value-format="YYYY-MM-DD"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="照片">
-          <el-input v-model="form.img" placeholder="请输入"/>
+        <el-form-item label="领养人">
+          <el-input v-model="form.createBy" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -87,11 +68,11 @@
 
 <script>
 
-import {petApi} from "@/api/api";
+import {adoptExamineApi} from "@/api/api";
 
 
 export default {
-  name: "Pet",
+  name: "AdoptExamine",
   data() {
     return {
       page: {
@@ -115,7 +96,7 @@ export default {
   methods: {
 
     search() {
-      petApi.page(this.page)
+      adoptExamineApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -127,6 +108,14 @@ export default {
       this.form.img = response[0].url
     },
 
+    adopt(row, status) {
+      row.status=status
+      adoptExamineApi.updateById(row)
+          .then((resp)=>{
+            console.log(resp)
+          })
+    },
+
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -135,21 +124,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        petApi.getById(row.id).then((resp) => {
+        adoptExamineApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        petApi.getById(row.id).then((resp) => {
+        adoptExamineApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        petApi.deleteById(row.id).then(() => {
+        adoptExamineApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -157,7 +146,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      petApi.page(this.page).then(resp => {
+      adoptExamineApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -166,12 +155,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        petApi.add(this.form)
+        adoptExamineApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        petApi.updateById(this.form)
+        adoptExamineApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -184,7 +173,7 @@ export default {
     },
 
     initTableData() {
-      petApi.page(this.page)
+      adoptExamineApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total

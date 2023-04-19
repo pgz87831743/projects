@@ -14,8 +14,12 @@
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="petId" label="宠物ID"/>
-        <el-table-column prop="status" label="领养状态"/>
+        <el-table-column prop="pet.name" label="宠物名称"/>
+        <el-table-column prop="pet.img" label="宠物照片">
+          <template #default="scope">
+            <img :src="scope.row.pet.img" width="300"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="领养时间"/>
         <el-table-column prop="createBy" label="领养人"/>
         <el-table-column label="操作" width="300px">
@@ -40,9 +44,6 @@
         </el-form-item>
         <el-form-item label="宠物ID">
           <el-input v-model="form.petId" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="领养状态">
-          <el-input v-model="form.status" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="领养时间">
           <el-input v-model="form.createTime" placeholder="请输入"/>

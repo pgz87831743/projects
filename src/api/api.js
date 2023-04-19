@@ -226,3 +226,26 @@ export const newsApi = {
         return request.put('/news/updateById', data)
     }
 }
+
+
+//宠物领养审核管理
+export const adoptExamineApi={
+    page(data){
+        return request.post('/adoptExamine/page',data)
+    },
+    listAll(){
+        return request.get('/adoptExamine/listAll')
+    },
+    getById(id){
+        return request.get('/adoptExamine/getById/'+id)
+    },
+    add(data){
+        return request.post('/adoptExamine/add',data)
+    },
+    deleteById(id){
+        return request.delete('/adoptExamine/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/adoptExamine/updateById',data)
+    }
+}
