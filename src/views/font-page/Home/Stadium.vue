@@ -16,7 +16,12 @@
         <el-table-column prop="name" label="场馆名字"/>
         <el-table-column prop="description" label="介绍"/>
         <el-table-column prop="capacity" label="容量"/>
-        <el-table-column prop="img" label="主图"/>
+        <el-table-column prop="" label=""/>
+        <el-table-column prop="img" label="主图" width="500">
+          <template #default="scope" >
+            <img :src="scope.row.img" height="300"/>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -44,7 +49,19 @@
           <el-input v-model="form.capacity" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="主图">
-          <el-input v-model="form.img" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="100"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -78,10 +95,12 @@
 <script>
 
 import {stadiumApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Stadium",
+  components: {Plus},
   data() {
     return {
       page: {

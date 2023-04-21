@@ -13,10 +13,13 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%">
-        <el-table-column prop="id" label="主键"/>
-        <el-table-column prop="stadiumId" label="场馆ID"/>
+        <el-table-column prop="stadium.name" label="场馆名称"/>
         <el-table-column prop="name" label="活动名称"/>
-        <el-table-column prop="price" label="价格"/>
+        <el-table-column prop="price" label="价格">
+          <template #default="scope">
+            {{scope.row.price}}$
+          </template>
+        </el-table-column>
         <el-table-column prop="unit" label="单位"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
@@ -37,14 +40,16 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="场馆ID">
-          <el-input v-model="form.stadiumId" placeholder="请输入"/>
+        <el-form-item label="场馆">
+          <el-select v-model="form.stadiumId">
+            <el-option v-for="item in stadiumList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="活动名称">
           <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input v-model="form.price" placeholder="请输入"/>
+          <el-input type="number" v-model="form.price" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="单位">
           <el-input v-model="form.unit" placeholder="请输入"/>
@@ -80,7 +85,7 @@
 
 <script>
 
-import {activityApi} from "@/api/api";
+import {activityApi, stadiumApi} from "@/api/api";
 
 
 export default {
@@ -94,6 +99,7 @@ export default {
         search: ''
       },
       tableData: [],
+      stadiumList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -184,9 +190,17 @@ export default {
           })
     },
 
+    initStadiumList(){
+      stadiumApi.listAll()
+          .then((resp)=>{
+            this.stadiumList=resp.data.data
+          })
+    }
+
   },
   mounted() {
     this.initTableData()
+    this.initStadiumList()
   },
 
 }

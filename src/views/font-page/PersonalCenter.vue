@@ -8,7 +8,7 @@
               router
               :default-active="$route.fullPath"
           >
-            <el-menu-item index="/MyHomePage">Home</el-menu-item>
+            <el-menu-item index="/MyHomePage">INFOMATION</el-menu-item>
             <el-menu-item index="/MyOrder">My Order</el-menu-item>
             <el-menu-item index="/MemberShip">Membership</el-menu-item>
             <el-menu-item index="/Stadium">Stadium</el-menu-item>

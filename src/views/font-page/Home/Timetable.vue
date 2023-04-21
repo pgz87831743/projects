@@ -13,12 +13,11 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%">
-        <el-table-column prop="id" label="主键"/>
-        <el-table-column prop="activityId" label="活动or场馆"/>
+        <el-table-column prop="stadium.name" label="场馆名称"/>
+        <el-table-column prop="activity.name" label="活动名称"/>
         <el-table-column prop="status" label="状态"/>
         <el-table-column prop="startTime" label="开始时间"/>
         <el-table-column prop="endTime" label="结束时间"/>
-        <el-table-column prop="type" label="类型，场馆or 活动"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
@@ -38,29 +37,37 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
+        <el-form-item label="场馆">
+          <el-select v-model="form.stadiumId" @change="change">
+            <el-option v-for="item in stadiumList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="活动or场馆">
-          <el-input v-model="form.activityId" placeholder="请输入"/>
+
+        <el-form-item label="活动">
+          <el-select v-model="form.activityId">
+            <el-option v-for="item in activityList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
+
         <el-form-item label="状态">
-          <el-input v-model="form.status" placeholder="请输入"/>
+          <el-radio-group v-model="form.status">
+            <el-radio label="available"></el-radio>
+            <el-radio label="unavailable"></el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="开始时间">
-          <el-input v-model="form.startTime" placeholder="请输入"/>
+        <el-form-item label="日期">
+          <el-date-picker v-model="form.startTime" type="date"></el-date-picker>
         </el-form-item>
-        <el-form-item label="结束时间">
-          <el-input v-model="form.endTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="类型，场馆or 活动">
-          <el-input v-model="form.type" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+        <el-form-item label="时间">
+<!--          <el-date-picker v-model="form.endTime"  value-format="YYYY-MM-DD HH:mm:ss"  type="datetime"></el-date-picker>-->
+          <el-time-picker
+              v-model="form.endTime"
+              is-range
+              :value-format="'HH:mm:ss'"
+              range-separator="To"
+              start-placeholder="Start time"
+              end-placeholder="End time"
+          />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -93,7 +100,7 @@
 
 <script>
 
-import {timetableApi} from "@/api/api";
+import {stadiumApi, timetableApi} from "@/api/api";
 
 
 export default {
@@ -113,7 +120,11 @@ export default {
         formDisabled: true,
         optionValue: null
       },
-      form: {},
+      stadiumList:[],
+      activityList:[],
+      form: {
+        status:"available"
+      },
       total: 0,
     }
   },
@@ -172,6 +183,9 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
+
+
+
         timetableApi.add(this.form)
             .then(() => {
               this.initTableData();
@@ -186,7 +200,9 @@ export default {
 
 
     dialogClose() {
-      this.form = {}
+      this.form = {
+        status:"available"
+      }
     },
 
     initTableData() {
@@ -196,10 +212,25 @@ export default {
             this.total = resp.data.data.total
           })
     },
+    initStadiumList(){
+      stadiumApi.listAll()
+          .then((resp)=>{
+            this.stadiumList=resp.data.data
+          })
+    },
+
+    change(id){
+      stadiumApi.getById(id)
+          .then((resp)=>{
+            this.activityList=resp.data.data.activityList
+            this.form.activityId=null
+          })
+    }
 
   },
   mounted() {
     this.initTableData()
+    this.initStadiumList()
   },
 
 }
@@ -246,3 +277,4 @@ export default {
 }
 
 </style>
+
