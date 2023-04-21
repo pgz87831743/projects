@@ -1,5 +1,19 @@
 <template>
 <div>
+  <div class="hdv1">
+    <div class="hdv1_1">
+      <el-row>
+        <el-col>
+          <el-avatar :size="300" src="http://p2.music.126.net/vZ5ef3WzRneTTydXSzPauQ==/109951165994871935.jpg?param=380y140" />
+        </el-col>
+      </el-row>
+      <el-row style="margin-top: 60px">
+        <el-col>
+          123123
+        </el-col>
+      </el-row>
+    </div>
+  </div>
     <el-row  class="eldiv">
       <el-col :span="8" :offset="2">
         <el-form  :model="form">
@@ -63,6 +77,23 @@ export default {
   margin-top: 50px;
   *{
     font-size: 20px;
+  }
+}
+
+.hdv1{
+  height: 662px;
+  background:url("@/../src/assets/od_1.png");
+  color: #ffffff;
+  font-size: 36px;
+  position: relative;
+
+  .hdv1_1{
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 163px;
+    bottom: 0;
   }
 }
 </style>

@@ -74,21 +74,23 @@ const routes = [
                         path: "/MyOrder",
                         name: "MyOrder",
                         component: () => import('../views/font-page/Home/MyOrder'),
-                    }
+                    },
+                    {
+                        path: "/Stadium",
+                        name: "Stadium",
+                        component: () => import('../views/font-page/Home/Stadium'),
+                    },{
+                        path: "/Activity",
+                        name: "Activity",
+                        component: () => import('../views/font-page/Home/Activity'),
+                    },
+                    {
+                        path: "/Timetable",
+                        name: "Timetable",
+                        component: () => import('../views/font-page/Home/Timetable'),
+                    },
                 ]
             },
-        ]
-    }
-    , {
-        path: '/EndPage',
-        name: 'EndPage',
-        component: () => import('../views/layout/EndPage'),
-        children: [
-            {
-                path: "/UserPage",
-                name: "UserPage",
-                component: () => import('../views/end-page/UserPage'),
-            }
         ]
     }
 ]

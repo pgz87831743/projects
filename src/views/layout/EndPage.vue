@@ -1,13 +1,13 @@
 <template>
   <div>
-
+123123
   </div>
 </template>
 
 
 <script>
 
-import {logout, sysUserGetById} from "@/api/api";
+import {logout, sysUserApi} from "@/api/api";
 import {getItem, removeItem} from "@/utils/storage";
 import router from "@/router";
 
@@ -21,7 +21,7 @@ export default {
   components: {},
   methods: {
     userQuery() {
-      sysUserGetById(getItem("TOKEN_INFO_KEY").user.id)
+      sysUserApi.getById(getItem("TOKEN_INFO_KEY").user.id)
           .then((resp) => {
             this.user = resp.data.data
           })

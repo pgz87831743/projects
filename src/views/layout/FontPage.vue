@@ -19,12 +19,12 @@
       </el-menu>
     </el-affix>
     <router-view></router-view>
-    <div class="hdv2">
-      <span class="hdv2-span">CREATIVE TIM</span>
-      <span class="hdv2-span">ABOUT US</span>
-      <span class="hdv2-span">BLOG</span>
-      <span class="hdv2-span">2019,Designed by<span class="sc">Invision</span>.Code by <span class="sc">Creative Tim</span>. Presented by <span class="sc">MockPlus RP</span></span>
-    </div>
+<!--    <div class="hdv2">-->
+<!--      <span class="hdv2-span">CREATIVE TIM</span>-->
+<!--      <span class="hdv2-span">ABOUT US</span>-->
+<!--      <span class="hdv2-span">BLOG</span>-->
+<!--      <span class="hdv2-span">2019,Designed by<span class="sc">Invision</span>.Code by <span class="sc">Creative Tim</span>. Presented by <span class="sc">MockPlus RP</span></span>-->
+<!--    </div>-->
   </div>
 </template>
 
