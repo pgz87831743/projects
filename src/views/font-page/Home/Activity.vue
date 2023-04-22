@@ -12,7 +12,10 @@
       <!--      </el-col>-->
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="600" style="width: 100%">
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center',padding:'30px'}"
+      >
         <el-table-column prop="stadium.name" label="场馆名称"/>
         <el-table-column prop="name" label="活动名称"/>
         <el-table-column prop="price" label="价格">

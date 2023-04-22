@@ -2,19 +2,21 @@
   <div>
     <div class="div1">
       <div class="div2">
-        场馆名字
+        {{ this.stadium.name }}
       </div>
     </div>
 
     <div style="margin-top: 50px ">
-      <div  style="font-size:48px ">
+      <div style="font-size:48px ">
         介绍
       </div>
       <div>
-        场馆介绍+容量
-        1
-        1
-        1
+        <p>
+          {{this.stadium.capacity}}
+        </p>
+       <p>
+         {{ this.stadium.description }}
+       </p>
       </div>
     </div>
 
@@ -22,10 +24,11 @@
       Activity Name
     </div>
     <div style="margin-top: 50px">
-      <div v-for="item in list" v-bind:key="item.id" style="margin: 20px auto;height: 50px; width: 500px; border: 1px solid #f0f0f0;border-radius: 30px">
+      <div v-for="item in stadium.activityList" v-bind:key="item.id"
+           style="margin: 20px auto;height: 50px; width: 500px; border: 1px solid #f0f0f0;border-radius: 30px">
         <span style="display: inline-block;width: 150px;line-height: 50px">{{ item.name }}</span>
-        <span style="display: inline-block;width: 150px;line-height: 50px">${{item.price}}</span>
-        <span style="display: inline-block;width: 150px;line-height: 50px"><el-button @click="chooseHandler" round style="background: #b054ac;color: #ffffff">Choose</el-button></span>
+        <span style="display: inline-block;width: 150px;line-height: 50px">${{ item.price }}</span>
+        <span style="display: inline-block;width: 150px;line-height: 50px"><el-button @click="chooseHandler(item.id)" round style="background: #b054ac;color: #ffffff">Choose</el-button></span>
       </div>
 
     </div>
@@ -41,59 +44,54 @@
 
 
 import router from "@/router";
+import {stadiumApi} from "@/api/api";
 
 export default {
   name: "StadiumBooking",
 
-  data(){
-    return{
-      list:[
-        {
-          id:'1',
-          name:'General use',
-          price:'10'
-        },
-        {
-          id:'1',
-          name:'Lane Swimming',
-          price:'10'
-        },
-        {
-          id:'1',
-          name:'Lessons',
-          price:'50'
-        },
-        {
-          id:'1',
-          name:'Team Events',
-          price:'15/person'
-        }
-      ]
+  data() {
+    return {
+      stadiuID: '',
+      stadium: {}
     }
   },
   methods: {
-    chooseHandler(){
-      router.push({path: '/StadiumDetail'})
+    chooseHandler(id) {
+      router.push({path: '/StadiumDetail',query:{id:id}})
+    },
+
+    initStadium() {
+      stadiumApi.getById(this.stadiuID)
+          .then((resp) => {
+            this.stadium = resp.data.data
+          })
     }
+  },
+  mounted() {
+    this.initStadium()
+  },
+  created() {
+    this.stadiuID = this.$route.query.stadiuID
   }
 }
 </script>
 
 <style scoped lang="scss">
-.tb-tr-td{
+.tb-tr-td {
   border: 1px solid #a6a3a3;
   padding: 30px;
   width: 180px;
 
 
 }
-.tb{
-  border-collapse:collapse;
+
+.tb {
+  border-collapse: collapse;
   margin: 30px auto;
 
 }
 
-.div3{
+.div3 {
   margin: 100px auto;
   width: 100%;
 }

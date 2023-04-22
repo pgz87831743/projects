@@ -33,8 +33,8 @@ const routes = [
                 component: () => import('../views/font-page/IndexPage'),
             },
             {
-                path: "/Timetable",
-                name: "Timetable",
+                path: "/TimetableF",
+                name: "TimetableF",
                 component: () => import('../views/font-page/Timetable'),
             },
             {
@@ -43,19 +43,14 @@ const routes = [
                 component: () => import('../views/font-page/FacilityAndAppointment'),
             },
             {
-                path: "/MemberShip",
-                name: "MemberShip",
-                component: () => import('../views/font-page/MemberShip'),
-            },
-            {
                 path: "/Contactus",
                 name: "Contactus",
                 component: () => import('../views/font-page/Contactus'),
-            },{
+            }, {
                 path: "/StadiumBooking",
                 name: "StadiumBooking",
                 component: () => import('../views/font-page/StadiumBooking'),
-            },{
+            }, {
                 path: "/StadiumDetail",
                 name: "StadiumDetail",
                 component: () => import('../views/font-page/StadiumDetail'),
@@ -69,17 +64,30 @@ const routes = [
                         path: "/MyHomePage",
                         name: "MyHomePage",
                         component: () => import('../views/font-page/Home/MyHomePage'),
+                    }, {
+                        path: "/MyHomeEdit",
+                        name: "MyHomeEdit",
+                        component: () => import('../views/font-page/Home/MyHomeEdit'),
+                    },
+                    {
+                        path: "/MemberShip",
+                        name: "MemberShip",
+                        component: () => import('../views/font-page/MemberShip'),
                     },
                     {
                         path: "/MyOrder",
                         name: "MyOrder",
                         component: () => import('../views/font-page/Home/MyOrder'),
+                    }, {
+                        path: "/Appointment",
+                        name: "Appointment",
+                        component: () => import('../views/font-page/Home/Appointment'),
                     },
                     {
                         path: "/Stadium",
                         name: "Stadium",
                         component: () => import('../views/font-page/Home/Stadium'),
-                    },{
+                    }, {
                         path: "/Activity",
                         name: "Activity",
                         component: () => import('../views/font-page/Home/Activity'),

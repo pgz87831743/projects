@@ -110,6 +110,9 @@ export const timetableApi={
     getById(id){
         return request.get('/timetable/getById/'+id)
     },
+    tableByActivityId(activityId){
+        return request.get('/timetable/tableByActivityId/'+activityId)
+    },
     add(data){
         return request.post('/timetable/add',data)
     },
@@ -118,5 +121,49 @@ export const timetableApi={
     },
     updateById(data){
         return request.put('/timetable/updateById',data)
+    }
+}
+
+//预约表管理
+export const appointmentApi={
+    page(data){
+        return request.post('/appointment/page',data)
+    },
+    listAll(){
+        return request.get('/appointment/listAll')
+    },
+    getById(id){
+        return request.get('/appointment/getById/'+id)
+    },
+    add(data){
+        return request.post('/appointment/add',data)
+    },
+    deleteById(id){
+        return request.delete('/appointment/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/appointment/updateById',data)
+    }
+}
+
+//订单表管理
+export const orderApi={
+    page(data){
+        return request.post('/order/page',data)
+    },
+    listAll(){
+        return request.get('/order/listAll')
+    },
+    getById(id){
+        return request.get('/order/getById/'+id)
+    },
+    add(data){
+        return request.post('/order/add',data)
+    },
+    deleteById(id){
+        return request.delete('/order/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/order/updateById',data)
     }
 }

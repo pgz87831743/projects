@@ -1,75 +1,49 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+      <el-col :span="7">
+        <el-radio-group v-model="page.search" @change="search">
+          <el-radio label="">ALL</el-radio>
+          <el-radio label="UPCOMING">UPCOMING</el-radio>
+          <el-radio label="ONGOING">ONGOING</el-radio>
+          <el-radio label="OVER">OVER</el-radio>
+        </el-radio-group>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="600" style="width: 100%">
-        <el-table-column prop="id" label="主键"/>
-        <el-table-column prop="name" label="Name"/>
-        <el-table-column prop="price" label="订单价格"/>
-        <el-table-column prop="tableTime" label="开始日期"/>
-        <el-table-column prop="rangStart" label="时间开始"/>
-        <el-table-column prop="rangEnd" label="时间结束"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center',padding:'30px'}"
+      >
+        <el-table-column prop="status" label="Status">
+          <template #default="scope">
+            <span v-if="scope.row.status==='OVER'" style="color:#f85d5d;">{{ scope.row.status }}</span>
+            <span v-if="scope.row.status==='UPCOMING'" style="color:#5df888;">{{ scope.row.status }}</span>
+            <span v-if="scope.row.status==='ONGOING'" style="color:#a44eae;">{{ scope.row.status }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="activity.name" label="Activity"/>
+        <el-table-column prop="createBy" label="Time">
+          <template #default="scope">
+            {{ scope.row.timetable.rangStart }}-{{ scope.row.timetable.rangEnd }}&nbsp;&nbsp;{{ scope.row.timetable.tableTime }}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
                 type="danger"
-                @click="clickButton('delete',scope.row)">删除
-            </el-button>
+                @click="clickButton('delete',scope.row)">Cancel</el-button>
+
+            <el-button
+                size="small"
+                type="primary"
+                @click="payHandle(scope.row)">Pay</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-row>
-
-
-    <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="Name">
-          <el-input v-model="form.name" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="订单价格">
-          <el-input v-model="form.price" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="开始日期">
-          <el-input v-model="form.tableTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="时间开始">
-          <el-input v-model="form.rangStart" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="时间结束">
-          <el-input v-model="form.rangEnd" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-<span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
-</span>
-      </template>
-    </el-dialog>
 
 
     <!-- 分页 -->
@@ -93,11 +67,11 @@
 
 <script>
 
-import {orderApi} from "@/api/api";
+import {appointmentApi} from "@/api/api";
 
 
 export default {
-  name: "Order",
+  name: "Appointment",
   data() {
     return {
       page: {
@@ -120,8 +94,13 @@ export default {
 
   methods: {
 
+
+    payHandle(row){
+      console.log(row)
+    },
+
     search() {
-      orderApi.page(this.page)
+      appointmentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -141,21 +120,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        orderApi.getById(row.id).then((resp) => {
+        appointmentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        orderApi.getById(row.id).then((resp) => {
+        appointmentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        orderApi.deleteById(row.id).then(() => {
+        appointmentApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -163,7 +142,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      orderApi.page(this.page).then(resp => {
+      appointmentApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -172,12 +151,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        orderApi.add(this.form)
+        appointmentApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        orderApi.updateById(this.form)
+        appointmentApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -190,7 +169,7 @@ export default {
     },
 
     initTableData() {
-      orderApi.page(this.page)
+      appointmentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -246,3 +225,4 @@ export default {
 }
 
 </style>
+

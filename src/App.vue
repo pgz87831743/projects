@@ -13,7 +13,7 @@ body{
   padding:0;
   text-underline: none;
   text-align: center;
-
+  background: #fff9fe;
 }
 
 </style>

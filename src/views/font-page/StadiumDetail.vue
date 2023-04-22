@@ -2,27 +2,29 @@
   <div>
     <div class="div1">
       <div class="div2">
-        场馆名字
+        {{this.info.stadium.name}}
       </div>
     </div>
     <div style="font-size:48px;margin-top: 50px ">
-      Activity Name
+      {{this.info.activity.name}}
     </div>
     <div class="div3">
       <table class="tb">
         <tr class="tb-tr">
           <td class="tb-tr-td"></td>
-          <td class="tb-tr-td">{{ toDay(0) }}</td>
-          <td class="tb-tr-td">{{ toDay(1) }}</td>
-          <td class="tb-tr-td">{{ toDay(2) }}</td>
+          <td class="tb-tr-td" v-for="item in info.dateList" v-bind:key="item">{{item }}</td>
         </tr>
-        <tr class="tb-tr"  v-for="item in tableDate" v-bind:key="item.id">
-          <td class="tb-tr-td" >{{item.time}}</td>
-          <td class="tb-tr-td" :style="{background:item.color}">{{item.status}}</td>
-          <td class="tb-tr-td"></td>
-          <td class="tb-tr-td"></td>
+        <tr class="tb-tr"  v-for="(item,index) in info.rangList" v-bind:key="item">
+          <td class="tb-tr-td" >{{item}}</td>
+          <td class="tb-tr-td" @click="order(t)" :style="{background:t.color}"  v-for="t in info.timeTableList[index]" v-bind:key="t">{{t.status}}</td>
+<!--          <td class="tb-tr-td" :style="{background:item.color}">{{item.status}}</td>-->
+<!--          <td class="tb-tr-td"></td>-->
+<!--          <td class="tb-tr-td"></td>-->
         </tr>
       </table>
+      <div>
+        <h2>{{this.chose.rangStart}}-{{this.chose.rangEnd}}</h2>
+      </div>
       <el-button style="background: #e0592d;color: #ffffff" @click="confirmHandler">Confirm</el-button>
     </div>
 
@@ -31,38 +33,22 @@
 
 <script>
 import {ElNotification} from "element-plus";
+import {appointmentApi, timetableApi} from "@/api/api";
 
 export default {
   name: "StadiumDetail",
 
   data(){
     return{
-      tableDate:[
-        {
-          id:"1",
-          time:'9:00-10:00',
-          status:'available',
-          color:'#00c6ff'
-        },
-        {
-          id:"2",
-          time:'10:00-11:00',
-          status:'unavailable',
-          color:'#ff8c8c'
-        },
-        {
-          id:"3",
-          time:'11:00-12:00',
-          status:'',
-          color:'#ffffff'
-        },
-        {
-          id:"4",
-          time:'12:00-13:00',
-          status:'',
-          color:'#ffffff'
-        }
-      ]
+      activityId:'',
+      info:{
+        stadium:{},
+        activity:{},
+        dateList:[],
+        rangList:[],
+        timeTableList:[]
+      },
+      chose:{}
     }
   },
   methods: {
@@ -72,12 +58,47 @@ export default {
       return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     },
     confirmHandler(){
-      ElNotification({
-        title: 'Success',
-        message: 'Appointment succeeded',
-        type: 'success',
-      })
+
+      if (this.chose.status==='available'){
+
+        let data={
+          timetableId:this.chose.id
+        }
+        appointmentApi
+            .add(data)
+            .then(()=>{
+              ElNotification({
+                title: 'Success',
+                message: 'Appointment succeeded',
+                type: 'success',
+              })
+            })
+      }else{
+        ElNotification({
+          title: 'error',
+          message: 'Appointment fail unavailable',
+          type: 'error',
+        })
+      }
+
+
+    },
+    initActivity(){
+      timetableApi.tableByActivityId(this.activityId)
+          .then((resp)=>{
+            this.info=resp.data.data;
+          })
+
+    },
+    order(t){
+      this.chose=t
     }
+  },
+  mounted() {
+    this.initActivity()
+  },
+  created() {
+    this.activityId = this.$route.query.id
   }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="div1">
-      <div class="div2">
-        Let’s get premium experience!
-      </div>
-    </div>
+<!--    <div class="div1">-->
+<!--&lt;!&ndash;      <div class="div2">&ndash;&gt;-->
+<!--&lt;!&ndash;        Let’s get premium experience!&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </div>-->
     <div class="div3">
       <p>To be our VIP, you will need to choose a plan for your needs. You can can</p>
       <p> cancel membership in 7 days for free.</p>
@@ -13,7 +13,7 @@
     <div class="div4">
       <div class="div5">
         <el-row :justify="'center'">
-          <el-col :span="5">
+          <el-col :span="10">
             <div class="cd2">
               <div class="nr" style="color:#999999;font-size: 18px">Monthly</div>
               <div>
@@ -36,7 +36,7 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="5">
+          <el-col :span="10">
             <div class="cd2">
               <div class="nr" style="color:#999999;font-size: 18px">Annually</div>
               <div>
@@ -70,7 +70,7 @@
     <div class="div7">
       <div class="div8">
         <el-row :justify="'center'">
-          <el-col :span="6">
+          <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf1.png')" style="float: left">
               <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Can I cancel my subscription?</span>
@@ -80,7 +80,7 @@
              <p>Yes, you can cancel and perform other <br/>actions on your subscriptions via the <br/> My Account page.</p>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf2.png')" style="float: left">
               <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Is there any discount for an annual</span>
@@ -94,7 +94,7 @@
       </div>
       <div class="div8">
         <el-row :justify="'center'">
-          <el-col :span="6">
+          <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf3.png')" style="float: left">
               <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Which payment methods do you take?</span>
@@ -104,7 +104,7 @@
               <p>AliPay、Wechat Pay、 Card Payment</p>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf4.png')" style="float: left">
               <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Any other questions we can answer?</span>

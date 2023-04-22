@@ -1,23 +1,25 @@
 <template>
   <div>
-    <div class="hdv1">
-      <div class="hdv1_1">
-        <el-row>
-          <el-col>
-            <el-avatar :size="300"
-                       :src="form.avatar"/>
-          </el-col>
-        </el-row>
-        <el-row style="margin-top: 60px">
-          <el-col>
-            123123
-          </el-col>
-        </el-row>
-      </div>
-    </div>
-    <el-row class="eldiv">
-      <el-col :span="8" :offset="2">
-        <el-form :model="form" :label-position="'top'" disabled>
+    <el-row>
+      <el-col>
+        <el-upload
+            class="avatar-uploader"
+            action="/api/file/upload"
+            :data="{fileTypeEnum:'FILE'}"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            name="files"
+        >
+          <img v-if="form.avatar" :src="form.avatar" width="150"/>
+          <el-icon v-else class="avatar-uploader-icon">
+            <Camera />
+          </el-icon>
+        </el-upload>
+      </el-col>
+    </el-row>
+    <el-row class="eldiv" justify="center">
+      <el-col :span="12" >
+        <el-form :model="form" :label-position="'top'">
           <el-form-item label="name">
             <el-input v-model="form.nickname" size="large" placeholder="Nickname"></el-input>
           </el-form-item>
@@ -25,17 +27,17 @@
             <el-input  v-model="form.email" size="large" placeholder="Nickname"></el-input>
           </el-form-item>
           <el-form-item label="Phone">
-            <el-input  v-model="form.phone" size="large" placeholder="Nickname"></el-input>
+            <el-input type="number" v-model="form.phone" size="large" placeholder="Nickname"></el-input>
           </el-form-item>
           <el-form-item label="Birthday">
-            <el-input v-model="form.birthday" size="large" placeholder="Nickname"></el-input>
+            <el-date-picker v-model="form.birthday" value-format="YYYY-MM-DD" type="date" ></el-date-picker>
           </el-form-item>
           <el-form-item label="Credit Card">
             <el-input v-model="form.creditCard" size="large" placeholder="Nickname"></el-input>
           </el-form-item>
+          <el-button round class="con-btn" @click="saveUserInfo"><span style="font-size: 10px;padding: 50px">Save Changes</span>
+          </el-button>
         </el-form>
-        <el-button round class="con-btn" @click=" router().push({path: '/MyHomeEdit'})"><span style="font-size: 10px;padding: 50px">EDIT INFORMATION</span>
-        </el-button>
       </el-col>
     </el-row>
   </div>
@@ -45,30 +47,36 @@
 
 import {sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
-import router from "@/router";
+import {Camera} from "@element-plus/icons-vue";
 
 export default {
   name: "MyHomePage",
+  components: {Camera},
   data() {
     return {
-      form: {
-        "nickName": "管理员",
-        "account": "admin",
-        "password": "123123",
-        "confirmPassword": "123123",
-        "creditCard": "6666212315645465",
-      },
+      form: {},
       user: {}
     }
   },
   methods: {
-    router() {
-      return router
+
+    handleAvatarSuccess(response) {
+      this.form.avatar = response[0].url
     },
+
+
     initUser() {
       sysUserApi.getById(getUser().id)
           .then((resp) => {
             this.form = resp.data.data
+          })
+    },
+
+    saveUserInfo(){
+      sysUserApi.updateById(this.form)
+          .then(()=>{
+            this.initUser()
+            window.location.href='/MyHomeEdit'
           })
     }
   },
@@ -90,11 +98,15 @@ export default {
     margin: 50px;
   }
 
-  margin-top: 50px;
-
   * {
     font-size: 20px;
   }
+}
+.avatar-uploader-icon{
+  font-size: 100px;
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
 }
 
 .hdv1 {

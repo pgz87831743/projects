@@ -27,12 +27,7 @@ export default {
           })
     },
 
-    logout() {
-      logout().then(() => {
-        removeItem("TOKEN_INFO_KEY")
-        router.push({path: '/login'})
-      })
-    }
+
   },
   mounted() {
     this.userQuery()
