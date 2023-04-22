@@ -6,7 +6,8 @@ import './styles/index.scss'
 import './styles/element-variables.scss'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+// import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import en from 'element-plus/dist/locale/en.min.mjs'
 import * as echarts from 'echarts'
 
 
@@ -15,7 +16,7 @@ import request from "@/utils/request";
 
 const app=createApp(App);
 app.use(ElementPlus, {
-    locale: zhCn,
+    locale: en,
 })
 app.config.globalProperties.$auth =authShow;
 app.config.globalProperties.$request =request;

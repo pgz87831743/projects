@@ -11,12 +11,13 @@
             <el-menu-item index="/MyHomePage">INFOMATION</el-menu-item>
             <el-menu-item index="/Appointment">APPOINTMENT</el-menu-item>
             <el-menu-item index="/MyOrder">ORDER</el-menu-item>
-            <el-menu-item index="/MemberShip">Membership</el-menu-item>
-            <el-menu-item index="/Stadium">Stadium</el-menu-item>
-            <el-menu-item index="/Activity">Activity</el-menu-item>
-            <el-menu-item index="/Timetable">Timetable</el-menu-item>
-            <el-menu-item index="/MyHomeEdit">Settings</el-menu-item>
-<!--            <el-menu-item index="/login" @click="logout">LoginOut</el-menu-item>-->
+            <el-menu-item index="/MemberShip">MEMBER CENTER</el-menu-item>
+            <el-menu-item index="/MembershipInfo">MEMBERSHIP</el-menu-item>
+            <el-menu-item index="/Stadium">STADIUM</el-menu-item>
+            <el-menu-item index="/Activity">ACTIVITY</el-menu-item>
+            <el-menu-item index="/Timetable">TIMETABLE</el-menu-item>
+            <el-menu-item index="/MyHomeEdit">SETTINGS</el-menu-item>
+            <el-menu-item index="/login" @click="logout">LOGINOUT</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="20">
@@ -33,16 +34,25 @@
 
 <script>
 
-import {logout} from "@/api/api";
+import {logout, membershipApi} from "@/api/api";
 import {removeItem} from "@/utils/storage";
 import router from "@/router";
 
 export default {
   name: "PersonalCenter",
   data() {
-    return {}
+    return {
+      isMemberShip: false
+    }
   },
   methods: {
+
+    memberShip() {
+      membershipApi.isMemberShip()
+          .then((resp) => {
+            this.isMemberShip = resp.data.data
+          })
+    },
 
     logout() {
       logout().then(() => {
@@ -51,6 +61,9 @@ export default {
       })
     }
 
+  },
+  mounted() {
+    this.memberShip()
   }
 }
 </script>
@@ -64,9 +77,10 @@ export default {
 }
 
 
-.el-menu-vertical-demo{
+.el-menu-vertical-demo {
   height: 70vh;
-  *{
+
+  * {
     font-size: 30px;
   }
 }

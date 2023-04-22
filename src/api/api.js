@@ -167,3 +167,29 @@ export const orderApi={
         return request.put('/order/updateById',data)
     }
 }
+
+
+//会员表管理
+export const membershipApi={
+    page(data){
+        return request.post('/membership/page',data)
+    },
+    listAll(){
+        return request.get('/membership/listAll')
+    },
+    getById(id){
+        return request.get('/membership/getById/'+id)
+    },
+    isMemberShip(){
+        return request.get('/membership/isMemberShip')
+    },
+    add(data){
+        return request.post('/membership/add',data)
+    },
+    deleteById(id){
+        return request.delete('/membership/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/membership/updateById',data)
+    }
+}

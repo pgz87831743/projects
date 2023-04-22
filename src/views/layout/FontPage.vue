@@ -14,7 +14,7 @@
         <div class="flex-grow"/>
         <el-menu-item index="/IndexPage">HOME</el-menu-item>
         <el-menu-item index="/FacilityAndAppointment">FACILITY & APPOINTMENT</el-menu-item>
-        <el-menu-item index="/TimetableF">TIMETABLE</el-menu-item>
+<!--        <el-menu-item index="/TimetableF">TIMETABLE</el-menu-item>-->
 <!--        <el-menu-item index="/MemberShip">MEMBERSHIP</el-menu-item>-->
         <el-menu-item index="/Contactus">CONTACTUS</el-menu-item>
         <el-menu-item index="/MyHomePage">

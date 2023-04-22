@@ -68,6 +68,7 @@
 <script>
 
 import {appointmentApi} from "@/api/api";
+import router from "@/router";
 
 
 export default {
@@ -96,7 +97,7 @@ export default {
 
 
     payHandle(row){
-      console.log(row)
+      router.push({path: '/PayChose',query:{id:row.id}})
     },
 
     search() {

@@ -1,38 +1,81 @@
 <template>
   <div>
-    <el-card>
-      <div class="ediv">
-        <el-row>
-          <el-col>1</el-col>
-          <el-col>2</el-col>
-        </el-row>
-      </div>
-
-      <div class="ediv">
-        <el-row>
-          <el-col>1</el-col>
-          <el-col>2</el-col>
-        </el-row>
-      </div>
-    </el-card>
+    <p style="text-align: left">Payment</p>
+    <div class="ediv" >
+      <el-row justify="center" :gutter="20">
+        <el-col :span="7">
+          <el-card>
+            <img :src="src[0]" @click="pay">
+          </el-card>
+        </el-col>
+        <el-col :span="7">
+          <el-card>
+            <img :src="src[1]"  @click="pay">
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="ediv" >
+      <el-row justify="center" :gutter="20">
+        <el-col :span="7">
+          <el-card>
+            <img :src="src[2]"  @click="pay">
+          </el-card>
+        </el-col>
+        <el-col :span="7">
+          <el-card>
+            <img :src="src[3]"  @click="pay">
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
+import router from "@/router";
+import {membershipApi} from "@/api/api";
+
 export default {
   name: "PayChose",
   data() {
-    return {}
+    return {
+      id:'',
+      src:[
+          require("@/assets/img.png"),
+          require("@/assets/img_1.png"),
+          require("@/assets/img_2.png"),
+          require("@/assets/img_3.png"),
+      ]
+    }
   },
-  methods: {},
+  methods: {
+    pay(){
+      if (this.id === 'Annually' || this.id === 'Monthly') {
+        let data = {
+          name: this.id
+        }
+        membershipApi.add(data)
+            .then(() => {
+              window.location.href = '/MembershipInfo'
+            })
+      } else {
+        router.push({path: '/Pay',query:{id:this.id}})
+      }
+
+    }
+  },
   mounted() {
 
+  },
+  created() {
+    this.id = this.$route.query.id
   }
 }
 </script>
 
 <style scoped lang="scss">
-.eldiv{
-  margin: 10px;
+.ediv{
+  margin: 20px 0 0 0;
 }
 </style>

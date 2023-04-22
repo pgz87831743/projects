@@ -1,10 +1,10 @@
 <template>
   <div>
-<!--    <div class="div1">-->
-<!--&lt;!&ndash;      <div class="div2">&ndash;&gt;-->
-<!--&lt;!&ndash;        Let’s get premium experience!&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--    </div>-->
+    <!--    <div class="div1">-->
+    <!--&lt;!&ndash;      <div class="div2">&ndash;&gt;-->
+    <!--&lt;!&ndash;        Let’s get premium experience!&ndash;&gt;-->
+    <!--&lt;!&ndash;      </div>&ndash;&gt;-->
+    <!--    </div>-->
     <div class="div3">
       <p>To be our VIP, you will need to choose a plan for your needs. You can can</p>
       <p> cancel membership in 7 days for free.</p>
@@ -32,7 +32,8 @@
                 <span style="color: #666666;display: block;font-size: 36px">purchasing</span>
               </div>
               <div class="nr">
-                <el-button  round style="background: #ff3636;color: #ffffff">Get Started</el-button>
+                <el-button round style="background: #ff3636;color: #ffffff" @click="getMember('Monthly')">Get Started
+                </el-button>
               </div>
             </div>
           </el-col>
@@ -55,7 +56,8 @@
                 <span style="color: #666666;display: block;font-size: 36px">purchasing</span>
               </div>
               <div class="nr">
-                <el-button  round style="background: #18ce0f;color: #ffffff;">Get it now</el-button>
+                <el-button round style="background: #18ce0f;color: #ffffff;" @click="getMember('Annually')">Get it now
+                </el-button>
               </div>
             </div>
           </el-col>
@@ -73,17 +75,20 @@
           <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf1.png')" style="float: left">
-              <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Can I cancel my subscription?</span>
+              <span
+                  style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Can I cancel my subscription?</span>
             </div>
             <div style="clear:both"></div>
             <div style="text-align: left;margin-left: 40px;">
-             <p>Yes, you can cancel and perform other <br/>actions on your subscriptions via the <br/> My Account page.</p>
+              <p>Yes, you can cancel and perform other <br/>actions on your subscriptions via the <br/> My Account page.
+              </p>
             </div>
           </el-col>
           <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf2.png')" style="float: left">
-              <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Is there any discount for an annual</span>
+              <span
+                  style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Is there any discount for an annual</span>
             </div>
             <div style="clear:both"></div>
             <div style="text-align: left;margin-left: 40px;">
@@ -97,7 +102,8 @@
           <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf3.png')" style="float: left">
-              <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Which payment methods do you take?</span>
+              <span
+                  style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Which payment methods do you take?</span>
             </div>
             <div style="clear:both"></div>
             <div style="text-align: left;margin-left: 40px;">
@@ -107,7 +113,8 @@
           <el-col :span="8">
             <div>
               <img :src="require('@/assets/mbf4.png')" style="float: left">
-              <span style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Any other questions we can answer?</span>
+              <span
+                  style="margin-left: 10px;display: inline-block;float:left;font-size: 20px;height: 40px;line-height: 34px">Any other questions we can answer?</span>
             </div>
             <div style="clear:both"></div>
             <div style="text-align: left;margin-left: 40px;">
@@ -122,12 +129,20 @@
 
 <script>
 
+import router from "@/router";
+
 export default {
   name: "MemberShip",
 
 
   data() {
-    return {}
+    return {
+
+      getMember(item) {
+        router.push({path: '/PayChose', query: {id: item}})
+      }
+
+    }
   },
   methods: {},
 }
@@ -135,7 +150,7 @@ export default {
 
 <style scoped lang="scss">
 
-.div8{
+.div8 {
   margin: 100px;
 }
 

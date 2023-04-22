@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button type="primary" @click="clickButton('add')">Add</el-button>
       </el-col>
       <!--      <el-col :span="5" :offset="1">-->
       <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
@@ -16,23 +16,23 @@
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center',padding:'30px'}"
       >
-        <el-table-column prop="name" label="场馆名字"/>
-        <el-table-column prop="description" label="介绍"/>
-        <el-table-column prop="capacity" label="容量"/>
+        <el-table-column prop="name" label="name"/>
+        <el-table-column prop="description" label="description"/>
+        <el-table-column prop="capacity" label="capacity"/>
         <el-table-column prop="" label=""/>
-        <el-table-column prop="img" label="主图" width="500">
+        <el-table-column prop="img" label="img" width="500">
           <template #default="scope" >
             <img :src="scope.row.img" height="300"/>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="300px">
+        <el-table-column label="Option" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">Update</el-button>
+            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">Info</el-button>
             <el-button
                 size="small"
                 type="danger"
-                @click="clickButton('delete',scope.row)">删除
+                @click="clickButton('delete',scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -42,16 +42,16 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="场馆名字">
-          <el-input v-model="form.name" placeholder="请输入"/>
+        <el-form-item label="name">
+          <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="介绍">
-          <el-input v-model="form.description" placeholder="请输入"/>
+        <el-form-item label="description">
+          <el-input v-model="form.description" />
         </el-form-item>
-        <el-form-item label="容量">
-          <el-input v-model="form.capacity" placeholder="请输入"/>
+        <el-form-item label="capacity">
+          <el-input v-model="form.capacity" />
         </el-form-item>
-        <el-form-item label="主图">
+        <el-form-item label="img">
           <el-upload
               class="avatar-uploader"
               action="/api/file/upload"
@@ -69,8 +69,8 @@
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
+<el-button @click="dialog.dialogFormVisible = false">Cancel</el-button>
+<el-button type="success" @click="formSubmit">Ok</el-button>
 </span>
       </template>
     </el-dialog>
@@ -115,7 +115,7 @@ export default {
       tableData: [],
       dialog: {
         dialogFormVisible: false,
-        optionName: '新增',
+        optionName: 'Add',
         formDisabled: true,
         optionValue: null
       },

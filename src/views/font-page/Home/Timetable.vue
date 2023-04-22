@@ -13,22 +13,19 @@
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%">
-        <el-table-column prop="id" label="主键"/>
-        <el-table-column prop="name" label="Name"/>
-        <el-table-column prop="price" label="订单价格"/>
-        <el-table-column prop="tableTime" label="开始日期"/>
-        <el-table-column prop="rangStart" label="时间开始"/>
-        <el-table-column prop="rangEnd" label="时间结束"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
-        <el-table-column label="操作" width="300px">
+        <el-table-column prop="stadium.name" label="stadiumName"/>
+        <el-table-column prop="activity.name" label="ActivityName"/>
+        <el-table-column prop="status" label="status"/>
+        <el-table-column prop="rangStart" label="rangStart"/>
+        <el-table-column prop="rangEnd" label="rangEnd"/>
+        <el-table-column label="Option" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">Update</el-button>
+            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">Info</el-button>
             <el-button
                 size="small"
                 type="danger"
-                @click="clickButton('delete',scope.row)">删除
+                @click="clickButton('delete',scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -38,35 +35,45 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
+        <el-form-item label="stadiumName">
+          <el-select v-model="form.stadiumId" @change="change">
+            <el-option v-for="item in stadiumList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="Name">
-          <el-input v-model="form.name" placeholder="请输入"/>
+        <el-form-item label="activityName">
+          <el-select v-model="form.activityId">
+            <el-option v-for="item in activityList" v-bind:key="item.id" :label="item.name"
+                       :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="订单价格">
-          <el-input v-model="form.price" placeholder="请输入"/>
+        <el-form-item label="status">
+          <el-radio-group v-model="form.status">
+            <el-radio label="available"></el-radio>
+            <el-radio label="unavailable"></el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="开始日期">
-          <el-input v-model="form.tableTime" placeholder="请输入"/>
+        <el-form-item label="tableTime">
+          <el-date-picker  v-model="form.tableTime" :value-format="'YYYY-MM-DD'"></el-date-picker>
         </el-form-item>
-        <el-form-item label="时间开始">
-          <el-input v-model="form.rangStart" placeholder="请输入"/>
+        <el-form-item label="rangStart">
+          <el-time-picker
+              v-model="form.rangStart"
+              :value-format="'HH:mm'"
+          />
         </el-form-item>
-        <el-form-item label="时间结束">
-          <el-input v-model="form.rangEnd" placeholder="请输入"/>
+
+        <el-form-item label="rangEnd">
+          <el-time-picker
+              v-model="form.rangEnd"
+              :value-format="'HH:mm'"
+          />
         </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
-        </el-form-item>
+
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
+<el-button @click="dialog.dialogFormVisible = false">Cancel</el-button>
+<el-button type="success" @click="formSubmit">Ok</el-button>
 </span>
       </template>
     </el-dialog>
@@ -93,11 +100,12 @@
 
 <script>
 
-import {orderApi} from "@/api/api";
+
+import {stadiumApi, timetableApi} from "@/api/api";
 
 
 export default {
-  name: "Order",
+  name: "Timetable",
   data() {
     return {
       page: {
@@ -109,11 +117,15 @@ export default {
       tableData: [],
       dialog: {
         dialogFormVisible: false,
-        optionName: '新增',
+        optionName: 'Add',
         formDisabled: true,
         optionValue: null
       },
-      form: {},
+      stadiumList: [],
+      activityList: [],
+      form: {
+        status: "available"
+      },
       total: 0,
     }
   },
@@ -121,7 +133,7 @@ export default {
   methods: {
 
     search() {
-      orderApi.page(this.page)
+      timetableApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -138,24 +150,24 @@ export default {
       this.dialog.optionValue = type
       if (type === 'add') {
         this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
+        this.dialog.optionName = type
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        orderApi.getById(row.id).then((resp) => {
+        timetableApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
+          this.dialog.optionName = type
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        orderApi.getById(row.id).then((resp) => {
+        timetableApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
+          this.dialog.optionName = type
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        orderApi.deleteById(row.id).then(() => {
+        timetableApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -163,7 +175,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      orderApi.page(this.page).then(resp => {
+      timetableApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -172,12 +184,14 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        orderApi.add(this.form)
+
+
+        timetableApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        orderApi.updateById(this.form)
+        timetableApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -187,19 +201,37 @@ export default {
 
     dialogClose() {
       this.form = {}
+      this.form = {
+        status: "available"
+      }
     },
 
     initTableData() {
-      orderApi.page(this.page)
+      timetableApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
+    initStadiumList() {
+      stadiumApi.listAll()
+          .then((resp) => {
+            this.stadiumList = resp.data.data
+          })
+    },
+
+    change(id) {
+      stadiumApi.getById(id)
+          .then((resp) => {
+            this.activityList = resp.data.data.activityList
+            this.form.activityId = null
+          })
+    }
 
   },
   mounted() {
     this.initTableData()
+    this.initStadiumList()
   },
 
 }
@@ -246,3 +278,5 @@ export default {
 }
 
 </style>
+
+

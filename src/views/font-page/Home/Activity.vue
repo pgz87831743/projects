@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button type="primary" @click="clickButton('add')">Add</el-button>
       </el-col>
       <!--      <el-col :span="5" :offset="1">-->
       <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
@@ -16,24 +16,24 @@
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center',padding:'30px'}"
       >
-        <el-table-column prop="stadium.name" label="场馆名称"/>
-        <el-table-column prop="name" label="活动名称"/>
-        <el-table-column prop="price" label="价格">
+        <el-table-column prop="stadium.name" label="StadiumName"/>
+        <el-table-column prop="name" label="ActivityName"/>
+        <el-table-column prop="price" label="Price">
           <template #default="scope">
             {{scope.row.price}}$
           </template>
         </el-table-column>
-        <el-table-column prop="unit" label="单位"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
-        <el-table-column label="操作" width="300px">
+        <el-table-column prop="unit" label="unit"/>
+<!--        <el-table-column prop="createTime" label="创建时间"/>-->
+<!--        <el-table-column prop="createBy" label="创建人"/>-->
+        <el-table-column label="Option" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">Update</el-button>
+            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">Info</el-button>
             <el-button
                 size="small"
                 type="danger"
-                @click="clickButton('delete',scope.row)">删除
+                @click="clickButton('delete',scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -43,25 +43,25 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="场馆">
+        <el-form-item label="StadiumName">
           <el-select v-model="form.stadiumId">
             <el-option v-for="item in stadiumList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name" placeholder="请输入"/>
+        <el-form-item label="ActivityName">
+          <el-input v-model="form.name"/>
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input type="number" v-model="form.price" placeholder="请输入"/>
+        <el-form-item label="Price">
+          <el-input type="number" v-model="form.price" />
         </el-form-item>
-        <el-form-item label="单位">
-          <el-input v-model="form.unit" placeholder="请输入"/>
+        <el-form-item label="Unit">
+          <el-input v-model="form.unit" />
         </el-form-item>
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
+<el-button @click="dialog.dialogFormVisible = false">Cancel</el-button>
+<el-button type="success" @click="formSubmit">Ok</el-button>
 </span>
       </template>
     </el-dialog>

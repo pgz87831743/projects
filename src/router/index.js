@@ -96,6 +96,18 @@ const routes = [
                         path: "/Timetable",
                         name: "Timetable",
                         component: () => import('../views/font-page/Home/Timetable'),
+                    },{
+                        path: "/PayChose",
+                        name: "PayChose",
+                        component: () => import('../views/font-page/Home/PayChose'),
+                    },{
+                        path: "/Pay",
+                        name: "Pay",
+                        component: () => import('../views/font-page/Home/Pay'),
+                    },{
+                        path: "/MembershipInfo",
+                        name: "MembershipInfo",
+                        component: () => import('../views/font-page/Home/MembershipInfo'),
                     },
                 ]
             },
