@@ -33,7 +33,7 @@
             <el-button v-if="scope.row.confirm==='yes'" color="#55c9b8" size="small" type="success"
                        @click="sendEmail(scope.row.id)"><span
                 style="color: white">Send Email</span></el-button>
-            <el-button v-if="scope.row.confirm==='no'" color="#E04141FF" size="small" type="success"
+            <el-button v-if="scope.row.confirm==='no'&&authShow(['EMPLOYEE'])" color="#E04141FF" size="small" type="success"
                        @click="confirmHandle(scope.row.id)"><span
                 style="color: white">Confirm</span></el-button>
           </template>
@@ -94,6 +94,7 @@
 <script>
 
 import {orderApi} from "@/api/api";
+import {authShow} from "@/utils/authutil";
 
 
 export default {
@@ -119,6 +120,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
     search() {
       orderApi.page(this.page)
