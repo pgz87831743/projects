@@ -9,7 +9,7 @@
             <el-input   :prefix-icon="User"  v-model="user.username" size="large" placeholder="Account"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-input  :prefix-icon="Lock" v-model="user.password"   size="large" placeholder="password"></el-input>
+            <el-input  :prefix-icon="Lock" v-model="user.password" type="password" clearable    size="large" placeholder="password"></el-input>
           </el-form-item>
         </el-form>
 
