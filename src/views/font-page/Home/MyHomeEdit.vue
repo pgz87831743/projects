@@ -21,19 +21,19 @@
       <el-col :span="12" >
         <el-form :model="form" :label-position="'top'">
           <el-form-item label="name">
-            <el-input v-model="form.nickname" size="large" placeholder="Nickname"></el-input>
+            <el-input v-model="form.nickname" size="large" ></el-input>
           </el-form-item>
           <el-form-item label="Email">
-            <el-input  v-model="form.email" size="large" placeholder="Nickname"></el-input>
+            <el-input  v-model="form.email" size="large" ></el-input>
           </el-form-item>
           <el-form-item label="Phone">
-            <el-input type="number" v-model="form.phone" size="large" placeholder="Nickname"></el-input>
+            <el-input type="number" v-model="form.phone" size="large" ></el-input>
           </el-form-item>
           <el-form-item label="Birthday">
             <el-date-picker v-model="form.birthday" value-format="YYYY-MM-DD" type="date" ></el-date-picker>
           </el-form-item>
           <el-form-item label="Credit Card">
-            <el-input v-model="form.creditCard" size="large" placeholder="Nickname"></el-input>
+            <el-input v-model="form.creditCard" size="large" ></el-input>
           </el-form-item>
           <el-button round class="con-btn" @click="saveUserInfo"><span style="font-size: 10px;padding: 50px">Save Changes</span>
           </el-button>

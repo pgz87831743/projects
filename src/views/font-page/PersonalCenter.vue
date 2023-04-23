@@ -17,6 +17,7 @@
             <el-menu-item index="/Activity">ACTIVITY</el-menu-item>
             <el-menu-item index="/Timetable">TIMETABLE</el-menu-item>
             <el-menu-item index="/MyHomeEdit">SETTINGS</el-menu-item>
+            <el-menu-item index="/StatisticsInfo">STATISTICS</el-menu-item>
             <el-menu-item index="/login" @click="logout">LOGINOUT</el-menu-item>
           </el-menu>
         </el-col>

@@ -44,6 +44,7 @@ export default {
     return {
       id: '',
       appointment: {},
+      type: '',
       order: {
         name: '',
         price: 0,
@@ -68,7 +69,10 @@ export default {
               rangStart: this.appointment.timetable.rangStart,
               rangEnd: this.appointment.timetable.rangEnd,
               createBy: this.appointment.createBy,
-              Stadium: this.appointment.stadium.name
+              Stadium: this.appointment.stadium.name,
+              stadiumId: this.appointment.stadium.id,
+              payType: this.type,
+              appointmentId:this.appointment.id
             }
           })
     },
@@ -84,6 +88,7 @@ export default {
   },
   created() {
     this.id = this.$route.query.id
+    this.type = this.$route.query.pay
   }
 }
 </script>

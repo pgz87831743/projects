@@ -113,6 +113,10 @@ const routes = [
                         path: "/MembershipInfo",
                         name: "MembershipInfo",
                         component: () => import('../views/font-page/Home/MembershipInfo'),
+                    },{
+                        path: "/StatisticsInfo",
+                        name: "StatisticsInfo",
+                        component: () => import('../views/font-page/Home/StatisticsInfo'),
                     },
                 ]
             },

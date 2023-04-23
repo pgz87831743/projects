@@ -20,12 +20,22 @@
         <el-table-column prop="price" label="Price"/>
         <el-table-column label="Time">
           <template #default="scope">
-            {{scope.row.rangStart}}-{{scope.row.rangEnd}}&nbsp;{{scope.row.tableTime}}
+            {{ scope.row.rangStart }}-{{ scope.row.rangEnd }}&nbsp;{{ scope.row.tableTime }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="qr" label="QR" width="300">
+          <template #default="scope">
+            <img :src="scope.row.qr" width="180">
           </template>
         </el-table-column>
         <el-table-column label="Option" width="300px">
           <template #default="scope">
-            <el-button color="#55c9b8" size="small" type="success" @click="clickButton('update', scope.row)"><span style="color: white">Send Email</span></el-button>
+            <el-button v-if="scope.row.confirm==='yes'" color="#55c9b8" size="small" type="success"
+                       @click="sendEmail(scope.row.id)"><span
+                style="color: white">Send Email</span></el-button>
+            <el-button v-if="scope.row.confirm==='no'" color="#E04141FF" size="small" type="success"
+                       @click="confirmHandle(scope.row.id)"><span
+                style="color: white">Confirm</span></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -118,11 +128,20 @@ export default {
           })
     },
 
+    confirmHandle(id) {
+      orderApi.confirmOrder(id)
+          .then(() => {
+            this.initTableData()
+          })
+    },
+
 
     handleAvatarSuccess(response) {
       this.form.img = response[0].url
     },
-
+    sendEmail(id) {
+      orderApi.sendPdfToEmail(id)
+    },
 
     clickButton(type, row) {
       this.dialog.optionValue = type

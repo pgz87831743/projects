@@ -5,12 +5,12 @@
       <el-row justify="center" :gutter="20">
         <el-col :span="7">
           <el-card>
-            <img :src="src[0]" @click="pay">
+            <img :src="src[0]" @click="pay('Cash')">
           </el-card>
         </el-col>
         <el-col :span="7">
           <el-card>
-            <img :src="src[1]"  @click="pay">
+            <img :src="src[1]"  @click="pay('AliPay')">
           </el-card>
         </el-col>
       </el-row>
@@ -19,12 +19,12 @@
       <el-row justify="center" :gutter="20">
         <el-col :span="7">
           <el-card>
-            <img :src="src[2]"  @click="pay">
+            <img :src="src[2]"  @click="pay('Wechat')">
           </el-card>
         </el-col>
         <el-col :span="7">
           <el-card>
-            <img :src="src[3]"  @click="pay">
+            <img :src="src[3]"  @click="pay('Card')">
           </el-card>
         </el-col>
       </el-row>
@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    pay(){
+    pay(type){
       if (this.id === 'Annually' || this.id === 'Monthly') {
         let data = {
           name: this.id
@@ -60,7 +60,7 @@ export default {
               window.location.href = '/MembershipInfo'
             })
       } else {
-        router.push({path: '/Pay',query:{id:this.id}})
+        router.push({path: '/Pay',query:{id:this.id,pay:type}})
       }
 
     }
