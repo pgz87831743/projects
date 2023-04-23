@@ -66,13 +66,6 @@ export default {
         }
         appointmentApi
             .add(data)
-            .then(()=>{
-              ElNotification({
-                title: 'Success',
-                message: 'Appointment succeeded',
-                type: 'success',
-              })
-            })
       }else{
         ElNotification({
           title: 'error',

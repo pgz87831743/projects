@@ -8,11 +8,11 @@
 
     <div style="margin-top: 50px ">
       <div style="font-size:48px ">
-        介绍
+        Description
       </div>
       <div>
         <p>
-          {{this.stadium.capacity}}
+          capacity: {{this.stadium.capacity}}
         </p>
        <p>
          {{ this.stadium.description }}
@@ -25,10 +25,10 @@
     </div>
     <div style="margin-top: 50px">
       <div v-for="item in stadium.activityList" v-bind:key="item.id"
-           style="margin: 20px auto;height: 50px; width: 500px; border: 1px solid #f0f0f0;border-radius: 30px">
-        <span style="display: inline-block;width: 150px;line-height: 50px">{{ item.name }}</span>
-        <span style="display: inline-block;width: 150px;line-height: 50px">${{ item.price }}</span>
-        <span style="display: inline-block;width: 150px;line-height: 50px"><el-button @click="chooseHandler(item.id)" round style="background: #b054ac;color: #ffffff">Choose</el-button></span>
+           style="margin: 20px auto;height: 50px; width:750px; border: 1px solid #f0f0f0;border-radius: 30px">
+        <span style="display: inline-block;width: 400px;line-height: 50px">{{ item.name }}</span>
+        <span style="display: inline-block;width: 150px;line-height: 50px">${{ item.price }}{{item.unit}}</span>
+        <span style="display: inline-block;width: 200px;line-height: 50px"><el-button @click="chooseHandler(item.id)" round style="background: #b054ac;color: #ffffff">Choose</el-button></span>
       </div>
 
     </div>

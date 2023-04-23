@@ -48,7 +48,7 @@
               </div>
               <div style="position: relative;margin-top: 20px">
                 <span style="color: #333333; display: inline-block;position: absolute;left:0;right:105px">$</span><span
-                  style="color:#333333;font-size: 48px;font-weight: bold">299</span>
+                  style="color:#333333;font-size: 48px;font-weight: bold">389</span>
               </div>
               <div class="nr">
                 <span style="color: #666666; display: block;font-size:48px;font-weight: bold">20% off</span>

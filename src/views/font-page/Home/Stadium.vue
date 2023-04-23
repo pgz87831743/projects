@@ -17,9 +17,8 @@
                 :cell-style="{textAlign:'center',padding:'30px'}"
       >
         <el-table-column prop="name" label="name"/>
-        <el-table-column prop="description" label="description"/>
+        <el-table-column prop="description" label="description" width="300"/>
         <el-table-column prop="capacity" label="capacity"/>
-        <el-table-column prop="" label=""/>
         <el-table-column prop="img" label="img" width="500">
           <template #default="scope" >
             <img :src="scope.row.img" height="300"/>
@@ -49,7 +48,7 @@
           <el-input v-model="form.description" />
         </el-form-item>
         <el-form-item label="capacity">
-          <el-input v-model="form.capacity" />
+          <el-input type="textarea" v-model="form.capacity" />
         </el-form-item>
         <el-form-item label="img">
           <el-upload
@@ -60,7 +59,7 @@
               :on-success="handleAvatarSuccess"
               name="files"
           >
-            <img v-if="form.img" :src="form.img" width="100"/>
+            <img v-if="form.img" :src="form.img" width="300"/>
             <el-icon v-else class="avatar-uploader-icon">
               <Plus/>
             </el-icon>
@@ -144,19 +143,19 @@ export default {
       this.dialog.optionValue = type
       if (type === 'add') {
         this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
+        this.dialog.optionName = 'Add'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
         stadiumApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
+          this.dialog.optionName = 'Update'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
         stadiumApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
+          this.dialog.optionName = 'Info'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })

@@ -23,7 +23,7 @@
             {{scope.row.rangStart}}-{{scope.row.rangEnd}}&nbsp;{{scope.row.tableTime}}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="300px">
+        <el-table-column label="Option" width="300px">
           <template #default="scope">
             <el-button color="#55c9b8" size="small" type="success" @click="clickButton('update', scope.row)"><span style="color: white">Send Email</span></el-button>
           </template>
@@ -55,8 +55,8 @@
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
+<el-button @click="dialog.dialogFormVisible = false">Cancel</el-button>
+<el-button type="success" @click="formSubmit">Ok</el-button>
 </span>
       </template>
     </el-dialog>
@@ -99,7 +99,7 @@ export default {
       tableData: [],
       dialog: {
         dialogFormVisible: false,
-        optionName: '新增',
+        optionName: 'Add',
         formDisabled: true,
         optionValue: null
       },
@@ -128,19 +128,19 @@ export default {
       this.dialog.optionValue = type
       if (type === 'add') {
         this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
+        this.dialog.optionName = 'Add'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
         orderApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
+          this.dialog.optionName = 'Update'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
         orderApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
+          this.dialog.optionName = 'Info'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })

@@ -33,6 +33,11 @@ const routes = [
                 component: () => import('../views/font-page/IndexPage'),
             },
             {
+                path: "/Now",
+                name: "Now",
+                component: () => import('../views/font-page/IndexPage'),
+            },
+            {
                 path: "/TimetableF",
                 name: "TimetableF",
                 component: () => import('../views/font-page/Timetable'),

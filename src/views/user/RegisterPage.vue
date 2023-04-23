@@ -50,10 +50,10 @@
                 <el-input :prefix-icon="Lock" v-model="user.username" size="large" placeholder="Account"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-input :prefix-icon="Lock" v-model="user.password" size="large" placeholder="Password"></el-input>
+                <el-input :prefix-icon="Lock" type="password"  show-password v-model="user.password" size="large" placeholder="Password"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-input :prefix-icon="Lock" v-model="user.confirmPassword" size="large"
+                <el-input :prefix-icon="Lock" type="password"  show-password v-model="user.confirmPassword" size="large"
                           placeholder="Confirm Password"></el-input>
               </el-form-item>
 

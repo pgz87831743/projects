@@ -1,19 +1,21 @@
 <template>
   <div class="p-div">
-   <div>
-     <p style="text-align: left;font-weight: bold">Existing membership</p>
-     <el-row :gutter="20" >
-       <el-col :span="3">annual membership</el-col>
-       <el-col :span="3">expire at 05/25/2023</el-col>
-       <el-col :span="3" :offset="15"><el-button>Cancel</el-button></el-col>
-     </el-row>
-   </div>
+    <div v-if="this.memberInfo">
+      <p style="text-align: left;font-weight: bold">Existing membership</p>
+      <el-row :gutter="20">
+        <el-col :span="3">{{ memberInfo.name }} membership</el-col>
+        <el-col :span="3">expire at {{ memberInfo.end }}</el-col>
+        <el-col :span="3" :offset="15">
+          <el-button @click="Cancel">Cancel</el-button>
+        </el-col>
+      </el-row>
+    </div>
 
     <div>
-      <p  style="text-align: left;font-weight: bold">Add membership</p>
-      <el-row :gutter="20" >
-        <el-col :span="8"><img :src="img[0]"></el-col>
-        <el-col :span="8"><img :src="img[1]"></el-col>
+      <p style="text-align: left;font-weight: bold">Add membership</p>
+      <el-row :gutter="20">
+        <el-col :span="8" @click="getMember"><img :src="img[0]"></el-col>
+        <el-col :span="8" @click="getMember"><img :src="img[1]"></el-col>
       </el-row>
     </div>
   </div>
@@ -25,20 +27,43 @@
 <script>
 
 
+import {membershipApi} from "@/api/api";
+
 export default {
-  name: "Membership",
+  name: "MembershipInfo",
   data() {
     return {
-      img:[
-          require("@/assets/img_4.png"),
-          require("@/assets/img_5.png"),
-      ]
+      img: [
+        require("@/assets/img_4.png"),
+        require("@/assets/img_5.png"),
+      ],
+      memberInfo: {}
     }
   },
 
-  methods: {},
-  mounted() {
+  methods: {
 
+    initMemberShip() {
+      membershipApi.getMemberByUserName()
+          .then((resp) => {
+            this.memberInfo = resp.data.data
+
+          })
+    },
+
+    Cancel() {
+      membershipApi.deleteById(this.memberInfo.id)
+          .then(()=>{
+            this.initMemberShip()
+          })
+    },
+    getMember(){
+      window.location.href='/MemberShip'
+    }
+
+  },
+  mounted() {
+    this.initMemberShip()
   },
 
 }

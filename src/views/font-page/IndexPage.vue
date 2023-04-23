@@ -31,7 +31,7 @@
               <div class="nr" style="font-size: 18px;color: #666666 ">Monthly</div>
               <div style="position: relative;">
                 <span style="display: inline-block;position: absolute;left:0;right:80px">$</span><span
-                  style="font-size: 48px;font-weight: bold">29</span><span style="font-size: 18px">/M</span>
+                  style="font-size: 48px;font-weight: bold">49</span><span style="font-size: 18px">/M</span>
               </div>
               <div class="nr">
                 <span style="display: block;color: #666666;font-size:48px;font-weight: bold">10% off</span>
@@ -39,7 +39,7 @@
                 <span style="display: block;color: #666666;font-size: 36px">purchasing</span>
               </div>
               <div class="nr">
-                <el-button type="danger" round class="btc1">Get Started</el-button>
+                <el-button type="danger" round class="btc1" @click="member">Get Started</el-button>
               </div>
             </div>
           </el-col>
@@ -48,7 +48,7 @@
               <div class="nr" style="font-size: 18px">Annually</div>
               <div style="position: relative;">
                 <span style="display: inline-block;position: absolute;left:0;right:105px">$</span><span
-                  style="font-size: 48px;font-weight: bold">299</span><span style="font-size: 18px">/M</span>
+                  style="font-size: 48px;font-weight: bold">389</span><span style="font-size: 18px">/M</span>
               </div>
               <div class="nr">
                 <span style="display: block;font-size:48px;font-weight: bold">15% off</span>
@@ -56,7 +56,7 @@
                 <span style="display: block;font-size: 36px">purchasing</span>
               </div>
               <div class="nr">
-                <el-button type="danger" round class="btc2">Get Started</el-button>
+                <el-button type="danger" round class="btc2" @click="member">Get Started</el-button>
               </div>
             </div>
           </el-col>
@@ -90,6 +90,7 @@
 <script>
 
 
+
 export default {
   name: "IndexPage",
 
@@ -115,6 +116,11 @@ export default {
           description: "This is Sports hall"
         },
       ],
+    }
+  },
+  methods:{
+    member(){
+      window.location.href='/MemberShip'
     }
   }
 }

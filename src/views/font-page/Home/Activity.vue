@@ -105,7 +105,7 @@ export default {
       stadiumList:[],
       dialog: {
         dialogFormVisible: false,
-        optionName: '新增',
+        optionName: 'Add',
         formDisabled: true,
         optionValue: null
       },
@@ -134,19 +134,19 @@ export default {
       this.dialog.optionValue = type
       if (type === 'add') {
         this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
+        this.dialog.optionName = 'Add'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
         activityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
+          this.dialog.optionName = 'Update'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
         activityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
+          this.dialog.optionName = 'Info'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })

@@ -34,7 +34,7 @@
 
 <script>
 
-import {logout, membershipApi} from "@/api/api";
+import {logout} from "@/api/api";
 import {removeItem} from "@/utils/storage";
 import router from "@/router";
 
@@ -47,12 +47,7 @@ export default {
   },
   methods: {
 
-    memberShip() {
-      membershipApi.isMemberShip()
-          .then((resp) => {
-            this.isMemberShip = resp.data.data
-          })
-    },
+
 
     logout() {
       logout().then(() => {
@@ -63,7 +58,7 @@ export default {
 
   },
   mounted() {
-    this.memberShip()
+
   }
 }
 </script>

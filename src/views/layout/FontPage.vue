@@ -8,7 +8,7 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item>
+        <el-menu-item index="/Now">
           <div style="font-size: 20px;">NOW UI KIT PRO</div>
         </el-menu-item>
         <div class="flex-grow"/>

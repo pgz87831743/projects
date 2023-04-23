@@ -180,8 +180,8 @@ export const membershipApi={
     getById(id){
         return request.get('/membership/getById/'+id)
     },
-    isMemberShip(){
-        return request.get('/membership/isMemberShip')
+    getMemberByUserName(){
+        return request.get('/membership/getMemberByUserName')
     },
     add(data){
         return request.post('/membership/add',data)
