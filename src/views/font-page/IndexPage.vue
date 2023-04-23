@@ -14,6 +14,13 @@
             <el-col :span="3">
               <div style="font-size: 20px;font-weight: bold;">城市事件</div>
             </el-col>
+            <el-col :span="6" :offset="15">
+              <el-input  v-model="search" clearable @clear="initNews">
+                <template #append>
+                  <el-button :icon="Search" @click="initNews"/>
+                </template>
+              </el-input>
+            </el-col>
           </el-row>
 
 
@@ -25,20 +32,20 @@
               <div>
                 <el-form>
                   <el-form-item label="时间:">
-                    {{item.eventTime}}
+                    {{ item.eventTime }}
                   </el-form-item>
                   <el-form-item label="城市:">
-                    {{item.city.name}}
+                    {{ item.city.name }}
                   </el-form-item>
                   <el-form-item label="标题:">
-                    {{item.title}}
+                    {{ item.title }}
                   </el-form-item>
                   <el-form-item label="事件类型:">
-                    {{item.eventType}}
+                    {{ item.eventType }}
                   </el-form-item>
 
                   <el-form-item label="">
-                      <el-link type="primary" :href="'/NewsInfo?id='+item.id" target="_blank">查看详细</el-link>
+                    <el-link type="primary" :href="'/NewsInfo?id='+item.id" target="_blank">查看详细</el-link>
                   </el-form-item>
                 </el-form>
               </div>
@@ -62,12 +69,19 @@
 
 
 import {cityEventApi} from "@/api/api";
+import {Search} from "@element-plus/icons-vue";
 
 export default {
   name: "IndexPage",
+  computed: {
+    Search() {
+      return Search
+    }
+  },
   data() {
     return {
       list: [],
+      search:'',
       top: [
         require("@/assets/index1.jpg"),
         require("@/assets/index2.jpg"),
@@ -79,11 +93,12 @@ export default {
   },
   methods: {
     initNews() {
-      cityEventApi.listAll()
-          .then((resp)=>{
-            this.list=resp.data.data
+      cityEventApi.listAllSearch(this.search)
+          .then((resp) => {
+            this.list = resp.data.data
           })
-    }
+    },
+
   },
   mounted() {
     this.initNews()

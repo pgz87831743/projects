@@ -5,7 +5,7 @@
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
             <el-col :span="5" :offset="1">
-              <el-input v-model="page.search" placeholder="请输入地形" clearable/>
+              <el-input v-model="page.search" placeholder="请输入地形" clearable @clear="this.initTableData"/>
             </el-col>
             <el-col :span="1" :offset="1">
               <el-button type="success" @click="search">搜索</el-button>

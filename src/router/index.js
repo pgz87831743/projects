@@ -37,6 +37,45 @@ const routes = [
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
             }
+            ,
+            {
+                path: "/CityFont",
+                name: "CityFont",
+                component: () => import('../views/font-page/CityFont'),
+            }
+            ,
+            {
+                path: "/PopulationFont",
+                name: "PopulationFont",
+                component: () => import('../views/font-page/PopulationFont'),
+            }
+            ,
+            {
+                path: "/EconomyFont",
+                name: "EconomyFont",
+                component: () => import('../views/font-page/EconomyFont'),
+            }
+            ,
+            {
+                path: "/EnvironmentFont",
+                name: "EnvironmentFont",
+                component: () => import('../views/font-page/EnvironmentFont'),
+            },
+            {
+                path: "/FacilityFont",
+                name: "FacilityFont",
+                component: () => import('../views/font-page/FacilityFont'),
+            },
+            {
+                path: "/GeographyFont",
+                name: "GeographyFont",
+                component: () => import('../views/font-page/GeographyFont'),
+            },
+            {
+                path: "/PopulationFont",
+                name: "PopulationFont",
+                component: () => import('../views/font-page/PopulationFont'),
+            }
 
         ]
     }
@@ -50,12 +89,6 @@ const routes = [
                 name: "News",
                 component: () => import('../views/end-page/News'),
             },
-            {
-                path: "/Doctor",
-                name: "Doctor",
-                component: () => import('../views/end-page/Doctor'),
-            }
-            ,
             {
                 path: "/City",
                 name: "City",

@@ -11,6 +11,12 @@
         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">城市信息系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
         <el-menu-item index="/PersonalCenter">个人信息</el-menu-item>
+        <el-menu-item index="/CityFont">城市信息</el-menu-item>
+        <el-menu-item index="/PopulationFont">人口信息</el-menu-item>
+        <el-menu-item index="/EconomyFont">经济信息</el-menu-item>
+        <el-menu-item index="/GeographyFont">地理信息</el-menu-item>
+        <el-menu-item index="/FacilityFont">设施信息</el-menu-item>
+        <el-menu-item index="/EnvironmentFont">环境信息</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
           <template #title>

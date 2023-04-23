@@ -90,6 +90,9 @@ export const cityEventApi={
     listAll(){
         return request.get('/cityEvent/listAll')
     },
+    listAllSearch(search){
+        return request.get(`/cityEvent/listAllSearch?search=${search}`)
+    },
     getById(id){
         return request.get('/cityEvent/getById/'+id)
     },

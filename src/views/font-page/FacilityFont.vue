@@ -1,11 +1,10 @@
 <template>
-  <div class="p-div">
+  <div class="div">
+  <el-card>
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
-      </el-col>
+
       <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入事件标题" clearable @clear="this.initTableData"/>
+        <el-input v-model="page.search" placeholder="请输入设施名称" clearable @clear="this.initTableData"/>
       </el-col>
       <el-col :span="1" :offset="1">
         <el-button type="success" @click="search">搜索</el-button>
@@ -19,68 +18,16 @@
             <img :src="scope.row.img" width="100">
           </template>
         </el-table-column>
-        <el-table-column prop="eventType" label="事件类型"/>
-        <el-table-column prop="eventTime" label="事件发生时间"/>
-        <el-table-column prop="title" label="事件标题"/>
-        <el-table-column label="操作" width="300px">
-          <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="clickButton('delete',scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
+        <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
+        <el-table-column prop="name" label="设施名称"/>
+        <el-table-column prop="address" label="设施地址"/>
+        <el-table-column prop="latitude" label="设施所在的纬度，以度为单位"/>
+        <el-table-column prop="longitude" label="设施所在的经度，以度为单位"/>
+        <el-table-column prop="rating" label="设施评级，范围在0到5之间"/>
       </el-table>
     </el-row>
 
-
-    <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="城市">
-          <el-select v-model="form.cityId" placeholder="请选择">
-            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="图片">
-          <el-upload
-              class="avatar-uploader"
-              action="/api/file/upload"
-              :data="{fileTypeEnum:'FILE'}"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              name="files"
-          >
-            <img v-if="form.img" :src="form.img" width="100"/>
-            <el-icon v-else class="avatar-uploader-icon">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="事件发生时间">
-          <el-date-picker value-format="YYYY-MM-DD HH:mm:ss" v-model="form.eventTime" type="datetime">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="事件类型">
-          <el-input v-model="form.eventType" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="事件标题">
-          <el-input v-model="form.title" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="事件描述">
-          <MyEditor @onChange="onChange" v-model="form.description"></MyEditor>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-<span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
-</span>
-      </template>
-    </el-dialog>
-
+  </el-card>
 
     <!-- 分页 -->
     <el-affix position="bottom" :offset="20">
@@ -103,24 +50,21 @@
 
 <script>
 
-import {cityApi, cityEventApi} from "@/api/api";
-import {Plus} from "@element-plus/icons-vue";
-import MyEditor from "@/views/components/MyEditor.vue";
+import {cityApi, facilityApi} from "@/api/api";
 
 
 export default {
-  name: "CityEvent",
-  components: {MyEditor, Plus},
+  name: "FacilityFont",
   data() {
     return {
       page: {
-        pageSize: 5,
+        pageSize: 10,
         pageNum: 1,
         tootle: 100,
         search: ''
       },
       tableData: [],
-      cityList: [],
+      cityList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -135,23 +79,16 @@ export default {
   methods: {
 
     search() {
-      cityEventApi.page(this.page)
+      facilityApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
-    onChange(value) {
-      this.form.description = value
-    },
-
-
     handleAvatarSuccess(response) {
       this.form.img = response[0].url
     },
-
-
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -160,21 +97,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        cityEventApi.getById(row.id).then((resp) => {
+        facilityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        cityEventApi.getById(row.id).then((resp) => {
+        facilityApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        cityEventApi.deleteById(row.id).then(() => {
+        facilityApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -182,7 +119,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      cityEventApi.page(this.page).then(resp => {
+      facilityApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -191,12 +128,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        cityEventApi.add(this.form)
+        facilityApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        cityEventApi.updateById(this.form)
+        facilityApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -209,7 +146,7 @@ export default {
     },
 
     initTableData() {
-      cityEventApi.page(this.page)
+      facilityApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -272,4 +209,3 @@ export default {
 }
 
 </style>
-
