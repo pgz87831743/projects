@@ -12,31 +12,33 @@
             </el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="city.name" label="城市"/>
-        <el-table-column prop="avatar" label="图片">
-          <template #default="scope">
-            <img :src="scope.row.img" width="100">
-          </template>
-        </el-table-column>
-        <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
-        <el-table-column prop="name" label="设施名称"/>
-        <el-table-column prop="address" label="设施地址"/>
-        <el-table-column prop="latitude" label="设施所在的纬度，以度为单位"/>
-        <el-table-column prop="longitude" label="设施所在的经度，以度为单位"/>
-        <el-table-column prop="rating" label="设施评级，范围在0到5之间"/>
-        <el-table-column label="操作" width="300px">
-          <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="clickButton('delete',scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+     <el-col>
+       <el-table :data="tableData" border height="450" style="width: 100%">
+         <el-table-column prop="city.name" label="城市"/>
+         <el-table-column prop="avatar" label="图片">
+           <template #default="scope">
+             <img :src="scope.row.img" width="100">
+           </template>
+         </el-table-column>
+         <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
+         <el-table-column prop="name" label="设施名称"/>
+         <el-table-column prop="address" label="设施地址"/>
+         <el-table-column prop="latitude" label="设施所在的纬度，以度为单位"/>
+         <el-table-column prop="longitude" label="设施所在的经度，以度为单位"/>
+         <el-table-column prop="rating" label="设施评级，范围在0到5之间"/>
+         <el-table-column label="操作" width="300px">
+           <template #default="scope">
+             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+             <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+             <el-button
+                 size="small"
+                 type="danger"
+                 @click="clickButton('delete',scope.row)">删除
+             </el-button>
+           </template>
+         </el-table-column>
+       </el-table>
+     </el-col>
     </el-row>
 
 
