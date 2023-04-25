@@ -164,7 +164,7 @@
                   <el-col :span="1">
                     <div>
                       <el-avatar
-                          :src="replay.avatarPl"
+                          :src="replay.avatarFb"
                           :size="45"
                       />
                     </div>
