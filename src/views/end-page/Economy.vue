@@ -15,6 +15,7 @@
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="id" label="ID"/>
         <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="gdp" label="GDP(亿)"/>
         <el-table-column prop="gdpGrowthRate" label="该城市的GDP增长率，以百分比表示"/>
         <el-table-column prop="perCapitaGdp" label="该城市的人均GDP，以元为单位"/>
@@ -42,6 +43,9 @@
           <el-select v-model="form.cityId" placeholder="请选择" :disabled="dialog.optionValue!=='add'">
             <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="GDP(亿)">
           <el-input type="number" v-model="form.gdp" placeholder="请输入"/>

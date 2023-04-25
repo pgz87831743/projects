@@ -11,6 +11,7 @@
       </el-row>
       <el-row>
         <el-table :data="tableData" border height="600" style="width: 100%">
+          <el-table-column prop="timeInfo" label="时间"/>
           <el-table-column prop="id" label="城市ID"/>
           <el-table-column prop="name" label="名称"/>
           <el-table-column prop="avatar" label="图片">

@@ -19,6 +19,7 @@
             <img :src="scope.row.img" width="100">
           </template>
         </el-table-column>
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="terrain" label="地形"/>
         <el-table-column prop="transportation" label="交通"/>
         <el-table-column prop="climate" label="气候"/>
@@ -60,6 +61,9 @@
               <Plus/>
             </el-icon>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="地形">
           <el-input v-model="form.terrain" placeholder="请输入"/>

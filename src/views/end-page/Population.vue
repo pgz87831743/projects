@@ -14,6 +14,7 @@
     <el-row>
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="city.name" label="城市"/>
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="total" label="人口数量"/>
         <el-table-column prop="density" label="人口密度"/>
         <el-table-column prop="ageGroupOne" label="年龄分布0-14"/>
@@ -40,6 +41,9 @@
           <el-select v-model="form.cityId" placeholder="请选择" :disabled="dialog.optionValue!=='add'">
             <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="人口数量">
           <el-input type="number" v-model="form.total" placeholder="请输入"/>

@@ -17,6 +17,7 @@
         <el-menu-item index="/GeographyFont">地理信息</el-menu-item>
         <el-menu-item index="/FacilityFont">设施信息</el-menu-item>
         <el-menu-item index="/EnvironmentFont">环境信息</el-menu-item>
+        <el-menu-item index="/StatictsInfo">图表统计</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">
           <template #title>

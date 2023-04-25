@@ -19,6 +19,7 @@
             <img :src="scope.row.img" width="100">
           </template>
         </el-table-column>
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="airQuality" label="空气质量，取值范围0-100"/>
         <el-table-column prop="waterQuality" label="水质，取值范围0-100"/>
         <el-table-column prop="noiseLevel" label="噪音水平，取值范围0-100"/>
@@ -59,6 +60,9 @@
               <Plus/>
             </el-icon>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="空气质量">
           <el-input type="number" min="0" max="100"  v-model="form.airQuality" placeholder="请输入"/>

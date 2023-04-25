@@ -15,6 +15,7 @@
       <el-table :data="tableData" border height="450" style="width: 100%">
         <el-table-column prop="id" label="城市ID"/>
         <el-table-column prop="name" label="名称"/>
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="avatar" label="图片">
           <template #default="scope">
             <img :src="scope.row.img" width="100">
@@ -125,6 +126,9 @@
               <Plus/>
             </el-icon>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="位置">
           <el-input v-model="form.location" placeholder="请输入"/>

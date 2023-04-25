@@ -3,6 +3,7 @@
   <el-card>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%">
+        <el-table-column prop="timeInfo" label="时间"/>
         <el-table-column prop="city.name" label="城市"/>
         <el-table-column prop="total" label="人口数量"/>
         <el-table-column prop="density" label="人口密度"/>

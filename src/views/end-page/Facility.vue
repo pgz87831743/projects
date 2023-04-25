@@ -20,6 +20,7 @@
              <img :src="scope.row.img" width="100">
            </template>
          </el-table-column>
+         <el-table-column prop="timeInfo" label="时间"/>
          <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
          <el-table-column prop="name" label="设施名称"/>
          <el-table-column prop="address" label="设施地址"/>
@@ -63,6 +64,9 @@
               <Plus/>
             </el-icon>
           </el-upload>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-date-picker  v-model="form.timeInfo" value-format="YYYY-MM-DD"></el-date-picker>
         </el-form-item>
         <el-form-item label="设施类型">
           <el-input v-model="form.facilityType" placeholder="请输入"/>

@@ -75,6 +75,11 @@ const routes = [
                 path: "/PopulationFont",
                 name: "PopulationFont",
                 component: () => import('../views/font-page/PopulationFont'),
+            },
+            {
+                path: "/StatictsInfo",
+                name: "StatictsInfo",
+                component: () => import('../views/font-page/StatictsInfo'),
             }
 
         ]

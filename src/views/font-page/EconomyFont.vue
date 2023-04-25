@@ -3,7 +3,7 @@
     <el-card>
       <el-row>
         <el-table :data="tableData" border height="600" style="width: 100%">
-          <el-table-column prop="id" label="ID"/>
+          <el-table-column prop="timeInfo" label="时间"/>
           <el-table-column prop="city.name" label="城市"/>
           <el-table-column prop="gdp" label="GDP(亿)"/>
           <el-table-column prop="gdpGrowthRate" label="该城市的GDP增长率，以百分比表示"/>
