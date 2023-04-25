@@ -3,17 +3,21 @@
     <el-row :gutter="10" :justify="'center'">
       <el-col :span="11">
         <el-card>
-          <div id="tj1" style="width: 100%;height: 600px">132</div>
+          <div id="tj1" style="width: 100%;height: 600px"></div>
         </el-card>
       </el-col>
       <el-col :span="11">
-        <div id="tj2"  style="width: 100%;height: 600px">123</div>
+        <el-card>
+          <div id="tj2" style="width: 100%;height: 600px"></div>
+        </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import {economyApi, populationApi} from "@/api/api";
+
 export default {
   name: "StatictsInfo",
   data() {
@@ -21,16 +25,20 @@ export default {
   },
   methods: {
 
-    show() {
-      let myChart = this.$echarts.init(document.getElementById("tj1"));
+
+    show(title,unit,data,id) {
+    //  console.log(data)
+      let myChart = this.$echarts.init(document.getElementById(id));
       // 绘制图表
       myChart.setOption( {
         title: {
-          text: '城市人口信息',
+          text: title,
           left: 'center'
         },
         tooltip: {
-          trigger: 'item',
+          formatter: function(params) {
+            return '数据名称：' + params.name + '<br>' + '数据值：' + params.value+unit;
+          }
         },
         legend: {
           orient: 'vertical',
@@ -41,13 +49,7 @@ export default {
             name: 'Access From',
             type: 'pie',
             radius: '50%',
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ],
+            data:data,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -60,9 +62,27 @@ export default {
       });
     },
 
+    initPople(){
+      populationApi.listAll()
+          .then((resp)=>{
+            this.show('城市人口数量','人',resp.data.data.map((item)=>{
+              return{name:item.city.name,value:item.ageGroupOne}
+            }),'tj1')
+          })
+    },
+    initEconomy(){
+      economyApi.listAll()
+          .then((resp)=>{
+            this.show('城市GDP','（亿）',resp.data.data.map((item)=>{
+              return{name:item.city.name,value:item.gdp}
+            }),'tj2')
+          })
+    }
+
   },
   mounted() {
-    this.show()
+    this.initPople()
+    this.initEconomy()
   }
 }
 </script>
