@@ -15,7 +15,7 @@
       <el-table :data="tableData" border   @selection-change="handleSelectionChange"  style="width: 100%">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="title" label="名称"/>
-        <el-table-column prop="description" label="简介"/>
+        <el-table-column prop="description" label="简介" :show-overflow-tooltip='true'/>
         <el-table-column prop="type" label="文件类型"/>
         <el-table-column prop="status" label="发布状态"/>
         <el-table-column prop="createTime" width="150" label="发布时间"/>
@@ -50,7 +50,7 @@
             <el-input v-model="form.title"/>
           </el-form-item>
           <el-form-item label="简介">
-            <el-input v-model="form.description"/>
+            <el-input type="textarea" :autosize="{minRows:5}" v-model="form.description"/>
           </el-form-item>
           <el-form-item label="文件类型">
             <el-input v-model="form.type"/>

@@ -51,7 +51,34 @@
             <el-col :span="6">
               <el-button type="success" @click="previewHandle(item)">预览</el-button>
               <el-button type="success" @click="downLoadHandle(item)">下载</el-button>
-
+              <el-popover
+                  :width="450"
+                  popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                  @show="elShow"
+              >
+                <template #reference>
+                  <el-button type="success">分享</el-button>
+                </template>
+                <template #default>
+                  <el-row :gutter="20">
+                    <el-col :span="20">
+                      <el-input
+                          id="cp"
+                          v-model="input3"
+                          placeholder="Please input"
+                          class="input-with-select"
+                      >
+                        <template #prepend>
+                          链接
+                        </template>
+                        <template #append>
+                          <el-button @click="copy">复制</el-button>
+                        </template>
+                      </el-input>
+                    </el-col>
+                  </el-row>
+                </template>
+              </el-popover>
 
               <el-popover
                   :width="450"
@@ -181,6 +208,7 @@ export default {
         content: '',
         replyContent: ''
       },
+      input3: 'http://localhost:8080/FileDetail?id=1650495479479443458',
       report: {
         resourcesId: '',
         content: ''
@@ -190,6 +218,29 @@ export default {
   },
   methods: {
 
+    copy() {
+
+      const range = document.createRange();
+      range.selectNode(document.getElementById('cp')); //获取复制内容的 id 选择器
+      const selection = window.getSelection();  //创建 selection对象
+      if (selection.rangeCount > 0) selection.removeAllRanges(); //如果页面已经有选取了的话，会自动删除这个选区，没有选区的话，会把这个选取加入选区
+      selection.addRange(range); //将range对象添加到selection选区当中，会高亮文本块
+      document.execCommand('copy'); //复制选中的文字到剪贴板
+      this.$notify(
+          {
+            title: 'Success',
+            message: '复制成功',
+            type: 'success',
+            duration: 800
+          }
+      )
+      selection.removeRange(range); // 移除选中的元素
+    },
+
+
+    elShow() {
+      this.input3 = window.location.href
+    },
 
     previewHandle(item) {
       window.open(item.filePath, '_blank');
@@ -198,7 +249,7 @@ export default {
       window.open('/api/file/download/' + item.fileId, '_blank');
     },
     reportHandle(item) {
-      if (this.report.content.trim().length===0){
+      if (this.report.content.trim().length === 0) {
         return;
       }
       this.report.resourcesId = item.id

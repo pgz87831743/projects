@@ -8,7 +8,7 @@
             <el-link :href="'/FileDetail?id='+scope.row.resourcesId" target="_blank">{{scope.row.resourcesId}}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="举报内容"/>
+        <el-table-column prop="content" label="举报内容" :show-overflow-tooltip='true'/>
         <el-table-column prop="createBy" label="举报人"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column label="操作" width="300px">

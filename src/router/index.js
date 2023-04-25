@@ -103,7 +103,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
 
-    if (to.href==='/login'||to.href==='/register'){
+    if (to.href==='/login'||to.href==='/register'||to.href.includes("/FileDetail")){
         next()
     } else{
         if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {
