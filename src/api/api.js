@@ -56,168 +56,76 @@ export const sysUserApi = {
 }
 
 
-
-
-
-
-//城市基本信息管理
-export const cityApi={
-    page(data){
-        return request.post('/city/page',data)
+//机构表管理
+export const deptApi = {
+    page(data) {
+        return request.post('/dept/page', data)
     },
-    listAll(){
-        return request.get('/city/listAll')
+    listAll() {
+        return request.get('/dept/listAll')
     },
-    getById(id){
-        return request.get('/city/getById/'+id)
+    getById(id) {
+        return request.get('/dept/getById/' + id)
     },
-    add(data){
-        return request.post('/city/add',data)
+    deptTree() {
+        return request.get('/dept/deptTree')
     },
-    deleteById(id){
-        return request.delete('/city/deleteById/'+id)
+    getCurryDeptUser() {
+        return request.get('/dept/getCurryDeptUser')
     },
-    updateById(data){
-        return request.put('/city/updateById',data)
-    }
-}
-
-//城市事件表管理
-export const cityEventApi={
-    page(data){
-        return request.post('/cityEvent/page',data)
+    add(data) {
+        return request.post('/dept/add', data)
     },
-    listAll(){
-        return request.get('/cityEvent/listAll')
+    deleteById(id) {
+        return request.delete('/dept/deleteById/' + id)
     },
-    listAllSearch(search){
-        return request.get(`/cityEvent/listAllSearch?search=${search}`)
-    },
-    getById(id){
-        return request.get('/cityEvent/getById/'+id)
-    },
-    add(data){
-        return request.post('/cityEvent/add',data)
-    },
-    deleteById(id){
-        return request.delete('/cityEvent/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/cityEvent/updateById',data)
-    }
-}
-
-//城市经济数据表管理
-export const economyApi={
-    page(data){
-        return request.post('/economy/page',data)
-    },
-    listAll(){
-        return request.get('/economy/listAll')
-    },
-    getById(id){
-        return request.get('/economy/getById/'+id)
-    },
-    add(data){
-        return request.post('/economy/add',data)
-    },
-    deleteById(id){
-        return request.delete('/economy/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/economy/updateById',data)
+    updateById(data) {
+        return request.put('/dept/updateById', data)
     }
 }
 
 
-
-//城市环境信息表管理
-export const environmentApi={
-    page(data){
-        return request.post('/environment/page',data)
+//绩效表管理
+export const performanceApi = {
+    page(data) {
+        return request.post('/performance/page', data)
     },
-    listAll(){
-        return request.get('/environment/listAll')
+    listAll() {
+        return request.get('/performance/listAll')
     },
-    getById(id){
-        return request.get('/environment/getById/'+id)
+    getById(id) {
+        return request.get('/performance/getById/' + id)
     },
-    add(data){
-        return request.post('/environment/add',data)
+    add(data) {
+        return request.post('/performance/add', data)
     },
-    deleteById(id){
-        return request.delete('/environment/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/performance/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/environment/updateById',data)
+    updateById(data) {
+        return request.put('/performance/updateById', data)
     }
 }
 
 
-
-//城市设施表，记录了城市中各种设施的信息，包括名称、位置和评级等管理
-export const facilityApi={
-    page(data){
-        return request.post('/facility/page',data)
+//交易记录表管理
+export const transactionApi = {
+    page(data) {
+        return request.post('/transaction/page', data)
     },
-    listAll(){
-        return request.get('/facility/listAll')
+    listAll() {
+        return request.get('/transaction/listAll')
     },
-    getById(id){
-        return request.get('/facility/getById/'+id)
+    getById(id) {
+        return request.get('/transaction/getById/' + id)
     },
-    add(data){
-        return request.post('/facility/add',data)
+    add(data) {
+        return request.post('/transaction/add', data)
     },
-    deleteById(id){
-        return request.delete('/facility/deleteById/'+id)
+    deleteById(id) {
+        return request.delete('/transaction/deleteById/' + id)
     },
-    updateById(data){
-        return request.put('/facility/updateById',data)
-    }
-}
-
-
-//城市地理信息表管理
-export const geographyApi={
-    page(data){
-        return request.post('/geography/page',data)
-    },
-    listAll(){
-        return request.get('/geography/listAll')
-    },
-    getById(id){
-        return request.get('/geography/getById/'+id)
-    },
-    add(data){
-        return request.post('/geography/add',data)
-    },
-    deleteById(id){
-        return request.delete('/geography/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/geography/updateById',data)
-    }
-}
-
-//人口信息管理
-export const populationApi={
-    page(data){
-        return request.post('/population/page',data)
-    },
-    listAll(){
-        return request.get('/population/listAll')
-    },
-    getById(id){
-        return request.get('/population/getById/'+id)
-    },
-    add(data){
-        return request.post('/population/add',data)
-    },
-    deleteById(id){
-        return request.delete('/population/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/population/updateById',data)
+    updateById(data) {
+        return request.put('/transaction/updateById', data)
     }
 }

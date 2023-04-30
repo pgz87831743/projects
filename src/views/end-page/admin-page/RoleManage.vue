@@ -1,33 +1,58 @@
 <template>
-  <div class="div">
-  <el-card>
+  <div class="p-div">
     <el-row>
-
       <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入设施名称" clearable @clear="this.initTableData"/>
+        <el-input v-model="page.search" placeholder="请输入姓名" clearable @clear="this.initTableData"/>
       </el-col>
       <el-col :span="1" :offset="1">
         <el-button type="success" @click="search">搜索</el-button>
       </el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="city.name" label="城市"/>
-        <el-table-column prop="avatar" label="图片">
-          <template #default="scope">
-            <img :src="scope.row.img" width="100">
-          </template>
-        </el-table-column>
-        <el-table-column prop="facilityType" label="设施类型，可选值包括医院、学校、公园、购物中心和餐厅"/>
-        <el-table-column prop="name" label="设施名称"/>
-        <el-table-column prop="address" label="设施地址"/>
-        <el-table-column prop="latitude" label="设施所在的纬度，以度为单位"/>
-        <el-table-column prop="longitude" label="设施所在的经度，以度为单位"/>
-        <el-table-column prop="rating" label="设施评级，范围在0到5之间"/>
-      </el-table>
+      <el-col>
+        <el-table :data="tableData" border height="600" style="width: 100%"
+                  :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                  :cell-style="{textAlign:'center',padding:'30px'}">
+          <el-table-column prop="username" label="用户名"/>
+          <el-table-column prop="nickname" label="真实姓名"/>
+          <el-table-column prop="role" label="角色">
+            <template #default="scope">
+              <span v-if="scope.row.role==='ADMIN'">管理员</span>
+              <span v-if="scope.row.role==='SALESMAN'">业务员</span>
+              <span v-if="scope.row.role==='TREASURER'">财务员</span>
+              <span v-if="scope.row.role==='ADMINISTRATIVE'">行政员</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="dept" label="机构"/>
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
     </el-row>
 
-  </el-card>
+
+    <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
+      <el-form size="large" :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+        <el-form-item label="角色">
+          <el-select v-model="form.role"  placeholder="请选择角色">
+            <el-option value="ADMIN" label="管理员"/>
+            <el-option value="SALESMAN" label="业务员"/>
+            <el-option value="TREASURER" label="财务员"/>
+            <el-option value="ADMINISTRATIVE" label="行政员"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+<span class="dialog-footer" v-if="!dialog.formDisabled">
+<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+<el-button type="success" @click="formSubmit">确认</el-button>
+</span>
+      </template>
+    </el-dialog>
+
 
     <!-- 分页 -->
     <el-affix position="bottom" :offset="20">
@@ -38,7 +63,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>
@@ -50,11 +75,11 @@
 
 <script>
 
-import {cityApi, facilityApi} from "@/api/api";
+import {sysUserApi} from "@/api/api";
 
 
 export default {
-  name: "FacilityFont",
+  name: "RoleManage",
   data() {
     return {
       page: {
@@ -64,7 +89,6 @@ export default {
         search: ''
       },
       tableData: [],
-      cityList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -79,16 +103,18 @@ export default {
   methods: {
 
     search() {
-      facilityApi.page(this.page)
+      sysUserApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
+
     handleAvatarSuccess(response) {
       this.form.img = response[0].url
     },
+
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -97,21 +123,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        facilityApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        facilityApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        facilityApi.deleteById(row.id).then(() => {
+        sysUserApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -119,7 +145,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      facilityApi.page(this.page).then(resp => {
+      sysUserApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -128,12 +154,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        facilityApi.add(this.form)
+        sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        facilityApi.updateById(this.form)
+        sysUserApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -146,23 +172,16 @@ export default {
     },
 
     initTableData() {
-      facilityApi.page(this.page)
+      sysUserApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
-          })
-    },
-    initCityList() {
-      cityApi.listAll()
-          .then(resp => {
-            this.cityList = resp.data.data
           })
     },
 
   },
   mounted() {
     this.initTableData()
-    this.initCityList()
   },
 
 }

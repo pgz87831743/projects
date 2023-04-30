@@ -46,14 +46,45 @@
               :default-active="$route.fullPath"
           >
 
-            <el-menu-item index="/City">城市基本信息管理</el-menu-item>
-            <el-menu-item index="/Population">人口信息管理</el-menu-item>
-            <el-menu-item index="/Economy">经济信息管理</el-menu-item>
-            <el-menu-item index="/Geography">地理信息管理</el-menu-item>
-            <el-menu-item index="/Facility">设施信息管理</el-menu-item>
-            <el-menu-item index="/Environment">环境信息管理</el-menu-item>
-            <el-menu-item index="/CityEvent">事件管理</el-menu-item>
+            <el-menu-item index="/PersonalCenter">个人基本信息</el-menu-item>
+            <el-sub-menu index="/1"  v-show="authShow(['SALESMAN'])">
+              <template #title>
+                交易业务
+              </template>
+              <el-menu-item index="/1-1">交易录入</el-menu-item>
+              <el-menu-item index="/1-2">业务列表</el-menu-item>
+            </el-sub-menu>
 
+
+            <el-menu-item index="/3" v-show="authShow(['TREASURER'])">人员业绩</el-menu-item>
+            <el-sub-menu index="/2" v-show="authShow(['TREASURER'])">
+              <template #title>
+                机构收支信息管理
+              </template>
+              <el-menu-item index="/2-1">机构收支信息管理</el-menu-item>
+              <el-menu-item index="/2-2">机构收支信息表</el-menu-item>
+            </el-sub-menu>
+            <el-menu-item index="/4" v-show="authShow(['TREASURER'])">人员工资绩效管理</el-menu-item>
+
+
+          <el-sub-menu index="/3" v-show="authShow(['ADMINISTRATIVE'])">
+            <template #title>
+              人事管理
+            </template>
+            <el-menu-item index="/3-1">入职审核</el-menu-item>
+            <el-menu-item index="/3-2">人员列表</el-menu-item>
+          </el-sub-menu>
+
+
+
+          <el-menu-item index="/RoleManage" v-show="authShow(['ADMIN'])">角色管理</el-menu-item>
+          <el-sub-menu index="/6" v-show="authShow(['ADMIN'])">
+            <template #title>
+              机构管理
+            </template>
+            <el-menu-item index="/CreateDept">创建下机机构</el-menu-item>
+            <el-menu-item index="/Dept">下级机构列表</el-menu-item>
+          </el-sub-menu>
           </el-menu>
         </el-col>
         <el-col :span="span.right">

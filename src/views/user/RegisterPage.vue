@@ -4,7 +4,7 @@
     <div class="div1">
       <div
           style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+        城市信息系统
       </div>
       <div>
         <div class="div2">
@@ -16,39 +16,104 @@
                 </div>
               </template>
               <el-row justify="center">
-                <el-col :span="20">
-                  <el-form>
-                    <el-form-item>
-                      <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
-                    </el-form-item>
-                    <el-form-item label="角色：">
-                      <el-radio-group v-model="user.role">
-                        <el-radio label="USER" name="roleType">用户</el-radio>
-                        <el-radio label="ADMIN" name="roleType">管理员</el-radio>
-                      </el-radio-group>
-                    </el-form-item>
+                <el-col :span="24">
+                  <el-form label-position="right" label-width="70">
+                  <el-row :gutter="10">
+                    <el-col :span="11">
+                      <el-form-item label="用户名">
+                        <el-input v-model="user.username" placeholder="请输入"/>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="11">
+                      <el-form-item label="联系方式">
+                        <el-input v-model="user.phone" placeholder="请输入"/>
+                      </el-form-item>
+                    </el-col>
+                  </el-row>
                     <el-row :gutter="10">
-                      <el-col :span="15">
-                        <el-form-item>
-                          <el-input :prefix-icon="View" v-model="user.userCode" placeholder="请输入验证码"></el-input>
+                      <el-col :span="11">
+                        <el-form-item label="密码">
+                          <el-input v-model="user.password" type="password" show-password  placeholder="请输入"/>
                         </el-form-item>
                       </el-col>
-                      <el-col :span="9">
-                        <el-form-item>
-                          <img :src="user.code" @click="changeCapHandler">
+                      <el-col :span="11">
+                        <el-form-item label="性别">
+                          <el-radio-group v-model="user.sex">
+                            <el-radio name="sex" label="男"></el-radio>
+                            <el-radio name="sex" label="女"></el-radio>
+                          </el-radio-group>
                         </el-form-item>
                       </el-col>
                     </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="11">
+                        <el-form-item label="确认密码">
+                          <el-input type="password" show-password   v-model="user.confirmPassword"
+                                    placeholder="请输入"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="11">
+                        <el-form-item label="角色">
+                          <el-select v-model="user.role" placeholder="请选择" class="sel">
+                            <el-option value="ADMIN" label="管理员"/>
+                            <el-option value="SALESMAN" label="业务员"/>
+                            <el-option value="TREASURER" label="财务员"/>
+                            <el-option value="ADMINISTRATIVE" label="行政员"/>
+                          </el-select>
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="11">
+                        <el-form-item label="真实姓名">
+                          <el-input v-model="user.nickname" placeholder="请输入"/>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="11">
+                        <el-form-item label="机构">
+                          <el-tree style="width: 300px;min-height:100px; max-height: 100px;overflow: auto"
+                                   :data="deptTree"
+                                   :props="defaultProps"
+                                   ref="tree"
+                                   @check-change="orgCheckChange"
+                                   show-checkbox
+                                   :check-strictly="true"
+                                   node-key="id"
+                          />
+                        </el-form-item>
+
+                      </el-col>
+                    </el-row>
+                    <el-row :gutter="10">
+                      <el-col :span="11">
+                        <el-form-item label="身份证">
+                          <el-input v-model="user.idCard" placeholder="请输入"/>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="11">
+                        <el-row >
+                          <el-col :span="12">
+                            <el-form-item label="验证码">
+                              <el-input  v-model="user.userCode" placeholder="请输入验证码"></el-input>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :span="9">
+                            <el-form-item>
+                              <img :src="user.code" @click="changeCapHandler">
+                            </el-form-item>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                    </el-row>
+
+
+
+
+
                     <div>
-                      <el-row >
+                      <el-row>
                         <el-col :span="4">
-                          <el-link type="primary" :underline="false" @click="toLoginHandler" >去登陆</el-link>
+                          <el-link type="primary" :underline="false" @click="toLoginHandler">去登陆</el-link>
                         </el-col>
                       </el-row>
                     </div>
@@ -70,7 +135,7 @@
 
 <script>
 
-import {register, systemCaptcha} from "@/api/api";
+import {deptApi, register, systemCaptcha} from "@/api/api";
 import {useStore} from 'vuex'
 import router from "@/router";
 import {Lock, User, View} from "@element-plus/icons-vue";
@@ -105,14 +170,30 @@ export default {
         confirmPassword: '',
         uuid: '',
         userCode: '',
-      }
+      },
+      deptTree: [],
+      defaultProps:{
+        children:'child',
+        label:'name'
+      },
+      selectOrg:[]
     }
   },
   components: {},
   methods: {
 
+    orgCheckChange(data, checked, indeterminate) {
+      if (checked){
+        this.$refs.tree.setCheckedKeys([data.id],false)
+        this.user.dept=data.id
+        console.log(indeterminate, '子树中选中状态')
+      }else if(data.id===this.user.dept) {
+        this.user.dept=null
+      }
 
-    toLoginHandler(){
+    },
+
+    toLoginHandler() {
       router.push({path: '/login'})
     },
 
@@ -131,11 +212,20 @@ export default {
         }
       }))
     },
+
+    initDeptTree(){
+      deptApi.deptTree()
+          .then((resp)=>{
+            this.deptTree=resp.data.data
+          })
+    }
   },
   mounted() {
     systemCaptcha().then((resp) => {
       this.user = resp.data.data;
     })
+
+    this.initDeptTree()
   },
 
 }
@@ -148,11 +238,11 @@ export default {
 .div2 {
   position: relative;
   margin: auto auto;
-  width: 400px;
+  width: 1000px;
 
   .div3 {
     position: absolute;
-    top: 100px;
+    top: 10px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -160,14 +250,16 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image: url("@/assets/pexels-josh-hild-2422461.jpg");
   background-size: 1920px;
   height: 100vh;
 }
 
-.el-card{
+.el-card {
   background: rgba(255, 255, 255, 0.5);
 }
 
-
+.sel {
+  width: 300px;
+}
 </style>

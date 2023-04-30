@@ -5,61 +5,66 @@
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
       <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
       <!--      </el-col>-->
       <!--      <el-col :span="1" :offset="1">-->
       <!--        <el-button type="success" @click="search">搜索</el-button>-->
       <!--      </el-col>-->
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="city.name" label="城市"/>
-        <el-table-column prop="gdp" label="GDP(亿)"/>
-        <el-table-column prop="gdpGrowthRate" label="该城市的GDP增长率，以百分比表示"/>
-        <el-table-column prop="perCapitaGdp" label="该城市的人均GDP，以元为单位"/>
-        <el-table-column prop="disposableIncome" label="该城市的人均可支配收入，以元为单位"/>
-        <el-table-column prop="inflationRate" label="该城市的通货膨胀率，以百分比表示"/>
-        <el-table-column prop="unemploymentRate" label="该城市的失业率，以百分比表示"/>
-        <el-table-column label="操作" width="300px">
-          <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="clickButton('delete',scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-col>
+        <el-table :data="tableData" border height="600" style="width: 100%"
+                  :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                  :cell-style="{textAlign:'center',padding:'30px'}">
+          <el-table-column prop="id" label="主键"/>
+          <el-table-column prop="userId" label="用户ID"/>
+          <el-table-column prop="nickname" label="姓名"/>
+          <el-table-column prop="salary" label="工资"/>
+          <el-table-column prop="perform" label="绩效"/>
+          <el-table-column prop="total" label="总计"/>
+          <el-table-column prop="createTime" label="创建时间"/>
+          <el-table-column prop="createBy" label="创建人"/>
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+              <el-button
+                  size="small"
+                  type="danger"
+                  @click="clickButton('delete',scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
     </el-row>
 
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="城市">
-          <el-select v-model="form.cityId" placeholder="请选择" :disabled="dialog.optionValue!=='add'">
-            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
-          </el-select>
+        <el-form-item label="主键">
+          <el-input v-model="form.id" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="GDP(亿)">
-          <el-input type="number" v-model="form.gdp" placeholder="请输入"/>
+        <el-form-item label="用户ID">
+          <el-input v-model="form.userId" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="GDP增长率">
-          <el-input  type="number" v-model="form.gdpGrowthRate" placeholder="请输入"/>
+        <el-form-item label="姓名">
+          <el-input v-model="form.nickname" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="人均GDP">
-          <el-input type="number" v-model="form.perCapitaGdp" placeholder="请输入"/>
+        <el-form-item label="工资">
+          <el-input v-model="form.salary" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="人均可支配收入">
-          <el-input type="number" v-model="form.disposableIncome" placeholder="请输入"/>
+        <el-form-item label="绩效">
+          <el-input v-model="form.perform" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="通货膨胀率">
-          <el-input type="number" v-model="form.inflationRate" placeholder="请输入"/>
+        <el-form-item label="总计">
+          <el-input v-model="form.total" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="失业率">
-          <el-input  type="number" v-model="form.unemploymentRate" placeholder="请输入"/>
+        <el-form-item label="创建时间">
+          <el-input v-model="form.createTime" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="创建人">
+          <el-input v-model="form.createBy" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -80,7 +85,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>
@@ -92,22 +97,20 @@
 
 <script>
 
-import {cityApi, economyApi} from "@/api/api";
-
+import {performanceApi} from "@/api/api";
 
 
 export default {
-  name: "Economy",
+  name: "Performance",
   data() {
     return {
       page: {
-        pageSize: 5,
+        pageSize: 10,
         pageNum: 1,
         tootle: 100,
         search: ''
       },
       tableData: [],
-      cityList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -122,11 +125,16 @@ export default {
   methods: {
 
     search() {
-      economyApi.page(this.page)
+      performanceApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
+    },
+
+
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
     },
 
 
@@ -137,21 +145,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        economyApi.getById(row.id).then((resp) => {
+        performanceApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        economyApi.getById(row.id).then((resp) => {
+        performanceApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        economyApi.deleteById(row.id).then(() => {
+        performanceApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -159,7 +167,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      economyApi.page(this.page).then(resp => {
+      performanceApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -168,12 +176,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        economyApi.add(this.form)
+        performanceApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        economyApi.updateById(this.form)
+        performanceApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -186,23 +194,16 @@ export default {
     },
 
     initTableData() {
-      economyApi.page(this.page)
+      performanceApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
-          })
-    },
-    initCityList() {
-      cityApi.listAll()
-          .then(resp => {
-            this.cityList = resp.data.data
           })
     },
 
   },
   mounted() {
     this.initTableData()
-    this.initCityList()
   },
 
 }

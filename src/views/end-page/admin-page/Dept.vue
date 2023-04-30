@@ -1,60 +1,58 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+      <el-col :span="5" :offset="1">
+        <el-input v-model="page.search" placeholder="请输入机构名称或级别" clearable @clear="this.initTableData"/>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="search">搜索</el-button>
+      </el-col>
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="city.name" label="城市"/>
-        <el-table-column prop="total" label="人口数量"/>
-        <el-table-column prop="density" label="人口密度"/>
-        <el-table-column prop="ageGroupOne" label="年龄分布0-14"/>
-        <el-table-column prop="ageGroupTwo" label="年龄分布15-64"/>
-        <el-table-column prop="ageGroupThree" label="年龄分布65以上"/>
-        <el-table-column label="操作" width="300px">
-          <template #default="scope">
-            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="clickButton('delete',scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-col>
+        <el-table :data="tableData" border height="600" style="width: 100%"
+                  :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                  :cell-style="{textAlign:'center',padding:'30px'}">
+          <el-table-column prop="name" label="机构名称"/>
+          <el-table-column prop="level" label="机构级别"/>
+          <el-table-column prop="startDate" label="创建时间"/>
+          <el-table-column prop="age" label="年龄"/>
+          <el-table-column prop="endDate" label="注销时间"/>
+          <el-table-column prop="stats" label="状态"/>
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button
+                  size="small"
+                  type="danger"
+                  @click="clickButton('delete',scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
     </el-row>
 
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="城市">
-          <el-select v-model="form.cityId" placeholder="请选择" :disabled="dialog.optionValue!=='add'">
-            <el-option :label="item.name" v-for="item in cityList" v-bind:key="item.id" :value="item.id" ></el-option>
-          </el-select>
+      <el-form :model="form" size="large" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+        <el-form-item label="机构名称">
+          <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="人口数量">
-          <el-input type="number" v-model="form.total" placeholder="请输入"/>
+        <el-form-item label="创建时间">
+          <el-date-picker value-format="YYYY-MM-DD" v-model="form.startDate"></el-date-picker>
         </el-form-item>
-        <el-form-item label="人口密度">
-          <el-input type="number" v-model="form.density" placeholder="请输入"/>
+        <el-form-item label="年龄">
+          <el-input v-model="form.age" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="年龄分布0-14">
-          <el-input type="number" v-model="form.ageGroupOne" placeholder="请输入"/>
+        <el-form-item label="注销时间">
+          <el-date-picker value-format="YYYY-MM-DD" v-model="form.endDate"></el-date-picker>
         </el-form-item>
-        <el-form-item label="年龄分布15-64">
-          <el-input type="number" v-model="form.ageGroupTwo" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="年龄分布65以上">
-          <el-input type="number" v-model="form.ageGroupThree" placeholder="请输入"/>
+        <el-form-item label="状态">
+          <el-radio-group v-model="form.stats">
+            <el-radio name="stats" label="在运营"></el-radio>
+            <el-radio name="stats" label="注销"></el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -75,7 +73,7 @@
             :total="total"
             :page-size="this.page.pageSize"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            layout="total,prev, pager, next, jumper"
         />
       </div>
     </el-affix>
@@ -87,21 +85,20 @@
 
 <script>
 
-import {cityApi, populationApi} from "@/api/api";
+import {deptApi} from "@/api/api";
 
 
 export default {
-  name: "Population",
+  name: "Dept",
   data() {
     return {
       page: {
-        pageSize: 5,
+        pageSize: 10,
         pageNum: 1,
         tootle: 100,
         search: ''
       },
       tableData: [],
-      cityList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -116,11 +113,16 @@ export default {
   methods: {
 
     search() {
-      populationApi.page(this.page)
+      deptApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
+    },
+
+
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
     },
 
 
@@ -131,21 +133,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        populationApi.getById(row.id).then((resp) => {
+        deptApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        populationApi.getById(row.id).then((resp) => {
+        deptApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        populationApi.deleteById(row.id).then(() => {
+        deptApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -153,7 +155,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      populationApi.page(this.page).then(resp => {
+      deptApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -162,12 +164,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        populationApi.add(this.form)
+        deptApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        populationApi.updateById(this.form)
+        deptApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -180,23 +182,16 @@ export default {
     },
 
     initTableData() {
-      populationApi.page(this.page)
+      deptApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
-          })
-    },
-    initCityList() {
-      cityApi.listAll()
-          .then(resp => {
-            this.cityList = resp.data.data
           })
     },
 
   },
   mounted() {
     this.initTableData()
-    this.initCityList()
   },
 
 }

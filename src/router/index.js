@@ -17,117 +17,48 @@ const routes = [
         path: '/',
         component: () => import('../views/user/LoginPage')
     },
-    {
-        path: '/NewsInfo',
-        component: () => import('../views/font-page/NewsInfo')
-    },
 
 
     {
-        path: '/FontPage',
-        component: () => import('../views/layout/FontPage'),
-        children: [
-            {
-                path: "/IndexPage",
-                name: "IndexPage",
-                component: () => import('../views/font-page/IndexPage'),
-            },
-            {
-                path: "/PersonalCenter",
-                name: "PersonalCenter",
-                component: () => import('../views/font-page/PersonalCenter'),
-            }
-            ,
-            {
-                path: "/CityFont",
-                name: "CityFont",
-                component: () => import('../views/font-page/CityFont'),
-            }
-            ,
-            {
-                path: "/PopulationFont",
-                name: "PopulationFont",
-                component: () => import('../views/font-page/PopulationFont'),
-            }
-            ,
-            {
-                path: "/EconomyFont",
-                name: "EconomyFont",
-                component: () => import('../views/font-page/EconomyFont'),
-            }
-            ,
-            {
-                path: "/EnvironmentFont",
-                name: "EnvironmentFont",
-                component: () => import('../views/font-page/EnvironmentFont'),
-            },
-            {
-                path: "/FacilityFont",
-                name: "FacilityFont",
-                component: () => import('../views/font-page/FacilityFont'),
-            },
-            {
-                path: "/GeographyFont",
-                name: "GeographyFont",
-                component: () => import('../views/font-page/GeographyFont'),
-            },
-            {
-                path: "/PopulationFont",
-                name: "PopulationFont",
-                component: () => import('../views/font-page/PopulationFont'),
-            }
-
-        ]
-    }
-    , {
         path: '/EndPage',
         name: 'EndPage',
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: "/News",
-                name: "News",
-                component: () => import('../views/end-page/News'),
+                path: "/Dept",
+                name: "Dept",
+                component: () => import('../views/end-page/admin-page/Dept.vue'),
+            }, {
+                path: "/PersonalCenter",
+                name: "PersonalCenter",
+                component: () => import('../views/end-page/PersonalCenter'),
             },
             {
-                path: "/City",
-                name: "City",
-                component: () => import('../views/end-page/City'),
-            }
-            ,
-            {
-                path: "/CityEvent",
-                name: "CityEvent",
-                component: () => import('../views/end-page/CityEvent'),
+                path: "/Performance",
+                name: "Performance",
+                component: () => import('../views/end-page/Performance'),
             },
             {
-                path: "/Economy",
-                name: "Economy",
-                component: () => import('../views/end-page/Economy'),
+                path: "/SysUser",
+                name: "SysUser",
+                component: () => import('../views/end-page/SysUser'),
             },
             {
-                path: "/Environment",
-                name: "Environment",
-                component: () => import('../views/end-page/Environment'),
-            }
-            ,
+                path: "/Transaction",
+                name: "Transaction",
+                component: () => import('../views/end-page/Transaction'),
+            },
             {
-                path: "/Facility",
-                name: "Facility",
-                component: () => import('../views/end-page/Facility'),
-            }
-            ,
+                path: "/RoleManage",
+                name: "RoleManage",
+                component: () => import('../views/end-page/admin-page/RoleManage'),
+            },
             {
-                path: "/Geography",
-                name: "Geography",
-                component: () => import('../views/end-page/Geography'),
+                path: "/CreateDept",
+                name: "CreateDept",
+                component: () => import('../views/end-page/admin-page/CreateDept'),
             }
-            ,
-            {
-                path: "/Population",
-                name: "Population",
-                component: () => import('../views/end-page/Population'),
-            }
+
         ]
     }
 ]
