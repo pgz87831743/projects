@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">城市信息系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">分级机构人员管理系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
