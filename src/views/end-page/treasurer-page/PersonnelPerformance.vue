@@ -7,6 +7,9 @@
             <el-col :span="1" :offset="1">
               <el-button type="success" @click="search">搜索</el-button>
             </el-col>
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="exportExcel('PersonnelPerformance')">导出</el-button>
+      </el-col>
     </el-row>
     <el-row>
       <el-col>
@@ -90,6 +93,7 @@
 <script>
 
 import {transactionApi} from "@/api/api";
+import {getUser} from "@/utils/authutil";
 
 
 export default {
@@ -122,6 +126,10 @@ export default {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
+    },
+
+    exportExcel(type) {
+      window.location.href='/api/sys/sysUser/exportInfo?type='+type+"&userId="+getUser().id
     },
 
 

@@ -51,6 +51,7 @@
 <script>
 
 import {receiptPaymentApi} from "@/api/api";
+import {getUser} from "@/utils/authutil";
 
 
 export default {
@@ -86,8 +87,7 @@ export default {
     },
 
     exportExcel(type) {
-     // window.location.href=this.$request
-      console.log(type)
+      window.location.href='/api/sys/sysUser/exportInfo?type='+type+"&userId="+getUser().id
     },
 
 

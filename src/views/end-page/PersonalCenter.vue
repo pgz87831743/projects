@@ -87,9 +87,7 @@ export default {
     },
 
     exportExcel(type) {
-      window.location.href='http://localhost:9011/PersonalCenter'
-
-      console.log(type)
+      window.location.href='/api/sys/sysUser/exportInfo?type='+type+"&userId="+getUser().id
     },
 
     initUserInfo() {

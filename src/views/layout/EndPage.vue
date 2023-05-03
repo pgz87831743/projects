@@ -22,9 +22,7 @@
           <template #title>{{ getUser().username }}</template>
         </el-menu-item>
 
-        <el-menu-item index="/IndexPage">
-          <template #title>前台</template>
-        </el-menu-item>
+
 
 
         <el-menu-item index="/login" @click="logout">
