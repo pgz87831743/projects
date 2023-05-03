@@ -57,6 +57,31 @@ const routes = [
                 path: "/CreateDept",
                 name: "CreateDept",
                 component: () => import('../views/end-page/admin-page/CreateDept'),
+            },
+            {
+                path: "/OnboardingReview",
+                name: "OnboardingReview",
+                component: () => import('../views/end-page/administrative-page/OnboardingReview.vue'),
+            },
+            {
+                path: "/PersonnelList",
+                name: "PersonnelList",
+                component: () => import('../views/end-page/administrative-page/PersonnelList'),
+            },
+            {
+                path: "/BusinessList",
+                name: "BusinessList",
+                component: () => import('../views/end-page/salesman-page/BusinessList'),
+            },
+            {
+                path: "/TransactionEntry",
+                name: "TransactionEntry",
+                component: () => import('../views/end-page/salesman-page/TransactionEntry'),
+            },
+            {
+                path: "/PersonnelPerformance",
+                name: "PersonnelPerformance",
+                component: () => import('../views/end-page/treasurer-page/PersonnelPerformance'),
             }
 
         ]

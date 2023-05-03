@@ -12,7 +12,7 @@
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
-                  :cell-style="{textAlign:'center',padding:'30px'}">
+                  :cell-style="{textAlign:'center',padding:'10px'}">
           <el-table-column prop="username" label="用户名"/>
           <el-table-column prop="nickname" label="真实姓名"/>
           <el-table-column prop="role" label="角色">
@@ -23,7 +23,11 @@
               <span v-if="scope.row.role==='ADMINISTRATIVE'">行政员</span>
             </template>
           </el-table-column>
-          <el-table-column prop="dept" label="机构"/>
+          <el-table-column prop="dept" label="机构">
+            <template #default="scope">
+              {{scope.row.deptInfo.name}}
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
               <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>

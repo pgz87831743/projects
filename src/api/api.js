@@ -34,8 +34,11 @@ export const sysUserApi = {
     page(data) {
         return request.post('/sys/sysUser/page', data)
     },
-    doctorList() {
-        return request.post('/sys/sysUser/doctorList')
+    administrativePage(data) {
+        return request.post('/sys/sysUser/administrative-page', data)
+    }
+    ,auditListPage(data) {
+        return request.post('/sys/sysUser/audit-list-page', data)
     },
     getById(id) {
         return request.get('/sys/sysUser/getById/' + id)
@@ -48,6 +51,9 @@ export const sysUserApi = {
     },
     updateById(data) {
         return request.put('/sys/sysUser/updateById', data)
+    },
+    administrativeUpdateById(data) {
+        return request.put('/sys/sysUser/administrativeUpdateById', data)
     },
 
     allUserByType(type) {
@@ -112,6 +118,9 @@ export const performanceApi = {
 export const transactionApi = {
     page(data) {
         return request.post('/transaction/page', data)
+    }
+    ,treasurerPage(data) {
+        return request.post('/transaction/treasurerPage', data)
     },
     listAll() {
         return request.get('/transaction/listAll')

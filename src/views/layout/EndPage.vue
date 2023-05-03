@@ -51,12 +51,12 @@
               <template #title>
                 交易业务
               </template>
-              <el-menu-item index="/1-1">交易录入</el-menu-item>
-              <el-menu-item index="/1-2">业务列表</el-menu-item>
+              <el-menu-item index="/TransactionEntry">交易录入</el-menu-item>
+              <el-menu-item index="/BusinessList">业务列表</el-menu-item>
             </el-sub-menu>
 
 
-            <el-menu-item index="/3" v-show="authShow(['TREASURER'])">人员业绩</el-menu-item>
+            <el-menu-item index="/PersonnelPerformance" v-show="authShow(['TREASURER'])">人员业绩</el-menu-item>
             <el-sub-menu index="/2" v-show="authShow(['TREASURER'])">
               <template #title>
                 机构收支信息管理
@@ -71,8 +71,8 @@
             <template #title>
               人事管理
             </template>
-            <el-menu-item index="/3-1">入职审核</el-menu-item>
-            <el-menu-item index="/3-2">人员列表</el-menu-item>
+            <el-menu-item index="/OnboardingReview">入职审核</el-menu-item>
+            <el-menu-item index="/PersonnelList">人员列表</el-menu-item>
           </el-sub-menu>
 
 

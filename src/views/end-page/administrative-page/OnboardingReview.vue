@@ -1,32 +1,46 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入机构名称或级别" clearable @clear="this.initTableData"/>
-      </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button type="success" @click="search">搜索</el-button>
-      </el-col>
+            <el-col :span="5" :offset="1">
+              <el-input v-model="page.search" placeholder="请输入姓名" clearable @clear="this.initTableData"/>
+            </el-col>
+            <el-col :span="1" :offset="1">
+              <el-button type="success" @click="search">搜索</el-button>
+            </el-col>
     </el-row>
     <el-row>
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center',padding:'10px'}">
-          <el-table-column prop="name" label="机构名称"/>
-          <el-table-column prop="level" label="机构级别"/>
-          <el-table-column prop="startDate" label="创建时间"/>
-          <el-table-column prop="age" label="年龄"/>
-          <el-table-column prop="endDate" label="注销时间"/>
-          <el-table-column prop="stats" label="状态"/>
+          <el-table-column prop="username" label="用户名"/>
+          <el-table-column prop="password" label="密码" />
+          <el-table-column prop="nickname" label="姓名" />
+
+          <el-table-column prop="idCard" label="身份证" width="200"/>
+          <el-table-column prop="phone" label="联系方式" width="150"/>
+          <el-table-column prop="sex" label="性别"/>
+          <el-table-column prop="role" label="角色" >
+            <template #default="scope">
+              <span v-if="scope.row.role==='ADMIN'">管理员</span>
+              <span v-if="scope.row.role==='SALESMAN'">业务员</span>
+              <span v-if="scope.row.role==='TREASURER'">财务员</span>
+              <span v-if="scope.row.role==='ADMINISTRATIVE'">行政员</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="dept" label="机构"  width="180">
+            <template #default="scope">
+              {{scope.row.deptInfo.name}}
+            </template>
+          </el-table-column>
+          <el-table-column prop="startTime" label="入职时间"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-              <el-button
-                  size="small"
-                  type="danger"
-                  @click="clickButton('delete',scope.row)">删除
+              <el-button v-if="scope.row.onboardingStatus==='待审核'" size="small" type="success" @click="clickButton('update', scope.row)">修改
               </el-button>
+              <span v-if="scope.row.onboardingStatus!=='待审核'">
+                 {{scope.row.onboardingStatus}}
+              </span>
             </template>
           </el-table-column>
         </el-table>
@@ -35,23 +49,11 @@
 
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" size="large" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="机构名称">
-          <el-input v-model="form.name" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-date-picker value-format="YYYY-MM-DD" v-model="form.startDate"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="注销时间">
-          <el-date-picker value-format="YYYY-MM-DD" v-model="form.endDate"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.stats">
-            <el-radio name="stats" label="在运营"></el-radio>
-            <el-radio name="stats" label="注销"></el-radio>
+      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+        <el-form-item label="入职审批">
+          <el-radio-group v-model="form.onboardingStatus">
+            <el-radio name="sp" label="通过"></el-radio>
+            <el-radio name="sp" label="不通过"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -85,11 +87,11 @@
 
 <script>
 
-import {deptApi} from "@/api/api";
+import {sysUserApi} from "@/api/api";
 
 
 export default {
-  name: "Dept",
+  name: "PersonnelList",
   data() {
     return {
       page: {
@@ -113,7 +115,7 @@ export default {
   methods: {
 
     search() {
-      deptApi.page(this.page)
+      sysUserApi.auditListPage(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -133,21 +135,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        deptApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        deptApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        deptApi.deleteById(row.id).then(() => {
+        sysUserApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -155,7 +157,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      deptApi.page(this.page).then(resp => {
+      sysUserApi.auditListPage(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -164,12 +166,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        deptApi.add(this.form)
+        sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        deptApi.updateById(this.form)
+        sysUserApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -182,7 +184,7 @@ export default {
     },
 
     initTableData() {
-      deptApi.page(this.page)
+      sysUserApi.auditListPage(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total

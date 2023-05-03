@@ -16,18 +16,10 @@
             <el-form-item label="身份证">
               <el-input v-model="form.idCard" placeholder="请输入"/>
             </el-form-item>
-            <el-form-item label="头像">
-              <el-input v-model="form.avatar" placeholder="请输入"/>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input v-model="form.email" placeholder="请输入"/>
-            </el-form-item>
             <el-form-item label="联系方式">
               <el-input v-model="form.phone" placeholder="请输入"/>
             </el-form-item>
-            <el-form-item label="年龄">
-              <el-input v-model="form.age" placeholder="请输入"/>
-            </el-form-item>
+
             <el-form-item label="性别">
               <el-input v-model="form.sex" placeholder="请输入"/>
             </el-form-item>
