@@ -42,9 +42,7 @@
         <el-form-item label="创建时间">
           <el-date-picker value-format="YYYY-MM-DD" v-model="form.startDate"></el-date-picker>
         </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age" placeholder="请输入"/>
-        </el-form-item>
+
         <el-form-item label="注销时间">
           <el-date-picker value-format="YYYY-MM-DD" v-model="form.endDate"></el-date-picker>
         </el-form-item>

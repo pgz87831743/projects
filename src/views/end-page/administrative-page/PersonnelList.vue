@@ -68,9 +68,6 @@
         <el-form-item label="联系方式">
           <el-input v-model="form.phone" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="工龄">
-          <el-input type="number" v-model="form.seniority" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="性别">
           <el-radio-group v-model="form.sex">
             <el-radio name="sex" label="男"></el-radio>

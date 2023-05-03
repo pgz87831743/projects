@@ -36,7 +36,7 @@
              {{form.startTime}}
             </el-form-item>
             <el-form-item label="工龄">
-              {{9}}
+              {{form.seniority}}
             </el-form-item>
 
           </el-form>
