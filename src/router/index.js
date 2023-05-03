@@ -82,6 +82,21 @@ const routes = [
                 path: "/PersonnelPerformance",
                 name: "PersonnelPerformance",
                 component: () => import('../views/end-page/treasurer-page/PersonnelPerformance'),
+            },
+            {
+                path: "/SalaryPerformance",
+                name: "SalaryPerformance",
+                component: () => import('../views/end-page/treasurer-page/SalaryPerformance'),
+            },
+            {
+                path: "/ReceiptPaymentEntry",
+                name: "ReceiptPaymentEntry",
+                component: () => import('../views/end-page/treasurer-page/ReceiptPaymentEntry'),
+            },
+            {
+                path: "/ReceiptPaymentList",
+                name: "ReceiptPaymentList",
+                component: () => import('../views/end-page/treasurer-page/ReceiptPaymentList'),
             }
 
         ]

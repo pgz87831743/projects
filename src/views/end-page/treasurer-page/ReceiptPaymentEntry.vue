@@ -3,6 +3,7 @@
     <el-row justify="start">
       <el-col :span="10">
         <el-form :model="form" label-position="right" label-width="150px" size="large">
+
           <el-form-item label="交易内容">
             <el-input v-model="form.content" placeholder="请输入"/>
           </el-form-item>
@@ -13,10 +14,9 @@
             <el-input v-model="form.person" placeholder="请输入"/>
           </el-form-item>
           <el-form-item label="交易时间">
-
             <el-date-picker type="datetime" value-format="YYYY-MM-DD HH:mm:ss" v-model="form.tradingTime"></el-date-picker>
-
           </el-form-item>
+
         </el-form>
 
       </el-col>
@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import {transactionApi} from "@/api/api";
+import {receiptPaymentApi} from "@/api/api";
 
 export default {
-  name: "TransactionEntry",
+  name: "ReceiptPaymentEntry",
   data() {
     return {
       form: {}
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     createHandle() {
-      transactionApi.add(this.form)
+      receiptPaymentApi.add(this.form)
           .then(() => {
             this.form = {}
           })

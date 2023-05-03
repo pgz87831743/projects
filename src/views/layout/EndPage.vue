@@ -61,10 +61,10 @@
               <template #title>
                 机构收支信息管理
               </template>
-              <el-menu-item index="/2-1">机构收支信息管理</el-menu-item>
-              <el-menu-item index="/2-2">机构收支信息表</el-menu-item>
+              <el-menu-item index="/ReceiptPaymentEntry">机构收支信息管理</el-menu-item>
+              <el-menu-item index="/ReceiptPaymentList">机构收支信息表</el-menu-item>
             </el-sub-menu>
-            <el-menu-item index="/4" v-show="authShow(['TREASURER'])">人员工资绩效管理</el-menu-item>
+            <el-menu-item index="/SalaryPerformance" v-show="authShow(['TREASURER'])">人员工资绩效管理</el-menu-item>
 
 
           <el-sub-menu index="/3" v-show="authShow(['ADMINISTRATIVE'])">

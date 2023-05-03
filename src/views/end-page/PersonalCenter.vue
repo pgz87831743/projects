@@ -49,6 +49,9 @@
         <el-col :span="6">
           <el-button type="primary" @click="saveUserInfoHandle">保存</el-button>
         </el-col>
+        <el-col :span="6">
+          <el-button type="primary" @click="exportExcel('Person')">导出</el-button>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -81,6 +84,12 @@ export default {
 
     handleAvatarSuccess(response) {
       this.form.avatar = response[0].url
+    },
+
+    exportExcel(type) {
+      window.location.href='http://localhost:9011/PersonalCenter'
+
+      console.log(type)
     },
 
     initUserInfo() {

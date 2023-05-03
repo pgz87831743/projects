@@ -37,7 +37,7 @@ export const sysUserApi = {
     administrativePage(data) {
         return request.post('/sys/sysUser/administrative-page', data)
     }
-    ,auditListPage(data) {
+    , auditListPage(data) {
         return request.post('/sys/sysUser/audit-list-page', data)
     },
     getById(id) {
@@ -58,6 +58,9 @@ export const sysUserApi = {
 
     allUserByType(type) {
         return request.get('/sys/sysUser/allUserByType/' + type)
+    },
+    exportInfo(type) {
+        return request.get('/sys/sysUser/exportInfo?type=' + type)
     }
 }
 
@@ -98,6 +101,8 @@ export const performanceApi = {
     },
     listAll() {
         return request.get('/performance/listAll')
+    }, autoPerformance() {
+        return request.get('/performance/autoPerformance')
     },
     getById(id) {
         return request.get('/performance/getById/' + id)
@@ -119,7 +124,7 @@ export const transactionApi = {
     page(data) {
         return request.post('/transaction/page', data)
     }
-    ,treasurerPage(data) {
+    , treasurerPage(data) {
         return request.post('/transaction/treasurerPage', data)
     },
     listAll() {
@@ -136,5 +141,28 @@ export const transactionApi = {
     },
     updateById(data) {
         return request.put('/transaction/updateById', data)
+    }
+}
+
+
+//机构收支表管理
+export const receiptPaymentApi = {
+    page(data) {
+        return request.post('/receiptPayment/page', data)
+    },
+    listAll() {
+        return request.get('/receiptPayment/listAll')
+    },
+    getById(id) {
+        return request.get('/receiptPayment/getById/' + id)
+    },
+    add(data) {
+        return request.post('/receiptPayment/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/receiptPayment/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/receiptPayment/updateById', data)
     }
 }
