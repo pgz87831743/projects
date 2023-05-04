@@ -65,12 +65,12 @@
             <el-menu-item index="/SalaryPerformance" v-show="authShow(['TREASURER'])">人员工资绩效管理</el-menu-item>
 
 
-          <el-sub-menu index="/3" v-show="authShow(['ADMINISTRATIVE'])">
+          <el-sub-menu index="/3" v-show="authShow(['ADMINISTRATIVE','ADMIN'])">
             <template #title>
               人事管理
             </template>
-            <el-menu-item index="/OnboardingReview">入职审核</el-menu-item>
-            <el-menu-item index="/PersonnelList">人员列表</el-menu-item>
+            <el-menu-item index="/OnboardingReview" v-show="authShow(['ADMINISTRATIVE','ADMIN'])">入职审核</el-menu-item>
+            <el-menu-item index="/PersonnelList" v-show="authShow(['ADMINISTRATIVE'])">人员列表</el-menu-item>
           </el-sub-menu>
 
 
