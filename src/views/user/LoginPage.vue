@@ -36,16 +36,6 @@
                         </el-col>
                       </el-row>
                     </el-form>
-                    <div>
-                      <el-row >
-                        <el-col :span="12">
-                          <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
-                        </el-col>
-                        <el-col style="text-align: right" :span="12">
-                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
-                        </el-col>
-                      </el-row>
-                    </div>
                     <el-button  @keyup.down.enter="alert('123')" @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
                   </el-col>
                 </el-row>
@@ -100,9 +90,6 @@ export default {
   components: {},
   methods: {
 
-    registerHandler(){
-      router.push({path: '/register'})
-    },
 
     changeCapHandler(){
       systemCaptcha().then((resp) => {
@@ -116,7 +103,7 @@ export default {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/IndexPage'})
+          router.push({path: '/UserManagement'})
         }
       }))
     },

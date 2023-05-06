@@ -12,9 +12,7 @@ export const roles = () => {
     return request.post('/system/roles')
 }
 
-export const register = (data) => {
-    return request.post('/system/register', data)
-}
+
 export const systemCaptcha = () => {
     return request.post('/system/captcha')
 }
@@ -49,203 +47,47 @@ export const sysUserApi = {
 }
 
 
-
-
-
-
-//商品管理相关
-export const goodsApi = {
-    page(data) {
-        return request.post('/goods/page', data)
-    },
-    getById(id) {
-        return request.get('/goods/getById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goods/updateById', data)
-    },
-    add(data) {
-        return request.post('/goods/add', data)
-    },
-    hotGoods() {
-        return request.get('/goods/hotGoods')
-    },
-    deleteById(id) {
-        return request.delete('/goods/deleteById/' + id)
-    },
-
-    searchGoods(data) {
-        return request.post('/goods/searchGoods', data)
-    }
-}
-
-
-//评论
-export const commentAdd = (data) => {
-    return request.post('/comment/add', data)
-}
-
-
-//购物车管理
-export const goodsCarApi = {
-    page(data) {
-        return request.post('/goodsCar/page', data)
-    },
-    getById(id) {
-        return request.get('/goodsCar/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsCar/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsCar/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsCar/updateById', data)
-    },
-
-    //前台
-    pageUser(data) {
-        return request.post('/goodsCar/pageUser', data)
-    },
-    submitBefore(data) {
-        return request.post('/goodsCar/submitBefore', data)
-    },
-    submitOrder(data) {
-        return request.post('/goodsCar/submitOrder', data)
-    },
-}
-
-//订单管理
-export const goodsOrderApi = {
-    page(data) {
-        return request.post('/goodsOrder/page', data)
-    },
-    listAll() {
-        return request.get('/goodsOrder/listAll')
-    },
-    getById(id) {
-        return request.get('/goodsOrder/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsOrder/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsOrder/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsOrder/updateById', data)
-    }
-}
-
-
-//订单明细管理
-export const goodsOrderDetailApi = {
-    page(data) {
-        return request.post('/goodsOrderDetail/page', data)
-    },
-    getById(id) {
-        return request.get('/goodsOrderDetail/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsOrderDetail/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsOrderDetail/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsOrderDetail/updateById', data)
-    }
-}
-
-
-//宠物领养信息管理
-export const adoptApi={
+//导航菜单管理
+export const meansApi={
     page(data){
-        return request.post('/adopt/page',data)
+        return request.post('/means/page',data)
     },
     listAll(){
-        return request.get('/adopt/listAll')
+        return request.get('/means/listAll')
     },
     getById(id){
-        return request.get('/adopt/getById/'+id)
+        return request.get('/means/getById/'+id)
     },
     add(data){
-        return request.post('/adopt/add',data)
+        return request.post('/means/add',data)
     },
     deleteById(id){
-        return request.delete('/adopt/deleteById/'+id)
+        return request.delete('/means/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/adopt/updateById',data)
+        return request.put('/means/updateById',data)
     }
 }
 
 
-//宠物信息管理
-export const petApi={
+//医生信息管理管理
+export const doctorInfoApi={
     page(data){
-        return request.post('/pet/page',data)
+        return request.post('/doctorInfo/page',data)
     },
     listAll(){
-        return request.get('/pet/listAll')
+        return request.get('/doctorInfo/listAll')
     },
     getById(id){
-        return request.get('/pet/getById/'+id)
+        return request.get('/doctorInfo/getById/'+id)
     },
     add(data){
-        return request.post('/pet/add',data)
+        return request.post('/doctorInfo/add',data)
     },
     deleteById(id){
-        return request.delete('/pet/deleteById/'+id)
+        return request.delete('/doctorInfo/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/pet/updateById',data)
-    }
-}
-
-
-//陪宠经验分享管理
-export const newsApi = {
-    page(data) {
-        return request.post('/news/page', data)
-    },
-    getById(id) {
-        return request.get('/news/getById/' + id)
-    },
-    listAll() {
-        return request.get('/news/listAll/')
-    },
-    add(data) {
-        return request.post('/news/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/news/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/news/updateById', data)
-    }
-}
-
-
-//宠物领养审核管理
-export const adoptExamineApi={
-    page(data){
-        return request.post('/adoptExamine/page',data)
-    },
-    listAll(){
-        return request.get('/adoptExamine/listAll')
-    },
-    getById(id){
-        return request.get('/adoptExamine/getById/'+id)
-    },
-    add(data){
-        return request.post('/adoptExamine/add',data)
-    },
-    deleteById(id){
-        return request.delete('/adoptExamine/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/adoptExamine/updateById',data)
+        return request.put('/doctorInfo/updateById',data)
     }
 }
