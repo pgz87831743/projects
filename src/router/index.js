@@ -21,6 +21,21 @@ const routes = [
                 path: "/IndexPage",
                 name: "IndexPage",
                 component: () => import('../views/font-page/IndexPage'),
+            },
+            {
+                path: "/DoctorInfoDetail",
+                name: "DoctorInfoDetail",
+                component: () => import('../views/font-page/DoctorInfoDetail'),
+            },
+            {
+                path: "/DoctorInfoDesc",
+                name: "DoctorInfoDesc",
+                component: () => import('../views/font-page/DoctorInfoDesc'),
+            },
+            {
+                path: "/SearchPage",
+                name: "SearchPage",
+                component: () => import('../views/font-page/SearchPage'),
             }
         ]
     }

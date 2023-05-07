@@ -16,17 +16,7 @@
         <el-table-column prop="username" label="用户名"/>
         <el-table-column prop="password" label="密码"/>
         <el-table-column prop="nickname" label="昵称"/>
-        <el-table-column prop="avatar" label="头像">
-          <template #default="scope">
-            <img :src="scope.row.avatar" width="100">
-          </template>
-        </el-table-column>
-        <el-table-column prop="sex" label="性别"/>
-        <el-table-column prop="phone" label="联系电话"/>
-        <el-table-column prop="address" label="联系地址"/>
         <el-table-column prop="role" label="角色"/>
-        <el-table-column prop="createTime" label="创建时间"/>
-        <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -53,32 +43,7 @@
         <el-form-item label="昵称">
           <el-input v-model="form.nickname"/>
         </el-form-item>
-        <el-form-item label="头像">
-          <el-upload
-              class="avatar-uploader"
-              action="/api/file/upload"
-              :data="{fileTypeEnum:'FILE'}"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              name="files"
-          >
-            <img  :src="form.avatar"  width="100" />
-            <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
-          </el-upload>
 
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="form.sex">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="联系电话">
-          <el-input v-model="form.phone"/>
-        </el-form-item>
-        <el-form-item label="联系地址">
-          <el-input type="textarea" v-model="form.address"/>
-        </el-form-item>
         <el-form-item label="角色">
           <el-select v-model="form.role">
             <el-option :label="item" :value="item" v-for="item in roleData"  v-bind:key="item"/>
@@ -118,7 +83,7 @@
 <script>
 
 import { roles, sysUserApi} from "@/api/api";
-import {Plus} from "@element-plus/icons-vue";
+
 
 export default {
   name: "UserManagement",
@@ -143,7 +108,6 @@ export default {
       total: 0,
     }
   },
-  components: {Plus},
   methods: {
 
     search(){

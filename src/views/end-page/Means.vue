@@ -12,7 +12,7 @@
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center'}">
         <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="name" label="菜单名称"/>
+        <el-table-column prop="text" label="菜单名称"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -31,7 +31,7 @@
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
         <el-form-item label="菜单名称">
-          <el-input v-model="form.name" placeholder="请输入"/>
+          <el-input v-model="form.text" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="父菜单">
           <el-input v-model="form.pid" placeholder="请输入"/>

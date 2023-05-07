@@ -1,32 +1,3 @@
-////.p_note{
-////  text-align: left;
-////  font-size: 16px;
-////  margin: 10px;
-////}
-//
-//.p-div{
-//  margin: 0;
-//  padding: 15px;
-//  //background: #e0d7d7;
-//}
-//
-////.p-color{
-////  color: #2c3c9a;
-////}
-////
-////.p-b-c{
-////  background: #2c3c9a !important;
-////  color: white !important;
-////  border: none !important;
-////}
-//
-//.el-button{
-// // background: #2c3c9a !important;
-// // color: white !important;
-// // border: none !important;
-//  border-radius: 30px !important;
-//}
-//
 
 .div>div{
   margin: 30px 20px;
@@ -37,4 +8,23 @@
   line-height: 30px;
   font-weight: 600;
   color: #252933;
+}
+
+.dv1{
+  width: 100%;
+  height: 46px;
+  background-color: #3296fa;
+  display: flex;
+
+
+  .dv2{
+    height: 33px;
+    width: 98%;
+    border-radius:20px 20px;
+    line-height: 33px;
+    background: #5babfb;
+    margin: auto;
+    color: white;
+    text-align: center;
+  }
 }

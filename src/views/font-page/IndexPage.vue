@@ -1,203 +1,81 @@
 <template>
-  <div class="div">
-    <el-carousel :interval="4000" type="card" height="480px">
-      <el-carousel-item v-for="item in top" :key="item">
-        <div >
-          <img :src="item.img" height="480" >
-        </div>
-      </el-carousel-item>
-    </el-carousel>
-
-
-    <el-card class="box-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
-          <span class="pin-lun">宠物领养</span>
-        </div>
-      </template>
-      <div class="row-div">
-        <el-row :gutter="12" >
-          <el-col v-bind:key="item.id" v-for="item in top" :span="6">
-            <el-card shadow="hover" @click="petDetail(item)"  style="margin: 10px">
-              <div>
-                <div>
-                  <img :src="item.img" height="300">
-                </div>
-                <div>
-                  {{item.type}}-{{ item.name }}
-                </div>
-                <div class="card-div">
-                  <div>
-
-                  </div>
-                  <div>
-                    {{ item.sex }}
-                  </div>
-                  <div>
-                    {{item.createTime}}
-                  </div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-
+  <div>
+    <div class="dv1" @click="searchClick">
+      <div class="dv2">
+        <van-icon name="search">请输入医生名</van-icon>
       </div>
-    </el-card>
-
-    <el-card class="box-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
-          <span class="pin-lun">产品推荐</span>
-        </div>
-      </template>
-      <div class="row-div">
-        <el-row :gutter="12" >
-          <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-            <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
-              <div>
-                <div>
-                  <img :src="item.cover" height="300">
-                </div>
-                <div>
-                  {{ item.title }}
-                </div>
-                <div class="card-div">
-                  <div>
-
-                  </div>
-                  <div>
-                    {{ item.storeName }}
-                  </div>
-                  <div>
-                    <el-icon>
-                      <View/>
-                    </el-icon>
-                   {{item.times}}
-                  </div>
-                  <div>
-                    <el-icon>
-                      <Comment/>
-                    </el-icon>
-                    {{item.commentNum}}
-                  </div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-
-      </div>
-    </el-card>
-
-
+    </div>
+    <van-tree-select
+        :active-id="activeId"
+        :main-active-index="activeIndex"
+        :items="items"
+        @click-nav="onNavClick"
+        @click-item="onItemClick"
+    />
   </div>
 </template>
 
 <script>
-import {Comment, View} from "@element-plus/icons-vue";
-import {goodsApi, petApi} from "@/api/api";
+
+
+import {meansApi} from "@/api/api";
 import router from "@/router";
 
 export default {
   name: "IndexPage",
-  components: {Comment, View},
   data() {
     return {
-      img: require("@/assets/a.png"),
-      list: [],
-      top:[
-
-      ]
+      value: '',
+      items: [],
+      activeIndex: 0,
+      activeId: 0
     }
   },
   methods: {
 
-    fileDetail(item) {
-      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
-      window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
+    onNavClick(index) {
+      console.log(index)
+      const id = this.items[index]
+      this.activeId = id.id
+      this.activeIndex = index
     },
 
-    petDetail(item) {
-      let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
-      window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
+    onItemClick(item) {
+      console.log(item.id)
+      router.push({path: '/DoctorInfoDetail', query: {meanId: item.id}})
     },
 
-    inithotGoods() {
-      goodsApi.hotGoods()
+    searchClick(){
+      router.push({path: '/SearchPage'})
+    },
+
+
+    initItems() {
+      meansApi.listAll()
           .then((resp) => {
-            this.list = resp.data.data
-          })
-    },
-
-
-    initPet(){
-      petApi.listAll()
-          .then((resp)=>{
-            this.top=resp.data.data
+            this.items = resp.data.data
           })
     }
   },
   mounted() {
-    this.inithotGoods()
-    this.initPet()
+    this.initItems()
   }
 }
 </script>
 
 <style scoped lang="scss">
 
-.card-div {
-  //background: aqua;
-  height: 35px;
-  margin-top: 10px;
-
-  div {
-    display: inline-block;
-    float: left;
-  }
-
-  div:nth-child(2) {
-    height: 100%;
-    line-height: 35px;
-    margin-left: 5px;
-    font-size: 10px;
-  }
-
-  div:nth-child(n+3) {
-    float: right;
-    font-size: 10px;
-    line-height: 35px;
-    margin: 0 5px;
-
-  }
+.d1 {
+  background-color: #3296fa;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-  text-align: center;
+::v-deep(.van-sidebar){
+  height: 100vh;
+  background-color: #fafafa;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
+::v-deep(.van-nav-bar.van-hairline--bottom > div > div > button){
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
 }
-
-::v-deep(.box-card .el-card__header) {
-  //border: none;
-}
-
-.row-div > div {
-  margin: 30px auto;
-}
-
 
 </style>

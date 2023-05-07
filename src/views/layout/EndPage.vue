@@ -9,22 +9,16 @@
            router
            :default-active="$route.fullPath"
        >
-         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">健康莱西</div></el-menu-item>
          <div class="flex-grow" />
-         <el-sub-menu index="2-4">
-           <template #title>
-             <el-avatar :src="user.avatar"></el-avatar>
-           </template>
-           <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
-           <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
-
-         </el-sub-menu>
+         <el-menu-item index="/IndexPage">主页</el-menu-item>
+         <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 
        </el-menu>
      </el-affix>
    </div>
    <div class="mean2">
-     <el-row :gutter="10">
+     <el-row >
        <el-col :span="3">
          <el-menu
              class="el-menu-vertical-demo"

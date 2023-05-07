@@ -11,6 +11,10 @@ import * as echarts from 'echarts'
 import '@wangeditor/editor/dist/css/style.css'
 
 
+import Vant from 'vant';
+import '../node_modules/vant/lib/index.css';
+
+
 import {authShow} from "@/utils/authutil";
 import request from "@/utils/request";
 
@@ -23,5 +27,6 @@ app.config.globalProperties.$request =request;
 app.config.globalProperties.$echarts = echarts;
 app.use(store)
 app.use(router)
+app.use(Vant)
 app.mount('#app')
 

@@ -3,7 +3,7 @@
 
     <div class="div1">
       <div style="text-align: left;color:#ffffff;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-        宠物领养救助系统
+        健康莱西
       </div>
       <div>
         <div class="div2">

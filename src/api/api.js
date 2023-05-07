@@ -55,6 +55,9 @@ export const meansApi={
     listAll(){
         return request.get('/means/listAll')
     },
+    listAllByPid(pid){
+        return request.get('/means/listAllByPid/'+pid)
+    },
     getById(id){
         return request.get('/means/getById/'+id)
     },
@@ -77,6 +80,9 @@ export const doctorInfoApi={
     },
     listAll(){
         return request.get('/doctorInfo/listAll')
+    },
+    listAllByMeansId(meanId){
+        return request.get('/doctorInfo/listAllByMeansId/'+meanId)
     },
     getById(id){
         return request.get('/doctorInfo/getById/'+id)

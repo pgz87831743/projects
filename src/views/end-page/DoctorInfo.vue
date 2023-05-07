@@ -15,17 +15,22 @@
       <el-table :data="tableData" border height="600" style="width: 100%"
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center'}">
-        <el-table-column prop="img" label="照片"/>
+        <el-table-column prop="img" label="照片">
+          <template #default="scope">
+            <img :src="scope.row.img" width="100">
+          </template>
+        </el-table-column>
         <el-table-column prop="name" label="姓名"/>
-        <el-table-column prop="job" label="职位"/>
+        <el-table-column prop="jobOne" label="职位一"/>
+        <el-table-column prop="jobTwo" label="职位二"/>
         <el-table-column prop="phone" label="预约电话"/>
-        <el-table-column prop="goodAt" label="擅长"/>
-        <el-table-column prop="expertise" label="专业特长"/>
-        <el-table-column prop="rewards" label="获得奖励"/>
-        <el-table-column prop="achievements" label="学术成就"/>
-        <el-table-column prop="other" label="其他方面"/>
-        <el-table-column prop="meanIdOne" label="一级菜单"/>
-        <el-table-column prop="meanIdTwo" label="二级菜单"/>
+        <el-table-column prop="goodAt" :show-overflow-tooltip="true"  label="擅长"/>
+        <el-table-column prop="expertise" :show-overflow-tooltip="true" label="专业特长"/>
+        <el-table-column prop="rewards"  :show-overflow-tooltip="true" label="获得奖励"/>
+        <el-table-column prop="achievements" :show-overflow-tooltip="true" label="学术成就"/>
+        <el-table-column prop="other" :show-overflow-tooltip="true"  label="其他方面"/>
+        <el-table-column prop="meanIdOneInfo.text" label="一级菜单"/>
+        <el-table-column prop="meanIdTwoInfo.text" label="二级菜单"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -42,39 +47,64 @@
 
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled" size="large">
+
         <el-form-item label="照片">
-          <el-input v-model="form.img" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="this.form.img" :src="form.img" width="250"/>
+            <el-icon v-else style="font-size: 100px">
+              <Plus/>
+            </el-icon>
+          </el-upload>
+
         </el-form-item>
+
         <el-form-item label="姓名">
-          <el-input v-model="form.name" placeholder="请输入"/>
+          <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="职位">
-          <el-input v-model="form.job" placeholder="请输入"/>
+        <el-form-item label="职位一">
+          <el-input v-model="form.jobOne" />
+        </el-form-item>
+        <el-form-item label="职位二">
+          <el-input v-model="form.jobTwo" />
+        </el-form-item>
+        <el-form-item label="出诊医院">
+          <el-input v-model="form.hospital" />
         </el-form-item>
         <el-form-item label="预约电话">
-          <el-input v-model="form.phone" placeholder="请输入"/>
+          <el-input v-model="form.phone" />
         </el-form-item>
         <el-form-item label="擅长">
-          <el-input v-model="form.goodAt" placeholder="请输入"/>
+          <el-input  type="textarea" v-model="form.goodAt" />
         </el-form-item>
         <el-form-item label="专业特长">
-          <el-input v-model="form.expertise" placeholder="请输入"/>
+          <el-input type="textarea" v-model="form.expertise" />
         </el-form-item>
         <el-form-item label="获得奖励">
-          <el-input v-model="form.rewards" placeholder="请输入"/>
+          <el-input  type="textarea" v-model="form.rewards" />
         </el-form-item>
         <el-form-item label="学术成就">
-          <el-input v-model="form.achievements" placeholder="请输入"/>
+          <el-input  type="textarea" v-model="form.achievements" />
         </el-form-item>
         <el-form-item label="其他方面">
-          <el-input v-model="form.other" placeholder="请输入"/>
+          <el-input  type="textarea" v-model="form.other" />
         </el-form-item>
         <el-form-item label="一级菜单">
-          <el-input v-model="form.meanIdOne" placeholder="请输入"/>
+          <el-select v-model="form.meanIdOne" @change="meanChangeHandler">
+            <el-option v-for="item in meanList" v-bind:key="item.id" :label="item.text" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="二级菜单">
-          <el-input v-model="form.meanIdTwo" placeholder="请输入"/>
+          <el-select v-model="form.meanIdTwo">
+            <el-option v-for="item in meanTwo" v-bind:key="item.id" :label="item.text" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -107,11 +137,13 @@
 
 <script>
 
-import {doctorInfoApi} from "@/api/api";
+import {doctorInfoApi, meansApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "DoctorInfo",
+  components: {Plus},
   data() {
     return {
       page: {
@@ -129,10 +161,28 @@ export default {
       },
       form: {},
       total: 0,
+      meanList: [],
+      meanTwo: [],
     }
   },
 
   methods: {
+
+    meanChangeHandler(e) {
+      meansApi.listAllByPid(e)
+          .then((resp) => {
+            this.meanTwo = resp.data.data
+            this.form.meanIdTwo=''
+          })
+    },
+
+    meanChangeHandlerInfo(e) {
+      meansApi.listAllByPid(e)
+          .then((resp) => {
+            this.meanTwo = resp.data.data
+          })
+    },
+
 
     search() {
       doctorInfoApi.page(this.page)
@@ -160,6 +210,7 @@ export default {
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
+          this.meanChangeHandlerInfo(this.form.meanIdOne)
         })
       } else if (type === 'detail') {
         doctorInfoApi.getById(row.id).then((resp) => {
@@ -167,6 +218,7 @@ export default {
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
+          this.meanChangeHandlerInfo(this.form.meanIdOne)
         })
       } else if (type === 'delete') {
         doctorInfoApi.deleteById(row.id).then(() => {
@@ -211,9 +263,18 @@ export default {
           })
     },
 
+    initMeanData() {
+      meansApi.listAll()
+          .then(resp => {
+            this.meanList = resp.data.data
+          })
+    },
+
+
   },
   mounted() {
     this.initTableData()
+    this.initMeanData()
   },
 
 }
