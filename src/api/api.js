@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 
+
 //系统相关
 export const login = (data) => {
     return request.post('/system/login', data)
@@ -83,6 +84,9 @@ export const doctorInfoApi={
     },
     listAllByMeansId(meanId){
         return request.get('/doctorInfo/listAllByMeansId/'+meanId)
+    },
+    listAllByName(name){
+        return request.get('/doctorInfo/listAllByName/',{params:{name:name}})
     },
     getById(id){
         return request.get('/doctorInfo/getById/'+id)

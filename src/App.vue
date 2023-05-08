@@ -11,7 +11,8 @@ body{
   margin: 0;
   padding:0;
   text-underline: none;
-  //background: #bcb5b5;
+  background: #f3f5f7;
+  font-family: "Microsoft YaHei",serif;
 }
 
 </style>

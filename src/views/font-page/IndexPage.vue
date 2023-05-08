@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div class="dv1" @click="searchClick">
-      <div class="dv2">
-        <van-icon name="search">请输入医生名</van-icon>
-      </div>
-    </div>
+    <van-search v-model="value" disabled placeholder="请输入医生名" @click="searchClick"/>
     <van-tree-select
         :active-id="activeId"
         :main-active-index="activeIndex"
@@ -74,8 +70,10 @@ export default {
   background-color: #fafafa;
 }
 
-::v-deep(.van-nav-bar.van-hairline--bottom > div > div > button){
 
+::v-deep(.van-tree-select__content){
+  height: 100vh;
 }
+
 
 </style>

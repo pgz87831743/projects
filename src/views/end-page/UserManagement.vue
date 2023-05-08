@@ -4,12 +4,6 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-<!--      <el-col :span="5" :offset="1">-->
-<!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1" :offset="1">-->
-<!--        <el-button type="success" @click="search">搜索</el-button>-->
-<!--      </el-col>-->
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">

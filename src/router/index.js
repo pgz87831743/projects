@@ -72,8 +72,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
+    let ig = ['/login'
+        ,'/register'
+        ,'/IndexPage'
+        ,'/DoctorInfoDesc'
+        ,'/DoctorInfoDetail'
+        ,'/SearchPage'
+    ]
 
-    if (to.href === '/login' || to.href === '/register') {
+    if (ig.concat(to.href)) {
         next()
     } else {
         if (to.href !== '/login' && getItem("TOKEN_INFO_KEY") === null) {

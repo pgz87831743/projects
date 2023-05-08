@@ -1,54 +1,99 @@
 <template>
   <div>
-    <div class="dv1" @click="searchClick">
-      <div class="dv2">
-        <van-icon name="search">请输入医生名</van-icon>
+    <van-search disabled placeholder="请输入医生名" @click="searchClick"/>
+    <div class="vc" >
+      <van-row>
+        <van-col :span="5">
+          <div class="vc1">
+            <van-image
+                style="margin-top: 8px"
+                round
+                width="4rem"
+                height="4rem"
+                :src="item.img"
+                @click="showImage(item)"
+            />
+          </div>
+        </van-col>
+        <van-col :span="19">
+          <div class="vc2">
+            <p><span style="font-weight: bold;font-size: 18px">{{item.name}}&nbsp;&nbsp;</span ><span><van-tag type="primary">{{ item.jobTwo }}</van-tag></span></p>
+            <p style="font-size: 14px"><span >坐诊医院&nbsp;&nbsp;</span ><span>{{item.hospital}}</span></p>
+            <p style="font-size: 14px"><span >工作单位&nbsp;&nbsp;</span ><span>{{item.hospital}}</span></p>
+            <p style="font-size: 14px"><span >预约电话&nbsp;&nbsp;</span ><span>{{item.phone}}</span></p>
+          </div>
+        </van-col>
+      </van-row>
+    </div>
+
+    <div class="vc" >
+      <div class="vcd1">
+        医生擅长
+      </div>
+      <div class="vcd2">
+        {{item.goodAt}}
       </div>
     </div>
-    <van-card
-        :thumb="doctor.img"
-    >
-      <template #tags>
-        <div data-v-5e0858e0="">
-          <div data-v-5e0858e0="" style="font-weight: bold; font-style: normal;"><span data-v-5e0858e0="" style="font-size: 0.5rem;">张文论 </span><span
-              data-v-5e0858e0="" class="van-ellipsis" style="font-size: 0.4rem;"> 外一科主任 </span></div>
-          <span data-v-5e0858e0="" class="van-tag van-tag--plain van-tag--danger van-hairline--surround"
-                style="margin: 0.02rem 0px;">主任医师</span>
-          <div data-v-5e0858e0="" style=" font-style: normal; margin: 0.05rem 0px;"><span
-              data-v-5e0858e0="" class="info-title" style=" font-style: normal;">出诊医院</span> 莱西市中医医院
-          </div>
-          <div data-v-5e0858e0="" style=" font-style: normal; margin: 0.05rem 0px;"><span
-              data-v-5e0858e0="" class="info-title" style=" font-style: normal;">预约电话</span>
-            55652001-8025
-          </div>
-          <div data-v-5e0858e0="" style=" font-style: normal; margin: 0.05rem 0px;">
-            <div data-v-5e0858e0="" class="info-title"
-                 style=" font-style: normal; width: 4em; float: left;">擅长
-            </div>
-            <div data-v-5e0858e0="" style="display: inline-block; float: right; width: 75%;">
-              擅长外科疑难、急危重症疾病的诊治
-            </div>
-          </div>
-        </div>
-      </template>
-    </van-card>
+
+    <div class="vc" >
+      <div class="vcd1">
+        专业特长
+      </div>
+      <div class="vcd2">
+        {{item.expertise}}
+      </div>
+    </div>
+
+    <div class="vc" >
+      <div class="vcd1">
+        获得奖励
+      </div>
+      <div class="vcd2">
+        {{item.rewards}}
+      </div>
+    </div>
+
+
+    <div class="vc" >
+      <div class="vcd1">
+        学术成就
+      </div>
+      <div class="vcd2">
+        {{item.achievements}}
+      </div>
+    </div>
+
+
+    <div class="vc" >
+      <div class="vcd1">
+        其他方面
+      </div>
+      <div class="vcd2">
+        {{item.other}}
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import {doctorInfoApi} from "@/api/api";
 import router from "@/router";
+import {showImagePreview} from "vant";
 
 export default {
   name: "DoctorInfoDesc.vue",
   data() {
     return {
       query: {},
-      doctor: {}
+      item: {}
     }
   },
   methods: {
 
+    showImage(item){
+      showImagePreview([item.img]);
+    },
 
     searchClick(){
       router.push({path: '/SearchPage'})
@@ -57,7 +102,7 @@ export default {
     initDoctorDesc() {
       doctorInfoApi.getById(this.query.id)
           .then((resp) => {
-            this.doctor = resp.data.data
+            this.item = resp.data.data
           })
     }
   },
@@ -71,5 +116,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.vc {
+  background-color: #ffffff;
+  border-radius: 8px 8px 8px 8px;
+  width: 95%;
+  margin: 10px auto;
 
+  .vcd1{
+    font-size: 18px;font-weight: bold; padding: 10px;
+  }
+
+  .vcd2{
+    font-size: 14px;  padding: 10px;
+  }
+
+  .vc1 {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+  }
+
+  .vc2 {
+    line-height: 16px;
+  }
+}
 </style>

@@ -136,7 +136,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-simona-kidrič-2607544.jpg");
+  background-image:url("@/assets/pexels-rahul-pandit-9916558.jpg");
   background-size: 1920px;
   height: 100vh;
 }
