@@ -37,41 +37,41 @@
 
     <div class="vc" >
       <div class="vcd1">
-        专业特长
+        医生简介
       </div>
       <div class="vcd2">
-        {{item.expertise}}
+        {{item.jobOne}}
       </div>
     </div>
 
-    <div class="vc" >
-      <div class="vcd1">
-        获得奖励
-      </div>
-      <div class="vcd2">
-        {{item.rewards}}
-      </div>
-    </div>
+<!--    <div class="vc" >-->
+<!--      <div class="vcd1">-->
+<!--        获得奖励-->
+<!--      </div>-->
+<!--      <div class="vcd2">-->
+<!--        {{item.rewards}}-->
+<!--      </div>-->
+<!--    </div>-->
 
 
-    <div class="vc" >
-      <div class="vcd1">
-        学术成就
-      </div>
-      <div class="vcd2">
-        {{item.achievements}}
-      </div>
-    </div>
+<!--    <div class="vc" >-->
+<!--      <div class="vcd1">-->
+<!--        学术成就-->
+<!--      </div>-->
+<!--      <div class="vcd2">-->
+<!--        {{item.achievements}}-->
+<!--      </div>-->
+<!--    </div>-->
 
 
-    <div class="vc" >
-      <div class="vcd1">
-        其他方面
-      </div>
-      <div class="vcd2">
-        {{item.other}}
-      </div>
-    </div>
+<!--    <div class="vc" >-->
+<!--      <div class="vcd1">-->
+<!--        其他方面-->
+<!--      </div>-->
+<!--      <div class="vcd2">-->
+<!--        {{item.other}}-->
+<!--      </div>-->
+<!--    </div>-->
 
   </div>
 </template>

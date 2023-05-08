@@ -21,14 +21,15 @@
           </template>
         </el-table-column>
         <el-table-column prop="name" label="姓名"/>
-        <el-table-column prop="jobOne" label="职位一"/>
-        <el-table-column prop="jobTwo" label="职位二"/>
+        <el-table-column prop="jobTwo" label="职位"/>
         <el-table-column prop="phone" label="预约电话"/>
+        <el-table-column prop="hospital" label="出诊医院"/>
         <el-table-column prop="goodAt" :show-overflow-tooltip="true"  label="擅长"/>
-        <el-table-column prop="expertise" :show-overflow-tooltip="true" label="专业特长"/>
-        <el-table-column prop="rewards"  :show-overflow-tooltip="true" label="获得奖励"/>
-        <el-table-column prop="achievements" :show-overflow-tooltip="true" label="学术成就"/>
-        <el-table-column prop="other" :show-overflow-tooltip="true"  label="其他方面"/>
+        <el-table-column prop="jobOne" label="医生简介"/>
+<!--        <el-table-column prop="expertise" :show-overflow-tooltip="true" label="专业特长"/>-->
+<!--        <el-table-column prop="rewards"  :show-overflow-tooltip="true" label="获得奖励"/>-->
+<!--        <el-table-column prop="achievements" :show-overflow-tooltip="true" label="学术成就"/>-->
+<!--        <el-table-column prop="other" :show-overflow-tooltip="true"  label="其他方面"/>-->
         <el-table-column prop="meanIdOneInfo.text" label="一级菜单"/>
         <el-table-column prop="meanIdTwoInfo.text" label="二级菜单"/>
         <el-table-column label="操作" width="300px">
@@ -69,10 +70,7 @@
         <el-form-item label="姓名">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="职位一">
-          <el-input v-model="form.jobOne" />
-        </el-form-item>
-        <el-form-item label="职位二">
+        <el-form-item label="职位">
           <el-input v-model="form.jobTwo" />
         </el-form-item>
         <el-form-item label="出诊医院">
@@ -81,21 +79,24 @@
         <el-form-item label="预约电话">
           <el-input v-model="form.phone" />
         </el-form-item>
-        <el-form-item label="擅长">
+        <el-form-item label="医生擅长">
           <el-input  type="textarea" v-model="form.goodAt" />
         </el-form-item>
-        <el-form-item label="专业特长">
-          <el-input type="textarea" v-model="form.expertise" />
+        <el-form-item label="医生简介">
+          <el-input type="textarea" v-model="form.jobOne" />
         </el-form-item>
-        <el-form-item label="获得奖励">
-          <el-input  type="textarea" v-model="form.rewards" />
-        </el-form-item>
-        <el-form-item label="学术成就">
-          <el-input  type="textarea" v-model="form.achievements" />
-        </el-form-item>
-        <el-form-item label="其他方面">
-          <el-input  type="textarea" v-model="form.other" />
-        </el-form-item>
+<!--        <el-form-item label="专业特长">-->
+<!--          <el-input type="textarea" v-model="form.expertise" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="获得奖励">-->
+<!--          <el-input  type="textarea" v-model="form.rewards" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="学术成就">-->
+<!--          <el-input  type="textarea" v-model="form.achievements" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="其他方面">-->
+<!--          <el-input  type="textarea" v-model="form.other" />-->
+<!--        </el-form-item>-->
         <el-form-item label="一级菜单">
           <el-select v-model="form.meanIdOne" @change="meanChangeHandler">
             <el-option v-for="item in meanList" v-bind:key="item.id" :label="item.text" :value="item.id"></el-option>
