@@ -19,7 +19,7 @@
           <div class="vc2">
             <p><span style="font-weight: bold;font-size: 18px">{{item.name}}&nbsp;&nbsp;</span ><span><van-tag type="primary">{{ item.jobTwo }}</van-tag></span></p>
             <p style="font-size: 14px"><span >坐诊医院&nbsp;&nbsp;</span ><span>{{item.hospital}}</span></p>
-            <p style="font-size: 14px"><span >工作单位&nbsp;&nbsp;</span ><span>{{item.hospital}}</span></p>
+            <p style="font-size: 14px"><span >工作单位&nbsp;&nbsp;</span ><span>{{item.unit}}</span></p>
             <p style="font-size: 14px"><span >预约电话&nbsp;&nbsp;</span ><span>{{item.phone}}</span></p>
           </div>
         </van-col>
