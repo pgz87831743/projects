@@ -24,6 +24,7 @@
         <el-table-column prop="jobTwo" label="职位"/>
         <el-table-column prop="phone" label="预约电话"/>
         <el-table-column prop="hospital" label="出诊医院"/>
+        <el-table-column prop="times" label="坐诊时间"/>
         <el-table-column prop="unit" label="工作单位"/>
         <el-table-column prop="goodAt" :show-overflow-tooltip="true"  label="擅长"/>
         <el-table-column prop="jobOne" label="医生简介"/>
@@ -76,6 +77,10 @@
         </el-form-item>
         <el-form-item label="出诊医院">
           <el-input v-model="form.hospital" />
+        </el-form-item>
+
+        <el-form-item label="坐诊时间">
+          <el-input v-model="form.times" />
         </el-form-item>
         <el-form-item label="工作单位">
           <el-input v-model="form.unit" />

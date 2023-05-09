@@ -16,6 +16,7 @@
 
 import {meansApi} from "@/api/api";
 import router from "@/router";
+import {getItem, setItem} from "@/utils/storage";
 
 export default {
   name: "IndexPage",
@@ -34,6 +35,10 @@ export default {
       const id = this.items[index]
       this.activeId = id.id
       this.activeIndex = index
+      setItem("activityStats", {
+        activeId: id.id,
+        activeIndex: index,
+      })
     },
 
     onItemClick(item) {
@@ -41,7 +46,7 @@ export default {
       router.push({path: '/DoctorInfoDetail', query: {meanId: item.id}})
     },
 
-    searchClick(){
+    searchClick() {
       router.push({path: '/SearchPage'})
     },
 
@@ -50,6 +55,11 @@ export default {
       meansApi.listAll()
           .then((resp) => {
             this.items = resp.data.data
+            let act = getItem("activityStats")
+            if (act) {
+              this.activeIndex = act.activeIndex
+              this.activeId = act.activeIndex
+            }
           })
     }
   },
@@ -65,13 +75,13 @@ export default {
   background-color: #3296fa;
 }
 
-::v-deep(.van-sidebar){
+::v-deep(.van-sidebar) {
   height: 100vh;
   background-color: #fafafa;
 }
 
 
-::v-deep(.van-tree-select__content){
+::v-deep(.van-tree-select__content) {
   height: 100vh;
 }
 

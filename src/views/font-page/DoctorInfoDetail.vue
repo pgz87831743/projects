@@ -19,7 +19,7 @@
           <div class="vc2" @click="doctorClick(item)">
             <p><span style="font-weight: bold;font-size: 18px">{{item.name}}&nbsp;&nbsp;</span ><span><van-tag type="primary">{{ item.jobTwo }}</van-tag></span></p>
             <p><span >坐诊医院&nbsp;&nbsp;</span ><span>{{item.hospital}}</span></p>
-            <p><span >坐诊时间&nbsp;&nbsp;</span ><span>周一至周五</span></p>
+            <p><span >坐诊时间&nbsp;&nbsp;</span ><span>{{item.times}}</span></p>
             <p><span >预约电话&nbsp;&nbsp;</span ><span>{{item.phone}}</span></p>
             <p style="font-size: 12px;color:#999999">
               <van-text-ellipsis rows="2" :content="'擅长：'+item.goodAt" />
