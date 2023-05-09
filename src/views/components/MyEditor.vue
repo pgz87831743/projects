@@ -88,3 +88,9 @@ export default {
 <style scoped lang="scss">
 
 </style>
+
+
+<!--<MyEditor @onChange="onChange" :value="form.content"></MyEditor>-->
+<!--onChange(value) {-->
+<!--this.form.content = value-->
+<!--},-->

@@ -12,7 +12,9 @@
 <!--      </el-col>-->
     </el-row>
     <el-row>
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center'}">
         <el-table-column prop="username" label="用户名"/>
         <el-table-column prop="password" label="密码"/>
         <el-table-column prop="nickname" label="昵称"/>
