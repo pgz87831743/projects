@@ -4,22 +4,33 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+      <el-col :span="5" :offset="1">
+        <el-input v-model="page.search" placeholder="请输入中药名称" clearable @clear="initTableData"/>
+      </el-col>
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="search">搜索</el-button>
+      </el-col>
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%"
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center'}">
-        <el-table-column prop="id" label="主键"/>
         <el-table-column prop="name" label="中药名称"/>
         <el-table-column prop="effect" label="中药功效"/>
         <el-table-column prop="ug" label="中药用法"/>
-        <el-table-column prop="img" label="中药图片"/>
+        <el-table-column prop="img" label="中药图片">
+          <template #default="scope">
+            <el-image
+                style="width: 100px"
+                :src="scope.row.img"
+                :zoom-rate="1.2"
+                :preview-src-list="[scope.row.img]"
+                :initial-index="4"
+                :preview-teleported="true"
+                fit="cover"
+            />
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
@@ -39,26 +50,28 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="中药名称">
           <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="中药功效">
-          <el-input v-model="form.effect" placeholder="请输入"/>
+          <el-input  type="textarea"  v-model="form.effect" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="中药用法">
-          <el-input v-model="form.ug" placeholder="请输入"/>
+          <el-input  type="textarea"  v-model="form.ug" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="中药图片">
-          <el-input v-model="form.img" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img  v-if="form.img" :src="form.img"  width="200" />
+            <el-icon v-else style="font-size: 100px"><Plus /></el-icon>
+          </el-upload>
+
         </el-form-item>
       </el-form>
       <template #footer>
@@ -92,10 +105,12 @@
 <script>
 
 import {medicineApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Medicine",
+  components: {Plus},
   data() {
     return {
       page: {

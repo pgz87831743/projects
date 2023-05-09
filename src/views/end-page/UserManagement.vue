@@ -20,7 +20,15 @@
         <el-table-column prop="nickname" label="昵称"/>
         <el-table-column prop="avatar" label="头像">
           <template #default="scope">
-            <img :src="scope.row.avatar" width="100">
+            <el-image
+                style="width: 100px"
+                :src="scope.row.avatar"
+                :zoom-rate="1.2"
+                :preview-src-list="[scope.row.avatar]"
+                :initial-index="4"
+                :preview-teleported="true"
+                fit="cover"
+            />
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别"/>
@@ -64,8 +72,8 @@
               :on-success="handleAvatarSuccess"
               name="files"
           >
-            <img  :src="form.avatar"  width="100" />
-            <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+            <img  v-if="form.avatar" :src="form.avatar"  width="100" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
 
         </el-form-item>

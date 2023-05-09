@@ -4,20 +4,19 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+      <el-col :span="5" :offset="1">
+        <el-input v-model="page.search" placeholder="请输入标题" clearable @clear="initTableData"/>
+      </el-col>
+      <el-col :span="1" :offset="1">
+        <el-button type="success" @click="search">搜索</el-button>
+      </el-col>
     </el-row>
     <el-row>
       <el-table :data="tableData" border height="600" style="width: 100%"
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center'}">
-        <el-table-column prop="id" label="主键"/>
         <el-table-column prop="title" label="标题"/>
-        <el-table-column prop="content" label="内容"/>
+        <el-table-column prop="content" :show-overflow-tooltip="true" label="内容"/>
         <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
@@ -37,20 +36,11 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="标题">
           <el-input v-model="form.title" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="内容">
-          <el-input v-model="form.content" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+          <MyEditor @onChange="onChange" :value="form.content"></MyEditor>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -84,10 +74,12 @@
 <script>
 
 import {scienceApi} from "@/api/api";
+import MyEditor from "@/views/components/MyEditor.vue";
 
 
 export default {
   name: "Science",
+  components: {MyEditor},
   data() {
     return {
       page: {
@@ -118,7 +110,9 @@ export default {
           })
     },
 
-
+    onChange(value) {
+      this.form.content = value
+    },
     handleAvatarSuccess(response) {
       this.form.img = response[0].url
     },
