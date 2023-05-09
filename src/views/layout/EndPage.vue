@@ -24,7 +24,7 @@
      </el-affix>
    </div>
    <div class="mean2">
-     <el-row :gutter="10">
+     <el-row >
        <el-col :span="3">
          <el-menu
              class="el-menu-vertical-demo"
