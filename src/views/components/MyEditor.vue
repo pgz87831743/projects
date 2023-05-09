@@ -12,7 +12,6 @@
         :mode="mode"
         @onCreated="handleCreated"
         @onChange="onChange"
-
     />
   </div>
 

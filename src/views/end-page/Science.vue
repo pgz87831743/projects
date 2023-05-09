@@ -40,7 +40,7 @@
           <el-input v-model="form.title" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="内容">
-          <MyEditor @onChange="onChange" :value="form.content"></MyEditor>
+          <el-input type="textarea" :autosize="{minRows:5}" v-model="form.content" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -74,12 +74,10 @@
 <script>
 
 import {scienceApi} from "@/api/api";
-import MyEditor from "@/views/components/MyEditor.vue";
 
 
 export default {
   name: "Science",
-  components: {MyEditor},
   data() {
     return {
       page: {
@@ -95,7 +93,9 @@ export default {
         formDisabled: true,
         optionValue: null
       },
-      form: {},
+      form: {
+        content: ''
+      },
       total: 0,
     }
   },
