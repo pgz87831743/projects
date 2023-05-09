@@ -18,19 +18,6 @@ const routes = [
         component: () => import('../views/user/LoginPage')
     },
     {
-        path: "/ProductDetail",
-        name: "ProductDetail",
-        component: () => import('../views/font-page/ProductDetail'),
-    }, {
-        path: "/OrderDetail",
-        name: "OrderDetail",
-        component: () => import('../views/font-page/OrderDetail'),
-    }, {
-        path: "/PetDetail",
-        name: "PetDetail",
-        component: () => import('../views/font-page/PetDetail'),
-    },
-    {
         path: "/NewsInfo",
         name: "NewsInfo",
         component: () => import('../views/font-page/NewsInfo'),
@@ -45,36 +32,14 @@ const routes = [
                 path: "/IndexPage",
                 name: "IndexPage",
                 component: () => import('../views/font-page/IndexPage'),
-            }, {
-                path: "/MyAdeptList",
-                name: "MyAdeptList",
-                component: () => import('../views/font-page/MyAdeptList'),
-            },
-            {
-                path: "/SearchShop",
-                name: "SearchShop",
-                component: () => import('../views/font-page/SearchShop.vue'),
-            },
-            {
-                path: "/ShoppingCar",
-                name: "ShoppingCar",
-                component: () => import('../views/font-page/ShoppingCar'),
             },
             {
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
             },
-            {
-                path: "/ProductDetail",
-                name: "ProductDetail",
-                component: () => import('../views/font-page/ProductDetail'),
-            },
-            {
-                path: "/Teaching",
-                name: "Teaching",
-                component: () => import('../views/font-page/Teaching'),
-            },
+
+
         ]
     }
     , {
@@ -86,6 +51,21 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
+            },
+            {
+                path: "/Medicine",
+                name: "Medicine",
+                component: () => import('../views/end-page/Medicine'),
+            },
+            {
+                path: "/Record",
+                name: "Record",
+                component: () => import('../views/end-page/Record'),
+            },
+            {
+                path: "/Science",
+                name: "Science",
+                component: () => import('../views/end-page/Science'),
             }
 
         ]

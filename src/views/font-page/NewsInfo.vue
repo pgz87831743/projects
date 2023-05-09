@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {newsApi} from "@/api/api";
+import {scienceApi} from "@/api/api";
 
 export default {
   name: "NewsInfo",
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     initItem() {
-      newsApi.getById(this.id)
+      scienceApi.getById(this.id)
           .then((resp) => {
             this.item = resp.data.data
           })

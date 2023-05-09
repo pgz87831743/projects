@@ -32,6 +32,9 @@
              :default-active="$route.fullPath"
          >
            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
+           <el-menu-item index="/Medicine">中药管理</el-menu-item>
+           <el-menu-item index="/Record">舌诊记录管理</el-menu-item>
+           <el-menu-item index="/Science">科普管理</el-menu-item>
          </el-menu>
        </el-col>
        <el-col :span="21">

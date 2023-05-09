@@ -96,7 +96,6 @@
 
 <script>
 import {Comment, View} from "@element-plus/icons-vue";
-import {goodsApi, petApi} from "@/api/api";
 import router from "@/router";
 
 export default {
@@ -126,18 +125,18 @@ export default {
     },
 
     inithotGoods() {
-      goodsApi.hotGoods()
-          .then((resp) => {
-            this.list = resp.data.data
-          })
+      // goodsApi.hotGoods()
+      //     .then((resp) => {
+      //       this.list = resp.data.data
+      //     })
     },
 
 
     initPet(){
-      petApi.listAll()
-          .then((resp)=>{
-            this.top=resp.data.data
-          })
+      // petApi.listAll()
+      //     .then((resp)=>{
+      //       this.top=resp.data.data
+      //     })
     }
   },
   mounted() {

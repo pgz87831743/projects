@@ -109,7 +109,7 @@
 <script>
 
 
-import {goodsOrderApi, systemCurrentUser, sysUserApi} from "@/api/api";
+import { systemCurrentUser, sysUserApi} from "@/api/api";
 
 export default {
   name: "PersonalCenter",
@@ -133,12 +133,7 @@ export default {
     },
 
 
-    initList() {
-      goodsOrderApi.listAll()
-          .then((resp) => {
-            this.list = resp.data.data
-          })
-    },
+
 
     initUserInfo() {
       systemCurrentUser()
@@ -156,7 +151,6 @@ export default {
     }
   },
   mounted() {
-    this.initList()
     this.initUserInfo()
   }
 }

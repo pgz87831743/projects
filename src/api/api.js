@@ -53,5 +53,72 @@ export const sysUserApi = {
 
 
 
+//科普内容管理
+export const scienceApi={
+    page(data){
+        return request.post('/science/page',data)
+    },
+    listAll(){
+        return request.get('/science/listAll')
+    },
+    getById(id){
+        return request.get('/science/getById/'+id)
+    },
+    add(data){
+        return request.post('/science/add',data)
+    },
+    deleteById(id){
+        return request.delete('/science/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/science/updateById',data)
+    }
+}
 
 
+
+
+//舌诊记录表管理
+export const recordApi={
+    page(data){
+        return request.post('/record/page',data)
+    },
+    listAll(){
+        return request.get('/record/listAll')
+    },
+    getById(id){
+        return request.get('/record/getById/'+id)
+    },
+    add(data){
+        return request.post('/record/add',data)
+    },
+    deleteById(id){
+        return request.delete('/record/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/record/updateById',data)
+    }
+}
+
+
+//中药表管理
+export const medicineApi={
+    page(data){
+        return request.post('/medicine/page',data)
+    },
+    listAll(){
+        return request.get('/medicine/listAll')
+    },
+    getById(id){
+        return request.get('/medicine/getById/'+id)
+    },
+    add(data){
+        return request.post('/medicine/add',data)
+    },
+    deleteById(id){
+        return request.delete('/medicine/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/medicine/updateById',data)
+    }
+}
