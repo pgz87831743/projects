@@ -78,7 +78,6 @@ export default {
   border-radius: 8px 8px 8px 8px;
   width: 95%;
   margin: 10px auto;
-  max-height: 190px;
   min-height: 190px;
 
 
