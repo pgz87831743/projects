@@ -1,9 +1,9 @@
 <template>
   <div class="div">
-    <el-carousel :interval="4000" type="card" height="480px">
-      <el-carousel-item v-for="item in top" :key="item">
+    <el-carousel :interval="3000" type="card" height="360px" >
+      <el-carousel-item v-for="item in banner" :key="item">
         <div >
-          <img :src="item.img" height="480" >
+          <img :src="item" height="480" >
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -104,6 +104,13 @@ export default {
   data() {
     return {
       img: require("@/assets/a.png"),
+      banner:[
+          require("@/assets/index1.jpg"),
+          require("@/assets/index2.jpg"),
+          require("@/assets/index3.jpg"),
+          require("@/assets/index4.jpg"),
+          require("@/assets/index5.jpg"),
+      ],
       list: [],
       top:[
 

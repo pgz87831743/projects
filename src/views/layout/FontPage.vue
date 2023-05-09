@@ -8,7 +8,7 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">舌诊系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
 
         <el-menu-item index="/Teaching">陪宠教学</el-menu-item>

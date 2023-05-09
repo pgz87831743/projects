@@ -9,7 +9,7 @@
            router
            :default-active="$route.fullPath"
        >
-         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">舌诊系统</div></el-menu-item>
          <div class="flex-grow" />
          <el-sub-menu index="2-4">
            <template #title>
