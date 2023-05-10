@@ -17,6 +17,7 @@
                 :cell-style="{textAlign:'center'}">
         <el-table-column prop="status" label="状态"/>
         <el-table-column prop="msg" label="消息"/>
+        <el-table-column prop="type" label="类型"/>
         <el-table-column prop="matchRatio" label="匹配率"/>
         <el-table-column prop="describe" label="描述"/>
         <el-table-column prop="recommend" label="建议"/>
@@ -57,6 +58,10 @@
         </el-form-item>
         <el-form-item label="消息">
           <el-input v-model="form.msg" placeholder="请输入"/>
+        </el-form-item>
+
+        <el-form-item label="类型">
+          <el-input v-model="form.type" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="匹配率">
           <el-input v-model="form.matchRatio" placeholder="请输入"/>

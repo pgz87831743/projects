@@ -38,6 +38,11 @@ const routes = [
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
             },
+            {
+                path: "/TongueDiagnosis",
+                name: "TongueDiagnosis",
+                component: () => import('../views/font-page/TongueDiagnosis'),
+            },
 
 
         ]

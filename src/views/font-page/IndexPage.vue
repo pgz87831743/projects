@@ -1,208 +1,172 @@
 <template>
   <div class="div">
-    <el-carousel :interval="3000" type="card" height="360px" >
+    <el-carousel :interval="2000" type="card" height="360px">
       <el-carousel-item v-for="item in banner" :key="item">
-        <div >
-          <img :src="item" height="480" >
+        <div>
+          <img :src="item" height="480">
         </div>
       </el-carousel-item>
     </el-carousel>
 
 
-    <el-card class="box-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
-          <span class="pin-lun">宠物领养</span>
-        </div>
-      </template>
-      <div class="row-div">
-        <el-row :gutter="12" >
-          <el-col v-bind:key="item.id" v-for="item in top" :span="6">
-            <el-card shadow="hover" @click="petDetail(item)"  style="margin: 10px">
-              <div>
-                <div>
-                  <img :src="item.img" height="300">
-                </div>
-                <div>
-                  {{item.type}}-{{ item.name }}
-                </div>
-                <div class="card-div">
-                  <div>
+    <el-row justify="space-around">
 
-                  </div>
-                  <div>
-                    {{ item.sex }}
-                  </div>
-                  <div>
-                    {{item.createTime}}
-                  </div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
+      <el-col :span="7">
+        <el-card shadow="hover">
+          <template #header>
+            <div class="card-header">
+              <span class="pin-lun">科普</span>
+            </div>
+          </template>
+          <div class="row-div">
+            <el-scrollbar height="800px">
+              <el-link :underline="false" v-for="item in scienceList" :key="item.id" class="scrollbar-demo-item">
+                <el-text truncated @click="fileDetail(item)">
+                  {{ item.title }}&nbsp;&nbsp;{{ item.createTime }}
+                </el-text>
+              </el-link>
+            </el-scrollbar>
+          </div>
+        </el-card>
+      </el-col>
 
-      </div>
-    </el-card>
+      <el-col :span="16">
+        <el-card class="box-card">
+          <template #header>
+            <div>
+              <el-row>
+                <el-col :span="2"><span class="pin-lun">中药知识</span></el-col>
 
-    <el-card class="box-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
-          <span class="pin-lun">产品推荐</span>
-        </div>
-      </template>
-      <div class="row-div">
-        <el-row :gutter="12" >
-          <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-            <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
-              <div>
-                <div>
-                  <img :src="item.cover" height="300">
-                </div>
-                <div>
-                  {{ item.title }}
-                </div>
-                <div class="card-div">
-                  <div>
+                <el-col :span="22">
+                  <el-input
+                      v-model="searchValue"
+                      size="large"
+                      clearable
+                      @clear="initMedicineList"
+                  >
+                    <template #append>
+                      <el-button  @click="initMedicineList" :icon="Search"/>
+                    </template>
+                  </el-input>
+                </el-col>
+              </el-row>
 
-                  </div>
-                  <div>
-                    {{ item.storeName }}
-                  </div>
-                  <div>
-                    <el-icon>
-                      <View/>
-                    </el-icon>
-                   {{item.times}}
-                  </div>
-                  <div>
-                    <el-icon>
-                      <Comment/>
-                    </el-icon>
-                    {{item.commentNum}}
-                  </div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-
-      </div>
-    </el-card>
+            </div>
+          </template>
+          <div>
+            <el-scrollbar height="800px">
+              <el-row :gutter="10" justify="center">
+                <el-col :span="7" v-for="item in medicineList" :key="item.id" style="margin: 10px">
+                  <el-card>
+                    <div style="overflow: auto;">
+                      <img :src="item.img" width="300">
+                      <div>名称：{{ item.name }}</div>
+                      <div>功效：{{ item.effect }}</div>
+                      <div>用法：{{ item.ug }}</div>
+                    </div>
+                  </el-card>
+                </el-col>
+              </el-row>
+            </el-scrollbar>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
 
   </div>
 </template>
 
 <script>
-import {Comment, View} from "@element-plus/icons-vue";
 import router from "@/router";
+import {medicineApi, scienceApi} from "@/api/api";
+import {Search} from "@element-plus/icons-vue";
 
 export default {
   name: "IndexPage",
-  components: {Comment, View},
+  computed: {
+    Search() {
+      return Search
+    }
+  },
   data() {
     return {
       img: require("@/assets/a.png"),
-      banner:[
-          require("@/assets/index1.jpg"),
-          require("@/assets/index2.jpg"),
-          require("@/assets/index3.jpg"),
-          require("@/assets/index4.jpg"),
-          require("@/assets/index5.jpg"),
+      banner: [
+        require("@/assets/index1.jpg"),
+        require("@/assets/index2.jpg"),
+        require("@/assets/index3.jpg"),
+        require("@/assets/index4.jpg"),
+        require("@/assets/index5.jpg"),
       ],
       list: [],
-      top:[
-
-      ]
+      medicineList: [],
+      scienceList: [],
+      searchValue: ''
     }
   },
   methods: {
 
     fileDetail(item) {
-      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
+      let routeData = router.resolve({path: '/NewsInfo', query: {id: item.id}});
       window.open(routeData.href, '_blank');
       // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
-    petDetail(item) {
-      let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
-      window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
-    },
 
-    inithotGoods() {
-      // goodsApi.hotGoods()
-      //     .then((resp) => {
-      //       this.list = resp.data.data
-      //     })
+    initMedicineList() {
+      medicineApi.listAll(this.searchValue)
+          .then((resp) => {
+            this.medicineList = resp.data.data
+          })
     },
 
 
-    initPet(){
-      // petApi.listAll()
-      //     .then((resp)=>{
-      //       this.top=resp.data.data
-      //     })
+    initScience() {
+      scienceApi.listAll()
+          .then((resp) => {
+            this.scienceList = resp.data.data
+          })
     }
   },
   mounted() {
-    this.inithotGoods()
-    this.initPet()
+    this.initMedicineList()
+    this.initScience()
   }
 }
 </script>
 
 <style scoped lang="scss">
 
-.card-div {
-  //background: aqua;
-  height: 35px;
-  margin-top: 10px;
-
-  div {
-    display: inline-block;
-    float: left;
-  }
-
-  div:nth-child(2) {
-    height: 100%;
-    line-height: 35px;
-    margin-left: 5px;
-    font-size: 10px;
-  }
-
-  div:nth-child(n+3) {
-    float: right;
-    font-size: 10px;
-    line-height: 35px;
-    margin: 0 5px;
-
-  }
+.scroll-box::-webkit-scrollbar {
+  display: none;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
+div.el-col.el-col-3 > span {
+  line-height: 45px;
+}
+
+.detail {
+
+  display: flex;
+  width: 300px;
+  height: 400px;
+  overflow: scroll;
+  background: #247ff2;
+  margin: 5px;
+
+}
+
+.scrollbar-demo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin: 10px;
   text-align: center;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-
-::v-deep(.box-card .el-card__header) {
-  //border: none;
-}
-
-.row-div > div {
-  margin: 30px auto;
+  border-radius: 4px;
+  //background: var(--el-color-primary-light-9);
+  //color: var(--el-color-primary);
 }
 
 

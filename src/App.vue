@@ -11,7 +11,7 @@ body{
   margin: 0;
   padding:0;
   text-underline: none;
-  background: #bcb5b5;
+  background: #ede6e6;
 }
 
 </style>

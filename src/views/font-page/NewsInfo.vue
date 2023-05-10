@@ -13,7 +13,7 @@
             {{item.createTime}}
           </div>
 
-          <div v-html="item.content"></div>
+          <div style="margin-top: 20px" v-html="item.content"></div>
         </el-card>
       </el-col>
     </el-row>

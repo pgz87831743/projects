@@ -16,8 +16,8 @@
                 :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                 :cell-style="{textAlign:'center'}">
         <el-table-column prop="name" label="中药名称"/>
-        <el-table-column prop="effect" label="中药功效"/>
-        <el-table-column prop="ug" label="中药用法"/>
+        <el-table-column prop="effect" :show-overflow-tooltip="true" label="中药功效"/>
+        <el-table-column prop="ug" :show-overflow-tooltip="true" label="中药用法"/>
         <el-table-column prop="img" label="中药图片">
           <template #default="scope">
             <el-image

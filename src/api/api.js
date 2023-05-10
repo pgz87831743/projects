@@ -89,6 +89,9 @@ export const recordApi={
     getById(id){
         return request.get('/record/getById/'+id)
     },
+    onDiagnosis(url){
+        return request.get('/record/onDiagnosis?url='+url)
+    },
     add(data){
         return request.post('/record/add',data)
     },
@@ -106,8 +109,8 @@ export const medicineApi={
     page(data){
         return request.post('/medicine/page',data)
     },
-    listAll(){
-        return request.get('/medicine/listAll')
+    listAll(searchValue){
+        return request.get('/medicine/listAll?searchValue='+searchValue)
     },
     getById(id){
         return request.get('/medicine/getById/'+id)

@@ -10,7 +10,7 @@
               </template>
               <el-row>
                 <el-col>
-                  <el-form class="div-form" model="form" :disabled="disabled"   label-width="100px">
+                  <el-form class="div-form" model="form" :disabled="disabled" label-width="100px">
                     <el-form-item>
                       <el-upload
                           class="avatar-uploader"
@@ -63,45 +63,46 @@
         <el-col :span="18">
           <el-card shadow="hover" class="box-card">
             <template #header>
-              <span class="pin-lun">我的订单</span>
+              <span class="pin-lun">诊断记录</span>
             </template>
-            <el-row>
-              <el-col>
-                <el-row :gutter="12">
-                  <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-                    <div class="div">
-                      <el-card shadow="hover">
-                        <div>
-                          <div>
-                           <el-image :src="item.goodsOrderDetails[0].goods.cover"
-                                     :preview-src-list="item.goodsOrderDetails.map(s=>s.goods.cover)"
-                           ></el-image>
-                          </div>
-                          <div style="font-size: 10px;">
-                           <el-form  label-width="80px">
-                             <el-form-item label="下单时间:">
-                               {{item.createTime}}
-                             </el-form-item>
-                             <el-form-item label="总价:">
-                               {{item.priceNum.toFixed(2)}}元
-                             </el-form-item>
-                             <el-form-item label="查看详情:">
-                               <el-link type="primary" :href="'/OrderDetail?id='+item.id" target="_blank">点击查看</el-link>
-                             </el-form-item>
-
-                           </el-form>
-                          </div>
-                        </div>
-                      </el-card>
-
-                    </div>
-                  </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
+            <el-table :data="tableData" border height="600" style="width: 100%"
+                      :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                      :cell-style="{textAlign:'center'}">
+              <el-table-column prop="status" label="状态"/>
+              <el-table-column prop="msg" label="消息"/>
+              <el-table-column prop="type" label="类型"/>
+              <el-table-column prop="matchRatio" label="匹配率"/>
+              <el-table-column prop="describe" label="描述"/>
+              <el-table-column prop="recommend" label="建议"/>
+              <el-table-column prop="img" label="舌头照片">
+                <template #default="scope">
+                  <el-image
+                      style="width: 100px"
+                      :src="scope.row.img"
+                      :zoom-rate="1.2"
+                      :preview-src-list="[scope.row.img]"
+                      :initial-index="4"
+                      :preview-teleported="true"
+                      fit="cover"
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column prop="createTime" label="创建时间"/>
+              <el-table-column prop="createBy" label="创建人"/>
+              <el-table-column label="操作" width="300px">
+                <template #default="scope">
+                  <el-button
+                      size="small"
+                      type="danger"
+                      @click="deleteRecord(scope.row)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-card>
         </el-col>
       </el-row>
+
     </div>
   </div>
 </template>
@@ -109,7 +110,7 @@
 <script>
 
 
-import { systemCurrentUser, sysUserApi} from "@/api/api";
+import {recordApi, systemCurrentUser, sysUserApi} from "@/api/api";
 
 export default {
   name: "PersonalCenter",
@@ -123,16 +124,15 @@ export default {
         avatar: ""
       },
       disabled: true,
-      list: []
+      list: [],
+      tableData: []
     }
   },
   methods: {
 
-    handleAvatarSuccess(response){
-      this.form.avatar=response[0].url
+    handleAvatarSuccess(response) {
+      this.form.avatar = response[0].url
     },
-
-
 
 
     initUserInfo() {
@@ -146,12 +146,26 @@ export default {
     saveUserInfoHandle() {
       sysUserApi.updateById(this.form)
           .then(() => {
-              window.location.href='/PersonalCenter'
+            window.location.href = '/PersonalCenter'
           })
-    }
+    },
+
+    initTableData() {
+      recordApi.listAll()
+          .then(resp => {
+            this.tableData = resp.data.data
+          })
+    },
+
+    deleteRecord(row) {
+      recordApi.deleteById(row.id).then(() => {
+        this.initTableData()
+      })
+    },
   },
   mounted() {
     this.initUserInfo()
+    this.initTableData()
   }
 }
 </script>
@@ -161,7 +175,7 @@ export default {
   //border: none;
 }
 
-.box-card{
+.box-card {
   min-height: 600px;
 }
 
