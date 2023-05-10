@@ -72,8 +72,8 @@
               <el-table-column prop="msg" label="消息"/>
               <el-table-column prop="type" label="类型"/>
               <el-table-column prop="matchRatio" label="匹配率"/>
-              <el-table-column prop="describe" label="描述"/>
-              <el-table-column prop="recommend" label="建议"/>
+              <el-table-column prop="describe" :show-overflow-tooltip="true" label="描述"/>
+              <el-table-column prop="recommend"  :show-overflow-tooltip="true" label="建议"/>
               <el-table-column prop="img" label="舌头照片">
                 <template #default="scope">
                   <el-image
@@ -139,6 +139,7 @@ export default {
       systemCurrentUser()
           .then((resp) => {
             this.form = resp.data.data
+
           })
     },
 

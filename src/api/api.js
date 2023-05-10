@@ -96,6 +96,11 @@ export const recordApi={
         return request.post('/record/add',data)
     },
     deleteById(id){
+
+        request.post("uu",{
+
+        })
+
         return request.delete('/record/deleteById/'+id)
     },
     updateById(data){
