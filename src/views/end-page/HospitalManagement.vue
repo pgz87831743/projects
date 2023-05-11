@@ -11,6 +11,7 @@
         <el-table-column prop="password" label="密码"/>
         <el-table-column prop="nickname" label="昵称"/>
         <el-table-column prop="role" label="角色"/>
+        <el-table-column prop="deptId" label="医院"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -34,6 +35,10 @@
         <el-form-item label="密码">
           <el-input v-model="form.password"/>
         </el-form-item>
+        <el-form-item label="昵称">
+          <el-input v-model="form.nickname"/>
+        </el-form-item>
+
         <el-form-item label="昵称">
           <el-input v-model="form.nickname"/>
         </el-form-item>
@@ -70,7 +75,7 @@
 
 <script>
 
-import { roles, sysUserApi} from "@/api/api";
+import {deptApi, roles, sysUserApi} from "@/api/api";
 
 
 export default {
@@ -84,6 +89,7 @@ export default {
         search: 'HOSPITAL'
       },
       visible: [],
+      deptList: [],
       tableData: [],
       roleData: [],
       dialog: {
@@ -180,10 +186,19 @@ export default {
           })
     },
 
+    initDeptData() {
+      deptApi.listAll()
+          .then(resp => {
+            this.deptList = resp.data.data
+          })
+    },
+
+
   },
   mounted() {
     this.initTableData()
     this.initRoleData()
+    this.initDeptData()
   },
 
 }

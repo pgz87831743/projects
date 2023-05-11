@@ -1,6 +1,8 @@
 import {getItem} from "@/utils/storage";
 
 export const authShow = (name) => {
-    let role = getItem('TOKEN_INFO_KEY').role
-    return role === name
+    return name.indexOf(getItem('TOKEN_INFO_KEY').role) !== -1;
+}
+export const getUser = () => {
+    return getItem('TOKEN_INFO_KEY').user
 }
