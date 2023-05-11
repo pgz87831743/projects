@@ -1,23 +1,29 @@
 <template>
   <div class="p-div">
-
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="pet.name" label="宠物名称"/>
-        <el-table-column prop="pet.img" label="宠物照片" width="500">
-          <template #default="scope" >
-            <img :src="scope.row.pet.img" height="300"/>
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" label="领养状态"/>
-        <el-table-column prop="description" label="领养理由"/>
-        <el-table-column prop="createTime" label="申请时间"/>
-        <el-table-column prop="createBy" label="领养人"/>
+      <el-col :span="1">
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+      </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
+    </el-row>
+    <el-row>
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center'}">
+        <el-table-column prop="id" label="主键"/>
+        <el-table-column prop="hoursId" label="房源_ID"/>
+        <el-table-column prop="times" label="浏览次数"/>
+        <el-table-column prop="createBy" label="浏览人"/>
+        <el-table-column prop="createTime" label="浏览时间"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="success" @click="adopt(scope.row,'通过')">通过</el-button>
-            <el-button type="primary" size="small" @click="adopt(scope.row,'驳回')">驳回</el-button>
+            <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+            <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
             <el-button
                 size="small"
                 type="danger"
@@ -31,17 +37,20 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="宠物ID">
-          <el-input v-model="form.petId" placeholder="请输入"/>
+        <el-form-item label="主键">
+          <el-input v-model="form.id" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="领养状态">
-          <el-input v-model="form.status" placeholder="请输入"/>
+        <el-form-item label="房源_ID">
+          <el-input v-model="form.hoursId" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="领养理由">
-          <el-input v-model="form.description" placeholder="请输入"/>
+        <el-form-item label="浏览次数">
+          <el-input v-model="form.times" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="领养人">
+        <el-form-item label="浏览人">
           <el-input v-model="form.createBy" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="浏览时间">
+          <el-input v-model="form.createTime" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -74,11 +83,11 @@
 
 <script>
 
-import {adoptExamineApi} from "@/api/api";
+import {browsingHistoryApi} from "@/api/api";
 
 
 export default {
-  name: "AdoptExamine",
+  name: "BrowsingHistory",
   data() {
     return {
       page: {
@@ -102,7 +111,7 @@ export default {
   methods: {
 
     search() {
-      adoptExamineApi.page(this.page)
+      browsingHistoryApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -114,15 +123,6 @@ export default {
       this.form.img = response[0].url
     },
 
-    adopt(row, status) {
-      row.status=status
-      row.pet=null
-      adoptExamineApi.updateById(row)
-          .then(()=>{
-            this.initTableData()
-          })
-    },
-
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -131,21 +131,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        adoptExamineApi.getById(row.id).then((resp) => {
+        browsingHistoryApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        adoptExamineApi.getById(row.id).then((resp) => {
+        browsingHistoryApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        adoptExamineApi.deleteById(row.id).then(() => {
+        browsingHistoryApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -153,7 +153,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      adoptExamineApi.page(this.page).then(resp => {
+      browsingHistoryApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -162,12 +162,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        adoptExamineApi.add(this.form)
+        browsingHistoryApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        adoptExamineApi.updateById(this.form)
+        browsingHistoryApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -180,7 +180,7 @@ export default {
     },
 
     initTableData() {
-      adoptExamineApi.page(this.page)
+      browsingHistoryApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total

@@ -8,13 +8,10 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">线上个性化租房系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
 
-        <el-menu-item index="/Teaching">陪宠教学</el-menu-item>
-        <el-menu-item index="/SearchShop">宠物粮食</el-menu-item>
-        <el-menu-item index="/ShoppingCar">购物车</el-menu-item>
-        <el-menu-item index="/MyAdeptList">我的领养</el-menu-item>
+
         <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">

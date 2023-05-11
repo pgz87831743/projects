@@ -116,136 +116,99 @@ export const goodsCarApi = {
     },
 }
 
-//订单管理
-export const goodsOrderApi = {
-    page(data) {
-        return request.post('/goodsOrder/page', data)
-    },
-    listAll() {
-        return request.get('/goodsOrder/listAll')
-    },
-    getById(id) {
-        return request.get('/goodsOrder/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsOrder/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsOrder/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsOrder/updateById', data)
-    }
-}
 
 
-//订单明细管理
-export const goodsOrderDetailApi = {
-    page(data) {
-        return request.post('/goodsOrderDetail/page', data)
-    },
-    getById(id) {
-        return request.get('/goodsOrderDetail/getById/' + id)
-    },
-    add(data) {
-        return request.post('/goodsOrderDetail/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/goodsOrderDetail/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/goodsOrderDetail/updateById', data)
-    }
-}
-
-
-//宠物领养信息管理
-export const adoptApi={
+//用户浏览管理
+export const browsingHistoryApi={
     page(data){
-        return request.post('/adopt/page',data)
+        return request.post('/browsingHistory/page',data)
     },
     listAll(){
-        return request.get('/adopt/listAll')
+        return request.get('/browsingHistory/listAll')
     },
     getById(id){
-        return request.get('/adopt/getById/'+id)
+        return request.get('/browsingHistory/getById/'+id)
     },
     add(data){
-        return request.post('/adopt/add',data)
+        return request.post('/browsingHistory/add',data)
     },
     deleteById(id){
-        return request.delete('/adopt/deleteById/'+id)
+        return request.delete('/browsingHistory/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/adopt/updateById',data)
+        return request.put('/browsingHistory/updateById',data)
     }
 }
 
 
-//宠物信息管理
-export const petApi={
+//房源表管理
+export const hoursApi={
     page(data){
-        return request.post('/pet/page',data)
+        return request.post('/hours/page',data)
     },
     listAll(){
-        return request.get('/pet/listAll')
+        return request.get('/hours/listAll')
+    },
+    hotGoods(){
+        return request.get('/hours/hotGoods')
     },
     getById(id){
-        return request.get('/pet/getById/'+id)
+        return request.get('/hours/getById/'+id)
     },
     add(data){
-        return request.post('/pet/add',data)
+        return request.post('/hours/add',data)
     },
     deleteById(id){
-        return request.delete('/pet/deleteById/'+id)
+        return request.delete('/hours/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/pet/updateById',data)
+        return request.put('/hours/updateById',data)
     }
 }
 
 
-//陪宠经验分享管理
-export const newsApi = {
-    page(data) {
-        return request.post('/news/page', data)
-    },
-    getById(id) {
-        return request.get('/news/getById/' + id)
-    },
-    listAll() {
-        return request.get('/news/listAll/')
-    },
-    add(data) {
-        return request.post('/news/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/news/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/news/updateById', data)
-    }
-}
 
-
-//宠物领养审核管理
-export const adoptExamineApi={
+//聊天消息管理
+export const messageApi={
     page(data){
-        return request.post('/adoptExamine/page',data)
+        return request.post('/message/page',data)
     },
     listAll(){
-        return request.get('/adoptExamine/listAll')
+        return request.get('/message/listAll')
     },
     getById(id){
-        return request.get('/adoptExamine/getById/'+id)
+        return request.get('/message/getById/'+id)
     },
     add(data){
-        return request.post('/adoptExamine/add',data)
+        return request.post('/message/add',data)
     },
     deleteById(id){
-        return request.delete('/adoptExamine/deleteById/'+id)
+        return request.delete('/message/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/adoptExamine/updateById',data)
+        return request.put('/message/updateById',data)
+    }
+}
+
+
+//聊天会话管理
+export const onlineInfoApi={
+    page(data){
+        return request.post('/onlineInfo/page',data)
+    },
+    listAll(){
+        return request.get('/onlineInfo/listAll')
+    },
+    getById(id){
+        return request.get('/onlineInfo/getById/'+id)
+    },
+    add(data){
+        return request.post('/onlineInfo/add',data)
+    },
+    deleteById(id){
+        return request.delete('/onlineInfo/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/onlineInfo/updateById',data)
     }
 }

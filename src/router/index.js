@@ -86,29 +86,11 @@ const routes = [
                 path: "/UserManagement",
                 name: "UserManagement",
                 component: () => import('../views/end-page/UserManagement'),
-            }, {
-                path: "/GoodsManagement",
-                name: "GoodsManagement",
-                component: () => import('../views/end-page/GoodsManagement'),
-            }, {
-                path: "/Pet",
-                name: "Pet",
-                component: () => import('../views/end-page/Pet'),
-            }
-            , {
-                path: "/Adopt",
-                name: "Adopt",
-                component: () => import('../views/end-page/Adopt'),
-            }
-            , {
-                path: "/News",
-                name: "News",
-                component: () => import('../views/end-page/News'),
-            }
-            , {
-                path: "/AdoptExamine",
-                name: "AdoptExamine",
-                component: () => import('../views/end-page/AdoptExamine'),
+            },
+            {
+                path: "/Hours",
+                name: "Hours",
+                component: () => import('../views/end-page/Hours'),
             }
 
         ]

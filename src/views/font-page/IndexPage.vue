@@ -12,42 +12,6 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">宠物领养</span>
-        </div>
-      </template>
-      <div class="row-div">
-        <el-row :gutter="12" >
-          <el-col v-bind:key="item.id" v-for="item in top" :span="6">
-            <el-card shadow="hover" @click="petDetail(item)"  style="margin: 10px">
-              <div>
-                <div>
-                  <img :src="item.img" height="300">
-                </div>
-                <div>
-                  {{item.type}}-{{ item.name }}
-                </div>
-                <div class="card-div">
-                  <div>
-
-                  </div>
-                  <div>
-                    {{ item.sex }}
-                  </div>
-                  <div>
-                    {{item.createTime}}
-                  </div>
-                </div>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-
-      </div>
-    </el-card>
-
-    <el-card class="box-card" shadow="hover">
-      <template #header>
-        <div class="card-header">
           <span class="pin-lun">产品推荐</span>
         </div>
       </template>
@@ -96,7 +60,7 @@
 
 <script>
 import {Comment, View} from "@element-plus/icons-vue";
-import {goodsApi, petApi} from "@/api/api";
+import {hoursApi} from "@/api/api";
 import router from "@/router";
 
 export default {
@@ -126,7 +90,7 @@ export default {
     },
 
     inithotGoods() {
-      goodsApi.hotGoods()
+      hoursApi.hotGoods()
           .then((resp) => {
             this.list = resp.data.data
           })
@@ -134,7 +98,7 @@ export default {
 
 
     initPet(){
-      petApi.listAll()
+      hoursApi.listAll()
           .then((resp)=>{
             this.top=resp.data.data
           })

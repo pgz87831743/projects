@@ -1,27 +1,34 @@
 <template>
   <div class="p-div">
     <el-row>
-<!--      <el-col :span="1">-->
-<!--        <el-button type="primary" @click="clickButton('add')">新增</el-button>-->
-<!--      </el-col>-->
+      <el-col :span="1">
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+      </el-col>
       <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
       <!--      </el-col>-->
       <!--      <el-col :span="1" :offset="1">-->
       <!--        <el-button type="success" @click="search">搜索</el-button>-->
       <!--      </el-col>-->
     </el-row>
     <el-row>
-      <el-table :data="tableData" border height="450" style="width: 100%">
-        <el-table-column prop="id" label="ID"/>
-        <el-table-column prop="pet.name" label="宠物名称"/>
-        <el-table-column prop="pet.img" label="宠物照片" width="500">
-          <template #default="scope" >
-            <img :src="scope.row.pet.img" height="300"/>
-          </template>
-        </el-table-column>
-        <el-table-column prop="createTime" label="领养时间"/>
-        <el-table-column prop="createBy" label="领养人"/>
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center'}">
+        <el-table-column prop="title" label="标题"/>
+        <el-table-column prop="price" label="价格(元每月)"/>
+        <el-table-column prop="unitType" label="户型"/>
+        <el-table-column prop="area" label="面积（平米）"/>
+        <el-table-column prop="floorHeight" label="楼层高度"/>
+        <el-table-column prop="direction" label="朝向"/>
+        <el-table-column prop="communityName" label="小区名称"/>
+        <el-table-column prop="address" label="地址"/>
+        <el-table-column prop="times" label="浏览次数"/>
+        <el-table-column prop="elevator" label="是否有电梯"/>
+        <el-table-column prop="characteristics" :show-overflow-tooltip="true" label="房源特色"/>
+        <el-table-column prop="img" label="房源照片"/>
+        <el-table-column prop="createBy" label="发布人"/>
+        <el-table-column prop="createTime" label="发布时间"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -39,14 +46,39 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="宠物ID">
-          <el-input v-model="form.petId" placeholder="请输入"/>
+
+        <el-form-item label="标题">
+          <el-input v-model="form.title" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="领养时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
+        <el-form-item label="价格(元每月)">
+          <el-input v-model="form.price" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="领养人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+        <el-form-item label="户型">
+          <el-input v-model="form.unitType" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="面积（平米）">
+          <el-input v-model="form.area" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="楼层高度">
+          <el-input v-model="form.floorHeight" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="朝向">
+          <el-input v-model="form.direction" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="小区名称">
+          <el-input v-model="form.communityName" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="地址">
+          <el-input v-model="form.address" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="是否有电梯">
+          <el-input v-model="form.elevator" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="房源特色">
+          <el-input v-model="form.characteristics" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="房源照片">
+          <el-input v-model="form.img" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -79,11 +111,11 @@
 
 <script>
 
-import {adoptApi} from "@/api/api";
+import {hoursApi} from "@/api/api";
 
 
 export default {
-  name: "Adopt",
+  name: "Hours",
   data() {
     return {
       page: {
@@ -107,7 +139,7 @@ export default {
   methods: {
 
     search() {
-      adoptApi.page(this.page)
+      hoursApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -127,21 +159,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        adoptApi.getById(row.id).then((resp) => {
+        hoursApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        adoptApi.getById(row.id).then((resp) => {
+        hoursApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        adoptApi.deleteById(row.id).then(() => {
+        hoursApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -149,7 +181,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      adoptApi.page(this.page).then(resp => {
+      hoursApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -158,12 +190,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        adoptApi.add(this.form)
+        hoursApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        adoptApi.updateById(this.form)
+        hoursApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -176,7 +208,7 @@ export default {
     },
 
     initTableData() {
-      adoptApi.page(this.page)
+      hoursApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
