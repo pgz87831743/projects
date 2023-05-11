@@ -10,6 +10,8 @@
       >
         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">线上个性化租房系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
+        <el-menu-item index="/IndexPage">房源搜索</el-menu-item>
+        <el-menu-item index="/OnlineConsultation">在线咨询</el-menu-item>
 
 
         <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>

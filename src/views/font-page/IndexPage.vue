@@ -1,10 +1,8 @@
 <template>
   <div class="div">
-    <el-carousel :interval="4000" type="card" height="480px">
+    <el-carousel :interval="3000" type="card" height="380px">
       <el-carousel-item v-for="item in top" :key="item">
-        <div >
-          <img :src="item.img" height="480" >
-        </div>
+        <img :src="item" width="930" >
       </el-carousel-item>
     </el-carousel>
 
@@ -31,9 +29,9 @@
 
                   </div>
                   <div>
-                    <span style="color: #f17b7b;font-size: 20px">{{ item.price }}/每月</span>
-                    <span >-{{ item.area }}/平米</span>
-                    <span> -{{ item.unitType }}</span>
+                    <span style="color: #f50f0f;font-size: 26px">{{ item.price }}/每月</span>
+                    <span style="font-size: 18px">-{{ item.area }}/平米</span>
+                    <span style="font-size: 18px"> -{{ item.unitType }}</span>
                   </div>
                   <div>
                     <el-icon>
@@ -68,7 +66,11 @@ export default {
       img: require("@/assets/a.png"),
       list: [],
       top:[
-
+        require("@/assets/index1.jpg"),
+        require("@/assets/index2.jpg"),
+        require("@/assets/index3.jpg"),
+        require("@/assets/index4.jpg"),
+        require("@/assets/index5.jpg"),
       ]
     }
   },
@@ -89,16 +91,10 @@ export default {
     },
 
 
-    initPet(){
-      hoursApi.listAll()
-          .then((resp)=>{
-            this.top=resp.data.data
-          })
-    }
+
   },
   mounted() {
     this.inithotGoods()
-    this.initPet()
   }
 }
 </script>

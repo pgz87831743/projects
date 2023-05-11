@@ -132,7 +132,7 @@
         </el-descriptions-item>
 
 
-        <el-descriptions-item >
+        <el-descriptions-item>
           <template #label>
             <div class="cell-item">
               操作
@@ -140,7 +140,7 @@
           </template>
           <el-row>
             <el-col :span="6">
-              <el-button type="success" @click="addGoodsCarHandle(item)">加入购物车</el-button>
+              <el-button type="success" @click="onLineCheck(item)">在线咨询</el-button>
             </el-col>
           </el-row>
         </el-descriptions-item>
@@ -153,7 +153,8 @@
 <script>
 
 
-import {commentAdd, goodsCarApi, hoursApi} from "@/api/api";
+import {commentAdd, hoursApi, onlineInfoApi} from "@/api/api";
+import {getUser} from "@/utils/authutil";
 
 
 export default {
@@ -176,12 +177,17 @@ export default {
   methods: {
 
 
-    addGoodsCarHandle(item) {
-      let data={
-        goodsId:item.id,
-        shopNum:1
+    onLineCheck(item) {
+      let data = {
+        fromUser: getUser().username,
+        toUser: item.createBy
       }
-        goodsCarApi.add(data)
+      onlineInfoApi
+          .add(data)
+          .then(()=>{
+            alert("123")
+          })
+
     },
 
 
@@ -233,7 +239,7 @@ export default {
 
 <style scoped lang="scss">
 
-.cell-item{
+.cell-item {
   width: 150px;
 }
 

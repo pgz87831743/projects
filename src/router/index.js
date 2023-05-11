@@ -21,22 +21,7 @@ const routes = [
         path: "/ProductDetail",
         name: "ProductDetail",
         component: () => import('../views/font-page/HoursDetail.vue'),
-    }, {
-        path: "/OrderDetail",
-        name: "OrderDetail",
-        component: () => import('../views/font-page/OrderDetail'),
-    }, {
-        path: "/PetDetail",
-        name: "PetDetail",
-        component: () => import('../views/font-page/PetDetail'),
     },
-    {
-        path: "/NewsInfo",
-        name: "NewsInfo",
-        component: () => import('../views/font-page/NewsInfo'),
-    },
-
-
     {
         path: '/FontPage',
         component: () => import('../views/layout/FontPage'),
@@ -45,10 +30,6 @@ const routes = [
                 path: "/IndexPage",
                 name: "IndexPage",
                 component: () => import('../views/font-page/IndexPage'),
-            }, {
-                path: "/MyAdeptList",
-                name: "MyAdeptList",
-                component: () => import('../views/font-page/MyAdeptList'),
             },
             {
                 path: "/SearchShop",
@@ -64,6 +45,11 @@ const routes = [
                 path: "/HoursDetail",
                 name: "HoursDetail",
                 component: () => import('../views/font-page/HoursDetail'),
+            },
+            {
+                path: "/OnlineConsultation",
+                name: "OnlineConsultation",
+                component: () => import('../views/font-page/OnlineConsultation'),
             }
         ]
     }
