@@ -149,7 +149,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-oleksandr-pidvalnyi-1227513.jpg");
+  background-image:url("@/assets/ind.jpg");
   background-size: 1920px;
   height: 100vh;
 }
