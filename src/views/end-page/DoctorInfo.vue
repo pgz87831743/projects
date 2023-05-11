@@ -23,8 +23,8 @@
         <el-table-column prop="name" label="姓名"/>
         <el-table-column prop="jobTwo" label="职位"/>
         <el-table-column prop="phone" label="预约电话"/>
-        <el-table-column prop="hospital" label="出诊医院"/>
-        <el-table-column prop="times" label="坐诊时间"/>
+        <el-table-column prop="hospital"  :show-overflow-tooltip="true" label="出诊医院"/>
+        <el-table-column prop="times"  :show-overflow-tooltip="true" label="坐诊时间"/>
         <el-table-column prop="unit" label="工作单位"/>
         <el-table-column prop="goodAt" :show-overflow-tooltip="true"  label="擅长"/>
         <el-table-column prop="jobOne" label="医生简介"/>
@@ -34,6 +34,7 @@
 <!--        <el-table-column prop="other" :show-overflow-tooltip="true"  label="其他方面"/>-->
         <el-table-column prop="meanIdOneInfo.text" label="一级菜单"/>
         <el-table-column prop="meanIdTwoInfo.text" label="二级菜单"/>
+        <el-table-column prop="createBy" label="创建人"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>

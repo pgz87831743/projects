@@ -11,7 +11,7 @@
         <el-table-column prop="password" label="密码"/>
         <el-table-column prop="nickname" label="昵称"/>
         <el-table-column prop="role" label="角色"/>
-        <el-table-column prop="deptId" label="医院"/>
+        <el-table-column prop="deptInfo.name" label="医院"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -39,9 +39,13 @@
           <el-input v-model="form.nickname"/>
         </el-form-item>
 
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname"/>
+
+        <el-form-item label="所属医院">
+          <el-select v-model="form.deptId">
+            <el-option  v-for="item in deptList" :label="item.name" :value="item.id" v-bind:key="item.id"></el-option>
+          </el-select>
         </el-form-item>
+
 
 
       </el-form>

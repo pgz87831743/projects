@@ -26,10 +26,10 @@
              router
              :default-active="$route.fullPath"
          >
-           <el-menu-item index="/Dept">医院管理</el-menu-item>
-           <el-menu-item index="/UserManagement">管理员账号管理</el-menu-item>
-           <el-menu-item index="/HospitalManagement">医院账号管理</el-menu-item>
-           <el-menu-item index="/Means">导航菜单管理</el-menu-item>
+           <el-menu-item v-if="authShow(['ADMIN'])" index="/Dept">医院管理</el-menu-item>
+           <el-menu-item v-if="authShow(['ADMIN'])" index="/UserManagement">管理员账号管理</el-menu-item>
+           <el-menu-item v-if="authShow(['ADMIN'])" index="/HospitalManagement">医院账号管理</el-menu-item>
+           <el-menu-item  v-if="authShow(['ADMIN'])" index="/Means">导航菜单管理</el-menu-item>
            <el-menu-item index="/DoctorInfo">医生信息管理</el-menu-item>
          </el-menu>
        </el-col>
@@ -52,6 +52,7 @@
 import {logout, systemCurrentUser} from "@/api/api";
 import { removeItem} from "@/utils/storage";
 import router from "@/router";
+import {authShow} from "@/utils/authutil";
 
 export default {
   name: "EndPage",
@@ -62,6 +63,7 @@ export default {
   },
   components: {},
   methods: {
+    authShow,
     userQuery() {
       systemCurrentUser()
           .then((resp) => {
