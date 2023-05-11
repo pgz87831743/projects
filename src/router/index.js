@@ -6,58 +6,66 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/user/LoginPage')
+        component: () => import('@/views/user/LoginPage')
     },
     {
         path: '/',
-        component: () => import('../views/user/LoginPage')
+        component: () => import('@/views/user/LoginPage')
     },
 
     {
         path: '/FontPage',
-        component: () => import('../views/layout/FontPage'),
+        component: () => import('@/views/layout/FontPage'),
         children: [
             {
                 path: "/IndexPage",
                 name: "IndexPage",
-                component: () => import('../views/font-page/IndexPage'),
+                component: () => import('@/views/font-page/IndexPage'),
             },
             {
                 path: "/DoctorInfoDetail",
                 name: "DoctorInfoDetail",
-                component: () => import('../views/font-page/DoctorInfoDetail'),
+                component: () => import('@/views/font-page/DoctorInfoDetail'),
             },
             {
                 path: "/DoctorInfoDesc",
                 name: "DoctorInfoDesc",
-                component: () => import('../views/font-page/DoctorInfoDesc'),
+                component: () => import('@/views/font-page/DoctorInfoDesc'),
             },
             {
                 path: "/SearchPage",
                 name: "SearchPage",
-                component: () => import('../views/font-page/SearchPage'),
+                component: () => import('@/views/font-page/SearchPage'),
             }
         ]
     }
     , {
         path: '/EndPage',
         name: 'EndPage',
-        component: () => import('../views/layout/EndPage'),
+        component: () => import('@/views/layout/EndPage'),
         children: [
             {
                 path: "/UserManagement",
                 name: "UserManagement",
-                component: () => import('../views/end-page/UserManagement'),
+                component: () => import('@/views/end-page/UserManagement'),
             },
             {
                 path: "/DoctorInfo",
                 name: "DoctorInfo",
-                component: () => import('../views/end-page/DoctorInfo'),
+                component: () => import('@/views/end-page/DoctorInfo'),
             },
             {
                 path: "/Means",
                 name: "Means",
-                component: () => import('../views/end-page/Means'),
+                component: () => import('@/views/end-page/Means'),
+            }, {
+                path: "/Dept",
+                name: "Dept",
+                component: () => import('@/views/end-page/Dept'),
+            }, {
+                path: "/HospitalManagement",
+                name: "HospitalManagement",
+                component: () => import('@/views/end-page/HospitalManagement'),
             },
 
         ]
@@ -73,11 +81,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
     let ig = ['/login'
-        ,'/register'
-        ,'/IndexPage'
-        ,'/DoctorInfoDesc'
-        ,'/DoctorInfoDetail'
-        ,'/SearchPage'
+        , '/register'
+        , '/IndexPage'
+        , '/DoctorInfoDesc'
+        , '/DoctorInfoDetail'
+        , '/SearchPage'
     ]
 
     if (ig.concat(to.href)) {

@@ -101,3 +101,26 @@ export const doctorInfoApi={
         return request.put('/doctorInfo/updateById',data)
     }
 }
+
+
+//组织机构表管理
+export const deptApi={
+    page(data){
+        return request.post('/dept/page',data)
+    },
+    listAll(){
+        return request.get('/dept/listAll')
+    },
+    getById(id){
+        return request.get('/dept/getById/'+id)
+    },
+    add(data){
+        return request.post('/dept/add',data)
+    },
+    deleteById(id){
+        return request.delete('/dept/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/dept/updateById',data)
+    }
+}

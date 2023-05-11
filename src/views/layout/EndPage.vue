@@ -11,6 +11,7 @@
        >
          <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">健康莱西</div></el-menu-item>
          <div class="flex-grow" />
+         <el-menu-item index="">你好：{{user.username}}</el-menu-item>
          <el-menu-item index="/IndexPage">主页</el-menu-item>
          <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 
@@ -25,7 +26,9 @@
              router
              :default-active="$route.fullPath"
          >
-           <el-menu-item index="/UserManagement">用户管理</el-menu-item>
+           <el-menu-item index="/Dept">医院管理</el-menu-item>
+           <el-menu-item index="/UserManagement">管理员账号管理</el-menu-item>
+           <el-menu-item index="/HospitalManagement">医院账号管理</el-menu-item>
            <el-menu-item index="/Means">导航菜单管理</el-menu-item>
            <el-menu-item index="/DoctorInfo">医生信息管理</el-menu-item>
          </el-menu>

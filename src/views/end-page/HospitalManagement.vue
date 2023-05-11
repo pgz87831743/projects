@@ -38,6 +38,7 @@
           <el-input v-model="form.nickname"/>
         </el-form-item>
 
+
       </el-form>
       <template #footer>
       <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -80,7 +81,7 @@ export default {
         pageSize: 5,
         pageNum: 1,
         tootle: 100,
-        search: 'ADMIN'
+        search: 'HOSPITAL'
       },
       visible: [],
       tableData: [],
@@ -147,7 +148,7 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue==='add') {
-        this.form.role='ADMIN'
+        this.form.role='HOSPITAL'
         sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();

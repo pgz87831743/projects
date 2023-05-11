@@ -4,13 +4,22 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="initTableData" />-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
     </el-row>
     <el-row>
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="username" label="用户名"/>
-        <el-table-column prop="password" label="密码"/>
-        <el-table-column prop="nickname" label="昵称"/>
-        <el-table-column prop="role" label="角色"/>
+      <el-table :data="tableData" border height="600" style="width: 100%"
+                :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                :cell-style="{textAlign:'center'}">
+        <el-table-column prop="name" label="名称"/>
+        <el-table-column prop="phone" label="电话"/>
+        <el-table-column prop="address" label="地址"/>
+        <el-table-column prop="createBy" label="创建人"/>
+        <el-table-column prop="createTime" label="创建时间"/>
         <el-table-column label="操作" width="300px">
           <template #default="scope">
             <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -28,22 +37,22 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="用户名">
-          <el-input v-model="form.username"/>
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="form.password"/>
-        </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname"/>
-        </el-form-item>
 
+        <el-form-item label="名称">
+          <el-input v-model="form.name" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="form.phone" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="地址">
+          <el-input v-model="form.address" placeholder="请输入"/>
+        </el-form-item>
       </el-form>
       <template #footer>
-      <span class="dialog-footer" v-if="!dialog.formDisabled">
-          <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-        <el-button type="success" @click="formSubmit">确认</el-button>
-      </span>
+<span class="dialog-footer" v-if="!dialog.formDisabled">
+<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+<el-button type="success" @click="formSubmit">确认</el-button>
+</span>
       </template>
     </el-dialog>
 
@@ -69,22 +78,20 @@
 
 <script>
 
-import { roles, sysUserApi} from "@/api/api";
+import {deptApi} from "@/api/api";
 
 
 export default {
-  name: "UserManagement",
+  name: "Dept",
   data() {
     return {
       page: {
         pageSize: 5,
         pageNum: 1,
         tootle: 100,
-        search: 'ADMIN'
+        search: ''
       },
-      visible: [],
       tableData: [],
-      roleData: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -95,19 +102,22 @@ export default {
       total: 0,
     }
   },
+
   methods: {
 
-    search(){
-      sysUserApi.page(this.page)
+    search() {
+      deptApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
 
-    handleAvatarSuccess(response){
-      this.form.avatar=response[0].url
+
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
     },
+
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -116,21 +126,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        sysUserApi.getById(row.id).then((resp) => {
+        deptApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        sysUserApi.getById(row.id).then((resp) => {
+        deptApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        sysUserApi.deleteById(row.id).then(() => {
+        deptApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -138,7 +148,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      sysUserApi.page(this.page).then(resp => {
+      deptApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -146,14 +156,13 @@ export default {
 
     formSubmit() {
       this.dialog.dialogFormVisible = false
-      if (this.dialog.optionValue==='add') {
-        this.form.role='ADMIN'
-        sysUserApi.add(this.form)
+      if (this.dialog.optionValue === 'add') {
+        deptApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
-      } else if (this.dialog.optionValue==='update') {
-        sysUserApi.updateById(this.form)
+      } else if (this.dialog.optionValue === 'update') {
+        deptApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -165,14 +174,8 @@ export default {
       this.form = {}
     },
 
-    initRoleData() {
-      roles().then((resp) => {
-        this.roleData = resp.data.data
-      })
-    },
-
     initTableData() {
-      sysUserApi.page(this.page)
+      deptApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -182,7 +185,6 @@ export default {
   },
   mounted() {
     this.initTableData()
-    this.initRoleData()
   },
 
 }
@@ -197,6 +199,7 @@ export default {
 .el-row {
   margin-top: 30px;
 }
+
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -228,3 +231,4 @@ export default {
 }
 
 </style>
+
