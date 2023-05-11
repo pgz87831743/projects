@@ -20,7 +20,7 @@ const routes = [
     {
         path: "/ProductDetail",
         name: "ProductDetail",
-        component: () => import('../views/font-page/ProductDetail'),
+        component: () => import('../views/font-page/HoursDetail.vue'),
     }, {
         path: "/OrderDetail",
         name: "OrderDetail",
@@ -56,25 +56,15 @@ const routes = [
                 component: () => import('../views/font-page/SearchShop.vue'),
             },
             {
-                path: "/ShoppingCar",
-                name: "ShoppingCar",
-                component: () => import('../views/font-page/ShoppingCar'),
-            },
-            {
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
             },
             {
-                path: "/ProductDetail",
-                name: "ProductDetail",
-                component: () => import('../views/font-page/ProductDetail'),
-            },
-            {
-                path: "/Teaching",
-                name: "Teaching",
-                component: () => import('../views/font-page/Teaching'),
-            },
+                path: "/HoursDetail",
+                name: "HoursDetail",
+                component: () => import('../views/font-page/HoursDetail'),
+            }
         ]
     }
     , {

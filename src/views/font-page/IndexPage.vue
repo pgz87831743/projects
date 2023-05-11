@@ -12,16 +12,16 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">产品推荐</span>
+          <span class="pin-lun">房源推荐</span>
         </div>
       </template>
       <div class="row-div">
         <el-row :gutter="12" >
           <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-            <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
+            <el-card shadow="hover" @click="hoursDetail(item)"  style="margin: 10px">
               <div>
                 <div>
-                  <img :src="item.cover" height="300">
+                  <img :src="item.img" height="300">
                 </div>
                 <div>
                   {{ item.title }}
@@ -31,7 +31,9 @@
 
                   </div>
                   <div>
-                    {{ item.storeName }}
+                    <span style="color: #f17b7b;font-size: 20px">{{ item.price }}/每月</span>
+                    <span >-{{ item.area }}/平米</span>
+                    <span> -{{ item.unitType }}</span>
                   </div>
                   <div>
                     <el-icon>
@@ -39,12 +41,7 @@
                     </el-icon>
                    {{item.times}}
                   </div>
-                  <div>
-                    <el-icon>
-                      <Comment/>
-                    </el-icon>
-                    {{item.commentNum}}
-                  </div>
+
                 </div>
               </div>
             </el-card>
@@ -59,13 +56,13 @@
 </template>
 
 <script>
-import {Comment, View} from "@element-plus/icons-vue";
+import { View} from "@element-plus/icons-vue";
 import {hoursApi} from "@/api/api";
 import router from "@/router";
 
 export default {
   name: "IndexPage",
-  components: {Comment, View},
+  components: { View},
   data() {
     return {
       img: require("@/assets/a.png"),
@@ -77,17 +74,12 @@ export default {
   },
   methods: {
 
-    fileDetail(item) {
-      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
+    hoursDetail(item) {
+      let routeData = router.resolve({path: '/HoursDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
-    petDetail(item) {
-      let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
-      window.open(routeData.href, '_blank');
-      // router.push({path:"/FileDetail",query:{id:item.id}})
-    },
+
 
     inithotGoods() {
       hoursApi.hotGoods()

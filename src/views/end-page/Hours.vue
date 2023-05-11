@@ -26,7 +26,11 @@
         <el-table-column prop="times" label="浏览次数"/>
         <el-table-column prop="elevator" label="是否有电梯"/>
         <el-table-column prop="characteristics" :show-overflow-tooltip="true" label="房源特色"/>
-        <el-table-column prop="img" label="房源照片"/>
+        <el-table-column prop="img" label="房源照片">
+          <template #default="scope">
+            <el-image :preview-teleported="true" :preview-src-list="[scope.row.img]" :src="scope.row.img"></el-image>
+          </template>
+        </el-table-column>
         <el-table-column prop="createBy" label="发布人"/>
         <el-table-column prop="createTime" label="发布时间"/>
         <el-table-column label="操作" width="300px">
@@ -77,8 +81,20 @@
         <el-form-item label="房源特色">
           <el-input v-model="form.characteristics" placeholder="请输入"/>
         </el-form-item>
+
         <el-form-item label="房源照片">
-          <el-input v-model="form.img" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img"  width="300" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
+
         </el-form-item>
       </el-form>
       <template #footer>
@@ -112,10 +128,12 @@
 <script>
 
 import {hoursApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Hours",
+  components: {Plus},
   data() {
     return {
       page: {
