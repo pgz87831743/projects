@@ -4,12 +4,12 @@
       <el-col :span="1">
         <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+            <el-col :span="5" :offset="1">
+              <el-input v-model="page.search" placeholder="请输入零食名称" clearable  @clear="initTableData"/>
+            </el-col>
+            <el-col :span="1" :offset="1">
+              <el-button type="success" @click="search">搜索</el-button>
+            </el-col>
     </el-row>
     <el-row>
       <el-table :data="tableData" border style="width: 100%">
@@ -22,6 +22,7 @@
         <el-table-column prop="storeName" label="店铺名称" width="150px"/>
         <el-table-column prop="description" label="简介" width="300px"/>
         <el-table-column prop="price" label="价格"/>
+        <el-table-column prop="foodType" label="分类"/>
         <el-table-column prop="createTime" label="发布时间" width="150px"/>
         <el-table-column prop="createBy" label="发布人"/>
         <el-table-column prop="times" label="浏览次数"/>
@@ -86,16 +87,18 @@
 
 
     <!-- 分页 -->
-    <div class="paginationClass">
-      <el-pagination
-          small
-          background
-          :total="total"
-          :page-size="5"
-          @current-change="currentChange"
-          layout="prev, pager, next"
-      />
-    </div>
+    <el-affix position="bottom" :offset="20">
+      <div class="paginationClass">
+        <el-pagination
+            small
+            background
+            :total="total"
+            :page-size="this.page.pageSize"
+            @current-change="currentChange"
+            layout="total,prev, pager, next, jumper"
+        />
+      </div>
+    </el-affix>
   </div>
 
 

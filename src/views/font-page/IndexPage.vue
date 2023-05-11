@@ -9,7 +9,7 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">产品推荐</span>
+          <span class="pin-lun">美食推荐</span>
         </div>
       </template>
       <div class="row-div">
@@ -28,7 +28,7 @@
 
                   </div>
                   <div>
-                    {{ item.storeName }}
+                   <el-tag style="color:salmon;">{{ item.foodType }}</el-tag>   {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>
@@ -134,13 +134,7 @@ export default {
   text-align: center;
 }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
 
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 
 ::v-deep(.box-card .el-card__header) {
   //border: none;

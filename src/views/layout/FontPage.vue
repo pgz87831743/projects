@@ -8,9 +8,9 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">农产品推荐系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">灵食Go</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
-        <el-menu-item index="/SearchShop">我要找农产品</el-menu-item>
+        <el-menu-item index="/SearchShop">我要找美食</el-menu-item>
         <el-menu-item index="/ShoppingCar">购物车</el-menu-item>
         <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
         <div class="flex-grow" />

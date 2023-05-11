@@ -4,7 +4,7 @@
     <div class="div1">
       <div
           style="text-align: left;color:#ffffff;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-        农产品推荐系统
+        灵食Go
       </div>
       <div>
         <div class="div2">

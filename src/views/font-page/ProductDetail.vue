@@ -59,6 +59,15 @@
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">
+              分类
+            </div>
+          </template>
+          {{ item.goodType }}
+        </el-descriptions-item>
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
               店铺名称
             </div>
           </template>
