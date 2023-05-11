@@ -27,7 +27,7 @@
         <el-table-column prop="times"  :show-overflow-tooltip="true" label="坐诊时间"/>
         <el-table-column prop="unit" label="工作单位"/>
         <el-table-column prop="goodAt" :show-overflow-tooltip="true"  label="擅长"/>
-        <el-table-column prop="jobOne" label="医生简介"/>
+        <el-table-column prop="jobOne" :show-overflow-tooltip="true"  label="医生简介"/>
 <!--        <el-table-column prop="expertise" :show-overflow-tooltip="true" label="专业特长"/>-->
 <!--        <el-table-column prop="rewards"  :show-overflow-tooltip="true" label="获得奖励"/>-->
 <!--        <el-table-column prop="achievements" :show-overflow-tooltip="true" label="学术成就"/>-->
