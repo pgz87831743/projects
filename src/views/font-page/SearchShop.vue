@@ -7,13 +7,13 @@
           <div class="card-header">
 
             <el-input
-                v-model="searchParams.searchText"
+                v-model="searchParams"
                 placeholder="请输入搜索内容"
                 class="input-with-select"
             >
               <template #append>
                 <el-button type="primary" @click="searchHandle">
-                 搜索商品
+                 搜索房源
                 </el-button>
               </template>
             </el-input>
@@ -25,30 +25,27 @@
             <el-card shadow="hover" @click="fileDetail(item)" style="margin: 10px">
               <div>
                 <div>
-                  <img :src="item.cover" height="300">
+                  <img :src="item.img" height="300">
                 </div>
-                <div>
-                  <span v-html="  item.title "></span>
+                <div v-html="  item.title ">
+
                 </div>
                 <div class="card-div">
                   <div>
 
                   </div>
                   <div>
-                   {{ item.storeName }}
+                    <span style="color: #f50f0f;font-size: 26px">{{ item.price }}/每月</span>
+                    <span style="font-size: 18px">-{{ item.area }}/平米</span>
+                    <span style="font-size: 18px"> -{{ item.unitType }}</span>
                   </div>
                   <div>
                     <el-icon>
                       <View/>
                     </el-icon>
-                    {{ item.times }}
+                    {{item.times}}
                   </div>
-                  <div>
-                    <el-icon>
-                      <Comment/>
-                    </el-icon>
-                    {{ item.commentNum }}
-                  </div>
+
                 </div>
               </div>
             </el-card>
@@ -60,18 +57,16 @@
 </template>
 
 <script>
-import {Comment, View} from "@element-plus/icons-vue";
+import { View} from "@element-plus/icons-vue";
 import router from "@/router";
-import {goodsApi} from "@/api/api";
+import {hoursApi} from "@/api/api";
 
 export default {
   name: "SearchResource",
-  components: {Comment, View},
+  components: { View},
   data() {
     return {
-      searchParams: {
-        searchText: "",
-      },
+      searchParams: '',
       list: []
     }
   },
@@ -82,7 +77,7 @@ export default {
     },
 
     searchHandle() {
-      goodsApi.searchGoods(this.searchParams)
+      hoursApi.searchHours(this.searchParams)
           .then((resp) => {
             this.list = resp.data.data
           })
@@ -127,3 +122,5 @@ export default {
 }
 
 </style>
+
+

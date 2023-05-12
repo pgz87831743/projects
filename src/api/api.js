@@ -87,6 +87,9 @@ export const hoursApi={
     listAll(){
         return request.get('/hours/listAll')
     },
+    searchHours(text){
+        return request.get('/hours/searchHours?text='+text)
+    },
     hotGoods(){
         return request.get('/hours/hotGoods')
     },
@@ -111,8 +114,8 @@ export const messageApi={
     page(data){
         return request.post('/message/page',data)
     },
-    listAll(){
-        return request.get('/message/listAll')
+    listAll(id){
+        return request.get('/message/listAll?id='+id)
     },
     getById(id){
         return request.get('/message/getById/'+id)

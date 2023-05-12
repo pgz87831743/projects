@@ -50,6 +50,11 @@ const routes = [
                 path: "/OnlineConsultation",
                 name: "OnlineConsultation",
                 component: () => import('../views/font-page/OnlineConsultation'),
+            },
+            {
+                path: "/PublishHours",
+                name: "PublishHours",
+                component: () => import('../views/font-page/PublishHours'),
             }
         ]
     }

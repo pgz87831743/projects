@@ -6,7 +6,7 @@
       </template>
       <el-descriptions
           class="margin-top"
-          :column="1"
+          :column="2"
           :min-width="120"
           border
       >
@@ -14,12 +14,20 @@
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">
-              首页图
+              房源照片
             </div>
           </template>
-         <div style="width: 300px">
-           <el-image :preview-teleported="true" :preview-src-list="[item.img]" :src="item.img"></el-image>
-         </div>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img"  width="300" />
+            <el-icon v-else ><Plus /></el-icon>
+          </el-upload>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -28,7 +36,7 @@
               标题
             </div>
           </template>
-          {{ item.title }}
+          <el-input v-model="form.title" placeholder="请输入"/>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -37,7 +45,7 @@
               价格
             </div>
           </template>
-          {{ item.price }}(元每月)
+          <el-input v-model="form.price" placeholder="请输入"/>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -46,7 +54,7 @@
               户型
             </div>
           </template>
-          {{ item.unitType }}
+          <el-input v-model="form.unitType" placeholder="请输入"/>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -55,9 +63,8 @@
               面积
             </div>
           </template>
-          {{ item.area }}（平米）
+          <el-input v-model="form.area" placeholder="请输入"/>
         </el-descriptions-item>
-
 
         <el-descriptions-item>
           <template #label>
@@ -65,7 +72,7 @@
               楼层高度
             </div>
           </template>
-          {{ item.floorHeight }}
+          <el-input v-model="form.floorHeight" placeholder="请输入"/>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -74,7 +81,7 @@
               朝向
             </div>
           </template>
-          {{ item.direction }}
+          <el-input v-model="form.direction" placeholder="请输入"/>
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -83,7 +90,7 @@
               小区名称
             </div>
           </template>
-          {{ item.communityName }}
+          <el-input v-model="form.communityName" placeholder="请输入"/>
         </el-descriptions-item>
 
 
@@ -93,17 +100,7 @@
               地址
             </div>
           </template>
-          {{ item.address }}
-        </el-descriptions-item>
-
-
-        <el-descriptions-item>
-          <template #label>
-            <div class="cell-item">
-              浏览次数
-            </div>
-          </template>
-          {{ item.times }}
+          <el-input v-model="form.address" placeholder="请输入"/>
         </el-descriptions-item>
 
 
@@ -113,7 +110,7 @@
               是否有电梯
             </div>
           </template>
-          {{ item.elevator }}
+          <el-input v-model="form.elevator" placeholder="请输入"/>
         </el-descriptions-item>
 
 
@@ -123,11 +120,11 @@
               房源特色
             </div>
           </template>
-          {{ item.characteristics }}
+          <el-input type="textarea" v-model="form.characteristics" placeholder="请输入"/>
         </el-descriptions-item>
 
 
-        <el-descriptions-item v-if="item.createBy!==getUser().username">
+        <el-descriptions-item >
           <template #label>
             <div class="cell-item">
               操作
@@ -135,7 +132,7 @@
           </template>
           <el-row>
             <el-col :span="6">
-              <el-button type="success"  @click="onLineCheck(item)">在线咨询</el-button>
+              <el-button type="success"  @click="onSubmit">发布房源</el-button>
             </el-col>
           </el-row>
         </el-descriptions-item>
@@ -148,68 +145,49 @@
 <script>
 
 
-import { hoursApi, onlineInfoApi} from "@/api/api";
-import {getUser} from "@/utils/authutil";
-import router from "@/router";
 
+
+import {Plus} from "@element-plus/icons-vue";
+import {hoursApi} from "@/api/api";
 
 export default {
-  name: "HoursDetail",
+  name: "PublishHours",
+  components: {Plus},
+
 
   data() {
     return {
-      comment: {
-        goodsId: this.id,
-        content: '',
-        replyContent: ''
-      },
-      report: {
-        goodsId: '',
-        content: ''
-      },
-      item: {},
+      form:{},
+      item:{}
     }
   },
   methods: {
-    getUser,
 
-
-    onLineCheck(item) {
-
-      let data = {
-        fromUser: getUser().username,
-        toUser: item.createBy,
-        hoursId:item.id
-      }
-      onlineInfoApi.add(data)
-
-      router.push({path: '/OnlineConsultation'})
+    handleAvatarSuccess(response) {
+      this.form.img = response[0].url
     },
 
+    onSubmit(){
 
-
-    initData() {
-      hoursApi.getById(this.item.id)
-          .then((resp) => {
-            this.item = resp.data.data
-            this.comment.goodsId = resp.data.data.id
+      hoursApi.add(this.form)
+          .then(()=>{
+            this.form={}
           })
     }
 
+
   },
   mounted() {
-    this.initData()
+
   },
-  created() {
-    this.item.id = this.$route.query.id
-  }
+
 }
 </script>
 
 <style scoped lang="scss">
 
 .cell-item {
-  width: 150px;
+  width: 100px;
 }
 
 .reply {

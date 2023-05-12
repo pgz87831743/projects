@@ -1,73 +1,47 @@
 <template>
   <div class="div">
     <el-row :justify="'center'">
-      <el-col :span="12">
+      <el-col :span="16">
         <el-card>
           <el-tabs @tab-change="tableChange">
 
             <el-tab-pane label="咨询会话">
-              <el-collapse  v-if="getUser().role!=='DOCTOR'">
-                <el-collapse-item :title="item.toUserInfo.nickname" :name="item.username" v-for="item in onlineInfo"
-                                  v-bind:key="item.id">
-                  <el-descriptions
-                      class="margin-top"
-                      title="医生信息"
-                      :column="1"
-                      border
-                  >
-                    <template #extra>
-                      <el-row :gutter="10">
-                        <el-col :span="12">
-                          <el-button type="success" @click="onlineTalk(item)">在线问诊</el-button>
-                        </el-col>
-                        <el-col :span="12">
-                          <el-button type="danger" @click="deleteOnlineHandle(item)">结束会话</el-button>
-                        </el-col>
-                      </el-row>
-                    </template>
-                    <el-descriptions-item label="医生工号">{{ item.toUserInfo.num }}</el-descriptions-item>
-                    <el-descriptions-item label="性别">{{ item.toUserInfo.sex }}</el-descriptions-item>
-                    <el-descriptions-item label="科室">{{ item.toUserInfo.dept }}</el-descriptions-item>
-                    <el-descriptions-item label="擅长领域">
-                      <el-input type="textarea" v-model="item.toUserInfo.description" :autosize="{minRows:5}"
-                                disabled></el-input>
-                    </el-descriptions-item>
+              <el-collapse>
 
-                  </el-descriptions>
-                </el-collapse-item>
+                <div v-for="item in onlineInfo" v-bind:key="item.id">
+                  <el-collapse-item  :title="item.toUserInfo.username===getUser().username?item.fromUserInfo.username:item.toUserInfo.username" :name="item.username">
+                    <el-descriptions
+                        class="margin-top"
+                        title="房源信息"
+                        :column="1"
+                        border
+                    >
+                      <template #extra>
+                        <el-row :gutter="10">
+                          <el-col :span="12">
+                            <el-button type="success" @click="onlineTalk(item)">在线咨询</el-button>
+                          </el-col>
+                          <el-col :span="12">
+                            <el-button type="danger" @click="deleteOnlineHandle(item)">结束会话</el-button>
+                          </el-col>
+                        </el-row>
+                      </template>
+                      <el-descriptions-item label="标题">{{ item.hoursInfo.title }}</el-descriptions-item>
+                      <el-descriptions-item label="价格">{{ item.hoursInfo.price }}元每月</el-descriptions-item>
+                      <el-descriptions-item label="面积">{{ item.hoursInfo.area }}</el-descriptions-item>
+                      <el-descriptions-item label="房源特色">
+                        <el-input type="textarea" v-model="item.hoursInfo.characteristics" :autosize="{minRows:5}"
+                                  disabled></el-input>
+                      </el-descriptions-item>
 
-              </el-collapse>
-              <el-collapse  v-if="getUser().role!=='USER'">
-                <el-collapse-item :title="item.fromUserInfo.nickname" :name="item.username" v-for="item in onlineInfo"
-                                  v-bind:key="item.id">
-                  <el-descriptions
-                      class="margin-top"
-                      title="患者信息"
-                      :column="1"
-                      border
-                  >
-                    <template #extra>
-                      <el-row :gutter="10">
-                        <el-col :span="12">
-                          <el-button type="success" @click="onlineTalk(item)">沟通信息</el-button>
-                        </el-col>
-                        <el-col :span="12">
-                          <el-button type="danger" @click="deleteOnlineHandle(item)">结束会话</el-button>
-                        </el-col>
-                      </el-row>
-                    </template>
-                    <el-descriptions-item label="患者地址">{{ item.fromUserInfo.address }}</el-descriptions-item>
-                    <el-descriptions-item label="患者性别">{{ item.fromUserInfo.sex }}</el-descriptions-item>
-                    <el-descriptions-item label="患者电话">{{ item.fromUserInfo.phone }}</el-descriptions-item>
-                    <el-descriptions-item label="患者描述">
-                      <el-input type="textarea" v-model="item.fromUserInfo.description" :autosize="{minRows:5}"
-                                disabled></el-input>
-                    </el-descriptions-item>
+                    </el-descriptions>
+                  </el-collapse-item>
+                </div>
 
-                  </el-descriptions>
-                </el-collapse-item>
+
 
               </el-collapse>
+
 
             </el-tab-pane>
           </el-tabs>
@@ -108,7 +82,7 @@
                     <div style="float: left">{{ item.createTime }}</div>
                     <div style="clear:both"></div>
                     <span
-                        style="min-width: 100px;float: left; background: #d5c3c3;padding: 10px;display:inline-block;border-radius: 10px">{{
+                        style="min-width: 100px;float: left; background: rgba(238,97,97,0.74);padding: 10px;display:inline-block;border-radius: 10px">{{
                         item.content
                       }}</span>
                   </div>
@@ -119,6 +93,8 @@
             </el-row>
           </div>
         </div>
+
+        <div style="height: 60px"></div>
       </div>
       <div>
         <el-row justify="center" :gutter="20">
@@ -196,8 +172,6 @@ export default {
     onlineTalk(item) {
       messageApi.listAll(item.id)
           .then((resp) => {
-            console.log(resp)
-            console.log(this.from)
             this.messageData = resp.data.data
             this.dialog.dialogFormVisible = true
             this.dialog.optionName = '在线咨询'
@@ -209,19 +183,27 @@ export default {
     onmessage(data) {
       let msg = JSON.parse(data.data)
       if (this.form.targetId === msg.targetId) {
+        this.scope()
         this.messageData.push(msg)
       }
-      this.scope()
+
     },
 
     send() {
       this.ws.send(JSON.stringify(this.form))
+      this.form.content=''
     },
     scope() {
       let div = window.document.getElementById("divscope4")
-      div.scrollTop = div.scrollHeight;
+      if (div!==null){
+        div.scrollTop = div.scrollHeight;
+      }
     }
 
+  },
+
+  updated() {
+    this.scope()
   },
 
   unmounted() {
@@ -234,6 +216,7 @@ export default {
     this.ws = new WebSocket("ws://localhost:9001/websocket/" + getUser().username)
     this.ws.onmessage = this.onmessage
     this.ws.onopen = this.onOpen
+    this.scope()
   }
 }
 </script>
