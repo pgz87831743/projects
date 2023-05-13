@@ -31,6 +31,9 @@
                     <el-form-item label="昵称：">
                       <el-input v-model="form.nickname"></el-input>
                     </el-form-item>
+                    <el-form-item label="用户名：">
+                      <el-input v-model="form.username"></el-input>
+                    </el-form-item>
                     <el-form-item label="性别：">
                       <el-radio-group v-model="form.sex">
                         <el-radio label="男">男</el-radio>
@@ -43,8 +46,11 @@
                     <el-form-item label="联系电话：">
                       <el-input v-model="form.phone"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码：">
-                      <el-input type="password" show-password v-model="form.password"></el-input>
+                    <el-form-item label="原密码：">
+                      <el-input type="password" show-password v-model="form.ymm"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码：">
+                      <el-input type="password" show-password v-model="form.xmm"></el-input>
                     </el-form-item>
                   </el-form>
                 </el-col>

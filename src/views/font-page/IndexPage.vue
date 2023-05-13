@@ -9,7 +9,7 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">美食推荐</span>
+          <span class="pin-lun">商品推荐</span>
         </div>
       </template>
       <div class="row-div">
@@ -28,7 +28,7 @@
 
                   </div>
                   <div>
-                   <el-tag style="color:salmon;">{{ item.foodType }}</el-tag>   {{ item.storeName }}
+                    <el-tag style="color:deepskyblue;">{{ item.foodType }}</el-tag>     <span style="color:salmon;font-size: 20px">￥{{ item.price }}</span>       {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>

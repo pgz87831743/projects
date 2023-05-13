@@ -35,7 +35,7 @@
 
                   </div>
                   <div>
-                   {{ item.storeName }}
+                    <span style="color:salmon;font-size: 20px">￥{{ item.price }}</span>      {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>

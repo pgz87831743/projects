@@ -29,6 +29,16 @@
           {{ item.title }}
         </el-descriptions-item>
 
+
+        <el-descriptions-item>
+          <template #label>
+            <div class="cell-item">
+              价格
+            </div>
+          </template>
+          {{ item.price }}元
+        </el-descriptions-item>
+
         <el-descriptions-item>
           <template #label>
             <div class="cell-item">

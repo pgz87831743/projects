@@ -9,7 +9,7 @@
            router
            :default-active="$route.fullPath"
        >
-         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">灵食Go后台管理</div></el-menu-item>
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">XX购物商城后台管理</div></el-menu-item>
          <div class="flex-grow" />
          <el-sub-menu index="2-4">
            <template #title>
