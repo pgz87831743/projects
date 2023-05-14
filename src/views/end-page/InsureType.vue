@@ -17,7 +17,7 @@
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
           <el-table-column prop="name" label="险种名称"/>
-          <el-table-column prop="insureId" label="公司名称"/>
+          <el-table-column prop="insureInfo.name" label="公司名称"/>
           <el-table-column prop="description" label="险种说明"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
@@ -39,14 +39,16 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+        <el-form-item label="公司名称">
+          <el-select v-model="form.insureId">
+            <el-option v-for="item in insureList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="险种名称">
           <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="公司名称">
-          <el-input v-model="form.insureId" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="险种说明">
-          <el-input v-model="form.description" placeholder="请输入"/>
+          <el-input type="textarea" v-model="form.description" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -79,7 +81,7 @@
 
 <script>
 
-import {insureTypeApi} from "@/api/api";
+import {insureApi, insureTypeApi} from "@/api/api";
 
 
 export default {
@@ -93,6 +95,7 @@ export default {
         search: ''
       },
       tableData: [],
+      insureList: [],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -182,10 +185,17 @@ export default {
             this.total = resp.data.data.total
           })
     },
+    initInsureListData() {
+      insureApi.listAll()
+          .then(resp => {
+            this.insureList = resp.data.data
+          })
+    },
 
   },
   mounted() {
     this.initTableData()
+    this.initInsureListData()
   },
 
 }

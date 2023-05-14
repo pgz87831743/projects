@@ -15,22 +15,15 @@
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
-                  :cell-style="{textAlign:'center',padding:'30px'}">
+                  :cell-style="{textAlign:'center'}">
           <el-table-column prop="id" label="主键"/>
           <el-table-column prop="username" label="用户名"/>
           <el-table-column prop="password" label="密码"/>
           <el-table-column prop="nickname" label="真实姓名"/>
           <el-table-column prop="idCard" label="身份证"/>
-          <el-table-column prop="avatar" label="头像"/>
-          <el-table-column prop="email" label="邮箱"/>
           <el-table-column prop="phone" label="联系方式"/>
-          <el-table-column prop="age" label="年龄"/>
           <el-table-column prop="sex" label="性别"/>
           <el-table-column prop="role" label="角色"/>
-          <el-table-column prop="dept" label="机构"/>
-          <el-table-column prop="startTime" label="入职时间"/>
-          <el-table-column prop="endTime" label="离职时间"/>
-          <el-table-column prop="status" label="入职状态"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -66,23 +59,20 @@
         <el-form-item label="身份证">
           <el-input v-model="form.idCard" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="头像">
-          <el-input v-model="form.avatar" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="form.email" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="联系方式">
           <el-input v-model="form.phone" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="form.age" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="性别">
           <el-input v-model="form.sex" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="角色">
           <el-input v-model="form.role" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="创建时间">
+          <el-input v-model="form.createTime" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="创建人">
+          <el-input v-model="form.createBy" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -268,3 +258,4 @@ export default {
 }
 
 </style>
+

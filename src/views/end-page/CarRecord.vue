@@ -16,16 +16,15 @@
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
-          <el-table-column prop="carId" label="车辆"/>
-          <el-table-column prop="description" label="事故内容"/>
-          <el-table-column prop="score" label="评分内容"/>
-          <el-table-column prop="driverId" label="司机"/>
+          <el-table-column prop="carInfo.name" label="车辆"/>
+          <el-table-column prop="score" label="评分"/>
+          <el-table-column prop="driverInfo.username" label="司机"/>
           <el-table-column prop="returnCarInfo" label="还车信息"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button v-if="scope.row.returnCarInfo==='使用中'" size="small" type="success" @click="clickButton('update', scope.row)">还车</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
                   size="small"
@@ -41,21 +40,44 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="车辆">
-          <el-input v-model="form.carId" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="事故内容">
-          <el-input v-model="form.description" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="评分内容">
-          <el-input v-model="form.score" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="司机">
-          <el-input v-model="form.driverId" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="还车信息">
-          <el-input v-model="form.returnCarInfo" placeholder="请输入"/>
-        </el-form-item>
+
+
+        <div v-if="dialog.optionValue==='update'">
+          <el-form-item label="车辆">
+            <el-select v-model="form.carId" disabled>
+              <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="司机">
+            <el-select v-model="form.driverId"  disabled>
+              <el-option v-for="item in driverList" v-bind:key="item.id" :label="item.username" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="评分">
+            <el-input type="number" v-model="form.score" placeholder="请输入" />
+          </el-form-item>
+        </div>
+
+        <div v-if="dialog.optionValue==='add'">
+          <el-form-item label="车辆">
+            <el-select v-model="form.carId" >
+              <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="评分">
+            <el-input type="number"  v-model="form.score" placeholder="请输入"/>
+          </el-form-item>
+          <el-form-item label="司机">
+            <el-select v-model="form.driverId"  clearable>
+              <el-option v-for="item in driverList" v-bind:key="item.id" :label="item.username" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="还车信息">
+            <el-input  v-model="form.returnCarInfo" placeholder="请输入"/>
+          </el-form-item>
+        </div>
+
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -87,7 +109,7 @@
 
 <script>
 
-import {carRecordApi} from "@/api/api";
+import {carApi, carRecordApi, sysUserApi} from "@/api/api";
 
 
 export default {
@@ -101,6 +123,8 @@ export default {
         search: ''
       },
       tableData: [],
+      carList:[],
+      driverList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -171,6 +195,7 @@ export default {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
+        this.form.returnCarInfo='已还'
         carRecordApi.updateById(this.form)
             .then(() => {
               this.initTableData();
@@ -191,9 +216,24 @@ export default {
           })
     },
 
+    initCarData() {
+      carApi.listAll()
+          .then(resp => {
+            this.carList = resp.data.data
+          })
+    },
+    initDriverList() {
+      sysUserApi.driverList()
+          .then(resp => {
+            this.driverList = resp.data.data
+          })
+    },
+
   },
   mounted() {
     this.initTableData()
+    this.initCarData()
+    this.initDriverList()
   },
 
 }

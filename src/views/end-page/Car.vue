@@ -18,10 +18,15 @@
                   :cell-style="{textAlign:'center'}">
           <el-table-column prop="name" label="车辆名称"/>
           <el-table-column prop="plateNumber" label="车牌号"/>
+          <el-table-column prop="img" label="车辆图片">
+            <template #default="scope">
+              <el-image :preview-teleported="true" :preview-src-list="[scope.row.img]" :src="scope.row.img"></el-image>
+            </template>
+          </el-table-column>
           <el-table-column prop="color" label="车辆颜色"/>
           <el-table-column prop="model" label="车型"/>
-          <el-table-column prop="insureId" label="保险公司"/>
-          <el-table-column prop="insureTypeId" label="险种"/>
+          <el-table-column prop="insureInfo.name" label="保险公司"/>
+          <el-table-column prop="insureTypeInfo.name" label="险种"/>
           <el-table-column prop="status" label="车辆状态"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
@@ -43,7 +48,6 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
         <el-form-item label="车辆名称">
           <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
@@ -51,7 +55,19 @@
           <el-input v-model="form.plateNumber" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="车辆图片">
-          <el-input v-model="form.img" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="300"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
         <el-form-item label="车辆颜色">
           <el-input v-model="form.color" placeholder="请输入"/>
@@ -60,10 +76,14 @@
           <el-input v-model="form.model" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="保险公司">
-          <el-input v-model="form.insureId" placeholder="请输入"/>
+          <el-select v-model="form.insureId" @change="onInsureChange">
+            <el-option v-for="item in insureList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="险种">
-          <el-input v-model="form.insureTypeId" placeholder="请输入"/>
+          <el-select v-model="form.insureTypeId" >
+            <el-option v-for="item in insureTypeList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -96,11 +116,13 @@
 
 <script>
 
-import {carApi} from "@/api/api";
+import {carApi, insureApi, insureTypeApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Car",
+  components: {Plus},
   data() {
     return {
       page: {
@@ -116,6 +138,8 @@ export default {
         formDisabled: true,
         optionValue: null
       },
+      insureList: [],
+      insureTypeList: [],
       form: {},
       total: 0,
     }
@@ -200,9 +224,26 @@ export default {
           })
     },
 
+    initInsureListData() {
+      insureApi.listAll()
+          .then(resp => {
+            this.form.insureTypeId=''
+            this.insureList = resp.data.data
+            this.onInsureChange(this.insureList[0].id)
+          })
+    },
+
+    onInsureChange(e) {
+      insureTypeApi.listAllByInsureId(e)
+          .then((resp) => {
+            this.insureTypeList = resp.data.data
+          })
+    }
+
   },
   mounted() {
     this.initTableData()
+    this.initInsureListData()
   },
 
 }

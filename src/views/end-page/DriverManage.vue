@@ -16,8 +16,18 @@
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
-          <el-table-column prop="carInfo.name" label="车辆"/>
-          <el-table-column prop="description" label="流程说明"/>
+          <el-table-column prop="img" label="头像">
+            <template #default="scope">
+              <el-image :preview-teleported="true" :preview-src-list="[scope.row.img]" :src="scope.row.img"></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column prop="username" label="用户名"/>
+          <el-table-column prop="nickname" label="真实姓名"/>
+          <el-table-column prop="idCard" label="身份证"/>
+          <el-table-column prop="phone" label="联系方式"/>
+          <el-table-column prop="sex" label="性别"/>
+          <el-table-column prop="drivingExperience" label="驾龄"/>
+          <el-table-column prop="status" label="司机状态"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -38,16 +48,39 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
-        <el-form-item label="车辆">
-          <el-select v-model="form.carId" >
-            <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
+        <el-form-item label="用户名">
+          <el-input v-model="form.username" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="流程说明">
-          <el-input type="textarea" v-model="form.description" placeholder="请输入"/>
+        <el-form-item label="真实姓名">
+          <el-input v-model="form.nickname" placeholder="请输入"/>
         </el-form-item>
-
+        <el-form-item label="身份证">
+          <el-input v-model="form.idCard" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="联系方式">
+          <el-input v-model="form.phone" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="驾龄">
+          <el-input type="number" v-model="form.drivingExperience" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="头像">
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="300"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-input v-model="form.sex" placeholder="请输入"/>
+        </el-form-item>
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -79,11 +112,13 @@
 
 <script>
 
-import {carApi, carFlowPathApi} from "@/api/api";
+import {sysUserApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
-  name: "CarFlowPath",
+  name: "DriverManage",
+  components: {Plus},
   data() {
     return {
       page: {
@@ -93,14 +128,15 @@ export default {
         search: ''
       },
       tableData: [],
-      carList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
         formDisabled: true,
         optionValue: null
       },
-      form: {},
+      form: {
+        role:'DRIVER'
+      },
       total: 0,
     }
   },
@@ -108,7 +144,7 @@ export default {
   methods: {
 
     search() {
-      carFlowPathApi.page(this.page)
+      sysUserApi.driverPage(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -128,21 +164,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        carFlowPathApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        carFlowPathApi.getById(row.id).then((resp) => {
+        sysUserApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        carFlowPathApi.deleteById(row.id).then(() => {
+        sysUserApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -150,7 +186,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      carFlowPathApi.page(this.page).then(resp => {
+      sysUserApi.driverPage(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -159,12 +195,13 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        carFlowPathApi.add(this.form)
+        this.form.role='DRIVER'
+        sysUserApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        carFlowPathApi.updateById(this.form)
+        sysUserApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -177,23 +214,16 @@ export default {
     },
 
     initTableData() {
-      carFlowPathApi.page(this.page)
+      sysUserApi.driverPage(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
-          })
-    },
-    initCarData() {
-      carApi.listAll()
-          .then(resp => {
-            this.carList = resp.data.data
           })
     },
 
   },
   mounted() {
     this.initTableData()
-    this.initCarData()
   },
 
 }

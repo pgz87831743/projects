@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">分级机构人员管理系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">企业用车管理系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
@@ -45,12 +45,17 @@
           >
 
             <el-menu-item index="/PersonalCenter">个人基本信息</el-menu-item>
+            <el-menu-item index="/CapabilityAssessment">月度能力评估</el-menu-item>
+            <el-menu-item index="/DriverManage">司机管理</el-menu-item>
+            <el-menu-item index="/Insure">保险公司管理</el-menu-item>
+            <el-menu-item index="/InsureType">汽车险种管理</el-menu-item>
             <el-menu-item index="/Car">车辆信息管理</el-menu-item>
             <el-menu-item index="/CarFlowPath">用车流程管理</el-menu-item>
             <el-menu-item index="/CarMaintenance">车辆维修管理</el-menu-item>
+            <el-menu-item index="/CarAccident">车辆事故登记</el-menu-item>
+            <el-menu-item index="/CarApplyFor">用车申请</el-menu-item>
             <el-menu-item index="/CarRecord">用车记录管理</el-menu-item>
-            <el-menu-item index="/Insure">保险公司管理</el-menu-item>
-            <el-menu-item index="/InsureType">汽车险种管理</el-menu-item>
+
 
           </el-menu>
         </el-col>

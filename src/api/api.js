@@ -34,6 +34,12 @@ export const sysUserApi = {
     page(data) {
         return request.post('/sys/sysUser/page', data)
     },
+    driverPage(data) {
+        return request.post('/sys/sysUser/driverPage', data)
+    },
+    driverList() {
+        return request.post('/sys/sysUser/driverList')
+    },
     getById(id) {
         return request.get('/sys/sysUser/getById/' + id)
     },
@@ -177,6 +183,9 @@ export const insureTypeApi={
     listAll(){
         return request.get('/insureType/listAll')
     },
+    listAllByInsureId(id){
+        return request.get('/insureType/listAllByInsureId?id='+id)
+    },
     getById(id){
         return request.get('/insureType/getById/'+id)
     },
@@ -188,5 +197,49 @@ export const insureTypeApi={
     },
     updateById(data){
         return request.put('/insureType/updateById',data)
+    }
+}
+
+//用车申请管理
+export const carApplyForApi={
+    page(data){
+        return request.post('/carApplyFor/page',data)
+    },
+    listAll(){
+        return request.get('/carApplyFor/listAll')
+    },
+    getById(id){
+        return request.get('/carApplyFor/getById/'+id)
+    },
+    add(data){
+        return request.post('/carApplyFor/add',data)
+    },
+    deleteById(id){
+        return request.delete('/carApplyFor/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/carApplyFor/updateById',data)
+    }
+}
+
+//车辆事故登记管理
+export const carAccidentApi={
+    page(data){
+        return request.post('/carAccident/page',data)
+    },
+    listAll(){
+        return request.get('/carAccident/listAll')
+    },
+    getById(id){
+        return request.get('/carAccident/getById/'+id)
+    },
+    add(data){
+        return request.post('/carAccident/add',data)
+    },
+    deleteById(id){
+        return request.delete('/carAccident/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/carAccident/updateById',data)
     }
 }

@@ -17,6 +17,8 @@
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
           <el-table-column prop="name" label="公司名称"/>
+          <el-table-column prop="address" label="公司地址"/>
+          <el-table-column prop="phone" label="公司电话"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -37,11 +39,14 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="主键">
-          <el-input v-model="form.id" placeholder="请输入"/>
-        </el-form-item>
         <el-form-item label="公司名称">
           <el-input v-model="form.name" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="公司地址">
+          <el-input v-model="form.address" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="公司电话">
+          <el-input v-model="form.phone" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>

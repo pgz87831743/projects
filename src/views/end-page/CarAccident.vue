@@ -17,9 +17,9 @@
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
           <el-table-column prop="carInfo.name" label="车辆"/>
-          <el-table-column prop="description" label="流程说明"/>
-          <el-table-column prop="createTime" label="创建时间"/>
-          <el-table-column prop="createBy" label="创建人"/>
+          <el-table-column prop="description" label="事故说明"/>
+          <el-table-column prop="createTime" label="登记时间"/>
+          <el-table-column prop="createBy" label="登记人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
               <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -38,16 +38,14 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-
         <el-form-item label="车辆">
-          <el-select v-model="form.carId" >
+          <el-select v-model="form.carId"  >
             <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="流程说明">
-          <el-input type="textarea" v-model="form.description" placeholder="请输入"/>
+        <el-form-item label="事故说明">
+          <el-input v-model="form.description" placeholder="请输入"/>
         </el-form-item>
-
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -79,11 +77,11 @@
 
 <script>
 
-import {carApi, carFlowPathApi} from "@/api/api";
+import {carAccidentApi, carApi} from "@/api/api";
 
 
 export default {
-  name: "CarFlowPath",
+  name: "CarAccident",
   data() {
     return {
       page: {
@@ -108,7 +106,7 @@ export default {
   methods: {
 
     search() {
-      carFlowPathApi.page(this.page)
+      carAccidentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -128,21 +126,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        carFlowPathApi.getById(row.id).then((resp) => {
+        carAccidentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        carFlowPathApi.getById(row.id).then((resp) => {
+        carAccidentApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        carFlowPathApi.deleteById(row.id).then(() => {
+        carAccidentApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -150,7 +148,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      carFlowPathApi.page(this.page).then(resp => {
+      carAccidentApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -159,12 +157,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        carFlowPathApi.add(this.form)
+        carAccidentApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        carFlowPathApi.updateById(this.form)
+        carAccidentApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -177,12 +175,13 @@ export default {
     },
 
     initTableData() {
-      carFlowPathApi.page(this.page)
+      carAccidentApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
     },
+
     initCarData() {
       carApi.listAll()
           .then(resp => {

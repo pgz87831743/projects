@@ -16,8 +16,8 @@
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
-          <el-table-column prop="carId" label="车辆"/>
-          <el-table-column prop="description" label="维修说明"/>
+          <el-table-column prop="carInfo.name" label="车辆"/>
+          <el-table-column prop="description" label="流程说明"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -40,11 +40,14 @@
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
 
         <el-form-item label="车辆">
-          <el-input v-model="form.carId" placeholder="请输入"/>
+          <el-select v-model="form.carId" >
+            <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="维修说明">
-          <el-input v-model="form.description" placeholder="请输入"/>
+          <el-input type="textarea" v-model="form.description" placeholder="请输入"/>
         </el-form-item>
+
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -76,7 +79,7 @@
 
 <script>
 
-import {carMaintenanceApi} from "@/api/api";
+import {carApi, carMaintenanceApi} from "@/api/api";
 
 
 export default {
@@ -90,6 +93,7 @@ export default {
         search: ''
       },
       tableData: [],
+      carList:[],
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -179,10 +183,17 @@ export default {
             this.total = resp.data.data.total
           })
     },
+    initCarData() {
+      carApi.listAll()
+          .then(resp => {
+            this.carList = resp.data.data
+          })
+    },
 
   },
   mounted() {
     this.initTableData()
+    this.initCarData()
   },
 
 }
@@ -229,3 +240,4 @@ export default {
 }
 
 </style>
+

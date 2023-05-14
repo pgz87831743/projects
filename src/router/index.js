@@ -63,6 +63,26 @@ const routes = [
                 path: "/InsureType",
                 name: "InsureType",
                 component: () => import('../views/end-page/InsureType'),
+            },
+            {
+                path: "/DriverManage",
+                name: "DriverManage",
+                component: () => import('../views/end-page/DriverManage'),
+            },
+            {
+                path: "/CarApplyFor",
+                name: "CarApplyFor",
+                component: () => import('../views/end-page/CarApplyFor'),
+            },
+            {
+                path: "/CarAccident",
+                name: "CarAccident",
+                component: () => import('../views/end-page/CarAccident'),
+            },
+            {
+                path: "/CapabilityAssessment",
+                name: "CapabilityAssessment",
+                component: () => import('../views/end-page/CapabilityAssessment'),
             }
         ]
     }
