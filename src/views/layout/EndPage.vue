@@ -45,10 +45,11 @@
           >
 
             <el-menu-item index="/PersonalCenter">个人基本信息</el-menu-item>
-            <el-menu-item index="/CapabilityAssessment">月度能力评估</el-menu-item>
-            <el-menu-item index="/DriverManage">司机管理</el-menu-item>
-            <el-menu-item index="/Insure">保险公司管理</el-menu-item>
-            <el-menu-item index="/InsureType">汽车险种管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" index="/CapabilityAssessment">月度能力评估</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" index="/DriverManage">司机管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN'])" index="/SysUser">用户管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" index="/Insure">保险公司管理</el-menu-item>
+            <el-menu-item  v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" index="/InsureType">汽车险种管理</el-menu-item>
             <el-menu-item index="/Car">车辆信息管理</el-menu-item>
             <el-menu-item index="/CarFlowPath">用车流程管理</el-menu-item>
             <el-menu-item index="/CarMaintenance">车辆维修管理</el-menu-item>

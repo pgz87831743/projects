@@ -22,9 +22,10 @@
           <el-table-column prop="createBy" label="登记人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
+                  v-if="authShow(['ADMIN','VEHICLE_MANAGER'])"
                   size="small"
                   type="danger"
                   @click="clickButton('delete',scope.row)">删除
@@ -78,6 +79,7 @@
 <script>
 
 import {carAccidentApi, carApi} from "@/api/api";
+import {authShow} from "@/utils/authutil";
 
 
 export default {
@@ -104,6 +106,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
     search() {
       carAccidentApi.page(this.page)

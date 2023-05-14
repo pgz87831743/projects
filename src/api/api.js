@@ -243,3 +243,15 @@ export const carAccidentApi={
         return request.put('/carAccident/updateById',data)
     }
 }
+
+
+//统计信息
+export const staticApi={
+    carStaticInfo(){
+        return request.get('/static/carStaticInfo')
+    },
+    driverStaticInfo(){
+        return request.get('/static/driverStaticInfo')
+    },
+
+}

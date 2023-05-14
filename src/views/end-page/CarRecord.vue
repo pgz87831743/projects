@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button v-if="authShow(['ADMIN','VEHICLE_MANAGER'])" type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
       <!--      <el-col :span="5" :offset="1">-->
       <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
@@ -110,6 +110,7 @@
 <script>
 
 import {carApi, carRecordApi, sysUserApi} from "@/api/api";
+import {authShow} from "@/utils/authutil";
 
 
 export default {
@@ -137,6 +138,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
     search() {
       carRecordApi.page(this.page)

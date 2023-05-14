@@ -57,7 +57,6 @@
                           <el-select v-model="user.role" placeholder="请选择" class="sel">
                             <el-option value="ADMIN" label="管理员"/>
                             <el-option value="VEHICLE_MANAGER" label="车辆管理员"/>
-                            <el-option value="DRIVER" label="司机"/>
                             <el-option value="USER" label="用户"/>
                           </el-select>
                         </el-form-item>

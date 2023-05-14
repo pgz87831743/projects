@@ -2,14 +2,14 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button v-if="authShow(['ADMIN'])" type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
+            <el-col :span="5" :offset="1">
+              <el-input v-model="page.search" placeholder="请输入车牌号" clearable @clear="this.initTableData"/>
+            </el-col>
+            <el-col :span="1" :offset="1">
+              <el-button type="success" @click="search">搜索</el-button>
+            </el-col>
     </el-row>
     <el-row>
       <el-col>
@@ -32,9 +32,10 @@
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button v-if="authShow(['ADMIN'])" size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
+                  v-if="authShow(['ADMIN'])"
                   size="small"
                   type="danger"
                   @click="clickButton('delete',scope.row)">删除
@@ -118,6 +119,7 @@
 
 import {carApi, insureApi, insureTypeApi} from "@/api/api";
 import {Plus} from "@element-plus/icons-vue";
+import {authShow} from "@/utils/authutil";
 
 
 export default {
@@ -146,6 +148,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
     search() {
       carApi.page(this.page)

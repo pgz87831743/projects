@@ -25,9 +25,10 @@
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button v-if="scope.row.status==='待审核'" size="small" type="success" @click="clickButton('update', scope.row)">审核</el-button>
+              <el-button v-if="scope.row.status==='待审核'&& authShow(['ADMIN','VEHICLE_MANAGER'])" size="small" type="success" @click="clickButton('update', scope.row)">审核</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
+                  v-if=" authShow(['ADMIN','VEHICLE_MANAGER'])"
                   size="small"
                   type="danger"
                   @click="clickButton('delete',scope.row)">删除
@@ -142,6 +143,7 @@
 <script>
 
 import {carApi, carApplyForApi, sysUserApi} from "@/api/api";
+import {authShow} from "@/utils/authutil";
 
 
 export default {
@@ -169,6 +171,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
     search() {
       carApplyForApi.page(this.page)
