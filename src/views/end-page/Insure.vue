@@ -15,12 +15,8 @@
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
-                  :cell-style="{textAlign:'center',padding:'30px'}">
-          <el-table-column prop="id" label="主键"/>
-          <el-table-column prop="content" label="交易内容"/>
-          <el-table-column prop="amount" label="交易金额"/>
-          <el-table-column prop="person" label="交易人"/>
-          <el-table-column prop="tradingTime" label="交易时间"/>
+                  :cell-style="{textAlign:'center'}">
+          <el-table-column prop="name" label="公司名称"/>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -44,23 +40,8 @@
         <el-form-item label="主键">
           <el-input v-model="form.id" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="交易内容">
-          <el-input v-model="form.content" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="交易金额">
-          <el-input v-model="form.amount" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="交易人">
-          <el-input v-model="form.person" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="交易时间">
-          <el-input v-model="form.tradingTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+        <el-form-item label="公司名称">
+          <el-input v-model="form.name" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -93,11 +74,11 @@
 
 <script>
 
-import {transactionApi} from "@/api/api";
+import {insureApi} from "@/api/api";
 
 
 export default {
-  name: "Transaction",
+  name: "Insure",
   data() {
     return {
       page: {
@@ -121,7 +102,7 @@ export default {
   methods: {
 
     search() {
-      transactionApi.page(this.page)
+      insureApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -141,21 +122,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        transactionApi.getById(row.id).then((resp) => {
+        insureApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        transactionApi.getById(row.id).then((resp) => {
+        insureApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        transactionApi.deleteById(row.id).then(() => {
+        insureApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -163,7 +144,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      transactionApi.page(this.page).then(resp => {
+      insureApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -172,12 +153,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        transactionApi.add(this.form)
+        insureApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        transactionApi.updateById(this.form)
+        insureApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -190,7 +171,7 @@ export default {
     },
 
     initTableData() {
-      transactionApi.page(this.page)
+      insureApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -246,3 +227,4 @@ export default {
 }
 
 </style>
+

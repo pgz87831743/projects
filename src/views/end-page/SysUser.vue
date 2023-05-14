@@ -84,24 +84,6 @@
         <el-form-item label="角色">
           <el-input v-model="form.role" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="机构">
-          <el-input v-model="form.dept" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="入职时间">
-          <el-input v-model="form.startTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="离职时间">
-          <el-input v-model="form.endTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="入职状态">
-          <el-input v-model="form.status" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
-        </el-form-item>
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">

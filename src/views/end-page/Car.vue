@@ -1,32 +1,78 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入交易人内容/交易内容" clearable @clear="this.initTableData"/>
+      <el-col :span="1">
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button type="success" @click="search">搜索</el-button>
-      </el-col>
-
-      <el-col :span="1" :offset="1">
-        <el-button type="success" @click="exportExcel('ReceiptPaymentList')">导出</el-button>
-      </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
     </el-row>
     <el-row>
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
                   :cell-style="{textAlign:'center'}">
-          <el-table-column prop="content" label="交易内容"/>
-          <el-table-column prop="amount" label="交易金额"/>
-          <el-table-column prop="person" label="交易人"/>
-          <el-table-column prop="total" label="机构资金"/>
-          <el-table-column prop="tradingTime" label="交易时间"/>
-
-
+          <el-table-column prop="name" label="车辆名称"/>
+          <el-table-column prop="plateNumber" label="车牌号"/>
+          <el-table-column prop="color" label="车辆颜色"/>
+          <el-table-column prop="model" label="车型"/>
+          <el-table-column prop="insureId" label="保险公司"/>
+          <el-table-column prop="insureTypeId" label="险种"/>
+          <el-table-column prop="status" label="车辆状态"/>
+          <el-table-column prop="createTime" label="创建时间"/>
+          <el-table-column prop="createBy" label="创建人"/>
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+              <el-button
+                  size="small"
+                  type="danger"
+                  @click="clickButton('delete',scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>
+
+
+    <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
+      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+
+        <el-form-item label="车辆名称">
+          <el-input v-model="form.name" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="车牌号">
+          <el-input v-model="form.plateNumber" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="车辆图片">
+          <el-input v-model="form.img" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="车辆颜色">
+          <el-input v-model="form.color" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="车型">
+          <el-input v-model="form.model" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="保险公司">
+          <el-input v-model="form.insureId" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="险种">
+          <el-input v-model="form.insureTypeId" placeholder="请输入"/>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+<span class="dialog-footer" v-if="!dialog.formDisabled">
+<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+<el-button type="success" @click="formSubmit">确认</el-button>
+</span>
+      </template>
+    </el-dialog>
 
 
     <!-- 分页 -->
@@ -50,12 +96,11 @@
 
 <script>
 
-import {receiptPaymentApi} from "@/api/api";
-import {getUser} from "@/utils/authutil";
+import {carApi} from "@/api/api";
 
 
 export default {
-  name: "ReceiptPayment",
+  name: "Car",
   data() {
     return {
       page: {
@@ -79,15 +124,11 @@ export default {
   methods: {
 
     search() {
-      receiptPaymentApi.page(this.page)
+      carApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
           })
-    },
-
-    exportExcel(type) {
-      window.location.href='/api/sys/sysUser/exportInfo?type='+type+"&userId="+getUser().id
     },
 
 
@@ -103,21 +144,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        receiptPaymentApi.getById(row.id).then((resp) => {
+        carApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        receiptPaymentApi.getById(row.id).then((resp) => {
+        carApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        receiptPaymentApi.deleteById(row.id).then(() => {
+        carApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -125,7 +166,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      receiptPaymentApi.page(this.page).then(resp => {
+      carApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -134,12 +175,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        receiptPaymentApi.add(this.form)
+        carApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        receiptPaymentApi.updateById(this.form)
+        carApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -152,7 +193,7 @@ export default {
     },
 
     initTableData() {
-      receiptPaymentApi.page(this.page)
+      carApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -208,4 +249,3 @@ export default {
 }
 
 </style>
-

@@ -24,19 +24,10 @@ const routes = [
         name: 'EndPage',
         component: () => import('../views/layout/EndPage'),
         children: [
-            {
-                path: "/Dept",
-                name: "Dept",
-                component: () => import('../views/end-page/admin-page/Dept.vue'),
-            }, {
+             {
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/end-page/PersonalCenter'),
-            },
-            {
-                path: "/Performance",
-                name: "Performance",
-                component: () => import('../views/end-page/Performance'),
             },
             {
                 path: "/SysUser",
@@ -44,61 +35,35 @@ const routes = [
                 component: () => import('../views/end-page/SysUser'),
             },
             {
-                path: "/Transaction",
-                name: "Transaction",
-                component: () => import('../views/end-page/Transaction'),
+                path: "/Car",
+                name: "Car",
+                component: () => import('../views/end-page/Car'),
             },
             {
-                path: "/RoleManage",
-                name: "RoleManage",
-                component: () => import('../views/end-page/admin-page/RoleManage'),
+                path: "/CarFlowPath",
+                name: "CarFlowPath",
+                component: () => import('../views/end-page/CarFlowPath'),
             },
             {
-                path: "/CreateDept",
-                name: "CreateDept",
-                component: () => import('../views/end-page/admin-page/CreateDept'),
+                path: "/CarMaintenance",
+                name: "CarMaintenance",
+                component: () => import('../views/end-page/CarMaintenance'),
             },
             {
-                path: "/OnboardingReview",
-                name: "OnboardingReview",
-                component: () => import('../views/end-page/administrative-page/OnboardingReview.vue'),
+                path: "/CarRecord",
+                name: "CarRecord",
+                component: () => import('../views/end-page/CarRecord'),
             },
             {
-                path: "/PersonnelList",
-                name: "PersonnelList",
-                component: () => import('../views/end-page/administrative-page/PersonnelList'),
+                path: "/Insure",
+                name: "Insure",
+                component: () => import('../views/end-page/Insure'),
             },
             {
-                path: "/BusinessList",
-                name: "BusinessList",
-                component: () => import('../views/end-page/salesman-page/BusinessList'),
-            },
-            {
-                path: "/TransactionEntry",
-                name: "TransactionEntry",
-                component: () => import('../views/end-page/salesman-page/TransactionEntry'),
-            },
-            {
-                path: "/PersonnelPerformance",
-                name: "PersonnelPerformance",
-                component: () => import('../views/end-page/treasurer-page/PersonnelPerformance'),
-            },
-            {
-                path: "/SalaryPerformance",
-                name: "SalaryPerformance",
-                component: () => import('../views/end-page/treasurer-page/SalaryPerformance'),
-            },
-            {
-                path: "/ReceiptPaymentEntry",
-                name: "ReceiptPaymentEntry",
-                component: () => import('../views/end-page/treasurer-page/ReceiptPaymentEntry'),
-            },
-            {
-                path: "/ReceiptPaymentList",
-                name: "ReceiptPaymentList",
-                component: () => import('../views/end-page/treasurer-page/ReceiptPaymentList'),
+                path: "/InsureType",
+                name: "InsureType",
+                component: () => import('../views/end-page/InsureType'),
             }
-
         ]
     }
 ]

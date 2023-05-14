@@ -34,12 +34,6 @@ export const sysUserApi = {
     page(data) {
         return request.post('/sys/sysUser/page', data)
     },
-    administrativePage(data) {
-        return request.post('/sys/sysUser/administrative-page', data)
-    }
-    , auditListPage(data) {
-        return request.post('/sys/sysUser/audit-list-page', data)
-    },
     getById(id) {
         return request.get('/sys/sysUser/getById/' + id)
     },
@@ -52,117 +46,147 @@ export const sysUserApi = {
     updateById(data) {
         return request.put('/sys/sysUser/updateById', data)
     },
-    administrativeUpdateById(data) {
-        return request.put('/sys/sysUser/administrativeUpdateById', data)
-    },
 
-    allUserByType(type) {
-        return request.get('/sys/sysUser/allUserByType/' + type)
+}
+
+
+
+//车辆信息表管理
+export const carApi={
+    page(data){
+        return request.post('/car/page',data)
     },
-    exportInfo(type) {
-        return request.get('/sys/sysUser/exportInfo?type=' + type)
+    listAll(){
+        return request.get('/car/listAll')
+    },
+    getById(id){
+        return request.get('/car/getById/'+id)
+    },
+    add(data){
+        return request.post('/car/add',data)
+    },
+    deleteById(id){
+        return request.delete('/car/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/car/updateById',data)
     }
 }
 
 
-//机构表管理
-export const deptApi = {
-    page(data) {
-        return request.post('/dept/page', data)
+//用车流程管理
+export const carFlowPathApi={
+    page(data){
+        return request.post('/carFlowPath/page',data)
     },
-    listAll() {
-        return request.get('/dept/listAll')
+    listAll(){
+        return request.get('/carFlowPath/listAll')
     },
-    getById(id) {
-        return request.get('/dept/getById/' + id)
+    getById(id){
+        return request.get('/carFlowPath/getById/'+id)
     },
-    deptTree() {
-        return request.get('/dept/deptTree')
+    add(data){
+        return request.post('/carFlowPath/add',data)
     },
-    getCurryDeptUser() {
-        return request.get('/dept/getCurryDeptUser')
+    deleteById(id){
+        return request.delete('/carFlowPath/deleteById/'+id)
     },
-    add(data) {
-        return request.post('/dept/add', data)
-    },
-    deleteById(id) {
-        return request.delete('/dept/deleteById/' + id)
-    },
-    updateById(data) {
-        return request.put('/dept/updateById', data)
+    updateById(data){
+        return request.put('/carFlowPath/updateById',data)
     }
 }
 
 
-//绩效表管理
-export const performanceApi = {
-    page(data) {
-        return request.post('/performance/page', data)
+
+//车辆维修管理
+export const carMaintenanceApi={
+    page(data){
+        return request.post('/carMaintenance/page',data)
     },
-    listAll() {
-        return request.get('/performance/listAll')
-    }, autoPerformance() {
-        return request.get('/performance/autoPerformance')
+    listAll(){
+        return request.get('/carMaintenance/listAll')
     },
-    getById(id) {
-        return request.get('/performance/getById/' + id)
+    getById(id){
+        return request.get('/carMaintenance/getById/'+id)
     },
-    add(data) {
-        return request.post('/performance/add', data)
+    add(data){
+        return request.post('/carMaintenance/add',data)
     },
-    deleteById(id) {
-        return request.delete('/performance/deleteById/' + id)
+    deleteById(id){
+        return request.delete('/carMaintenance/deleteById/'+id)
     },
-    updateById(data) {
-        return request.put('/performance/updateById', data)
+    updateById(data){
+        return request.put('/carMaintenance/updateById',data)
     }
 }
 
 
-//交易记录表管理
-export const transactionApi = {
-    page(data) {
-        return request.post('/transaction/page', data)
-    }
-    , treasurerPage(data) {
-        return request.post('/transaction/treasurerPage', data)
+
+//车辆使用记录表管理
+export const carRecordApi={
+    page(data){
+        return request.post('/carRecord/page',data)
     },
-    listAll() {
-        return request.get('/transaction/listAll')
+    listAll(){
+        return request.get('/carRecord/listAll')
     },
-    getById(id) {
-        return request.get('/transaction/getById/' + id)
+    getById(id){
+        return request.get('/carRecord/getById/'+id)
     },
-    add(data) {
-        return request.post('/transaction/add', data)
+    add(data){
+        return request.post('/carRecord/add',data)
     },
-    deleteById(id) {
-        return request.delete('/transaction/deleteById/' + id)
+    deleteById(id){
+        return request.delete('/carRecord/deleteById/'+id)
     },
-    updateById(data) {
-        return request.put('/transaction/updateById', data)
+    updateById(data){
+        return request.put('/carRecord/updateById',data)
     }
 }
 
 
-//机构收支表管理
-export const receiptPaymentApi = {
-    page(data) {
-        return request.post('/receiptPayment/page', data)
+//保险公司表管理
+export const insureApi={
+    page(data){
+        return request.post('/insure/page',data)
     },
-    listAll() {
-        return request.get('/receiptPayment/listAll')
+    listAll(){
+        return request.get('/insure/listAll')
     },
-    getById(id) {
-        return request.get('/receiptPayment/getById/' + id)
+    getById(id){
+        return request.get('/insure/getById/'+id)
     },
-    add(data) {
-        return request.post('/receiptPayment/add', data)
+    add(data){
+        return request.post('/insure/add',data)
     },
-    deleteById(id) {
-        return request.delete('/receiptPayment/deleteById/' + id)
+    deleteById(id){
+        return request.delete('/insure/deleteById/'+id)
     },
-    updateById(data) {
-        return request.put('/receiptPayment/updateById', data)
+    updateById(data){
+        return request.put('/insure/updateById',data)
+    }
+}
+
+
+
+//险种管理
+export const insureTypeApi={
+    page(data){
+        return request.post('/insureType/page',data)
+    },
+    listAll(){
+        return request.get('/insureType/listAll')
+    },
+    getById(id){
+        return request.get('/insureType/getById/'+id)
+    },
+    add(data){
+        return request.post('/insureType/add',data)
+    },
+    deleteById(id){
+        return request.delete('/insureType/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/insureType/updateById',data)
     }
 }

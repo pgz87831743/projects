@@ -1,27 +1,32 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="5" :offset="1">
-        <el-input v-model="page.search" placeholder="请输入机构名称或级别" clearable @clear="this.initTableData"/>
+      <el-col :span="1">
+        <el-button type="primary" @click="clickButton('add')">新增</el-button>
       </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button type="success" @click="search">搜索</el-button>
-      </el-col>
+      <!--      <el-col :span="5" :offset="1">-->
+      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1" :offset="1">-->
+      <!--        <el-button type="success" @click="search">搜索</el-button>-->
+      <!--      </el-col>-->
     </el-row>
     <el-row>
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
                   :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
-                  :cell-style="{textAlign:'center',padding:'10px'}">
-          <el-table-column prop="name" label="机构名称"/>
-          <el-table-column prop="level" label="机构级别"/>
-          <el-table-column prop="startDate" label="创建时间"/>
-          <el-table-column prop="age" label="年龄"/>
-          <el-table-column prop="endDate" label="注销时间"/>
-          <el-table-column prop="stats" label="状态"/>
+                  :cell-style="{textAlign:'center'}">
+          <el-table-column prop="carId" label="车辆"/>
+          <el-table-column prop="description" label="事故内容"/>
+          <el-table-column prop="score" label="评分内容"/>
+          <el-table-column prop="driverId" label="司机"/>
+          <el-table-column prop="returnCarInfo" label="还车信息"/>
+          <el-table-column prop="createTime" label="创建时间"/>
+          <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
               <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
                   size="small"
                   type="danger"
@@ -35,22 +40,21 @@
 
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" size="large" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="机构名称">
-          <el-input v-model="form.name" placeholder="请输入"/>
+      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+        <el-form-item label="车辆">
+          <el-input v-model="form.carId" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="创建时间">
-          <el-date-picker value-format="YYYY-MM-DD" v-model="form.startDate"></el-date-picker>
+        <el-form-item label="事故内容">
+          <el-input v-model="form.description" placeholder="请输入"/>
         </el-form-item>
-
-        <el-form-item label="注销时间">
-          <el-date-picker value-format="YYYY-MM-DD" v-model="form.endDate"></el-date-picker>
+        <el-form-item label="评分内容">
+          <el-input v-model="form.score" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.stats">
-            <el-radio name="stats" label="在运营"></el-radio>
-            <el-radio name="stats" label="注销"></el-radio>
-          </el-radio-group>
+        <el-form-item label="司机">
+          <el-input v-model="form.driverId" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="还车信息">
+          <el-input v-model="form.returnCarInfo" placeholder="请输入"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -83,11 +87,11 @@
 
 <script>
 
-import {deptApi} from "@/api/api";
+import {carRecordApi} from "@/api/api";
 
 
 export default {
-  name: "Dept",
+  name: "CarRecord",
   data() {
     return {
       page: {
@@ -111,7 +115,7 @@ export default {
   methods: {
 
     search() {
-      deptApi.page(this.page)
+      carRecordApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -131,21 +135,21 @@ export default {
         this.dialog.optionName = '新增'
         this.dialog.formDisabled = false
       } else if (type === 'update') {
-        deptApi.getById(row.id).then((resp) => {
+        carRecordApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
-        deptApi.getById(row.id).then((resp) => {
+        carRecordApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        deptApi.deleteById(row.id).then(() => {
+        carRecordApi.deleteById(row.id).then(() => {
           this.initTableData()
         })
       }
@@ -153,7 +157,7 @@ export default {
 
     currentChange(number) {
       this.page.pageNum = number
-      deptApi.page(this.page).then(resp => {
+      carRecordApi.page(this.page).then(resp => {
         this.tableData = resp.data.data.records
         this.total = resp.data.data.total
       })
@@ -162,12 +166,12 @@ export default {
     formSubmit() {
       this.dialog.dialogFormVisible = false
       if (this.dialog.optionValue === 'add') {
-        deptApi.add(this.form)
+        carRecordApi.add(this.form)
             .then(() => {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
-        deptApi.updateById(this.form)
+        carRecordApi.updateById(this.form)
             .then(() => {
               this.initTableData();
             })
@@ -180,7 +184,7 @@ export default {
     },
 
     initTableData() {
-      deptApi.page(this.page)
+      carRecordApi.page(this.page)
           .then(resp => {
             this.tableData = resp.data.data.records
             this.total = resp.data.data.total
@@ -236,4 +240,3 @@ export default {
 }
 
 </style>
-

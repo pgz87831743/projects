@@ -56,9 +56,9 @@
                         <el-form-item label="角色">
                           <el-select v-model="user.role" placeholder="请选择" class="sel">
                             <el-option value="ADMIN" label="管理员"/>
-                            <el-option value="SALESMAN" label="业务员"/>
-                            <el-option value="TREASURER" label="财务员"/>
-                            <el-option value="ADMINISTRATIVE" label="行政员"/>
+                            <el-option value="VEHICLE_MANAGER" label="车辆管理员"/>
+                            <el-option value="DRIVER" label="司机"/>
+                            <el-option value="USER" label="用户"/>
                           </el-select>
                         </el-form-item>
                       </el-col>
@@ -70,18 +70,6 @@
                         </el-form-item>
                       </el-col>
                       <el-col :span="11">
-                        <el-form-item label="机构">
-                          <el-tree style="width: 300px;min-height:100px; max-height: 100px;overflow: auto"
-                                   :data="deptTree"
-                                   :props="defaultProps"
-                                   ref="tree"
-                                   @check-change="orgCheckChange"
-                                   show-checkbox
-                                   :check-strictly="true"
-                                   node-key="id"
-                          />
-                        </el-form-item>
-
                       </el-col>
                     </el-row>
                     <el-row :gutter="10">
@@ -135,7 +123,7 @@
 
 <script>
 
-import {deptApi, register, systemCaptcha} from "@/api/api";
+import {register, systemCaptcha} from "@/api/api";
 import {useStore} from 'vuex'
 import router from "@/router";
 import {Lock, User, View} from "@element-plus/icons-vue";
@@ -170,28 +158,16 @@ export default {
         confirmPassword: '',
         uuid: '',
         userCode: '',
+        role:'管理员'
       },
-      deptTree: [],
-      defaultProps:{
-        children:'child',
-        label:'name'
-      },
+
       selectOrg:[]
     }
   },
   components: {},
   methods: {
 
-    orgCheckChange(data, checked, indeterminate) {
-      if (checked){
-        this.$refs.tree.setCheckedKeys([data.id],false)
-        this.user.dept=data.id
-        console.log(indeterminate, '子树中选中状态')
-      }else if(data.id===this.user.dept) {
-        this.user.dept=null
-      }
 
-    },
 
     toLoginHandler() {
       router.push({path: '/login'})
@@ -213,19 +189,14 @@ export default {
       }))
     },
 
-    initDeptTree(){
-      deptApi.deptTree()
-          .then((resp)=>{
-            this.deptTree=resp.data.data
-          })
-    }
+
   },
   mounted() {
     systemCaptcha().then((resp) => {
       this.user = resp.data.data;
     })
 
-    this.initDeptTree()
+
   },
 
 }

@@ -25,19 +25,11 @@
             </el-form-item>
             <el-form-item label="角色">
               <span v-if="form.role==='ADMIN'">管理员</span>
-              <span v-if="form.role==='SALESMAN'">业务员</span>
-              <span v-if="form.role==='TREASURER'">财务员</span>
-              <span v-if="form.role==='ADMINISTRATIVE'">行政员</span>
+              <span v-if="form.role==='VEHICLE_MANAGER'">车辆管理员</span>
+              <span v-if="form.role==='DRIVER'">司机</span>
+              <span v-if="form.role==='USER'">用户</span>
             </el-form-item>
-            <el-form-item label="公司">
-              {{form.deptInfo.name}}
-            </el-form-item>
-            <el-form-item label="入职时间">
-             {{form.startTime}}
-            </el-form-item>
-            <el-form-item label="工龄">
-              {{form.seniority}}
-            </el-form-item>
+
 
           </el-form>
         </el-col>
@@ -60,7 +52,7 @@
 <script>
 
 
-import {deptApi, sysUserApi} from "@/api/api";
+import {systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
 
 export default {
@@ -91,7 +83,7 @@ export default {
     },
 
     initUserInfo() {
-      deptApi.getCurryDeptUser()
+      systemCurrentUser()
           .then((resp) => {
             this.form = resp.data.data
           })
