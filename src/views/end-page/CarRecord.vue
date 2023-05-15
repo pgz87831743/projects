@@ -24,7 +24,7 @@
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button v-if="scope.row.returnCarInfo==='使用中'" size="small" type="success" @click="clickButton('update', scope.row)">还车</el-button>
+              <el-button v-if="scope.row.returnCarInfo==='使用中'&&authShow(['USER'])" size="small" type="success" @click="clickButton('update', scope.row)">还车</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
                   size="small"
@@ -75,6 +75,26 @@
           </el-form-item>
           <el-form-item label="还车信息">
             <el-input  v-model="form.returnCarInfo" placeholder="请输入"/>
+          </el-form-item>
+        </div>
+
+        <div v-if="dialog.optionValue==='detail'">
+          <el-form-item label="车辆">
+            <el-select v-model="form.carId" disabled>
+              <el-option v-for="item in carList" v-bind:key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="司机">
+            <el-select v-model="form.driverId"  disabled>
+              <el-option v-for="item in driverList" v-bind:key="item.id" :label="item.username" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="评分">
+            <el-input type="number" v-model="form.score" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="还车信息">
+            <el-input  v-model="form.returnCarInfo" placeholder="请输入" />
           </el-form-item>
         </div>
 
