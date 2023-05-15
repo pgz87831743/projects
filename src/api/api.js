@@ -37,6 +37,9 @@ export const sysUserApi = {
     driverPage(data) {
         return request.post('/sys/sysUser/driverPage', data)
     },
+    carUserPage(data) {
+        return request.post('/sys/sysUser/carUserPage', data)
+    },
     driverList() {
         return request.post('/sys/sysUser/driverList')
     },

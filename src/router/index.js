@@ -83,6 +83,11 @@ const routes = [
                 path: "/CapabilityAssessment",
                 name: "CapabilityAssessment",
                 component: () => import('../views/end-page/CapabilityAssessment'),
+            },
+            {
+                path: "/CarUserManage",
+                name: "CarUserManage",
+                component: () => import('../views/end-page/CarUserManage'),
             }
         ]
     }
