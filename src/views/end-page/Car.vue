@@ -24,6 +24,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="color" label="车辆颜色"/>
+          <el-table-column prop="weight" label="重量"/>
           <el-table-column prop="model" label="车型"/>
           <el-table-column prop="insureInfo.name" label="保险公司"/>
           <el-table-column prop="insureTypeInfo.name" label="险种"/>
@@ -72,6 +73,9 @@
         </el-form-item>
         <el-form-item label="车辆颜色">
           <el-input v-model="form.color" placeholder="请输入"/>
+        </el-form-item>
+        <el-form-item label="重量">
+          <el-input v-model="form.weight" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="车型">
           <el-input v-model="form.model" placeholder="请输入"/>
