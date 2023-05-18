@@ -51,7 +51,7 @@
                          @show="economyHandle(scope.row.economyId)">
               <template #default>
                 <div v-if="this.economy">
-                  <div>GDP(亿): {{this.economy.total }}</div>
+                  <div>GDP(亿): {{this.economy.gdp }}</div>
                   <div>GDP增长率: {{this.economy.gdpGrowthRate }}</div>
                   <div>人均GDP: {{this.economy.perCapitaGdp }}</div>
                   <div>人均可支配收入: {{this.economy.disposableIncome }}</div>
