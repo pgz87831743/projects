@@ -3,53 +3,53 @@
 
     <div class="div1">
       <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       分级机构人员管理系统
+        分级机构人员管理系统
       </div>
       <div>
         <div class="div2">
           <div class="div3">
-              <el-card :shadow="'hover'">
-                <template #header>
-                  <div style="font-size: 26px">
-                    请登录
+            <el-card :shadow="'hover'">
+              <template #header>
+                <div style="font-size: 26px">
+                  请登录
+                </div>
+              </template>
+              <el-row justify="center">
+                <el-col :span="20">
+                  <el-form>
+                    <el-form-item>
+                      <el-input  :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-input  type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
+                    </el-form-item>
+                    <el-row :gutter="10">
+                      <el-col :span="15">
+                        <el-form-item>
+                          <el-input  :prefix-icon="View"  v-model="user.userCode" placeholder="请输入验证码"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-form-item>
+                          <img :src="user.code" @click="changeCapHandler">
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                  </el-form>
+                  <div>
+                    <el-row >
+                      <el-col :span="12">
+                        <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
+                      </el-col>
+                      <el-col style="text-align: right" :span="12">
+                        <el-link  type="danger" :underline="false">忘记密码?</el-link>
+                      </el-col>
+                    </el-row>
                   </div>
-                </template>
-                <el-row justify="center">
-                  <el-col :span="20">
-                    <el-form>
-                      <el-form-item>
-                        <el-input  :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
-                      </el-form-item>
-                      <el-form-item>
-                        <el-input  type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
-                      </el-form-item>
-                      <el-row :gutter="10">
-                        <el-col :span="15">
-                          <el-form-item>
-                            <el-input  :prefix-icon="View"  v-model="user.userCode" placeholder="请输入验证码"></el-input>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="9">
-                          <el-form-item>
-                            <img :src="user.code" @click="changeCapHandler">
-                          </el-form-item>
-                        </el-col>
-                      </el-row>
-                    </el-form>
-                    <div>
-                      <el-row >
-                        <el-col :span="12">
-                          <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
-                        </el-col>
-                        <el-col style="text-align: right" :span="12">
-                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
-                        </el-col>
-                      </el-row>
-                    </div>
-                    <el-button  @keyup.down.enter="alert('123')" @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
-                  </el-col>
-                </el-row>
-              </el-card>
+                  <el-button  @keyup.down.enter="alert('123')" @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
+                </el-col>
+              </el-row>
+            </el-card>
           </div>
         </div>
       </div>
