@@ -1,30 +1,34 @@
 <template>
   <div class="div">
     <div>
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <el-menu
-              class="el-menu-vertical-demo"
-              :default-active="$route.fullPath"
-              router
-          >
-            <el-menu-item index="/UserIfoDetail">
-              <span>个人信息</span>
-            </el-menu-item>
-            <el-menu-item index="/MyHealthLog">
-              <span>我的健康日志</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <span>我的订单</span>
-            </el-menu-item>
-          </el-menu>
-        </el-col>
-        <el-col :span="18">
-          <router-view></router-view>
-        </el-col>
-      </el-row>
+      <el-card shadow="hover" class="box-card">
+        <template #header>
+          <span class="pin-lun">我的健康日志</span>
+        </template>
+        <el-table :data="tableData" border style="width: 100%">
+          <el-table-column prop="content" label="日志内容"/>
+          <el-table-column prop="sleepTime" label="睡眠时间"/>
+          <el-table-column prop="mood" label="心情"/>
+          <el-table-column prop="smoke" label="抽烟"/>
+          <el-table-column prop="weight" label="体重"/>
+          <el-table-column prop="pressure" label="压力"/>
+          <el-table-column prop="bpH" label="高压"/>
+          <el-table-column prop="dbL" label="底压"/>
+          <el-table-column prop="bloodSugar" label="血糖"/>
+          <el-table-column prop="eatFood" label="吃的食物"/>
+          <el-table-column prop="createTime" label="创建时间"/>
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button
+                  size="small"
+                  type="danger"
+                  @click="deleteById(scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
     </div>
-
 
 
   </div>
@@ -37,7 +41,7 @@ import {healthLogsApi, systemCurrentUser, sysUserApi} from "@/api/api";
 import {getUser} from "@/utils/authutil";
 
 export default {
-  name: "PersonalCenter",
+  name: "UserIfoDetail",
 
   data() {
     return {
@@ -77,7 +81,7 @@ export default {
     saveUserInfoHandle() {
       sysUserApi.updateById(this.form)
           .then(() => {
-            window.location.href = '/UserIfoDetail'
+            window.location.href = '/PersonalCenter'
           })
     },
     initTableList() {
@@ -125,12 +129,6 @@ export default {
     float: right;
     margin: 0 5px;
   }
-
-}
-
-.el-menu {
-  height: 94vh;
-  border: none;
 
 }
 

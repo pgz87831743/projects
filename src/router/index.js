@@ -36,6 +36,17 @@ const routes = [
                 path: "/PersonalCenter",
                 name: "PersonalCenter",
                 component: () => import('../views/font-page/PersonalCenter'),
+                children:[
+                    {
+                        path: "/UserIfoDetail",
+                        name: "UserIfoDetail",
+                        component: () => import('../views/person-info/UserIfoDetail'),
+                    },{
+                        path: "/MyHealthLog",
+                        name: "MyHealthLog",
+                        component: () => import('../views/person-info/MyHealthLog'),
+                    },
+                ]
             },
             {
                 path: "/HealthLogsFont",
