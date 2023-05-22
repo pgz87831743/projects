@@ -13,6 +13,8 @@
         <el-menu-item index="/TeacherCheckup">教师体检管理</el-menu-item>
         <el-menu-item index="/TeacherFoods">教师饮食管理</el-menu-item>
         <el-menu-item index="/HealthLogsFont">教师健康日志</el-menu-item>
+        <el-menu-item index="/SearchShop">健康商城</el-menu-item>
+        <el-menu-item index="/ShoppingCar">购物车</el-menu-item>
         <el-menu-item index="/UserIfoDetail">个人信息</el-menu-item>
         <div class="flex-grow" />
         <el-sub-menu index="2-4">

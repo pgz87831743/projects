@@ -14,7 +14,7 @@
             <el-menu-item index="/MyHealthLog">
               <span>我的健康日志</span>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="MyOrder">
               <span>我的订单</span>
             </el-menu-item>
           </el-menu>

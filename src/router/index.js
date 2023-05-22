@@ -20,6 +20,9 @@ const routes = [
     {
         path: '/NewsInfo',
         component: () => import('../views/font-page/NewsInfo')
+    },{
+        path: '/OrderDetail',
+        component: () => import('../views/font-page/OrderDetail')
     },
 
 
@@ -45,6 +48,10 @@ const routes = [
                         path: "/MyHealthLog",
                         name: "MyHealthLog",
                         component: () => import('../views/person-info/MyHealthLog'),
+                    },{
+                        path: "/MyOrder",
+                        name: "MyOrder",
+                        component: () => import('../views/person-info/MyOrder'),
                     },
                 ]
             },
@@ -62,7 +69,22 @@ const routes = [
                 path: "/TeacherCheckup",
                 name: "TeacherCheckup",
                 component: () => import('../views/font-page/TeacherCheckup'),
-            }
+            },
+            {
+                path: "/SearchShop",
+                name: "SearchShop",
+                component: () => import('../views/font-page/SearchShop.vue'),
+            },
+            {
+                path: "/ShoppingCar",
+                name: "ShoppingCar",
+                component: () => import('../views/font-page/ShoppingCar'),
+            },
+            {
+                path: "/ProductDetail",
+                name: "ProductDetail",
+                component: () => import('../views/font-page/ProductDetail.vue'),
+            },
 
         ]
     }

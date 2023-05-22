@@ -50,6 +50,52 @@
         </div>
       </el-card>
     </div>
+    <div class="div">
+      <el-card class="box-card" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <span class="pin-lun">商品推荐</span>
+          </div>
+        </template>
+        <div class="row-div">
+          <el-row :gutter="12" >
+            <el-col v-bind:key="item.id" v-for="item in shopList" :span="6">
+              <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
+                <div>
+                  <div>
+                    <img :src="item.cover" height="300">
+                  </div>
+                  <div>
+                    {{ item.title }}
+                  </div>
+                  <div class="card-div">
+                    <div>
+
+                    </div>
+                    <div>
+                      <el-tag style="color:deepskyblue;">{{ item.foodType }}</el-tag>     <span style="color:salmon;font-size: 20px">￥{{ item.price }}</span>       {{ item.storeName }}
+                    </div>
+                    <div>
+                      <el-icon>
+                        <View/>
+                      </el-icon>
+                      {{item.times}}
+                    </div>
+                    <div>
+                      <el-icon>
+                        <Comment/>
+                      </el-icon>
+                      {{item.commentNum}}
+                    </div>
+                  </div>
+                </div>
+              </el-card>
+            </el-col>
+          </el-row>
+
+        </div>
+      </el-card>
+    </div>
 
   </div>
 </template>
@@ -57,13 +103,17 @@
 <script>
 
 
-import {newsApi} from "@/api/api";
+import {goodsApi, newsApi} from "@/api/api";
+import router from "@/router";
+import {Comment, View} from "@element-plus/icons-vue";
 
 export default {
   name: "IndexPage",
+  components: {Comment, View},
   data() {
     return {
       list: [],
+      shopList: [],
       top: [
         require("@/assets/index1.jpg"),
         require("@/assets/index2.jpg"),
@@ -79,10 +129,25 @@ export default {
           .then((resp)=>{
             this.list=resp.data.data
           })
+    },
+
+    fileDetail(item) {
+      console.log(item)
+      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
+      window.open(routeData.href, '_blank');
+      // router.push({path:"/FileDetail",query:{id:item.id}})
+    },
+
+    inithotGoods() {
+      goodsApi.hotGoods()
+          .then((resp) => {
+            this.shopList = resp.data.data
+          })
     }
   },
   mounted() {
     this.initNews()
+    this.inithotGoods()
   }
 }
 </script>
@@ -93,6 +158,32 @@ export default {
   height: 450px;
   margin: 20px 30px;
   display: inline-block;
+}
+
+.card-div {
+  //background: aqua;
+  height: 35px;
+  margin-top: 10px;
+
+  div {
+    display: inline-block;
+    float: left;
+  }
+
+  div:nth-child(2) {
+    height: 100%;
+    line-height: 35px;
+    margin-left: 5px;
+    font-size: 10px;
+  }
+
+  div:nth-child(n+3) {
+    float: right;
+    font-size: 10px;
+    line-height: 35px;
+    margin: 0 5px;
+
+  }
 }
 
 </style>

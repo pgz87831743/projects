@@ -160,3 +160,113 @@ export const foodsApi = {
 export const statics = () => {
     return request.get('/healthCheckup/statics')
 }
+
+
+
+
+
+//商品管理相关
+export const goodsApi = {
+    page(data) {
+        return request.post('/goods/page', data)
+    },
+    getById(id) {
+        return request.get('/goods/getById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goods/updateById', data)
+    },
+    add(data) {
+        return request.post('/goods/add', data)
+    },
+    hotGoods() {
+        return request.get('/goods/hotGoods')
+    },
+    deleteById(id) {
+        return request.delete('/goods/deleteById/' + id)
+    },
+
+    searchGoods(data) {
+        return request.post('/goods/searchGoods', data)
+    }
+}
+
+
+//评论
+export const commentAdd = (data) => {
+    return request.post('/comment/add', data)
+}
+
+
+//购物车管理
+export const goodsCarApi = {
+    page(data) {
+        return request.post('/goodsCar/page', data)
+    },
+    getById(id) {
+        return request.get('/goodsCar/getById/' + id)
+    },
+    add(data) {
+        return request.post('/goodsCar/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/goodsCar/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goodsCar/updateById', data)
+    },
+
+    //前台
+    pageUser(data) {
+        return request.post('/goodsCar/pageUser', data)
+    },
+    submitBefore(data) {
+        return request.post('/goodsCar/submitBefore', data)
+    },
+    submitOrder(data) {
+        return request.post('/goodsCar/submitOrder', data)
+    },
+}
+
+//订单管理
+export const goodsOrderApi = {
+    page(data) {
+        return request.post('/goodsOrder/page', data)
+    },
+    listAll() {
+        return request.get('/goodsOrder/listAll')
+    },
+    getById(id) {
+        return request.get('/goodsOrder/getById/' + id)
+    },
+    add(data) {
+        return request.post('/goodsOrder/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/goodsOrder/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goodsOrder/updateById', data)
+    }
+}
+
+
+//订单明细管理
+export const goodsOrderDetailApi = {
+    page(data) {
+        return request.post('/goodsOrderDetail/page', data)
+    },
+    getById(id) {
+        return request.get('/goodsOrderDetail/getById/' + id)
+    },
+    add(data) {
+        return request.post('/goodsOrderDetail/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/goodsOrderDetail/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goodsOrderDetail/updateById', data)
+    }
+}
+
