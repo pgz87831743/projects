@@ -37,6 +37,11 @@
               <el-form-item label="邮箱：">
                 <el-input v-model="form.email"></el-input>
               </el-form-item>
+
+              <el-form-item label="收货地址：">
+                <el-input v-model="form.address"></el-input>
+              </el-form-item>
+
               <el-form-item label="电话：">
                 <el-input v-model="form.phone"></el-input>
               </el-form-item>
@@ -112,7 +117,7 @@ export default {
     saveUserInfoHandle() {
       sysUserApi.updateById(this.form)
           .then(() => {
-            window.location.href = '/PersonalCenter'
+            window.location.href = '/UserIfoDetail'
           })
     },
     initTableList() {
