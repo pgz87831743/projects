@@ -2,8 +2,8 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-        分级机构人员管理系统
+      <div style="text-align: left;color:#edd2d2;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+        人口数据可视化平台
       </div>
       <div>
         <div class="div2">
@@ -22,6 +22,12 @@
                     </el-form-item>
                     <el-form-item>
                       <el-input  type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-radio-group v-model="user.role">
+                          <el-radio label="USER"  >用户</el-radio>
+                          <el-radio label="ADMIN"  >管理员</el-radio>
+                        </el-radio-group>
                     </el-form-item>
                     <el-row :gutter="10">
                       <el-col :span="15">
@@ -42,7 +48,7 @@
                         <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
                       </el-col>
                       <el-col style="text-align: right" :span="12">
-                        <el-link  type="danger" :underline="false">忘记密码?</el-link>
+                        <el-link  type="danger" :underline="false" @click="forgotPassword" >忘记密码?</el-link>
                       </el-col>
                     </el-row>
                   </div>
@@ -94,6 +100,7 @@ export default {
         code:'',
         uuid:'',
         userCode:'',
+        role:'用户'
       }
     }
   },
@@ -102,6 +109,9 @@ export default {
 
     registerHandler(){
       router.push({path: '/register'})
+    },
+    forgotPassword(){
+      router.push({path: '/ForgotPassword'})
     },
 
     changeCapHandler(){

@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">分级机构人员管理系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">人口数据可视化平台</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
@@ -43,46 +43,8 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-
             <el-menu-item index="/PersonalCenter">个人基本信息</el-menu-item>
-            <el-sub-menu index="/1"  v-show="authShow(['SALESMAN'])">
-              <template #title>
-                交易业务
-              </template>
-              <el-menu-item index="/TransactionEntry">交易录入</el-menu-item>
-              <el-menu-item index="/BusinessList">业务列表</el-menu-item>
-            </el-sub-menu>
-
-
-            <el-menu-item index="/PersonnelPerformance" v-show="authShow(['TREASURER'])">人员业绩</el-menu-item>
-            <el-sub-menu index="/2" v-show="authShow(['TREASURER'])">
-              <template #title>
-                机构收支信息管理
-              </template>
-              <el-menu-item index="/ReceiptPaymentEntry">机构收支信息管理</el-menu-item>
-              <el-menu-item index="/ReceiptPaymentList">机构收支信息表</el-menu-item>
-            </el-sub-menu>
-            <el-menu-item index="/SalaryPerformance" v-show="authShow(['TREASURER'])">人员工资绩效管理</el-menu-item>
-
-
-          <el-sub-menu index="/3" v-show="authShow(['ADMINISTRATIVE','ADMIN'])">
-            <template #title>
-              人事管理
-            </template>
-            <el-menu-item index="/OnboardingReview" v-show="authShow(['ADMINISTRATIVE','ADMIN'])">入职审核</el-menu-item>
-            <el-menu-item index="/PersonnelList" v-show="authShow(['ADMINISTRATIVE'])">人员列表</el-menu-item>
-          </el-sub-menu>
-
-
-
-          <el-menu-item index="/RoleManage" v-show="authShow(['ADMIN'])">角色管理</el-menu-item>
-          <el-sub-menu index="/6" v-show="authShow(['ADMIN'])">
-            <template #title>
-              机构管理
-            </template>
-            <el-menu-item index="/CreateDept">创建下机机构</el-menu-item>
-            <el-menu-item index="/Dept">下级机构列表</el-menu-item>
-          </el-sub-menu>
+            <el-menu-item index="/Popula">人口统计</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="span.right">
