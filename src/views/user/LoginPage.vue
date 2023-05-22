@@ -150,7 +150,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-sora-shimazaki-5673502.jpg");
+  background-image:url("@/assets/login.jpg");
   background-size: 1920px;
   height: 100vh;
 }
