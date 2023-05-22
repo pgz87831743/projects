@@ -164,8 +164,8 @@
             <template #default="scope">
               <div v-if="scope.row.cityId!=='-1'">
                 <div v-if="authShow(['USER'])">
-                  <el-button size="small" type="success" @click="clickButton('update', scope.row)">人口预测</el-button>
-                  <el-button size="small" type="success" @click="clickButton('update', scope.row)">可视化</el-button>
+                  <el-button size="small" type="success" @click="predictionHandle(scope.row)">人口预测</el-button>
+                  <el-button size="small" type="success" @click="visualizationHandle(scope.row)">可视化</el-button>
                 </div>
                 <div v-if="authShow(['ADMIN'])">
                   <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
@@ -334,9 +334,28 @@ export default {
           })
     },
 
-    onHotMap(value){
-      alert(value)
+    onHotMap(year){
+      populaApi.hotMap(year)
+          .then((resp)=>{
+            console.log(resp)
+          })
     },
+
+
+    visualizationHandle(value){
+      populaApi.visualization(value)
+          .then((resp)=>{
+            console.log(resp)
+          })
+    },
+
+    predictionHandle(value){
+      populaApi.prediction(value)
+          .then((resp)=>{
+            console.log(resp)
+          })
+    },
+
 
     clickButton(type, row) {
       this.dialog.optionValue = type

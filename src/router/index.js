@@ -34,12 +34,6 @@ const routes = [
                 name: "PersonalCenter",
                 component: () => import('../views/end-page/PersonalCenter'),
             },
-
-            {
-                path: "/SysUser",
-                name: "SysUser",
-                component: () => import('../views/end-page/SysUser'),
-            },
             {
                 path: "/Popula",
                 name: "Popula",
