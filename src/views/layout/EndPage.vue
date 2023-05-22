@@ -90,6 +90,17 @@
               <el-menu-item index="/HealthCheckup">教师体检信息管理</el-menu-item>
               <el-menu-item index="/HealthLogs">教师健康日志</el-menu-item>
             </el-sub-menu>
+
+
+
+
+            <el-menu-item index="/GoodsManagement">
+              <el-icon>
+                <Monitor/>
+              </el-icon>
+              <template #title>商品管理</template>
+            </el-menu-item>
+
           </el-menu>
         </el-col>
         <el-col :span="span.right">

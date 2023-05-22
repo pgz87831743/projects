@@ -60,9 +60,9 @@
         <div class="row-div">
           <el-row :gutter="12" >
             <el-col v-bind:key="item.id" v-for="item in shopList" :span="6">
-              <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
+              <el-card shadow="hover"  style="margin: 10px">
                 <div>
-                  <div>
+                  <div @click="fileDetail(item)" >
                     <img :src="item.cover" height="300">
                   </div>
                   <div>

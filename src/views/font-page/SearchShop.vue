@@ -7,7 +7,7 @@
           <div class="card-header">
 
             <el-input
-                v-model="searchParams.searchText"
+                v-model="page.search"
                 placeholder="请输入搜索内容"
                 class="input-with-select"
             >
@@ -22,9 +22,9 @@
 
         <el-row :gutter="12">
           <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-            <el-card shadow="hover" @click="fileDetail(item)" style="margin: 10px">
+            <el-card shadow="hover" style="margin: 10px">
               <div>
-                <div>
+                <div @click="fileDetail(item)" >
                   <img :src="item.cover" height="300">
                 </div>
                 <div>
@@ -69,8 +69,8 @@ export default {
   components: {Comment, View},
   data() {
     return {
-      searchParams: {
-        searchText: "",
+      page: {
+        search: "",
       },
       list: []
     }
@@ -82,7 +82,7 @@ export default {
     },
 
     searchHandle() {
-      goodsApi.searchGoods(this.searchParams)
+      goodsApi.searchGoods(this.page)
           .then((resp) => {
             this.list = resp.data.data
           })
@@ -90,7 +90,7 @@ export default {
 
   },
   mounted() {
-
+      this.searchHandle(this.page)
   }
 }
 </script>

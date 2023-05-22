@@ -102,6 +102,10 @@ const routes = [
                 path: "/AdminManagement",
                 name: "AdminManagement",
                 component: () => import('../views/end-page/AdminManagement'),
+            },{
+                path: "/GoodsManagement",
+                name: "GoodsManagement",
+                component: () => import('../views/end-page/GoodsManagement'),
             },
             {
                 path: "/EndIndex",
