@@ -1,52 +1,53 @@
 <template>
   <div>
-    <div class="mean1">
-      <el-affix>
-        <el-menu
-            class="el-menu-demo"
-            mode="horizontal"
-            :ellipsis="false"
-            router
-            :default-active="$route.fullPath"
-        >
-          <el-menu-item>
-            <div style="color: green;font-size: 20px;font-weight: bold">线上个性化租房系统</div>
-          </el-menu-item>
-          <div class="flex-grow"/>
-          <el-sub-menu index="2-4">
-            <template #title>
-              <el-avatar :src="user.avatar"></el-avatar>
-            </template>
-            <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
-            <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
+   <div class="mean1">
+     <el-affix >
+       <el-menu
+           class="el-menu-demo"
+           mode="horizontal"
+           :ellipsis="false"
+           router
+           :default-active="$route.fullPath"
+       >
+         <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物领养救助系统</div></el-menu-item>
+         <div class="flex-grow" />
+         <el-sub-menu index="2-4">
+           <template #title>
+             <el-avatar :src="user.avatar"></el-avatar>
+           </template>
+           <el-menu-item index="/PersonalCenter">我的主页</el-menu-item>
+           <el-menu-item index="/login" @click="logout">退出登录</el-menu-item>
 
-          </el-sub-menu>
+         </el-sub-menu>
 
-        </el-menu>
-      </el-affix>
-    </div>
-    <div class="mean2">
-      <el-row >
-        <el-col :span="3">
-          <el-menu
-              class="el-menu-vertical-demo"
-              router
-              :default-active="$route.fullPath"
-          >
-            <el-menu-item index="/UserManagement">用户管理</el-menu-item>
-            <el-menu-item index="/Hours">房源管理</el-menu-item>
-
-          </el-menu>
-        </el-col>
-        <el-col :span="21">
-          <div class="div">
-            <el-card shadow="hover">
-              <router-view/>
-            </el-card>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
+       </el-menu>
+     </el-affix>
+   </div>
+   <div class="mean2">
+     <el-row :gutter="10">
+       <el-col :span="3">
+         <el-menu
+             class="el-menu-vertical-demo"
+             router
+             :default-active="$route.fullPath"
+         >
+           <el-menu-item index="/UserManagement">用户管理</el-menu-item>
+           <el-menu-item index="/GoodsManagement">宠物商品管理</el-menu-item>
+           <el-menu-item index="/Pet">宠物管理</el-menu-item>
+           <el-menu-item index="/Adopt">领养管理</el-menu-item>
+           <el-menu-item index="/AdoptExamine">领养审核管理</el-menu-item>
+           <el-menu-item index="/News">陪宠教学分享</el-menu-item>
+         </el-menu>
+       </el-col>
+       <el-col :span="21">
+         <div class="div">
+           <el-card shadow="hover">
+             <router-view/>
+           </el-card>
+         </div>
+       </el-col>
+     </el-row>
+   </div>
 
   </div>
 </template>
@@ -55,7 +56,7 @@
 <script>
 
 import {logout, systemCurrentUser} from "@/api/api";
-import {removeItem} from "@/utils/storage";
+import { removeItem} from "@/utils/storage";
 import router from "@/router";
 
 export default {

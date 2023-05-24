@@ -21,14 +21,14 @@ request.interceptors.response.use(
                 title: 'Success',
                 message: response.data.msg,
                 type: 'success',
-                duration:2000
+                duration:800
             })
         }else if(code>200){
             ElNotification({
                 title: 'Error',
                 message: response.data.msg,
                 type: 'error',
-                duration:2000
+                duration:800
             })
         }
         if (response.request.responseURL.endsWith('/system/login')){

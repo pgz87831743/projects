@@ -1,8 +1,10 @@
 <template>
   <div class="div">
-    <el-carousel :interval="3000" type="card" height="380px">
+    <el-carousel :interval="4000" type="card" height="480px">
       <el-carousel-item v-for="item in top" :key="item">
-        <img :src="item" width="930" >
+        <div >
+          <img :src="item.img" height="480" >
+        </div>
       </el-carousel-item>
     </el-carousel>
 
@@ -10,16 +12,52 @@
     <el-card class="box-card" shadow="hover">
       <template #header>
         <div class="card-header">
-          <span class="pin-lun">房源推荐</span>
+          <span class="pin-lun">宠物领养</span>
+        </div>
+      </template>
+      <div class="row-div">
+        <el-row :gutter="12" >
+          <el-col v-bind:key="item.id" v-for="item in top" :span="6">
+            <el-card shadow="hover" @click="petDetail(item)"  style="margin: 10px">
+              <div>
+                <div>
+                  <img :src="item.img" height="300">
+                </div>
+                <div>
+                  {{item.type}}-{{ item.name }}
+                </div>
+                <div class="card-div">
+                  <div>
+
+                  </div>
+                  <div>
+                    {{ item.sex }}
+                  </div>
+                  <div>
+                    {{item.createTime}}
+                  </div>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+
+      </div>
+    </el-card>
+
+    <el-card class="box-card" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span class="pin-lun">产品推荐</span>
         </div>
       </template>
       <div class="row-div">
         <el-row :gutter="12" >
           <el-col v-bind:key="item.id" v-for="item in list" :span="6">
-            <el-card shadow="hover" @click="hoursDetail(item)"  style="margin: 10px">
+            <el-card shadow="hover" @click="fileDetail(item)"  style="margin: 10px">
               <div>
                 <div>
-                  <img :src="item.img" height="300">
+                  <img :src="item.cover" height="300">
                 </div>
                 <div>
                   {{ item.title }}
@@ -29,9 +67,7 @@
 
                   </div>
                   <div>
-                    <span style="color: #f50f0f;font-size: 26px">{{ item.price }}/每月</span>
-                    <span style="font-size: 18px">-{{ item.area }}/平米</span>
-                    <span style="font-size: 18px"> -{{ item.unitType }}</span>
+                    {{ item.storeName }}
                   </div>
                   <div>
                     <el-icon>
@@ -39,7 +75,12 @@
                     </el-icon>
                    {{item.times}}
                   </div>
-
+                  <div>
+                    <el-icon>
+                      <Comment/>
+                    </el-icon>
+                    {{item.commentNum}}
+                  </div>
                 </div>
               </div>
             </el-card>
@@ -54,47 +95,54 @@
 </template>
 
 <script>
-import { View} from "@element-plus/icons-vue";
-import {hoursApi} from "@/api/api";
+import {Comment, View} from "@element-plus/icons-vue";
+import {goodsApi, petApi} from "@/api/api";
 import router from "@/router";
 
 export default {
   name: "IndexPage",
-  components: { View},
+  components: {Comment, View},
   data() {
     return {
       img: require("@/assets/a.png"),
       list: [],
       top:[
-        require("@/assets/index1.jpg"),
-        require("@/assets/index2.jpg"),
-        require("@/assets/index3.jpg"),
-        require("@/assets/index4.jpg"),
-        require("@/assets/index5.jpg"),
+
       ]
     }
   },
   methods: {
 
-    hoursDetail(item) {
-      let routeData = router.resolve({path: '/HoursDetail', query: {id: item.id}});
+    fileDetail(item) {
+      let routeData = router.resolve({path: '/ProductDetail', query: {id: item.id}});
       window.open(routeData.href, '_blank');
+      // router.push({path:"/FileDetail",query:{id:item.id}})
     },
 
-
+    petDetail(item) {
+      let routeData = router.resolve({path: '/PetDetail', query: {id: item.id}});
+      window.open(routeData.href, '_blank');
+      // router.push({path:"/FileDetail",query:{id:item.id}})
+    },
 
     inithotGoods() {
-      hoursApi.hotGoods()
+      goodsApi.hotGoods()
           .then((resp) => {
             this.list = resp.data.data
           })
     },
 
 
-
+    initPet(){
+      petApi.listAll()
+          .then((resp)=>{
+            this.top=resp.data.data
+          })
+    }
   },
   mounted() {
     this.inithotGoods()
+    this.initPet()
   }
 }
 </script>
@@ -135,7 +183,13 @@ export default {
   text-align: center;
 }
 
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
 
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 
 ::v-deep(.box-card .el-card__header) {
   //border: none;

@@ -53,103 +53,199 @@ export const sysUserApi = {
 
 
 
+//商品管理相关
+export const goodsApi = {
+    page(data) {
+        return request.post('/goods/page', data)
+    },
+    getById(id) {
+        return request.get('/goods/getById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goods/updateById', data)
+    },
+    add(data) {
+        return request.post('/goods/add', data)
+    },
+    hotGoods() {
+        return request.get('/goods/hotGoods')
+    },
+    deleteById(id) {
+        return request.delete('/goods/deleteById/' + id)
+    },
 
-
-
-//用户浏览管理
-export const browsingHistoryApi={
-    page(data){
-        return request.post('/browsingHistory/page',data)
-    },
-    listAll(){
-        return request.get('/browsingHistory/listAll')
-    },
-    getById(id){
-        return request.get('/browsingHistory/getById/'+id)
-    },
-    add(data){
-        return request.post('/browsingHistory/add',data)
-    },
-    deleteById(id){
-        return request.delete('/browsingHistory/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/browsingHistory/updateById',data)
+    searchGoods(data) {
+        return request.post('/goods/searchGoods', data)
     }
 }
 
 
-//房源表管理
-export const hoursApi={
-    page(data){
-        return request.post('/hours/page',data)
+//评论
+export const commentAdd = (data) => {
+    return request.post('/comment/add', data)
+}
+
+
+//购物车管理
+export const goodsCarApi = {
+    page(data) {
+        return request.post('/goodsCar/page', data)
     },
-    listAll(){
-        return request.get('/hours/listAll')
+    getById(id) {
+        return request.get('/goodsCar/getById/' + id)
     },
-    searchHours(text){
-        return request.get('/hours/searchHours?text='+text)
+    add(data) {
+        return request.post('/goodsCar/add', data)
     },
-    hotGoods(){
-        return request.get('/hours/hotGoods')
+    deleteById(id) {
+        return request.delete('/goodsCar/deleteById/' + id)
     },
-    getById(id){
-        return request.get('/hours/getById/'+id)
+    updateById(data) {
+        return request.put('/goodsCar/updateById', data)
     },
-    add(data){
-        return request.post('/hours/add',data)
+
+    //前台
+    pageUser(data) {
+        return request.post('/goodsCar/pageUser', data)
     },
-    deleteById(id){
-        return request.delete('/hours/deleteById/'+id)
+    submitBefore(data) {
+        return request.post('/goodsCar/submitBefore', data)
     },
-    updateById(data){
-        return request.put('/hours/updateById',data)
+    submitOrder(data) {
+        return request.post('/goodsCar/submitOrder', data)
+    },
+}
+
+//订单管理
+export const goodsOrderApi = {
+    page(data) {
+        return request.post('/goodsOrder/page', data)
+    },
+    listAll() {
+        return request.get('/goodsOrder/listAll')
+    },
+    getById(id) {
+        return request.get('/goodsOrder/getById/' + id)
+    },
+    add(data) {
+        return request.post('/goodsOrder/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/goodsOrder/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/goodsOrder/updateById', data)
     }
 }
 
 
-
-//聊天消息管理
-export const messageApi={
-    page(data){
-        return request.post('/message/page',data)
+//订单明细管理
+export const goodsOrderDetailApi = {
+    page(data) {
+        return request.post('/goodsOrderDetail/page', data)
     },
-    listAll(id){
-        return request.get('/message/listAll?id='+id)
+    getById(id) {
+        return request.get('/goodsOrderDetail/getById/' + id)
     },
-    getById(id){
-        return request.get('/message/getById/'+id)
+    add(data) {
+        return request.post('/goodsOrderDetail/add', data)
     },
-    add(data){
-        return request.post('/message/add',data)
+    deleteById(id) {
+        return request.delete('/goodsOrderDetail/deleteById/' + id)
     },
-    deleteById(id){
-        return request.delete('/message/deleteById/'+id)
-    },
-    updateById(data){
-        return request.put('/message/updateById',data)
+    updateById(data) {
+        return request.put('/goodsOrderDetail/updateById', data)
     }
 }
 
 
-//聊天会话管理
-export const onlineInfoApi={
+//宠物领养信息管理
+export const adoptApi={
     page(data){
-        return request.post('/onlineInfo/page',data)
+        return request.post('/adopt/page',data)
     },
     listAll(){
-        return request.get('/onlineInfo/listAll')
+        return request.get('/adopt/listAll')
     },
     getById(id){
-        return request.get('/onlineInfo/getById/'+id)
+        return request.get('/adopt/getById/'+id)
     },
     add(data){
-        return request.post('/onlineInfo/add',data)
+        return request.post('/adopt/add',data)
     },
     deleteById(id){
-        return request.delete('/onlineInfo/deleteById/'+id)
+        return request.delete('/adopt/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/onlineInfo/updateById',data)
+        return request.put('/adopt/updateById',data)
+    }
+}
+
+
+//宠物信息管理
+export const petApi={
+    page(data){
+        return request.post('/pet/page',data)
+    },
+    listAll(){
+        return request.get('/pet/listAll')
+    },
+    getById(id){
+        return request.get('/pet/getById/'+id)
+    },
+    add(data){
+        return request.post('/pet/add',data)
+    },
+    deleteById(id){
+        return request.delete('/pet/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/pet/updateById',data)
+    }
+}
+
+
+//陪宠经验分享管理
+export const newsApi = {
+    page(data) {
+        return request.post('/news/page', data)
+    },
+    getById(id) {
+        return request.get('/news/getById/' + id)
+    },
+    listAll() {
+        return request.get('/news/listAll/')
+    },
+    add(data) {
+        return request.post('/news/add', data)
+    },
+    deleteById(id) {
+        return request.delete('/news/deleteById/' + id)
+    },
+    updateById(data) {
+        return request.put('/news/updateById', data)
+    }
+}
+
+
+//宠物领养审核管理
+export const adoptExamineApi={
+    page(data){
+        return request.post('/adoptExamine/page',data)
+    },
+    listAll(){
+        return request.get('/adoptExamine/listAll')
+    },
+    getById(id){
+        return request.get('/adoptExamine/getById/'+id)
+    },
+    add(data){
+        return request.post('/adoptExamine/add',data)
+    },
+    deleteById(id){
+        return request.delete('/adoptExamine/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/adoptExamine/updateById',data)
     }
 }

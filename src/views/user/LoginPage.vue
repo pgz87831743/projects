@@ -2,8 +2,8 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#06c900;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-        线上个性化租房系统
+      <div style="text-align: left;color:#ffffff;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+        宠物领养救助系统
       </div>
       <div>
         <div class="div2">
@@ -42,7 +42,7 @@
                           <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
                         </el-col>
                         <el-col style="text-align: right" :span="12">
-<!--                          <el-link  type="danger" :underline="false">忘记密码?</el-link>-->
+                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
                         </el-col>
                       </el-row>
                     </div>
@@ -145,13 +145,11 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #ffffff;
-    opacity: 0.9;
   }
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-andrea-gonzalez-281949.jpg");
+  background-image:url("@/assets/pexels-simona-kidrič-2607544.jpg");
   background-size: 1920px;
   height: 100vh;
 }
