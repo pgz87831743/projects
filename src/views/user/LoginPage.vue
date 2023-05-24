@@ -149,7 +149,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-atypeek-dgn-6366444.jpg");
+  background-image:url("@/assets/pexels-tyler-jones-15640834.jpg");
   background-size: 1920px;
   height: 100vh;
 }
