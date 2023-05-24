@@ -8,7 +8,7 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">XX购物商城</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">宠物用品销售系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
         <el-menu-item index="/SearchShop">商城搜索</el-menu-item>
         <el-menu-item index="/ShoppingCar">购物车</el-menu-item>
