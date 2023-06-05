@@ -2,8 +2,8 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+      <div style="text-align: left;color:#ebf5e5;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+        瓦罗兰特武器商店
       </div>
       <div>
         <div class="div2">
@@ -41,9 +41,7 @@
                         <el-col :span="12">
                           <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
                         </el-col>
-                        <el-col style="text-align: right" :span="12">
-                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
-                        </el-col>
+
                       </el-row>
                     </div>
                     <el-button  @keyup.down.enter="alert('123')" @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
@@ -150,13 +148,13 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image:url("@/assets/bg1.webp");
   background-size: 1920px;
   height: 100vh;
 }
 
 .el-card{
-  background: rgba(255, 255, 255,  0.5);
+  background: rgba(255, 255, 255,  0.6);
 }
 
 
