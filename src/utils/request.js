@@ -5,7 +5,7 @@ import router from "@/router";
 // import {getItem} from './storage'
 
 const request = axios.create({
-    baseURL: '/api',
+    baseURL: '/',
 })
 
 

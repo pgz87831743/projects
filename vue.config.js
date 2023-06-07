@@ -13,9 +13,10 @@ module.exports = defineConfig({
         target: 'http://localhost:9001', //填写请求的目标地址
         changOrigin: true, //允许跨域
         pathRewrite: {
-          '^/api': '' //请求的时候使用这个api就可以
+          '^/': '' //请求的时候使用这个api就可以
         }
       }
     }
-  }
+  },
+  publicPath: '/'
 })
