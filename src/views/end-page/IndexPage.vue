@@ -94,9 +94,25 @@
           <el-col :span="20">
             <el-form-item label="上传附件">
               <div style="width: 100%;height: 40px;background-color: #fafafa;padding: 15px">
-                <el-upload>
-                  <el-button>点击上传</el-button>
+                <el-upload
+                    class="avatar-uploader"
+                    action="/api/file/upload"
+                    :data="{fileTypeEnum:'FILE'}"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    name="files"
+                >
+                  <el-button v-if="!form.file">点击上传</el-button>
+                  <el-tag
+                      v-if="form.file"
+                      closable
+                      @close="this.form.file=undefined"
+                  >
+                    {{fileInfo.name}}
+                  </el-tag>
                 </el-upload>
+
+
               </div>
             </el-form-item>
           </el-col>
@@ -130,9 +146,17 @@ export default {
   data() {
     return {
       form: {},
+      fileInfo:{}
     }
   },
   methods: {
+
+    handleAvatarSuccess(response) {
+      this.form.file = response[0].id
+      this.fileInfo = response[0]
+    },
+
+
     submitRecord() {
       recordApi.add(this.form)
           .then(() => {

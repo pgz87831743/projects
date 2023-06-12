@@ -114,7 +114,7 @@
           <el-input v-model="form.jtqk" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="附件">
-          <el-input v-model="form.file" placeholder="请输入"/>
+          <el-link :href="'/api/file/download/'+form.file" type="primary"> 下载附件</el-link>
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="form.bz" placeholder="请输入"/>

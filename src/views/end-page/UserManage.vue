@@ -23,7 +23,7 @@
         <el-table-column prop="username" label="用户名"/>
         <el-table-column prop="password" label="密码"/>
         <el-table-column prop="nickname" label="昵称"/>
-        <el-table-column prop="deptId" label="单位"/>
+        <el-table-column prop="deptInfo.name" label="单位"/>
         <el-table-column label="操作">
           <template #default="scope">
             <el-link :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>

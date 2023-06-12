@@ -33,8 +33,8 @@
               :default-active="$route.fullPath"
           >
             <el-menu-item index="/IndexPage"><el-icon><HomeFilled /></el-icon>首页</el-menu-item>
-            <el-menu-item index="/DeptManage"><el-icon><OfficeBuilding /></el-icon>单位管理</el-menu-item>
-            <el-menu-item index="/UserManage"><el-icon><User /></el-icon>用户管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN'])" index="/DeptManage"><el-icon><OfficeBuilding /></el-icon>单位管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN'])" index="/UserManage"><el-icon><User /></el-icon>用户管理</el-menu-item>
             <el-menu-item index="/DataQuery"><el-icon><Search /></el-icon>数据查询</el-menu-item>
             <el-menu-item index="/Visualization"><el-icon><DataAnalysis /></el-icon>可视化大屏</el-menu-item>
 
