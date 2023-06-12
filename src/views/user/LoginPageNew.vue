@@ -96,11 +96,8 @@ export default {
     },
 
     loginHandler() {
-      console.log(this.user.username)
-      console.log(this.user.password)
       this.user.username=encrypt(this.user.username)
       this.user.password=encrypt(this.user.password+'')
-
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
@@ -116,7 +113,7 @@ export default {
       }))
     },
   },
-  created() {
+  mounted() {
     this.changeCapHandler()
   },
 
