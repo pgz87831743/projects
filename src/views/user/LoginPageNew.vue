@@ -53,7 +53,7 @@ import {useStore} from 'vuex'
 import router from "@/router";
 import {User,Lock,View} from "@element-plus/icons-vue";
 import {getItem, removeItem, setItem} from "@/utils/storage";
-import {encrypt} from "@/utils/request";
+import {decrypt, encrypt} from "@/utils/request";
 export default {
   name: "LoginPage",
   computed: {
@@ -96,14 +96,17 @@ export default {
     },
 
     loginHandler() {
+      console.log(this.user.username)
+      console.log(this.user.password)
       this.user.username=encrypt(this.user.username)
-      this.user.password=encrypt(this.user.password)
+      this.user.password=encrypt(this.user.password+'')
+
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
           if (this.check){
-            setItem('username',this.user.username)
-            setItem('password',this.user.password)
+            setItem('username',decrypt(this.user.username))
+            setItem('password',decrypt(this.user.password))
           }else{
             removeItem('username')
             removeItem('password')
@@ -113,8 +116,7 @@ export default {
       }))
     },
   },
-  mounted() {
-
+  created() {
     this.changeCapHandler()
   },
 
