@@ -14,8 +14,8 @@
            </div>
           <div class="right_div">
             <div class="lgn1">用户登录</div>
-            <div >
-              <el-form>
+            <div class="lgn2">
+              <el-form :size="'large'">
                 <el-form-item  >
                   <el-input
                       class="efi"
@@ -32,11 +32,11 @@
                   ></el-input>
                 </el-form-item>
                 <el-form-item  class="efi">
-                  <el-checkbox>记住密码</el-checkbox>
+                  <el-checkbox  v-model="check">记住密码</el-checkbox>
                 </el-form-item>
               </el-form>
 
-              <el-button type="primary"  @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
+              <el-button type="primary" class="lgn3"  @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
             </div>
           </div>
         </div>
@@ -48,10 +48,12 @@
 
 <script>
 
-import {login, systemCaptcha} from "@/api/api";
+import {login} from "@/api/api";
 import {useStore} from 'vuex'
 import router from "@/router";
 import {User,Lock,View} from "@element-plus/icons-vue";
+import {getItem, removeItem, setItem} from "@/utils/storage";
+import {encrypt} from "@/utils/request";
 export default {
   name: "LoginPage",
   computed: {
@@ -76,11 +78,9 @@ export default {
     return {
       user: {
         username: '',
-        password: '',
-        code:'',
-        uuid:'',
-        userCode:'',
-      }
+        password: ''
+      },
+      check:false
     }
   },
   components: {},
@@ -91,17 +91,23 @@ export default {
     },
 
     changeCapHandler(){
-      systemCaptcha().then((resp) => {
-        let data= resp.data.data
-        this.user.code=data.code
-        this.user.uuid=data.uuid
-      })
+      this.user.username=getItem('username')
+      this.user.password= getItem('password')
     },
 
     loginHandler() {
+      this.user.username=encrypt(this.user.username)
+      this.user.password=encrypt(this.user.password)
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
+          if (this.check){
+            setItem('username',this.user.username)
+            setItem('password',this.user.password)
+          }else{
+            removeItem('username')
+            removeItem('password')
+          }
           router.push({path: '/IndexPage'})
         }
       }))
@@ -109,9 +115,7 @@ export default {
   },
   mounted() {
 
-    systemCaptcha().then((resp) => {
-      this.user = resp.data.data;
-    })
+    this.changeCapHandler()
   },
 
 }
@@ -141,7 +145,7 @@ export default {
     .left_div{
       width: 580px;
       height: 681px;
-      background: linear-gradient(-36deg, rgba(191,220,244,0.98), rgba(59,135,206,0.98));
+      background: linear-gradient(-36deg, rgba(191,220,244,0.1), rgba(59,135,206,0.98));
 
       float: left;
 
@@ -167,10 +171,25 @@ export default {
         font-weight: bold;
         color: #33363A;
         text-align: center;
-        background: yellow;
+
         margin-top: 50px;
       }
 
+      .lgn2{
+        font-size: 30px;
+        font-weight: bold;
+        color: #33363A;
+        text-align: center;
+
+        padding: 60px;
+      }
+
+      .lgn3{
+        width: 500px;
+        height: 60px;
+        background: #2D7BCF;
+        border-radius: 30px;
+      }
 
 
     }
