@@ -109,6 +109,9 @@ export default {
             removeItem('password')
           }
           router.push({path: '/IndexPage'})
+        }else{
+          this.user.username=''
+          this.user.password=''
         }
       }))
     },

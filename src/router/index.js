@@ -9,15 +9,9 @@ const routes = [
         component: () => import('../views/user/LoginPageNew')
     },
     {
-        path: '/register',
-        name: 'register',
-        component: () => import('../views/user/RegisterPage')
-    },
-    {
         path: '/',
         component: () => import('../views/user/LoginPageNew')
     },
-
 
     {
         path: '/EndPage',

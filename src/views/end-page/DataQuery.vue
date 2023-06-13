@@ -10,7 +10,7 @@
           </el-col>
           <el-col :span="5">
             <el-form-item label="被侵害人姓名">
-              <el-input v-model="page.q2"  placeholder="请输入"></el-input>
+              <el-input v-model="page.q2" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5">
@@ -22,7 +22,7 @@
           <el-col :span="5">
             <el-form>
               <el-form-item label="身份证号">
-                <el-input v-model="page.q4"  placeholder="请输入"></el-input>
+                <el-input v-model="page.q4" placeholder="请输入"></el-input>
               </el-form-item>
             </el-form>
           </el-col>
@@ -34,7 +34,7 @@
       </template>
       <el-table :data="tableData" style="width: 100%"
                 :height="670"
-        :header-cell-style="{color:'#333333',fontSize:'14px',borderTop:'1px solid #EBEEF0'}"
+                :header-cell-style="{color:'#333333',fontSize:'14px',borderTop:'1px solid #EBEEF0'}"
                 :cell-style="{paddingTop:'15px',paddingBottom:'15px'}"
       >
         <el-table-column prop="bgr" label="报告人"/>
@@ -47,78 +47,130 @@
         <el-table-column prop="bqhrLxfs" label="联系方式"/>
         <el-table-column prop="fdlr" label="法定代理人"/>
         <el-table-column prop="fdlrLxfs" label="联系方式"/>
-        <el-table-column  label="操作">
+        <el-table-column label="操作">
           <template #default="scope">
-            <el-link  :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
+            <el-link :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
           </template>
         </el-table-column>
       </el-table>
       <div class="affix-container">
-       <el-row >
-         <el-col :span="5" :offset="17">
-           <el-pagination
-               small
-               background
-               layout="total,prev, pager, next"
-               :total="total"
-               :page-size="this.page.pageSize"
-               @current-change="currentChange"
-               class="mt-4"
-           />
-         </el-col>
-       </el-row>
+        <el-row>
+          <el-col :span="5" :offset="17">
+            <el-pagination
+                small
+                background
+                layout="total,prev, pager, next"
+                :total="total"
+                :page-size="this.page.pageSize"
+                @current-change="currentChange"
+                class="mt-4"
+            />
+          </el-col>
+        </el-row>
       </div>
     </el-card>
 
 
-
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
-      <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="报告人">
-          <el-input v-model="form.bgr" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="联系电话">
-          <el-input v-model="form.bgrTel" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="所属单位">
-          <el-input v-model="form.ssdw" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="所诉科室">
-          <el-input v-model="form.ssks" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="疑似未成年被侵害人">
-          <el-input v-model="form.bqhr" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="身份证号">
-          <el-input v-model="form.sfzh" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="家庭住址">
-          <el-input v-model="form.jtzz" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="联系方式">
-          <el-input v-model="form.bqhrLxfs" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="法定代理人">
-          <el-input v-model="form.fdlr" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="联系方式">
-          <el-input v-model="form.fdlrLxfs" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.cjsj" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="报告情形">
-          <el-input v-model="form.bgqx" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="具体情况">
-          <el-input v-model="form.jtqk" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="附件">
-          <el-link :href="'/api/file/download/'+form.file" type="primary"> 下载附件</el-link>
-        </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="form.bz" placeholder="请输入"/>
-        </el-form-item>
+      <el-form :model="form" label-position="right" label-width="150px" :size="'large'" :disabled="dialog.formDisabled">
+
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="报告人">
+              <el-input v-model="form.bgr" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="联系电话">
+              <el-input v-model="form.bgrTel" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="所属单位">
+              <el-input v-model="form.ssdw" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="所诉科室">
+              <el-input v-model="form.ssks" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="疑似未成年被侵害人">
+              <el-input v-model="form.bqhr" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="身份证号">
+              <el-input v-model="form.sfzh" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="家庭住址">
+              <el-input v-model="form.jtzz" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="联系方式">
+              <el-input v-model="form.bqhrLxfs" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="法定代理人">
+              <el-input v-model="form.fdlr" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="联系方式">
+              <el-input v-model="form.fdlrLxfs" placeholder="请输入"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="22">
+            <el-form-item label="创建时间">
+              <el-date-picker v-model="form.cjsj" style="width: 100%" type="date" placeholder="请选择"
+                              value-format="YYYY-MM-DD"></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="22">
+            <el-form-item label="报告情形">
+              <el-input type="textarea" v-model="form.bgqx" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="22">
+            <el-form-item label="具体情况">
+              <el-input type="textarea" v-model="form.jtqk"
+                        placeholder="（包括但不限于诊疗过程中的病人自述、因由、医生诊断过程和结果等相关内容）"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="22">
+            <el-form-item label="附件">
+              <el-link :href="'/api/file/download/'+form.file" type="primary"> 下载附件</el-link>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="22">
+            <el-form-item label="备注">
+              <el-input type="textarea" v-model="form.bz" placeholder="请填写"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -126,8 +178,9 @@
 <el-button type="success" @click="formSubmit">确认</el-button>
 </span>
       </template>
-    </el-dialog>
 
+
+    </el-dialog>
 
 
   </div>
@@ -160,8 +213,8 @@ export default {
 
   methods: {
 
-    cleanQuery(){
-      this.page={
+    cleanQuery() {
+      this.page = {
         pageSize: 10,
         pageNum: 1,
         tootle: 100,
@@ -269,7 +322,7 @@ export default {
   overflow: auto;
 }
 
-::v-deep(.el-form-item__label){
+::v-deep(.el-form-item__label) {
   color: #333333;
   font-size: 14px;
 }
