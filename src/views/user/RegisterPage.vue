@@ -3,8 +3,8 @@
 
     <div class="div1">
       <div
-          style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+          style="text-align: left;color:#c506f0;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+       虚拟机活动开发
       </div>
       <div>
         <div class="div2">
@@ -26,12 +26,6 @@
                     </el-form-item>
                     <el-form-item>
                       <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
-                    </el-form-item>
-                    <el-form-item label="角色：">
-                      <el-radio-group v-model="user.role">
-                        <el-radio label="USER" name="roleType">用户</el-radio>
-                        <el-radio label="ADMIN" name="roleType">管理员</el-radio>
-                      </el-radio-group>
                     </el-form-item>
                     <el-row :gutter="10">
                       <el-col :span="15">
@@ -160,7 +154,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image:url("@/assets/pexels-matej-1718168.jpg");
   background-size: 1920px;
   height: 100vh;
 }

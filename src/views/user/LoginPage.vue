@@ -2,8 +2,8 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+      <div style="text-align: left;color:#c506f0;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+       虚拟机活动开发
       </div>
       <div>
         <div class="div2">
@@ -40,9 +40,6 @@
                       <el-row >
                         <el-col :span="12">
                           <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
-                        </el-col>
-                        <el-col style="text-align: right" :span="12">
-                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
                         </el-col>
                       </el-row>
                     </div>
@@ -150,7 +147,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image:url("@/assets/pexels-matej-1718168.jpg");
   background-size: 1920px;
   height: 100vh;
 }

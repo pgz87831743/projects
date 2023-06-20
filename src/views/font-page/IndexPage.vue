@@ -1,108 +1,90 @@
 <template>
-  <div>
-    <div class="div">
-      <el-carousel :interval="4000" type="card" height="450px">
-        <el-carousel-item v-for="item in top" :key="item">
-          <img :src="item" width="930">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-    <div class="div">
-      <el-card>
-        <template #header>
-          <el-row>
-            <el-col :span="3">
-              <div style="font-size: 20px;font-weight: bold;">城市事件</div>
-            </el-col>
-            <el-col :span="6" :offset="15">
-              <el-input  v-model="search" clearable @clear="initNews">
-                <template #append>
-                  <el-button :icon="Search" @click="initNews"/>
-                </template>
-              </el-input>
-            </el-col>
-          </el-row>
+  <div class="div">
+    <el-row>
+      <el-col>
+        <el-table :data="tableData"  height="600" style="width: 100%"
+                  :header-cell-style="{textAlign:'center',fontWeight:'bold'}"
+                  :cell-style="{textAlign:'center',padding:'30px'}">
+          <el-table-column prop="id" label="序号"/>
+          <el-table-column prop="name" label="名称"/>
+          <el-table-column prop="cpu" label="cpu"/>
+          <el-table-column prop="memory" label="内存">
+            <template #default="scope">
+              {{scope.row.memory}}GB
+            </template>
+          </el-table-column>
+          <el-table-column prop="core" label="核数">
+            <template #default="scope">
+              {{scope.row.core}}核
+            </template>
+          </el-table-column>
+          <el-table-column prop="bandwidth" label="带宽"/>
+          <el-table-column prop="times" label="时长">
+            <template #default="scope">
+              {{scope.row.times}}年
+            </template>
+          </el-table-column>
 
+          <el-table-column prop="price" label="价格">
+            <template #default="scope">
+              {{scope.row.price}}元
+            </template>
+          </el-table-column>
 
-          <div class="car-div" v-for="item in list" v-bind:key="item.id">
-            <el-card>
-              <div>
-                <img :src="item.img" width="280">
-              </div>
-              <div>
-                <el-form>
-                  <el-form-item label="时间:">
-                    {{ item.eventTime }}
-                  </el-form-item>
-                  <el-form-item label="城市:">
-                    {{ item.city.name }}
-                  </el-form-item>
-                  <el-form-item label="标题:">
-                    {{ item.title }}
-                  </el-form-item>
-                  <el-form-item label="事件类型:">
-                    {{ item.eventType }}
-                  </el-form-item>
+          <el-table-column prop="num" label="数量">
+            <template #default="scope">
+              {{scope.row.num}}台
+            </template>
+          </el-table-column>
 
-                  <el-form-item label="">
-                    <el-link type="primary" :href="'/NewsInfo?id='+item.id" target="_blank">查看详细</el-link>
-                  </el-form-item>
-                </el-form>
-              </div>
-            </el-card>
-          </div>
-
-
-        </template>
-        <div>
-          <div>
-
-          </div>
-        </div>
-      </el-card>
-    </div>
-
+          <el-table-column label="操作" width="300px">
+            <template #default="scope">
+              <el-button size="small" type="success" @click="choujiang(scope.row.id)">盲盒抽奖
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 
 
-import {cityEventApi} from "@/api/api";
-import {Search} from "@element-plus/icons-vue";
+
+
+
+import {recordApi} from "@/api/api";
+import router from "@/router";
 
 export default {
   name: "IndexPage",
-  computed: {
-    Search() {
-      return Search
-    }
-  },
+
   data() {
     return {
       list: [],
       search:'',
-      top: [
-        require("@/assets/index1.jpg"),
-        require("@/assets/index2.jpg"),
-        require("@/assets/index3.jpg"),
-        require("@/assets/index4.jpg"),
-        require("@/assets/index5.jpg"),
-      ]
+      tableData:[]
+
     }
   },
   methods: {
-    initNews() {
-      cityEventApi.listAllSearch(this.search)
-          .then((resp) => {
-            this.list = resp.data.data
+    initTableData() {
+      recordApi.listAll()
+          .then(resp => {
+            this.tableData = resp.data.data
           })
     },
 
+    choujiang(id){
+      router.push({path: '/DrawPage',query:{id:id}})
+    }
+
   },
   mounted() {
-    this.initNews()
-  }
+    this.initTableData()
+  },
 }
 </script>
 
