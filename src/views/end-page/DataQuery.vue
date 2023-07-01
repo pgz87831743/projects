@@ -49,7 +49,9 @@
         <el-table-column prop="fdlrLxfs" label="联系方式"/>
         <el-table-column label="操作">
           <template #default="scope">
-            <el-link :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
+            <el-link  :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
+            <el-link  :type="'warning'" :underline="false" @click="clickButton('update', scope.row)">修改</el-link>
+            <el-link  :type="'danger'" :underline="false" @click="clickButton('delete', scope.row)">删除</el-link>
           </template>
         </el-table-column>
       </el-table>
@@ -159,8 +161,32 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="22">
-            <el-form-item label="附件">
+            <el-form-item label="附件" v-if="dialog.formDisabled">
               <el-link :href="'/api/file/download/'+form.file" type="primary"> 下载附件</el-link>
+            </el-form-item>
+
+            <el-form-item label="附件" v-if="!dialog.formDisabled">
+              <div style="width: 100%;height: 40px;background-color: #fafafa;padding: 15px">
+                <el-upload
+                    class="avatar-uploader"
+                    action="/api/file/upload"
+                    :data="{fileTypeEnum:'FILE'}"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    name="files"
+                >
+                  <el-button v-if="!form.file">点击上传</el-button>
+                  <el-tag
+                      v-if="form.file"
+                      closable
+                      @close="this.form.file=undefined"
+                  >
+                    {{fileInfo.name}}
+                  </el-tag>
+                </el-upload>
+
+
+              </div>
             </el-form-item>
           </el-col>
         </el-row>
@@ -188,6 +214,7 @@
 
 <script>
 import {recordApi} from "@/api/api";
+import {ElMessageBox} from "element-plus";
 
 
 export default {
@@ -207,6 +234,7 @@ export default {
         optionValue: null
       },
       form: {},
+      fileInfo:{},
       total: 0,
     }
   },
@@ -232,9 +260,9 @@ export default {
 
 
     handleAvatarSuccess(response) {
-      this.form.img = response[0].url
+      this.form.file = response[0].id
+      this.fileInfo = response[0]
     },
-
 
     clickButton(type, row) {
       this.dialog.optionValue = type
@@ -257,8 +285,17 @@ export default {
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        recordApi.deleteById(row.id).then(() => {
-          this.initTableData()
+        ElMessageBox.confirm(
+            '确定删除这条信息？',
+            '警告', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+            }
+        ).then(() => {
+          recordApi.deleteById(row.id).then(() => {
+            this.initTableData()
+          })
         })
       }
     },
@@ -321,6 +358,11 @@ export default {
   height: 90vh;
   overflow: auto;
 }
+
+.el-link {
+  margin-right: 8px;
+}
+
 
 ::v-deep(.el-form-item__label) {
   color: #333333;

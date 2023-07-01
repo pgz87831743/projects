@@ -105,14 +105,10 @@
                   <el-button v-if="!form.file">点击上传</el-button>
                   <el-tag
                       v-if="form.file"
-                      closable
-                      @close="this.form.file=undefined"
                   >
                     {{fileInfo.name}}
                   </el-tag>
                 </el-upload>
-
-
               </div>
             </el-form-item>
           </el-col>
