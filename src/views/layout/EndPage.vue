@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">城市信息系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">体检预约系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
@@ -22,9 +22,9 @@
           <template #title>{{ getUser().username }}</template>
         </el-menu-item>
 
-        <el-menu-item index="/IndexPage">
-          <template #title>前台</template>
-        </el-menu-item>
+<!--        <el-menu-item index="/IndexPage">-->
+<!--          <template #title>前台</template>-->
+<!--        </el-menu-item>-->
 
 
         <el-menu-item index="/login" @click="logout">
@@ -45,15 +45,8 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-
-            <el-menu-item index="/City">城市基本信息管理</el-menu-item>
-            <el-menu-item index="/Population">人口信息管理</el-menu-item>
-            <el-menu-item index="/Economy">经济信息管理</el-menu-item>
-            <el-menu-item index="/Geography">地理信息管理</el-menu-item>
-            <el-menu-item index="/Facility">设施信息管理</el-menu-item>
-            <el-menu-item index="/Environment">环境信息管理</el-menu-item>
-            <el-menu-item index="/CityEvent">事件管理</el-menu-item>
-
+            <el-menu-item index="/Inspection">检查项管理</el-menu-item>
+            <el-menu-item index="/Reservation">预约管理</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="span.right">

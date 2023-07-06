@@ -2,8 +2,8 @@
   <div>
 
     <div class="div1">
-      <div style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+      <div style="text-align: left;color:#0030f2;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+       体检预约系统
       </div>
       <div>
         <div class="div2">
@@ -46,7 +46,7 @@
                         </el-col>
                       </el-row>
                     </div>
-                    <el-button  @keyup.down.enter="alert('123')" @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
+                    <el-button   @click="loginHandler" style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">登录</el-button>
                   </el-col>
                 </el-row>
               </el-card>
@@ -116,7 +116,7 @@ export default {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/IndexPage'})
+          router.push({path: '/Inspection'})
         }
       }))
     },
@@ -150,7 +150,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image:url("@/assets/pexels-photo-1390403.webp");
   background-size: 1920px;
   height: 100vh;
 }

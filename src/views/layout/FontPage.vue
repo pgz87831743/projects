@@ -8,7 +8,7 @@
           router
           :default-active="$route.fullPath"
       >
-        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">城市信息系统</div></el-menu-item>
+        <el-menu-item ><div style="color: green;font-size: 20px;font-weight: bold">体检预约系统</div></el-menu-item>
         <el-menu-item index="/IndexPage">首页</el-menu-item>
         <el-menu-item index="/PersonalCenter">个人信息</el-menu-item>
         <el-menu-item index="/CityFont">城市信息</el-menu-item>

@@ -3,8 +3,8 @@
 
     <div class="div1">
       <div
-          style="text-align: left;color:#000000;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       城市信息系统
+          style="text-align: left;color:#0030f2;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
+       体检预约系统
       </div>
       <div>
         <div class="div2">
@@ -160,7 +160,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-josh-hild-2422461.jpg");
+  background-image:url("@/assets/pexels-photo-1390403.webp");
   background-size: 1920px;
   height: 100vh;
 }
