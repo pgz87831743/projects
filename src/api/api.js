@@ -67,5 +67,18 @@ export const reservationApi={
     },
     updateById(data){
         return request.put('/reservation/updateById',data)
+    },
+
+
+    reservation(data){
+        return request.put('/reservation/reservation',data)
     }
+}
+
+
+//用户管理
+export const userApi={
+    updateById(data){
+        return request.post('/user/update',data)
+    },
 }

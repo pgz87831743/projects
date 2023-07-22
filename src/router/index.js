@@ -33,12 +33,24 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: '/Inspection',
-                component: () => import('../views/end-page/Inspection')
+                path: '/admin/Inspection',
+                component: () => import('../views/end-page/admin/AdminInspection.vue')
             },
             {
-                path: '/Reservation',
-                component: () => import('../views/end-page/Reservation')
+                path: '/admin/Reservation',
+                component: () => import('../views/end-page/admin/AdminReservation.vue')
+            },
+            {
+                path: '/user/Inspection',
+                component: () => import('../views/end-page/user/UserInspection.vue')
+            },
+            {
+                path: '/user/Reservation',
+                component: () => import('../views/end-page/user/UserReservation.vue')
+            },
+            {
+                path: '/user/UserInfo',
+                component: () => import('../views/end-page/user/UserInfo.vue')
             }
         ]
     }

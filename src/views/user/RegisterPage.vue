@@ -19,6 +19,12 @@
                 <el-col :span="20">
                   <el-form>
                     <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.nickname" placeholder="请输入姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.phone" placeholder="请输入电话"></el-input>
+                    </el-form-item>
+                    <el-form-item>
                       <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
                     </el-form-item>
                     <el-form-item>

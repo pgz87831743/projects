@@ -45,8 +45,12 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-            <el-menu-item index="/Inspection">检查项管理</el-menu-item>
-            <el-menu-item index="/Reservation">预约管理</el-menu-item>
+            <el-menu-item v-if="authShow(['ADMIN'])" index="/admin/Inspection">检查项管理</el-menu-item>
+            <el-menu-item  v-if="authShow(['ADMIN'])" index="/admin/Reservation">预约管理</el-menu-item>
+
+            <el-menu-item  v-if="authShow(['USER'])"  index="/user/Inspection">检查项总览</el-menu-item>
+            <el-menu-item  v-if="authShow(['USER'])" index="/user/Reservation">预约总览</el-menu-item>
+            <el-menu-item  v-if="authShow(['USER'])" index="/user/UserInfo">用户信息</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="span.right">
