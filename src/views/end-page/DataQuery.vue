@@ -4,24 +4,27 @@
       <template #header>
         <el-row :gutter="10">
           <el-col :span="5">
-            <el-form-item label="所属单位">
+            <el-form-item label="报告人">
               <el-input v-model="page.q1" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="被侵害人姓名">
+            <el-form-item label="所诉科室">
               <el-input v-model="page.q2" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="创建时间">
-              <el-date-picker v-model="page.q3" style="width: 100%" type="date" placeholder="请选择"
-                              value-format="YYYY-MM-DD"></el-date-picker>
+            <el-form-item label="年龄">
+                <el-row :justify="'space-around'">
+                  <el-col :span="11"><el-input v-model="page.q3s" placeholder="最小年龄"></el-input></el-col>
+                  <el-col :span="2"><div style="text-align: center;width: 100%">-</div></el-col>
+                  <el-col :span="11"><el-input v-model="page.q3e" placeholder="最大年龄"></el-input></el-col>
+                </el-row>
             </el-form-item>
           </el-col>
           <el-col :span="5">
             <el-form>
-              <el-form-item label="身份证号">
+              <el-form-item label="诊断">
                 <el-input v-model="page.q4" placeholder="请输入"></el-input>
               </el-form-item>
             </el-form>
@@ -32,29 +35,44 @@
           </el-col>
         </el-row>
       </template>
-      <el-table :data="tableData" style="width: 100%"
-                :height="670"
-                :header-cell-style="{color:'#333333',fontSize:'14px',borderTop:'1px solid #EBEEF0'}"
-                :cell-style="{paddingTop:'15px',paddingBottom:'15px'}"
-      >
-        <el-table-column prop="bgr" label="报告人"/>
-        <el-table-column prop="bgrTel" label="联系电话"/>
-        <el-table-column prop="ssdw" label="所属单位"/>
-        <el-table-column prop="ssks" label="所诉科室"/>
-        <el-table-column prop="bqhr" label="被侵害人姓名"/>
-        <el-table-column prop="sfzh" label="身份证号" width="180"/>
-        <el-table-column prop="jtzz" label="家庭住址"/>
-        <el-table-column prop="bqhrLxfs" label="联系方式"/>
-        <el-table-column prop="fdlr" label="法定代理人"/>
-        <el-table-column prop="fdlrLxfs" label="联系方式"/>
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-link  :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
-            <el-link  :type="'warning'" :underline="false" @click="clickButton('update', scope.row)">修改</el-link>
-            <el-link  :type="'danger'" :underline="false" @click="clickButton('delete', scope.row)">删除</el-link>
-          </template>
-        </el-table-column>
-      </el-table>
+     <el-row>
+       <el-col :span="20">
+         <el-table :data="tableData" style="width: 100%"
+                   :height="670"
+                   border
+                   :header-cell-style="{color:'#333333',fontSize:'14px',borderTop:'1px solid #EBEEF0'}"
+                   :cell-style="{paddingTop:'15px',paddingBottom:'15px'}"
+         >
+           <el-table-column v-if="show[0].show" prop="bgr" label="报告人"/>
+           <el-table-column v-if="show[1].show" prop="bgrTel" label="联系电话" width="120"/>
+           <el-table-column v-if="show[2].show" prop="ssdw" label="所属单位" width="120"/>
+           <el-table-column v-if="show[3].show" prop="ssks" label="所诉科室"  width="120"/>
+           <el-table-column v-if="show[4].show" prop="bqhr" label="被侵害人姓名" width="120"/>
+           <el-table-column v-if="show[5].show" prop="age" label="年龄" width="120"/>
+           <el-table-column v-if="show[6].show" prop="sex" label="性别" width="120"/>
+           <el-table-column v-if="show[7].show" prop="zd" label="诊断" width="120"/>
+           <el-table-column v-if="show[8].show" prop="jzsj" label="就诊时间" width="180"/>
+           <el-table-column v-if="show[9].show" prop="sfzh" label="身份证号" width="180"/>
+           <el-table-column v-if="show[10].show" prop="jtzz" label="家庭住址" width="120"/>
+           <el-table-column v-if="show[11].show" prop="bqhrLxfs" label="联系方式" width="120"/>
+           <el-table-column v-if="show[12].show" prop="fdlr" label="法定代理人" width="120"/>
+           <el-table-column v-if="show[13].show" prop="fdlrLxfs" label="联系方式" width="120"/>
+           <el-table-column  label="操作" width="150" fixed="right">
+             <template #default="scope">
+               <el-link  :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
+               <el-link  :type="'warning'" :underline="false" @click="clickButton('update', scope.row)">修改</el-link>
+               <el-link  :type="'danger'" :underline="false" @click="clickButton('delete', scope.row)">删除</el-link>
+             </template>
+           </el-table-column>
+         </el-table>
+       </el-col>
+       <el-col :span="4">
+         <el-tree :data="show" show-checkbox
+                  node-key="id"
+                  :default-checked-keys="[1,2,3,4,5,6,7,8,9,10,11,12,13,14]"
+                  @check-change="saveColumn"/>
+       </el-col>
+     </el-row>
       <div class="affix-container">
         <el-row>
           <el-col :span="5" :offset="17">
@@ -73,73 +91,107 @@
     </el-card>
 
 
-    <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
+    <el-dialog width="60%"  id="dv"  v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :size="'large'" :disabled="dialog.formDisabled">
 
         <el-row :gutter="20">
           <el-col :span="11">
             <el-form-item label="报告人">
-              <el-input v-model="form.bgr" placeholder="请输入"></el-input>
+              <el-input v-model="form.bgr" :placeholder="form.bgr"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="联系电话">
-              <el-input v-model="form.bgrTel" placeholder="请输入"></el-input>
+              <el-input  v-model="form.bgrTel" :placeholder="form.bgrTel"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="11">
             <el-form-item label="所属单位">
-              <el-input v-model="form.ssdw" placeholder="请输入"></el-input>
+              <el-input v-model="form.ssdw" :placeholder="form.ssdw"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="所诉科室">
-              <el-input v-model="form.ssks" placeholder="请输入"/>
+              <el-input v-model="form.ssks"  :placeholder="form.ssks" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="11">
             <el-form-item label="疑似未成年被侵害人">
-              <el-input v-model="form.bqhr" placeholder="请输入"/>
+              <el-input v-model="form.bqhr"  :placeholder="form.bqhr" />
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="身份证号">
-              <el-input v-model="form.sfzh" placeholder="请输入"/>
+              <el-input v-model="form.sfzh"   :placeholder="form.sfzh"  />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="11">
             <el-form-item label="家庭住址">
-              <el-input v-model="form.jtzz" placeholder="请输入"/>
+              <el-input v-model="form.jtzz"  :placeholder="form.jtzz"  />
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="联系方式">
-              <el-input v-model="form.bqhrLxfs" placeholder="请输入"/>
+              <el-input v-model="form.bqhrLxfs"  :placeholder="form.bqhrLxfs"   />
             </el-form-item>
           </el-col>
         </el-row>
+
+
+        <el-row :gutter="20" id="dyys1">
+          <el-col :span="11">
+            <el-form-item label="年龄">
+              <el-input type="number" v-model="form.age" :placeholder="form.age"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="性别">
+              <el-input v-model="form.sex"   :placeholder="form.sex" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" id="dyys2">
+          <el-col :span="11">
+            <el-form-item label="就诊时间">
+              <el-date-picker
+                  v-model="form.jzsj"
+                  :placeholder="form.jzsj"
+                  type="datetime"
+                  value-format="YYYY-MM-DD HH:mm:ss"
+                  style="width: 100%"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="诊断">
+              <el-input v-model="form.zd" :placeholder="form.zd"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+
         <el-row :gutter="20">
           <el-col :span="11">
             <el-form-item label="法定代理人">
-              <el-input v-model="form.fdlr" placeholder="请输入"/>
+              <el-input v-model="form.fdlr" :placeholder="form.fdlr"/>
             </el-form-item>
           </el-col>
           <el-col :span="11">
             <el-form-item label="联系方式">
-              <el-input v-model="form.fdlrLxfs" placeholder="请输入"/>
+              <el-input v-model="form.fdlrLxfs" :placeholder="form.fdlrLxfs"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="22">
             <el-form-item label="创建时间">
-              <el-date-picker v-model="form.cjsj" style="width: 100%" type="date" placeholder="请选择"
+              <el-date-picker v-model="form.cjsj" style="width: 100%" type="date" :placeholder="form.cjsj"
                               value-format="YYYY-MM-DD"></el-date-picker>
             </el-form-item>
           </el-col>
@@ -147,7 +199,7 @@
         <el-row :gutter="20">
           <el-col :span="22">
             <el-form-item label="报告情形">
-              <el-input type="textarea" v-model="form.bgqx" placeholder="请输入"></el-input>
+              <el-input type="textarea" :autosize="{minRows:5}" v-model="form.bgqx" :placeholder="form.bgqx"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -155,7 +207,8 @@
           <el-col :span="22">
             <el-form-item label="具体情况">
               <el-input type="textarea" v-model="form.jtqk"
-                        placeholder="（包括但不限于诊疗过程中的病人自述、因由、医生诊断过程和结果等相关内容）"></el-input>
+                        :autosize="{minRows:5}"
+                        :placeholder="form.jtqk"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -193,12 +246,20 @@
         <el-row :gutter="20">
           <el-col :span="22">
             <el-form-item label="备注">
-              <el-input type="textarea" v-model="form.bz" placeholder="请填写"></el-input>
+              <el-input type="textarea" v-model="form.bz"  :autosize="{minRows:5}"   :placeholder="form.bz"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <template #footer>
+
+
+
+        <span class="dialog-footer" v-if="dialog.formDisabled">
+    <el-button @click="printlnDiv" id="dyys3">打印</el-button>
+</span>
+
+
 <span class="dialog-footer" v-if="!dialog.formDisabled">
 <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
 <el-button type="success" @click="formSubmit">确认</el-button>
@@ -217,6 +278,7 @@ import {recordApi} from "@/api/api";
 import {ElMessageBox} from "element-plus";
 
 
+
 export default {
   name: "Record",
   data() {
@@ -227,6 +289,80 @@ export default {
         tootle: 100,
       },
       tableData: [],
+      pt:true,
+      show: [
+        {
+          id: 1,
+          label: '报告人',
+          show:true
+        },
+        {
+          id: 2,
+          label: '联系电话',
+          show:true
+        },
+        {
+          id: 3,
+          label: '所属单位',
+          show:true
+        },
+        {
+          id: 4,
+          label: '所诉科室',
+          show:true
+        },
+        {
+          id: 5,
+          label: '被侵害人姓名',
+          show:true
+        },
+        {
+          id: 6,
+          label: '年龄',
+          show:true
+        },
+        {
+          id: 7,
+          label: '性别',
+          show:true
+        },
+        {
+          id: 8,
+          label: '诊断',
+          show:true
+        },
+        {
+          id: 9,
+          label: '就诊时间',
+          show:true
+        },
+        {
+          id: 10,
+          label: '身份证号',
+          show:true
+        },
+        {
+          id: 11,
+          label: '家庭住址',
+          show:true
+        },
+        {
+          id: 12,
+          label: '联系方式',
+          show:true
+        },
+        {
+          id: 13,
+          label: '法定代理人',
+          show:true
+        },
+        {
+          id: 14,
+          label: '联系方式',
+          show:true
+        }
+      ],
+      visible:true,
       dialog: {
         dialogFormVisible: false,
         optionName: '新增',
@@ -240,6 +376,38 @@ export default {
   },
 
   methods: {
+
+
+    saveColumn(a,b,c){{
+      console.log(a)
+      console.log(b)
+      console.log(c)
+      a.show=!a.show
+    }},
+
+    printlnDiv(){
+
+      // console.log()
+
+
+      document.getElementById("dyys1").remove();
+      document.getElementById("dyys2").remove();
+      document.getElementById("dyys3").remove();
+      document.getElementsByClassName("el-dialog__headerbtn")[0].remove();
+
+
+
+      var head_str = "<html><head><title></title></head><body>"; //先生成头部
+      var foot_str = "</body></html>"; //生成尾部
+      // var new_str =  this.$refs.printDiv.innerHTML; //获取指定打印区域
+      var new_str =  document.getElementById("dv").innerHTML; //获取指定打印区域
+      console.log(new_str)
+      // var new_str = document.getElementById('dv')[0].innerHTML; //获取指定打印区域
+      // var old_str = document.body.innerHTML; //获得原本页面的代码
+      document.body.innerHTML = head_str + new_str + foot_str; //构建新网页
+      window.print(); //打印刚才新建的网页
+       window.location.href='/DataQuery'
+    },
 
     cleanQuery() {
       this.page = {
@@ -275,6 +443,7 @@ export default {
           this.dialog.dialogFormVisible = true
           this.dialog.optionName = '修改'
           this.dialog.formDisabled = false
+          this.fileInfo=resp.data.data.sysFile
           this.form = resp.data.data
         })
       } else if (type === 'detail') {
@@ -283,6 +452,7 @@ export default {
           this.dialog.optionName = '详情'
           this.dialog.formDisabled = true
           this.form = resp.data.data
+
         })
       } else if (type === 'delete') {
         ElMessageBox.confirm(
@@ -316,6 +486,7 @@ export default {
               this.initTableData();
             })
       } else if (this.dialog.optionValue === 'update') {
+        this.form.sysFile=null
         recordApi.updateById(this.form)
             .then(() => {
               this.initTableData();

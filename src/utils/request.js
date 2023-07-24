@@ -43,7 +43,6 @@ request.interceptors.response.use(
 
         if (response.data.encryption){
             response.data.data=JSON.parse( decrypt(response.data.data))
-            console.log( response.data.data);
         }
 
         if (code === 200 && showMsg) {

@@ -19,6 +19,11 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
+                path: "/InfoWrite",
+                name: "InfoWrite",
+                component: () => import('../views/end-page/InfoWrite'),
+            },
+            {
                 path: "/IndexPage",
                 name: "IndexPage",
                 component: () => import('../views/end-page/IndexPage'),
@@ -26,6 +31,9 @@ const routes = [
             {
                 path: "/DataQuery",
                 name: "DataQuery",
+                meta:{
+                    keepAlive:true
+                },
                 component: () => import('../views/end-page/DataQuery'),
             },
             {

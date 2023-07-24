@@ -33,6 +33,7 @@
               :default-active="$route.fullPath"
           >
             <el-menu-item index="/IndexPage"><el-icon><HomeFilled /></el-icon>首页</el-menu-item>
+            <el-menu-item index="/InfoWrite"><el-icon><DocumentAdd /></el-icon>信息录入</el-menu-item>
             <el-menu-item v-if="authShow(['ADMIN'])" index="/DeptManage"><el-icon><OfficeBuilding /></el-icon>单位管理</el-menu-item>
             <el-menu-item v-if="authShow(['ADMIN'])" index="/UserManage"><el-icon><User /></el-icon>用户管理</el-menu-item>
             <el-menu-item index="/DataQuery"><el-icon><Search /></el-icon>数据查询</el-menu-item>
@@ -42,7 +43,15 @@
         </el-col>
         <el-col :span="21">
           <div class="div">
-            <router-view/>
+
+
+            <router-view v-slot="{ Component }">
+              <keep-alive>
+                <component :is="Component" v-if="$route.meta.keepAlive"></component>
+              </keep-alive>
+              <component :is="Component" v-if="!$route.meta.keepAlive"></component>
+            </router-view>
+
           </div>
         </el-col>
       </el-row>
@@ -58,11 +67,11 @@ import {removeItem} from "@/utils/storage";
 import router from "@/router";
 
 import {authShow, getUser} from "@/utils/authutil";
-import {DataAnalysis, HomeFilled, OfficeBuilding, Search, User} from "@element-plus/icons-vue";
+import {DataAnalysis, DocumentAdd, HomeFilled, OfficeBuilding, Search, User} from "@element-plus/icons-vue";
 
 export default {
   name: "EndPage",
-  components: {OfficeBuilding, User, DataAnalysis, Search, HomeFilled},
+  components: {DocumentAdd, OfficeBuilding, User, DataAnalysis, Search, HomeFilled},
   data() {
     return {
       avt:require("@/assets/1.png")
