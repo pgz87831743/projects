@@ -4,27 +4,60 @@
       <template #header>
         <el-row :gutter="10">
           <el-col :span="5">
-            <el-form-item label="报告人">
+            <el-form-item label="所属单位" label-width="70">
+              <el-input v-model="page.ssdw" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="被侵害人姓名" label-width="100">
+              <el-input v-model="page.bqhrxm" placeholder="请输入"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="创建时间" label-width="70">
+              <el-date-picker
+                  type="date"
+                  value-format="YYYY-MM-DD"
+                  v-model="page.cjsh"
+                  style="width: 100%"
+                  placeholder="请选择"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="5">
+            <el-form>
+              <el-form-item label="身份证号" label-width="70">
+                <el-input v-model="page.sfzh" placeholder="请输入"></el-input>
+              </el-form-item>
+            </el-form>
+          </el-col>
+          <el-col :span="3" :offset="1">
+
+          </el-col>
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="5">
+            <el-form-item label="报告人" label-width="70">
               <el-input v-model="page.q1" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="所诉科室">
+            <el-form-item label="所诉科室" label-width="100">
               <el-input v-model="page.q2" placeholder="请输入"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="年龄">
+            <el-form-item label="年龄" label-width="70">
                 <el-row :justify="'space-around'">
-                  <el-col :span="11"><el-input v-model="page.q3s" placeholder="最小年龄"></el-input></el-col>
+                  <el-col :span="11"><el-input type="number" v-model="page.q3s" placeholder="最小年龄"></el-input></el-col>
                   <el-col :span="2"><div style="text-align: center;width: 100%">-</div></el-col>
-                  <el-col :span="11"><el-input v-model="page.q3e" placeholder="最大年龄"></el-input></el-col>
+                  <el-col :span="11"><el-input type="number" v-model="page.q3e" placeholder="最大年龄"></el-input></el-col>
                 </el-row>
             </el-form-item>
           </el-col>
           <el-col :span="5">
             <el-form>
-              <el-form-item label="诊断">
+              <el-form-item label="诊断" label-width="70">
                 <el-input v-model="page.q4" placeholder="请输入"></el-input>
               </el-form-item>
             </el-form>
@@ -60,8 +93,8 @@
            <el-table-column  label="操作" width="150" fixed="right">
              <template #default="scope">
                <el-link  :type="'primary'" :underline="false" @click="clickButton('detail', scope.row)">查看</el-link>
-               <el-link  :type="'warning'" :underline="false" @click="clickButton('update', scope.row)">修改</el-link>
-               <el-link  :type="'danger'" :underline="false" @click="clickButton('delete', scope.row)">删除</el-link>
+               <el-link v-if="authShow(['ADMIN'])"  :type="'warning'" :underline="false" @click="clickButton('update', scope.row)">修改</el-link>
+               <el-link v-if="authShow(['ADMIN'])"  :type="'danger'" :underline="false" @click="clickButton('delete', scope.row)">删除</el-link>
              </template>
            </el-table-column>
          </el-table>
@@ -276,6 +309,7 @@
 <script>
 import {recordApi} from "@/api/api";
 import {ElMessageBox} from "element-plus";
+import {authShow} from "@/utils/authutil";
 
 
 
@@ -376,6 +410,7 @@ export default {
   },
 
   methods: {
+    authShow,
 
 
     saveColumn(a,b,c){{
@@ -511,6 +546,10 @@ export default {
   mounted() {
     this.initTableData()
   },
+
+  activated(){
+    this.initTableData()
+  }
 
 }
 </script>
