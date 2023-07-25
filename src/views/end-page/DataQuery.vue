@@ -71,7 +71,7 @@
      <el-row>
        <el-col :span="20">
          <el-table :data="tableData" style="width: 100%"
-                   :height="670"
+                   :height="610"
                    border
                    :header-cell-style="{color:'#333333',fontSize:'14px',borderTop:'1px solid #EBEEF0'}"
                    :cell-style="{paddingTop:'15px',paddingBottom:'15px'}"
