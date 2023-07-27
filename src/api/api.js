@@ -60,6 +60,9 @@ export const historyApi={
     getById(id){
         return request.get('/history/getById/'+id)
     },
+    zuche(id){
+        return request.get('/history/zuche/'+id)
+    },
     add(data){
         return request.post('/history/add',data)
     },
@@ -88,6 +91,11 @@ export const parkingPlaceApi={
     deleteById(id){
         return request.delete('/parkingPlace/deleteById/'+id)
     },
+
+    tuizu(id){
+        return request.delete('/parkingPlace/tuizu/'+id)
+    },
+
     updateById(data){
         return request.put('/parkingPlace/updateById',data)
     }

@@ -1,14 +1,17 @@
 <template>
   <div class="p-div">
     <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
-      </el-col>
       <el-col :span="5" :offset="1">
         <el-input v-model="page.search" placeholder="请输入车位编号" clearable @clear="this.initTableData"/>
       </el-col>
       <el-col :span="5" :offset="1">
         <el-input v-model="page.type" placeholder="请输入车位类型" clearable @clear="this.initTableData"/>
+      </el-col>
+      <el-col :span="5" :offset="1">
+      <el-select v-model="page.stats" placeholder="车位状态" clearable>
+        <el-option label="已租" value="已租"></el-option>
+        <el-option label="未租" value="未租"></el-option>
+      </el-select>
       </el-col>
       <el-col :span="1" :offset="1">
         <el-button type="success" @click="search">搜索</el-button>
@@ -34,11 +37,6 @@
           <el-table-column label="操作" width="300px">
             <template #default="scope">
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">租赁车位</el-button>
-              <el-button
-                  size="small"
-                  type="danger"
-                  @click="clickButton('delete',scope.row)">删除
-              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -48,9 +46,16 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
+
+        <el-form-item label="车位ID">
+          <el-input v-model="form.id" placeholder="请输入"/>
+        </el-form-item>
+
         <el-form-item label="车位编号">
           <el-input v-model="form.cno" placeholder="请输入"/>
         </el-form-item>
+
+
 
         <el-form-item label="车位照片">
           <el-upload
@@ -120,7 +125,7 @@
 
 <script>
 
-import {parkingPlaceApi} from "@/api/api";
+import {historyApi, parkingPlaceApi} from "@/api/api";
 import {Plus} from "@element-plus/icons-vue";
 
 
@@ -165,27 +170,12 @@ export default {
 
     clickButton(type, row) {
       this.dialog.optionValue = type
-      if (type === 'add') {
-        this.dialog.dialogFormVisible = true
-        this.dialog.optionName = '新增'
-        this.dialog.formDisabled = false
-      } else if (type === 'update') {
+       if (type === 'detail') {
         parkingPlaceApi.getById(row.id).then((resp) => {
           this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '修改'
-          this.dialog.formDisabled = false
-          this.form = resp.data.data
-        })
-      } else if (type === 'detail') {
-        parkingPlaceApi.getById(row.id).then((resp) => {
-          this.dialog.dialogFormVisible = true
-          this.dialog.optionName = '详情'
+          this.dialog.optionName = '租赁车位'
           this.dialog.formDisabled = true
           this.form = resp.data.data
-        })
-      } else if (type === 'delete') {
-        parkingPlaceApi.deleteById(row.id).then(() => {
-          this.initTableData()
         })
       }
     },
@@ -205,8 +195,8 @@ export default {
             .then(() => {
               this.initTableData();
             })
-      } else if (this.dialog.optionValue === 'update') {
-        parkingPlaceApi.updateById(this.form)
+      } else if (this.dialog.optionValue === 'detail') {
+        historyApi.zuche(this.form.id)
             .then(() => {
               this.initTableData();
             })

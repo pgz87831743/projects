@@ -1,16 +1,6 @@
 <template>
   <div class="p-div">
-    <el-row>
-      <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
-      </el-col>
-      <!--      <el-col :span="5" :offset="1">-->
-      <!--        <el-input v-model="page.search" placeholder="请输入搜索内容" clearable @clear="this.initTableData"/>-->
-      <!--      </el-col>-->
-      <!--      <el-col :span="1" :offset="1">-->
-      <!--        <el-button type="success" @click="search">搜索</el-button>-->
-      <!--      </el-col>-->
-    </el-row>
+
     <el-row>
       <el-col>
         <el-table :data="tableData" border height="600" style="width: 100%"
@@ -19,7 +9,11 @@
           <el-table-column prop="id" label="主键"/>
           <el-table-column prop="parkingPlaceId" label="车位ID"/>
           <el-table-column prop="cno" label="车位编号"/>
-          <el-table-column prop="img" label="车位照片"/>
+          <el-table-column prop="img" label="车位照片">
+            <template #default="scope">
+              <el-image :preview-teleported="true" :preview-src-list="[scope.row.img]" :src="scope.row.img"></el-image>
+            </template>
+          </el-table-column>
           <el-table-column prop="type" label="车位类型"/>
           <el-table-column prop="stats" label="车位状态"/>
           <el-table-column prop="hireTime" label="出租时间"/>
@@ -28,8 +22,6 @@
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
                   size="small"
                   type="danger"

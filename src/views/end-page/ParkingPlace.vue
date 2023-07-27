@@ -10,6 +10,12 @@
       <el-col :span="5" :offset="1">
         <el-input v-model="page.type" placeholder="请输入车位类型" clearable @clear="this.initTableData"/>
       </el-col>
+      <el-col :span="5" :offset="1">
+        <el-select v-model="page.stats" placeholder="车位状态"  clearable>
+          <el-option label="已租" value="已租"></el-option>
+          <el-option label="未租" value="未租"></el-option>
+        </el-select>
+      </el-col>
       <el-col :span="1" :offset="1">
         <el-button type="success" @click="search">搜索</el-button>
       </el-col>
@@ -73,7 +79,10 @@
           <el-input v-model="form.type" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="车位状态">
-          <el-input v-model="form.stats" placeholder="请输入"/>
+          <el-select v-model="form.stats" placeholder="请选择" >
+            <el-option label="已租" value="已租"></el-option>
+            <el-option label="未租" value="未租"></el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="出租时间">
@@ -89,9 +98,7 @@
         <el-form-item label="出租时长">
           <el-input v-model="form.duration" placeholder="请输入"/>
         </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
+
       </el-form>
       <template #footer>
 <span class="dialog-footer" v-if="!dialog.formDisabled">
@@ -125,6 +132,7 @@
 
 import {parkingPlaceApi} from "@/api/api";
 import {Plus} from "@element-plus/icons-vue";
+import {ElMessageBox} from "element-plus";
 
 
 export default {
@@ -187,9 +195,23 @@ export default {
           this.form = resp.data.data
         })
       } else if (type === 'delete') {
-        parkingPlaceApi.deleteById(row.id).then(() => {
-          this.initTableData()
+
+
+
+
+        ElMessageBox.confirm(
+            '确定删除这条信息？',
+            '警告', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+            }
+        ).then(() => {
+          parkingPlaceApi.deleteById(row.id).then(() => {
+            this.initTableData()
+          })
         })
+
       }
     },
 

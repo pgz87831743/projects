@@ -42,7 +42,7 @@
                           <el-link  type="primary" :underline="false" @click="registerHandler" >注册</el-link>
                         </el-col>
                         <el-col style="text-align: right" :span="12">
-                          <el-link  type="danger" :underline="false">忘记密码?</el-link>
+<!--                          <el-link  type="danger" :underline="false">忘记密码?</el-link>-->
                         </el-col>
                       </el-row>
                     </div>
@@ -116,7 +116,7 @@ export default {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/ParkingPlace'})
+          router.push({path: '/OwnersRentingCars'})
         }
       }))
     },
