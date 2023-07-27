@@ -10,7 +10,7 @@
           :default-active="$route.fullPath"
       >
         <el-menu-item index="">
-          <div style="color: white;font-size: 20px;font-weight: bold">体检预约系统</div>
+          <div style="color: white;font-size: 20px;font-weight: bold">车位租赁管理系统</div>
         </el-menu-item>
         <div class="flex-grow"/>
 
@@ -45,8 +45,9 @@
               :collapse-transition="false"
               :default-active="$route.fullPath"
           >
-            <el-menu-item index="/Inspection">检查项管理</el-menu-item>
-            <el-menu-item index="/Reservation">预约管理</el-menu-item>
+            <el-menu-item index="/ParkingPlace">车位管理</el-menu-item>
+            <el-menu-item index="/History">历史租车位</el-menu-item>
+            <el-menu-item index="/Feedback">业主反馈</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="span.right">

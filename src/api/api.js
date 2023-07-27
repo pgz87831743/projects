@@ -25,47 +25,70 @@ export const systemCurrentUser = () => {
 
 
 
-//检查项目表管理
-export const inspectionApi={
+//反馈表管理
+export const feedbackApi={
     page(data){
-        return request.post('/inspection/page',data)
+        return request.post('/feedback/page',data)
     },
     listAll(){
-        return request.get('/inspection/listAll')
+        return request.get('/feedback/listAll')
     },
     getById(id){
-        return request.get('/inspection/getById/'+id)
+        return request.get('/feedback/getById/'+id)
     },
     add(data){
-        return request.post('/inspection/add',data)
+        return request.post('/feedback/add',data)
     },
     deleteById(id){
-        return request.delete('/inspection/deleteById/'+id)
+        return request.delete('/feedback/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/inspection/updateById',data)
+        return request.put('/feedback/updateById',data)
     }
 }
 
 
-//预约表管理
-export const reservationApi={
+
+//历史车位租赁记录表管理
+export const historyApi={
     page(data){
-        return request.post('/reservation/page',data)
+        return request.post('/history/page',data)
     },
     listAll(){
-        return request.get('/reservation/listAll')
+        return request.get('/history/listAll')
     },
     getById(id){
-        return request.get('/reservation/getById/'+id)
+        return request.get('/history/getById/'+id)
     },
     add(data){
-        return request.post('/reservation/add',data)
+        return request.post('/history/add',data)
     },
     deleteById(id){
-        return request.delete('/reservation/deleteById/'+id)
+        return request.delete('/history/deleteById/'+id)
     },
     updateById(data){
-        return request.put('/reservation/updateById',data)
+        return request.put('/history/updateById',data)
+    }
+}
+
+//车位表管理
+export const parkingPlaceApi={
+    page(data){
+        return request.post('/parkingPlace/page',data)
+    },
+    listAll(){
+        return request.get('/parkingPlace/listAll')
+    },
+    getById(id){
+        return request.get('/parkingPlace/getById/'+id)
+    },
+    add(data){
+        return request.post('/parkingPlace/add',data)
+    },
+    deleteById(id){
+        return request.delete('/parkingPlace/deleteById/'+id)
+    },
+    updateById(data){
+        return request.put('/parkingPlace/updateById',data)
     }
 }

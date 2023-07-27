@@ -33,12 +33,16 @@ const routes = [
         component: () => import('../views/layout/EndPage'),
         children: [
             {
-                path: '/Inspection',
-                component: () => import('../views/end-page/Inspection')
+                path: '/Feedback',
+                component: () => import('../views/end-page/Feedback')
             },
             {
-                path: '/Reservation',
-                component: () => import('../views/end-page/Reservation')
+                path: '/History',
+                component: () => import('../views/end-page/History')
+            },
+            {
+                path: '/ParkingPlace',
+                component: () => import('../views/end-page/ParkingPlace')
             }
         ]
     }

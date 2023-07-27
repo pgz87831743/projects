@@ -3,7 +3,7 @@
 
     <div class="div1">
       <div style="text-align: left;color:#0030f2;height: 80px;font-size: 42px;line-height: 80px;padding-left: 30px;font-weight: bold">
-       体检预约系统
+       车位租赁管理系统
       </div>
       <div>
         <div class="div2">
@@ -116,7 +116,7 @@ export default {
       login(this.user).then((resp => {
         if (resp.data.code === 200) {
           this.store.commit('setUser', resp.data.data)
-          router.push({path: '/Inspection'})
+          router.push({path: '/ParkingPlace'})
         }
       }))
     },
@@ -150,7 +150,7 @@ export default {
 }
 
 .div1 {
-  background-image:url("@/assets/pexels-photo-1390403.webp");
+  background-image:url("@/assets/pexels-photo-3422964.webp");
   background-size: 1920px;
   height: 100vh;
 }
