@@ -19,7 +19,11 @@
           <el-table-column prop="id" label="主键"/>
           <el-table-column prop="title" label="反馈内容"/>
           <el-table-column prop="remark" label="反馈内容"/>
-          <el-table-column prop="img" label="反馈图片"/>
+          <el-table-column prop="img" label="反馈图片">
+            <template #default="scope">
+              <el-image :preview-teleported="true" :preview-src-list="[scope.row.img]" :src="scope.row.img"></el-image>
+            </template>
+          </el-table-column>
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column prop="createBy" label="创建人"/>
           <el-table-column label="操作" width="300px">
@@ -40,20 +44,26 @@
 
     <el-dialog v-model="dialog.dialogFormVisible" :title="dialog.optionName" @closed="dialogClose">
       <el-form :model="form" label-position="right" label-width="150px" :disabled="dialog.formDisabled">
-        <el-form-item label="反馈内容">
+        <el-form-item label="反馈标题">
           <el-input v-model="form.title" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="反馈内容">
           <el-input v-model="form.remark" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="反馈图片">
-          <el-input v-model="form.img" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建时间">
-          <el-input v-model="form.createTime" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="创建人">
-          <el-input v-model="form.createBy" placeholder="请输入"/>
+          <el-upload
+              class="avatar-uploader"
+              action="/api/file/upload"
+              :data="{fileTypeEnum:'FILE'}"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              name="files"
+          >
+            <img v-if="form.img" :src="form.img" width="300"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -87,10 +97,12 @@
 <script>
 
 import {feedbackApi} from "@/api/api";
+import {Plus} from "@element-plus/icons-vue";
 
 
 export default {
   name: "Feedback",
+  components: {Plus},
   data() {
     return {
       page: {

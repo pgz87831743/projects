@@ -48,6 +48,7 @@
             <el-menu-item index="/ParkingPlace">车位管理</el-menu-item>
             <el-menu-item index="/History">历史租车位</el-menu-item>
             <el-menu-item index="/Feedback">业主反馈</el-menu-item>
+            <el-menu-item index="/OwnersRentingCars">业主租车位</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="span.right">

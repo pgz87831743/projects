@@ -43,6 +43,10 @@ const routes = [
             {
                 path: '/ParkingPlace',
                 component: () => import('../views/end-page/ParkingPlace')
+            },
+            {
+                path: '/OwnersRentingCars',
+                component: () => import('../views/end-page/OwnersRentingCars')
             }
         ]
     }
