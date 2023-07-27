@@ -2,7 +2,7 @@
   <div class="p-div">
     <el-row>
       <el-col :span="1">
-        <el-button type="primary" @click="clickButton('add')">新增</el-button>
+        <el-button type="primary" @click="clickButton('add')">新增车位</el-button>
       </el-col>
       <el-col :span="5" :offset="1">
         <el-input v-model="page.search" placeholder="请输入车位编号" clearable @clear="this.initTableData"/>
@@ -31,14 +31,14 @@
           <el-table-column prop="hireTime" label="出租时间"/>
           <el-table-column prop="duration" label="出租时长"/>
           <el-table-column prop="createTime" label="创建时间"/>
-          <el-table-column label="操作" width="300px">
+          <el-table-column label="操作" width="330px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
+              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改车位</el-button>
               <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
               <el-button
                   size="small"
                   type="danger"
-                  @click="clickButton('delete',scope.row)">删除
+                  @click="clickButton('delete',scope.row)">删除车位
               </el-button>
             </template>
           </el-table-column>

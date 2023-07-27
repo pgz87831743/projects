@@ -33,8 +33,7 @@
           <el-table-column prop="createTime" label="创建时间"/>
           <el-table-column label="操作" width="300px">
             <template #default="scope">
-              <el-button size="small" type="success" @click="clickButton('update', scope.row)">修改</el-button>
-              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">详情</el-button>
+              <el-button type="primary" size="small" @click="clickButton('detail', scope.row)">租赁车位</el-button>
               <el-button
                   size="small"
                   type="danger"
@@ -94,10 +93,8 @@
         </el-form-item>
       </el-form>
       <template #footer>
-<span class="dialog-footer" v-if="!dialog.formDisabled">
-<el-button @click="dialog.dialogFormVisible = false">取消</el-button>
-<el-button type="success" @click="formSubmit">确认</el-button>
-</span>
+        <el-button @click="dialog.dialogFormVisible = false">取消</el-button>
+        <el-button type="success" @click="formSubmit">确认</el-button>
       </template>
     </el-dialog>
 

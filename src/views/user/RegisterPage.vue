@@ -15,11 +15,11 @@
                   注册用户
                 </div>
               </template>
-              <el-row justify="center">
+              <el-row v-if="type==='ADMIN'" justify="center">
                 <el-col :span="20">
                   <el-form>
                     <el-form-item>
-                      <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
+                      <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入手机号码"></el-input>
                     </el-form-item>
                     <el-form-item>
                       <el-input type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
@@ -28,7 +28,74 @@
                       <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
                     </el-form-item>
                     <el-form-item label="角色：">
-                      <el-radio-group v-model="user.role">
+                      <el-radio-group v-model="user.role" @change="rc">
+                        <el-radio label="USER" name="roleType">业主</el-radio>
+                        <el-radio label="ADMIN" name="roleType">管理员</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                    <el-row :gutter="10">
+                      <el-col :span="15">
+                        <el-form-item>
+                          <el-input :prefix-icon="View" v-model="user.userCode" placeholder="请输入验证码"></el-input>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="9">
+                        <el-form-item>
+                          <img :src="user.code" @click="changeCapHandler">
+                        </el-form-item>
+                      </el-col>
+                    </el-row>
+                    <div>
+                      <el-row >
+                        <el-col :span="4">
+                          <el-link type="primary" :underline="false" @click="toLoginHandler" >去登陆</el-link>
+                        </el-col>
+                      </el-row>
+                    </div>
+                  </el-form>
+
+                  <el-button @click="registerHandler"
+                             style="background:#247ff2;color:#ffffff; width: 100%;margin-top: 10px">注册
+                  </el-button>
+                </el-col>
+              </el-row>
+
+              <el-row  v-if="type==='USER'"  justify="center">
+                <el-col :span="20">
+                  <el-form>
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.username" placeholder="请输入手机号码111"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                      <el-input type="password" show-password :prefix-icon="Lock" v-model="user.confirmPassword" placeholder="确认密码"></el-input>
+                    </el-form-item>
+
+
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.sex" placeholder="请输入性别"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.idCard" placeholder="身份证"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.carNum" placeholder="车牌号"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.address" placeholder="家庭住址"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                      <el-input :prefix-icon="User" v-model="user.roomNo" placeholder="房间号"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="角色：">
+                      <el-radio-group v-model="user.role" @change="rc">
                         <el-radio label="USER" name="roleType">业主</el-radio>
                         <el-radio label="ADMIN" name="roleType">管理员</el-radio>
                       </el-radio-group>
@@ -98,12 +165,14 @@ export default {
 
   data() {
     return {
+      type:'USER',
       user: {
         username: '',
         password: '',
         code: '',
         confirmPassword: '',
         uuid: '',
+        role:'USER',
         userCode: '',
       }
     }
@@ -111,6 +180,9 @@ export default {
   components: {},
   methods: {
 
+    rc(v){
+      this.type=v
+    },
 
     toLoginHandler(){
       router.push({path: '/login'})

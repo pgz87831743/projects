@@ -18,7 +18,7 @@
                   <el-col :span="20">
                     <el-form>
                       <el-form-item>
-                        <el-input  :prefix-icon="User" v-model="user.username" placeholder="请输入用户名"></el-input>
+                        <el-input  :prefix-icon="User" v-model="user.username" placeholder="请输入手机号码"></el-input>
                       </el-form-item>
                       <el-form-item>
                         <el-input  type="password" show-password :prefix-icon="Lock" v-model="user.password" placeholder="请输入密码"></el-input>
