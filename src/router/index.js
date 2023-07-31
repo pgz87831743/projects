@@ -16,16 +16,6 @@ const routes = [
     {
         path: '/',
         component: () => import('../views/user/LoginPage')
-    },
-
-
-    {
-        path: '/FontPage',
-        component: () => import('../views/layout/FontPage'),
-        children: [
-
-
-        ]
     }
     , {
         path: '/EndPage',
