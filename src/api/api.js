@@ -8,9 +8,6 @@ export const logout = () => {
     return request.get('/system/logout')
 }
 
-export const roles = () => {
-    return request.post('/system/roles')
-}
 
 export const register = (data) => {
     return request.post('/system/register', data)
@@ -23,10 +20,6 @@ export const systemCurrentUser = () => {
     return request.get('/system/currentUser')
 }
 
-//文件相关
-export const systemUploadSecurity = (data) => {
-    return request.post('/file/uploadSecurity', data)
-}
 
 
 //用户管理
