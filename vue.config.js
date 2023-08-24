@@ -11,6 +11,7 @@ module.exports = defineConfig({
     proxy: { //配置跨域
       '/api': {
         target: 'http://10.21.30.50:9001', //填写请求的目标地址
+        // target: 'http://localhost:9001', //填写请求的目标地址
         changOrigin: true, //允许跨域
         pathRewrite: {
           '^/api': '' //请求的时候使用这个api就可以
